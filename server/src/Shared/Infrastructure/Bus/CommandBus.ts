@@ -1,7 +1,7 @@
 import { ICommandBus } from '../../Domain/Bus/ICommandBus';
 import { CommandClass, ConstructorFunc } from '../../Domain/types';
 import { ICommand } from "../../Domain/Interfaces/ICommand";
-import { IHandler } from "../../Domain/Interfaces/IHandler";
+import { IHandler } from "../../Domain/Interfaces/ICommandHandler";
 
 export class CommandBus implements ICommandBus {
   private static _instance: CommandBus;

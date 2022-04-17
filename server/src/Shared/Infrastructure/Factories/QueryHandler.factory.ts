@@ -1,7 +1,7 @@
 import { ConstructorFunc } from '../../Domain/types';
 import { QueryBus } from '../Bus/QueryBus';
 import { CryptoService } from "../../Domain/Services/CryptoService";
-import { IHandler } from "../../Domain/Interfaces/IHandler";
+import { IHandler } from "../../Domain/Interfaces/ICommandHandler";
 
 
 export default class QueryHandlerFactory {

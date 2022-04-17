@@ -1,7 +1,7 @@
 import { IQueryBus } from '../../Domain/Bus/IQueryBus';
 import { QueryClass } from '../../Domain/types';
 import { IQuery } from "../../Domain/Interfaces/IQuery";
-import { IHandler } from "../../Domain/Interfaces/IHandler";
+import { IHandler } from "../../Domain/Interfaces/ICommandHandler";
 
 export class QueryBus implements IQueryBus {
   private static _instance: QueryBus;

@@ -1,6 +1,5 @@
 import { Either } from "../types";
-import { Criteria } from "../Entities/Criteria";
-import { RepositoryFilter } from "../Entities/RepositoryFilter";
+import { RepositoryFilter } from "../Entities/Filter";
 
 export interface IRepository<T> {
   findOne(id: string): Promise<Either<Error, T>>;

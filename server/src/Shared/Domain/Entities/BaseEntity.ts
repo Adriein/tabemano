@@ -5,8 +5,7 @@ export abstract class BaseEntity {
     private _id: ID,
     private _dateCreated?: Date,
     private _dateUpdated?: Date
-  ) {
-  }
+  ) {}
 
   public id(): ID {
     return this._id;

@@ -1,4 +1,4 @@
-import { IHandler } from "../../Domain/Interfaces/IHandler";
+import { IHandler } from "../../Domain/Interfaces/ICommandHandler";
 import { ConstructorFunc } from "../../Domain/types";
 import { QueryBus } from "../Bus/QueryBus";
 

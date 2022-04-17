@@ -1,9 +1,9 @@
 import { ValueObject } from './ValueObject';
-import { LastPaymentDateError } from "../Error/LastPaymentDateError";
+import { DateFormatError } from "../Error/DateFormatError";
 import { Time } from "../../Infrastructure/Helper/Time";
 
 export class DateVo extends ValueObject {
-  private _date: Date;
+  private readonly _date: Date;
   private regex = new RegExp(
     '([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})'
   );
@@ -11,7 +11,7 @@ export class DateVo extends ValueObject {
   constructor(date: string | Date) {
     super();
     if (!date) {
-      throw new LastPaymentDateError();
+      throw new DateFormatError();
     }
 
     if (date instanceof Date) {
@@ -25,7 +25,7 @@ export class DateVo extends ValueObject {
     const parsedDate = Time.format(new Date(formattedDate), Time.AMERICAN_DATE_FORMAT);
 
     if (this.validate(parsedDate)) {
-      throw new LastPaymentDateError();
+      throw new DateFormatError();
     }
     this._date = new Date(formattedDate);
   }
