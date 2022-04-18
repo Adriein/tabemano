@@ -7,11 +7,11 @@ export class Left<L, R> {
     this.value = value;
   }
 
-  isLeft(): this is Left<L, R> {
+  isError(): this is Left<L, R> {
     return true;
   }
 
-  isRight(): this is Right<L, R> {
+  isOk(): this is Right<L, R> {
     return false;
   }
 

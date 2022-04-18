@@ -4,18 +4,19 @@ import express from 'express';
 import cookieSession from 'cookie-session';
 import chalk from 'chalk';
 import path from 'path';
-import { errorHandler } from './Shared/Infrastructure/Middlewares';
-import Database from './Shared/Infrastructure/Data/Database';
-import AppRouter from './Shared/Infrastructure/AppRouter';
+import { errorHandler } from 'Shared/Infrastructure/Middlewares';
+import Database from 'Shared/Infrastructure/Data/Database';
+import AppRouter from 'Shared/Infrastructure/AppRouter';
 import ExplorerService from './ExplorerService';
-import DomainEventHandlerFactory from './Shared/Infrastructure/Factories/DomainEventHandler.factory';
-import { DomainEventsManager } from './Shared/Domain/Entities/DomainEventsManager';
-import { CommandClass, DomainEventClass, QueryClass } from './Shared/Domain/types';
-import { COMMANDS_HANDLER_METADATA, EVENTS_HANDLER_METADATA, QUERY_HANDLER_METADATA } from './Shared/Domain/constants';
-import { CommandBus } from "./Shared/Infrastructure/Bus/CommandBus";
-import { QueryBus } from "./Shared/Infrastructure/Bus/QueryBus";
-import QueryHandlerFactory from "./Shared/Infrastructure/Factories/QueryHandler.factory";
-import CommandHandlerFactory from "./Shared/Infrastructure/Factories/CommandHandler.factory";
+import DomainEventHandlerFactory from 'Shared/Infrastructure/Factories/DomainEventHandler.factory';
+import { DomainEventsManager } from 'Shared/Domain/Entities/DomainEventsManager';
+import { CommandClass, DomainEventClass, QueryClass } from 'Shared/Domain/types';
+import { COMMANDS_HANDLER_METADATA, EVENTS_HANDLER_METADATA, QUERY_HANDLER_METADATA } from 'Shared/Domain/constants';
+import { CommandBus } from "Shared/Infrastructure/Bus/CommandBus";
+import { QueryBus } from "Shared/Infrastructure/Bus/QueryBus";
+import QueryHandlerFactory from "Shared/Infrastructure/Factories/QueryHandler.factory";
+import CommandHandlerFactory from "Shared/Infrastructure/Factories/CommandHandler.factory";
+import { DirectoryTree } from "Shared/Domain/Services/FileCrawler/DirectoryTree";
 
 
 export default class App {
@@ -25,13 +26,14 @@ export default class App {
     console.log(chalk.cyan('> Checking env variables...'));
 
     process.on('exit', (code) => {
-      console.log(chalk.red.bold(`> About to exit with code: ${code} some env variables are not setted`));
+      console.log(chalk.red.bold(`> About to exit with code: ${code} something went wrong`));
     });
 
     this.checkEnvVariables();
 
-    console.log(chalk.cyan('> Env variables setted correctly ✨'));
+    console.log(chalk.cyan('> Env variables set correctly ✨'));
 
+    this.bindControllers();
 
     Database.instance();
 
@@ -58,7 +60,7 @@ export default class App {
         secure: false,
         // maxAge: 900000,
         httpOnly: false,
-        name: 'nutrilog-session'
+        name: 'tabemano-session'
       })
     );
 
@@ -79,7 +81,7 @@ export default class App {
     }
 
     app.listen(app.get('port'), () => {
-      console.log(chalk.green.bold(`> Server running... ✅`));
+      console.log(chalk.green.bold(`> Server is running... ✅`));
     });
   }
 
@@ -102,6 +104,8 @@ export default class App {
   }
 
   private bindDomainEvents(): void {
+    console.log(chalk.blue('> Binding domain events handlers...'));
+
     const factory = new DomainEventHandlerFactory();
     for (const handler of factory.getContainer().values()) {
       const domainEvents = ExplorerService.explore<Function, DomainEventClass>(
@@ -114,6 +118,8 @@ export default class App {
   }
 
   private bindCommands(): void {
+    console.log(chalk.blue('> Binding command handlers...'));
+
     const factory = new CommandHandlerFactory();
     for (const handler of factory.getContainer().values()) {
       const commands = ExplorerService.explore<Function, CommandClass>(
@@ -126,6 +132,8 @@ export default class App {
   }
 
   private bindQueries(): void {
+    console.log(chalk.blue('> Binding query handlers...'));
+
     const factory = new QueryHandlerFactory();
     for (const handler of factory.getContainer().values()) {
       const queries = ExplorerService.explore<Function, QueryClass>(handler.constructor, QUERY_HANDLER_METADATA);
@@ -133,4 +141,18 @@ export default class App {
       queries.forEach((query: QueryClass) => QueryBus.bind(query, handler));
     }
   }
+
+  private bindControllers(): void {
+    console.log(chalk.blue('> Binding controllers...'));
+
+    const dirPath = process.env.NODE_ENV === 'dev'? `${process.cwd()}/src` : `${process.cwd()}/../src`;
+    const tree = new DirectoryTree(dirPath);
+
+    tree.crawl((path: string) => {
+      if(path.includes('Controller')) {
+        import(path);
+      }
+    });
+  }
 }
+

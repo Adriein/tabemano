@@ -9,7 +9,7 @@
     "emitDecoratorMetadata": true,
     "baseUrl": ".",
     "paths": {
-      "Shared/*": ["./src/Shared/*", "./src/Shared"],
+      "Shared/*": ["./src/Shared/*"],
       "Authorization/*": ["./src/Authorization/*", "./src/Authorization"]
     }
   },
