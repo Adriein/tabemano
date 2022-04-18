@@ -1,10 +1,13 @@
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model ta_user {
@@ -13,11 +16,11 @@ model ta_user {
     us_email String @unique
     us_password String
     us_tenant_id String
-    us_subscriptions subscription[]
-    us_role role @relation(fields: [role_id], references: [id])
+    us_subscriptions ta_subscription[]
+    us_role ta_role @relation(fields: [us_role_id], references: [ro_id])
     us_role_id String
-    us_config config?
-    us_app_config app_config?
+    us_config ta_config?
+    us_app_config ta_app_config?
     us_is_active Boolean
     us_created_at DateTime @db.Timestamp(0)
     us_updated_at DateTime @db.Timestamp(0)
@@ -29,7 +32,7 @@ model ta_pricing {
     pr_duration Int @db.SmallInt
     pr_price Int @db.SmallInt
     pr_tenant_id String?
-    pr_subscriptions subscription[]
+    pr_subscriptions ta_subscription[]
     pr_created_at DateTime @db.Timestamp(0)
     pr_updated_at DateTime @db.Timestamp(0)
 }
@@ -40,61 +43,61 @@ model ta_subscription {
     su_valid_to DateTime @db.Timestamp(0)
     su_is_active Boolean
     su_is_expired Boolean
-    su_pricing pricing  @relation(fields: [pricing_id], references: [id])
+    su_pricing ta_pricing  @relation(fields: [su_pricing_id], references: [pr_id])
     su_pricing_id String
-    su_user user @relation(fields: [user_id], references: [id])
+    su_user ta_user @relation(fields: [su_user_id], references: [us_id])
     su_user_id  String
-    su_history subscription_history []
+    su_events ta_subscription_events []
     su_created_at DateTime @db.Timestamp(0)
     su_updated_at DateTime @db.Timestamp(0)
 }
 
-model ta_subscription_history {
-    sh_id String @id
-    sh_event String
-    sh_subscription_id String
-    sh_subscription subscription @relation(fields: [subscription_id], references: [id])
-    sh_created_at DateTime @db.Timestamp(0)
-    sh_updated_at DateTime @db.Timestamp(0)
+model ta_subscription_events {
+    se_id String @id
+    se_event String
+    se_subscription_id String
+    se_subscription ta_subscription @relation(fields: [se_subscription_id], references: [su_id])
+    se_created_at DateTime @db.Timestamp(0)
+    se_updated_at DateTime @db.Timestamp(0)
 }
 
-model role {
-    id String @id
-    type String
-    users user[]
-    created_at DateTime @db.Timestamp(0)
-    updated_at DateTime @db.Timestamp(0)
+model ta_role {
+    ro_id String @id
+    ro_type String
+    ro_users ta_user[]
+    ro_created_at DateTime @db.Timestamp(0)
+    ro_updated_at DateTime @db.Timestamp(0)
 }
 
-model config {
-    id String @id
-    language String
-    send_notifications Boolean
-    send_warnings Boolean
-    user user @relation(fields: [user_id], references: [id])
-    user_id  String
-    created_at DateTime @db.Timestamp(0)
-    updated_at DateTime @db.Timestamp(0)
+model ta_config {
+    co_id String @id
+    co_language String
+    co_send_notifications Boolean
+    co_send_warnings Boolean
+    co_user ta_user @relation(fields: [co_user_id], references: [us_id])
+    co_user_id  String
+    co_created_at DateTime @db.Timestamp(0)
+    co_updated_at DateTime @db.Timestamp(0)
 }
 
-model app_config {
-    id String @id
-    warning_delay Int @db.SmallInt
-    notification_delay Int @db.SmallInt
-    email_content String
-    last_sent_report DateTime @db.Timestamp(0)
-    user user @relation(fields: [user_id], references: [id])
-    user_id  String
-    created_at DateTime @db.Timestamp(0)
-    updated_at DateTime @db.Timestamp(0)
+model ta_app_config {
+    ac_id String @id
+    ac_warning_delay Int @db.SmallInt
+    ac_notification_delay Int @db.SmallInt
+    ac_email_content String
+    ac_last_sent_report DateTime @db.Timestamp(0)
+    ac_user ta_user @relation(fields: [ac_user_id], references: [us_id])
+    ac_user_id  String
+    ac_created_at DateTime @db.Timestamp(0)
+    ac_updated_at DateTime @db.Timestamp(0)
 }
 
-model app_filter {
-    id String @id
-    tenant_id String
-    entity String
-    field String
-    type String
-    created_at DateTime @db.Timestamp(0)
-    updated_at DateTime @db.Timestamp(0)
+model ta_app_filter {
+    af_id String @id
+    af_tenant_id String
+    af_entity String
+    af_field String
+    af_type String
+    af_created_at DateTime @db.Timestamp(0)
+    af_updated_at DateTime @db.Timestamp(0)
 }
