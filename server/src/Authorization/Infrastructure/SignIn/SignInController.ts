@@ -1,3 +1,4 @@
+import { SignInQuery } from "Authorization/Application/SignIn/SignInQuery";
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { BaseController } from "Shared/Infrastructure/BaseController";
@@ -9,8 +10,9 @@ export class SignInController extends BaseController {
   @post('/signin')
   public async signIn(req: Request, res: Response<any>, next: NextFunction): Promise<void> {
     try {
-      const { email, password } = req.body;
-      console.log(email, password)
+      const command = SignInQuery.fromJson(req.body);
+
+      await this.commandBus.dispatch(command);
       //const auth = await this.queryBus.ask<Auth>(new SigninQuery(email, password));
 
       /*const userJwt = jwt.sign(
