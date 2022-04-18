@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { AppRouter } from '../AppRouter';
+import AppRouter from '../AppRouter';
 import { MetadaDataKeys, Methods } from '../enums';
 
 export function Controller() {

@@ -1,11 +1,11 @@
 import { ICommandBus } from '../../Domain/Bus/ICommandBus';
 import { CommandClass, ConstructorFunc } from '../../Domain/types';
 import { ICommand } from "../../Domain/Interfaces/ICommand";
-import { IHandler } from "../../Domain/Interfaces/ICommandHandler";
+import { ICommandHandler } from "../../Domain/Interfaces/ICommandHandler";
 
 export class CommandBus implements ICommandBus {
   private static _instance: CommandBus;
-  private static handlers: Map<string, IHandler<void>> = new Map();
+  private static handlers: Map<string, ICommandHandler> = new Map();
 
   private constructor() {}
 
@@ -17,7 +17,7 @@ export class CommandBus implements ICommandBus {
     return CommandBus._instance;
   }
 
-  public static bind = (command: CommandClass, handler: IHandler<void>) => {
+  public static bind = (command: CommandClass, handler: ICommandHandler) => {
     CommandBus.handlers.set(command.name, handler);
   };
 
@@ -25,7 +25,7 @@ export class CommandBus implements ICommandBus {
     return await this.resolve(command).handle(command);
   }
 
-  private resolve(command: ICommand): IHandler<void> {
+  private resolve(command: ICommand): ICommandHandler {
     const handler = CommandBus.handlers.get(command.constructor.name);
 
     if (!handler) {

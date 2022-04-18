@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { NotAuthorizedError } from '../../../Auth/Domain/NotAuthorizedError';
+import { NotAuthorizedError } from "../../../Authoritzation/Domain/Error/NotAuthorizedError";
 
 interface UserPayload {
   id: string;

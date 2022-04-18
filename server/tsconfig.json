@@ -1,11 +1,17 @@
 {
   "extends": "@tsconfig/node16/tsconfig.json",
   "compilerOptions": {
+    "sourceMap": true,
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "baseUrl": ".",
+    "paths": {
+      "Shared/*": ["./src/Shared/*", "./src/Shared"],
+      "Authorization/*": ["./src/Authorization/*", "./src/Authorization"]
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules"],

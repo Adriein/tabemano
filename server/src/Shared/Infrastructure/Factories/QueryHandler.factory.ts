@@ -1,11 +1,11 @@
 import { ConstructorFunc } from '../../Domain/types';
 import { QueryBus } from '../Bus/QueryBus';
 import { CryptoService } from "../../Domain/Services/CryptoService";
-import { IHandler } from "../../Domain/Interfaces/ICommandHandler";
+import { IQueryHandler } from "../../Domain/Interfaces/IQueryHandler";
 
 
 export default class QueryHandlerFactory {
-  private handlers: Map<string, IHandler<any>> = new Map();
+  private handlers: Map<string, IQueryHandler<any>> = new Map();
 
 
   private cryptoService: CryptoService = new CryptoService();
@@ -15,7 +15,7 @@ export default class QueryHandlerFactory {
     this.register();
   }
 
-  public create<T, R>(_handler: ConstructorFunc<T>): IHandler<R> {
+  public create<T, R>(_handler: ConstructorFunc<T>): IQueryHandler<R> {
     const handler = this.handlers.get(_handler.name);
 
     if (!handler) {
@@ -29,7 +29,7 @@ export default class QueryHandlerFactory {
 
   }
 
-  public getContainer(): Map<string, IHandler<any>> {
+  public getContainer(): Map<string, IQueryHandler<any>> {
     return this.handlers;
   }
 }

@@ -1,11 +1,11 @@
 import { IQueryBus } from '../../Domain/Bus/IQueryBus';
 import { QueryClass } from '../../Domain/types';
 import { IQuery } from "../../Domain/Interfaces/IQuery";
-import { IHandler } from "../../Domain/Interfaces/ICommandHandler";
+import { IQueryHandler } from "../../Domain/Interfaces/IQueryHandler";
 
 export class QueryBus implements IQueryBus {
   private static _instance: QueryBus;
-  private static handlers: Map<string, IHandler<any>> = new Map();
+  private static handlers: Map<string, IQueryHandler<any>> = new Map();
 
   private constructor() {
   }
@@ -18,7 +18,7 @@ export class QueryBus implements IQueryBus {
     return QueryBus._instance as QueryBus;
   }
 
-  public static bind = (command: QueryClass, handler: IHandler<any>): void => {
+  public static bind = (command: QueryClass, handler: IQueryHandler<any>): void => {
     QueryBus.handlers.set(command.name, handler);
   };
 
@@ -26,7 +26,7 @@ export class QueryBus implements IQueryBus {
     return await this.resolve(query).handle(query);
   }
 
-  private resolve(query: IQuery): IHandler<any> {
+  private resolve(query: IQuery): IQueryHandler<any> {
     const handler = QueryBus.handlers.get(query.constructor.name);
 
     if (!handler) {

@@ -1,7 +1,8 @@
 import { PrismaClient } from '@prisma/client'
-import { ID } from "../src/Shared/Domain/VO/Id.vo";
-import { CryptoService } from "../src/Shared/Domain/Services/CryptoService";
+import {CryptoService} from "../src/Shared/Domain/Services/CryptoService";
+import { ID } from "../src/Shared/Domain/Vo/Id.vo";
 import { Time } from "../src/Shared/Infrastructure/Helper/Time";
+
 
 const prisma = new PrismaClient()
 const crypto = new CryptoService();

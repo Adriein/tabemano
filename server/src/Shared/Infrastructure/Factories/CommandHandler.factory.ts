@@ -1,10 +1,10 @@
-import { IHandler } from "../../Domain/Interfaces/ICommandHandler";
+import { ICommandHandler } from "../../Domain/Interfaces/ICommandHandler";
 import { ConstructorFunc } from "../../Domain/types";
 import { QueryBus } from "../Bus/QueryBus";
 
 
 export default class CommandHandlerFactory {
-  private handlers: Map<string, IHandler<any>> = new Map();
+  private handlers: Map<string, ICommandHandler> = new Map();
 
 
 
@@ -12,7 +12,7 @@ export default class CommandHandlerFactory {
     this.register();
   }
 
-  public create<T, R>(_handler: ConstructorFunc<T>): IHandler<R> {
+  public create<T, R>(_handler: ConstructorFunc<T>): ICommandHandler {
     const handler = this.handlers.get(_handler.name);
 
     if (!handler) {
@@ -26,7 +26,7 @@ export default class CommandHandlerFactory {
 
   }
 
-  public getContainer(): Map<string, IHandler<any>> {
+  public getContainer(): Map<string, ICommandHandler> {
     return this.handlers;
   }
 }

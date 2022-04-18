@@ -1,25 +1,25 @@
 import { fakeData } from './data';
 import { PrismaClient } from '@prisma/client'
-import { ID } from "../src/Shared/Domain/VO/Id.vo";
+import { ID } from "../src/Shared/Domain/Vo/Id.vo";
 import { CryptoService } from "../src/Shared/Domain/Services/CryptoService";
-import { Password } from "../src/Shared/Domain/VO/Password.vo";
+import { Password } from "../src/Shared/Domain/Vo/Password.vo";
 import { Time } from "../src/Shared/Infrastructure/Helper/Time";
-import { SUBSCRIPTION_STATUS } from "../src/Backoffice/User/Domain/constants";
+/*import { SUBSCRIPTION_STATUS } from "../src/Backoffice/User/Domain/constants";
 
-const prisma = new PrismaClient()
+const prisma333 = new PrismaClient()
 const crypto = new CryptoService();
 
 async function main() {
   const pricingName = [ 'monthly', 'quarterly' ];
   const fakeUserCreationDates = [ '2021-03-04', '2021-06-20', '2021-11-01' ];
-  const admin = await prisma.user.findUnique({ where: { email: process.env.ADMIN_EMAIL! } });
-  const [ role ] = await prisma.role.findMany({ where: { type: 'client' } });
+  const admin = await prisma333.user.findUnique({ where: { email: process.env.ADMIN_EMAIL! } });
+  const [ role ] = await prisma333.role.findMany({ where: { type: 'client' } });
 
   for (const data of fakeData) {
     const randomPricingIndex = Math.floor(Math.random() * 2);
     const randomCreationDateIndex = Math.floor(Math.random() * 3);
 
-    const [ pricing ] = await prisma.pricing.findMany({ where: { pricing_name: pricingName[randomPricingIndex] } });
+    const [ pricing ] = await prisma333.pricing.findMany({ where: { pricing_name: pricingName[randomPricingIndex] } });
     const userCreationDate = fakeUserCreationDates[randomCreationDateIndex];
 
     const validTo = Time.add(new Date(userCreationDate), pricing.duration);
@@ -30,7 +30,7 @@ async function main() {
     const subscriptionId = ID.generate().value;
 
 
-    await prisma.user.create({
+    await prisma333.user.create({
       data: {
         id,
         username: data.username,
@@ -110,7 +110,7 @@ async function main() {
       const subscriptionExpirationDate = Time.add(new Date(fakeNow), pricing.duration);
 
       if (Time.before(Time.now(), subscriptionExpirationDate)) {
-        await prisma.subscription.create({
+        await prisma333.subscription.create({
           data: {
             id: ID.generate().value,
             pricing_id: pricing!.id,
@@ -139,7 +139,7 @@ async function main() {
         break;
       }
 
-      await prisma.subscription.create({
+      await prisma333.subscription.create({
         data: {
           id: ID.generate().value,
           pricing_id: pricing!.id,
@@ -194,5 +194,5 @@ main()
     process.exit(1)
   })
   .finally(async () => {
-    await prisma.$disconnect()
-  })
+    await prisma333.$disconnect()
+  })*/
