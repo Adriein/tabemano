@@ -146,25 +146,7 @@ export default class App {
   private bindControllers(): void {
     console.log(chalk.blue('> Binding controllers...'));
 
-    const dirPath = process.env.NODE_ENV === 'dev' ? `${process.cwd()}/src` : `${process.cwd()}/../src`;
-    const tree = new DirectoryTree(dirPath);
-
-    const isInsideFolderCalledControllersRegex = new RegExp('(?<=/Controllers).*?(?=.ts)');
-
-    tree.crawl((path: string) => {
-      const spliced = path.split('/');
-
-      const isController = spliced[spliced.length - 1].includes('Controller');
-      if (
-        path.includes('Controller') &&
-        !fs.lstatSync(path).isDirectory() &&
-        isInsideFolderCalledControllersRegex.test(path) &&
-        isController
-      ) {
-        console.log(path)
-        import(path);
-      }
-    });
+    ExplorerService.bindControllers();
   }
 }
 
