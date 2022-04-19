@@ -1,4 +1,6 @@
 import { SignInQuery } from "Authorization/Application/SignIn/SignInQuery";
+import { SignInResponse } from "Authorization/Application/SignIn/SignInResponse";
+import { SignInApiResponse } from "Authorization/Infrastructure/Controllers/SignIn/SignInApiResponse";
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { BaseController } from "Shared/Infrastructure/BaseController";
@@ -8,17 +10,16 @@ import { post } from "Shared/Infrastructure/Decorators/routes";
 @Controller()
 export class SignInController extends BaseController {
   @post('/signin')
-  public async signIn(req: Request, res: Response<any>, next: NextFunction): Promise<void> {
+  public async signIn(req: Request, res: Response<SignInApiResponse>, next: NextFunction): Promise<void> {
     try {
-      const command = SignInQuery.fromJson(req.body);
+      const query = SignInQuery.fromJson(req.body);
 
-      await this.commandBus.dispatch(command);
-      //const auth = await this.queryBus.ask<Auth>(new SigninQuery(email, password));
+      const response = await this.queryBus.ask<SignInResponse>(query);
 
-      /*const userJwt = jwt.sign(
+      const userJwt = jwt.sign(
         {
-          id: auth.id().value,
-          username: auth.name(),
+          id: response.id,
+          username: response.name,
         },
         process.env.JWT_KEY!
       );
@@ -27,7 +28,7 @@ export class SignInController extends BaseController {
         jwt: userJwt,
       };
 
-      res.status(200).send({ id: auth.id().value, username: auth.name() });*/
+      res.status(200).send({ id: response.id, username: response.name });
     } catch (error) {
       next(error);
     }

@@ -20,15 +20,15 @@ export class Auth extends AggregateRoot {
     return this._name;
   }
 
-  public email(): string {
-    return this._email.value;
+  public email(): Email {
+    return this._email;
   }
 
-  public password(): string {
-    return this._password.value;
+  public password(): Password {
+    return this._password;
   }
 
-  public async suppliedValidPassword(supplied: Password): Promise<void> {
+  public async isValidPassword(supplied: Password): Promise<void> {
     const valid = await this.crypto.compare(this._password.value, supplied.value);
 
     if(!valid) {
