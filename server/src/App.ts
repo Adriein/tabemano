@@ -3,6 +3,7 @@ import 'reflect-metadata';
 import express from 'express';
 import cookieSession from 'cookie-session';
 import chalk from 'chalk';
+import * as fs from "fs";
 import path from 'path';
 import { errorHandler } from 'Shared/Infrastructure/Middlewares';
 import Database from 'Shared/Infrastructure/Data/Database';
@@ -145,11 +146,22 @@ export default class App {
   private bindControllers(): void {
     console.log(chalk.blue('> Binding controllers...'));
 
-    const dirPath = process.env.NODE_ENV === 'dev'? `${process.cwd()}/src` : `${process.cwd()}/../src`;
+    const dirPath = process.env.NODE_ENV === 'dev' ? `${process.cwd()}/src` : `${process.cwd()}/../src`;
     const tree = new DirectoryTree(dirPath);
 
+    const isInsideFolderCalledControllersRegex = new RegExp('(?<=/Controllers).*?(?=.ts)');
+
     tree.crawl((path: string) => {
-      if(path.includes('Controller')) {
+      const spliced = path.split('/');
+
+      const isController = spliced[spliced.length - 1].includes('Controller');
+      if (
+        path.includes('Controller') &&
+        !fs.lstatSync(path).isDirectory() &&
+        isInsideFolderCalledControllersRegex.test(path) &&
+        isController
+      ) {
+        console.log(path)
         import(path);
       }
     });
