@@ -1,5 +1,7 @@
 import chalk from 'chalk';
 import { PrismaClient } from "@prisma/client";
+import { Left } from "Shared/Domain/Entities/Left";
+import { Either } from "Shared/Domain/types";
 
 export default class Database {
   private static _instance: Database;
@@ -41,5 +43,15 @@ export default class Database {
 
   public connection(): PrismaClient {
     return this.prismaClient!;
+  }
+
+  public async execute<T>(fn: (connection: PrismaClient) => Promise<Either<Error, T>>): Promise<Either<Error, T>> {
+    try {
+      return fn(this.connection());
+    } catch (error: any) {
+      return Left.error(error)
+    } finally {
+      this.connection().$disconnect();
+    }
   }
 }
