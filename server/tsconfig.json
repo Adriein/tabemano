@@ -10,7 +10,8 @@
     "baseUrl": ".",
     "paths": {
       "Shared/*": ["./src/Shared/*"],
-      "Authorization/*": ["./src/Authorization/*", "./src/Authorization"]
+      "Authorization/*": ["./src/Authorization/*", "./src/Authorization"],
+      "Backoffice/*": ["./src/Backoffice/*", "./src/Backoffice"]
     }
   },
   "include": ["src"],

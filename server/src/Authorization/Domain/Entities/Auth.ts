@@ -28,10 +28,10 @@ export class Auth extends AggregateRoot {
     return this._password;
   }
 
-  public async isValidPassword(supplied: Password): Promise<void> {
+  public async checkIsAValidPassword(supplied: Password): Promise<void> {
     const valid = await this.crypto.compare(this._password.value, supplied.value);
 
-    if(!valid) {
+    if (!valid) {
       throw new NotAuthorizedError();
     }
   }

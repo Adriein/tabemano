@@ -1,5 +1,6 @@
 import { SignInQuery } from "Authorization/Application/SignIn/SignInQuery";
 import { SignInResponse } from "Authorization/Application/SignIn/SignInResponse";
+import { Auth } from "Authorization/Domain/Entities/Auth";
 import { AuthFilter } from "Authorization/Domain/Entities/AuthFilter";
 import { IAuthRepository } from "Authorization/Domain/Entities/IAuthRepository";
 import { QueryHandler } from "Shared/Domain/Decorators/QueryHandler.decorator";
@@ -15,20 +16,24 @@ export class SignInQueryHandler implements IQueryHandler<SignInResponse> {
     const email = new Email(command.email);
     const password = new Password(command.password);
 
+    const auth = await this.findUser(email);
+
+    await auth.checkIsAValidPassword(password);
+
+    return SignInResponse.fromDomain(auth);
+  }
+
+  private async findUser(email: Email): Promise<Auth> {
     const filter = new AuthFilter();
 
     filter.withEmail(email);
 
     const result = await this.repository.find(filter);
 
-    if(result.isError()) {
+    if (result.isError()) {
       throw result.value;
     }
 
-    const auth = result.value[0];
-
-    await auth.isValidPassword(password);
-
-    return SignInResponse.fromDomain(auth);
+    return result.value[0];
   }
 }
