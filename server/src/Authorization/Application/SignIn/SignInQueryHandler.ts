@@ -28,12 +28,12 @@ export class SignInQueryHandler implements IQueryHandler<SignInResponse> {
 
     filter.withEmail(email);
 
-    const result = await this.repository.find(filter);
+    const result = await this.repository.findOne(filter);
 
     if (result.isError()) {
       throw result.value;
     }
 
-    return result.value[0];
+    return result.value;
   }
 }

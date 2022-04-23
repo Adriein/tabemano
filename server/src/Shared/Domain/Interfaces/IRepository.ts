@@ -1,9 +1,8 @@
-import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Either } from "../types";
 import { Filter } from "../Entities/Filter";
 
 export interface IRepository<T> {
-  findOne(id: ID): Promise<Either<Error, T>>;
+  findOne(filter: Filter): Promise<Either<Error, T>>;
 
   find(filter: Filter): Promise<Either<Error, T[]>>;
 

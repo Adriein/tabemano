@@ -1,5 +1,6 @@
 import { SignInQuery } from "Authorization/Application/SignIn/SignInQuery";
 import { SignInResponse } from "Authorization/Application/SignIn/SignInResponse";
+import { SignInApiRequest } from "Authorization/Infrastructure/Controllers/SignIn/SignInApiRequest";
 import { SignInApiResponse } from "Authorization/Infrastructure/Controllers/SignIn/SignInApiResponse";
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
@@ -10,7 +11,11 @@ import { post } from "Shared/Infrastructure/Decorators/routes";
 @Controller()
 export class SignInController extends BaseController {
   @post('/signin')
-  public async signIn(req: Request, res: Response<SignInApiResponse>, next: NextFunction): Promise<void> {
+  public async signIn(
+    req: Request<{}, {}, SignInApiRequest>,
+    res: Response<SignInApiResponse>,
+    next: NextFunction
+  ): Promise<void> {
     try {
       const query = SignInQuery.fromJson(req.body);
 

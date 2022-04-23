@@ -1,7 +1,8 @@
+import { RegisterTenantApiRequest } from "Authorization/Infrastructure/Controllers/RegisterTenant/RegisterTenantApiRequest";
 import { ICommand } from "Shared/Domain/Interfaces/ICommand";
 
 export class RegisterTenantCommand implements ICommand {
-  public static fromJson(json: any): RegisterTenantCommand {
+  public static fromJson(json: RegisterTenantApiRequest): RegisterTenantCommand {
     return new RegisterTenantCommand(json.name, json.email, json.password);
   }
 

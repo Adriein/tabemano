@@ -3,6 +3,10 @@ import { DateFormatError } from "../Error/DateFormatError";
 import { Time } from "../../Infrastructure/Helper/Time";
 
 export class DateVo extends ValueObject {
+  public static now(): DateVo {
+    return new DateVo(new Date());
+  }
+
   private readonly _date: Date;
   private regex = new RegExp(
     '([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})'

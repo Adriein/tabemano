@@ -1,7 +1,8 @@
+import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { ID } from "../Vo/Id.vo";
 
 export abstract class DomainEvent {
-  public abstract readonly aggregateId: ID;
+  protected abstract readonly _aggregateId: ID;
 
-  public readonly dateOccurred = new Date().toUTCString();
+  protected readonly _dateOccurred = DateVo.now();
 }
