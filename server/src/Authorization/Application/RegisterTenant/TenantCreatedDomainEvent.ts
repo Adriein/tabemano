@@ -8,14 +8,15 @@ import { Password } from "Shared/Domain/Vo/Password.vo";
 
 export class TenantCreatedDomainEvent extends DomainEvent {
   public static fromEntity(auth: Auth): TenantCreatedDomainEvent {
-    return new TenantCreatedDomainEvent(auth.id(), auth.name(), auth.email(), auth.password());
+    return new TenantCreatedDomainEvent(auth.id(), auth.name(), auth.email(), auth.password(), auth.roleId());
   }
 
   constructor(
     protected readonly _aggregateId: ID,
     private readonly _name: Name,
     private readonly _email: Email,
-    private readonly _password: Password
+    private readonly _password: Password,
+    private readonly _roleId: ID
   ) {
     super();
   }
@@ -38,5 +39,9 @@ export class TenantCreatedDomainEvent extends DomainEvent {
 
   public get password(): Password {
     return this._password;
+  }
+
+  public get roleId(): ID {
+    return this._roleId;
   }
 }

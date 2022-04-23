@@ -5,6 +5,7 @@ export abstract class PrismaAdapter<T> {
 
   protected merge(filter: T): void {
     merge(this.prismaFilter, filter);
+    console.log(this.prismaFilter)
   }
 
   protected pagination(page: number, quantity: number) {

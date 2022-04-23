@@ -1,7 +1,9 @@
 import { RegisterTenantCommand } from "Authorization/Application/RegisterTenant/RegisterTenantCommand";
+import { Roles } from "Authorization/Domain/constants";
 import { Auth } from "Authorization/Domain/Entities/Auth";
 import { AuthFilter } from "Authorization/Domain/Entities/AuthFilter";
 import { IAuthRepository } from "Authorization/Domain/Entities/IAuthRepository";
+import { Role } from "Authorization/Domain/Entities/Role";
 import { TenantAlreadyExistsError } from "Authorization/Domain/Error/TenantAlreadyExistsError";
 import { Name } from "Shared/Domain/Vo/Name.vo";
 import { CommandHandler } from "Shared/Domain/Decorators/CommandHandler.decorator";
@@ -10,6 +12,7 @@ import { DomainEventsManager } from "Shared/Domain/Entities/DomainEventsManager"
 import { ICommandHandler } from "Shared/Domain/Interfaces/ICommandHandler";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { Password } from "Shared/Domain/Vo/Password.vo";
+import { RoleType } from "Shared/Domain/Vo/RoleType";
 
 @CommandHandler(RegisterTenantCommand)
 export class RegisterTenantCommandHandler implements ICommandHandler {
@@ -20,6 +23,7 @@ export class RegisterTenantCommandHandler implements ICommandHandler {
     const name = new Name(command.name);
     const email = new Email(command.email);
     const password = new Password(command.password);
+    const roleType = new RoleType(Roles.TENANT);
 
     const tenant = await this.findTenant(email);
 
@@ -27,7 +31,9 @@ export class RegisterTenantCommandHandler implements ICommandHandler {
       throw new TenantAlreadyExistsError();
     }
 
-    const auth = Auth.build(name, email, password);
+    const role = Role.build(roleType);
+
+    const auth = Auth.build(name, email, password, role);
 
     await DomainEventsManager.publishEvents(auth.id());
   }

@@ -30,7 +30,6 @@ export default class ExplorerService {
       isInsideFolderCalledControllersRegex.test(path) &&
       isController
     ) {
-      console.log(path)
       import(path);
     }
   }

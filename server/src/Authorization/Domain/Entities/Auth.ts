@@ -1,3 +1,4 @@
+import { Role } from "Authorization/Domain/Entities/Role";
 import { NotAuthorizedError } from "Authorization/Domain/Error/NotAuthorizedError";
 import { Name } from "Shared/Domain/Vo/Name.vo";
 import { TenantCreatedDomainEvent } from "Authorization/Application/RegisterTenant/TenantCreatedDomainEvent";
@@ -10,15 +11,21 @@ import { Password } from "Shared/Domain/Vo/Password.vo";
 export class Auth extends AggregateRoot {
   private crypto: CryptoService = new CryptoService();
 
-  public static build(name: Name, email: Email, password: Password): Auth {
-    const auth = new Auth(ID.generate(), name, email, password);
+  public static build(name: Name, email: Email, password: Password, role: Role): Auth {
+    const auth = new Auth(ID.generate(), name, email, password, role);
     const event = TenantCreatedDomainEvent.fromEntity(auth);
     auth.addEvent(event);
 
     return auth;
   }
 
-  constructor(_id: ID, private _name: Name, private _email: Email, private _password: Password) {
+  constructor(
+    _id: ID,
+    private readonly _name: Name,
+    private readonly _email: Email,
+    private readonly _password: Password,
+    private readonly _role: Role
+  ) {
     super(_id);
   }
 
@@ -32,6 +39,10 @@ export class Auth extends AggregateRoot {
 
   public password(): Password {
     return this._password;
+  }
+
+  public roleId(): ID {
+    return this._role.id();
   }
 
   public async checkIsAValidPassword(supplied: Password): Promise<void> {
