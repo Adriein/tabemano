@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 
-export function Log(level: string = 'info') {
+export function Log() {
+  const level: string = process.env.NODE_ENV === 'pro' ? 'info' : 'debug';
   return function (target: Object, key: string, desc: PropertyDescriptor) {
     const fn = desc.value;
 

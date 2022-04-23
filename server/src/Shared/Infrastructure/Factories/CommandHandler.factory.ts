@@ -1,12 +1,13 @@
+import { RegisterTenantCommand } from "Authorization/Application/RegisterTenant/RegisterTenantCommand";
+import { RegisterTenantCommandHandler } from "Authorization/Application/RegisterTenant/RegisterTenantCommandHandler";
+import { PgAuthRepository } from "Authorization/Infrastructure/Data/Repositories/PgAuthRepository";
 import { ICommandHandler } from "../../Domain/Interfaces/ICommandHandler";
 import { ConstructorFunc } from "../../Domain/types";
-import { QueryBus } from "../Bus/QueryBus";
-
 
 export default class CommandHandlerFactory {
   private handlers: Map<string, ICommandHandler> = new Map();
 
-
+  private authRepository = new PgAuthRepository();
 
   constructor() {
     this.register();
@@ -23,7 +24,8 @@ export default class CommandHandlerFactory {
   }
 
   private register() {
-
+    //Authentication
+    this.handlers.set(RegisterTenantCommand.name, new RegisterTenantCommandHandler(this.authRepository))
   }
 
   public getContainer(): Map<string, ICommandHandler> {

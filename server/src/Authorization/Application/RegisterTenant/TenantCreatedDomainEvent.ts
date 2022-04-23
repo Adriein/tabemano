@@ -1,5 +1,5 @@
 import { Auth } from "Authorization/Domain/Entities/Auth";
-import { Name } from "Authorization/Domain/Vo/Name.vo";
+import { Name } from "Shared/Domain/Vo/Name.vo";
 import { DomainEvent } from "Shared/Domain/Entities/DomainEvent";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { Email } from "Shared/Domain/Vo/Email.vo";

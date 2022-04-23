@@ -1,6 +1,6 @@
 import { NotAuthorizedError } from "Authorization/Domain/Error/NotAuthorizedError";
-import { Name } from "Authorization/Domain/Vo/Name.vo";
-import { TenantCreatedDomainEvent } from "Backoffice/Tenant/Application/CreateTenant/TenantCreatedDomainEvent";
+import { Name } from "Shared/Domain/Vo/Name.vo";
+import { TenantCreatedDomainEvent } from "Authorization/Application/RegisterTenant/TenantCreatedDomainEvent";
 import { AggregateRoot } from "Shared/Domain/Entities/AggregateRoot";
 import { CryptoService } from "Shared/Domain/Services/CryptoService";
 import { Email } from "Shared/Domain/Vo/Email.vo";

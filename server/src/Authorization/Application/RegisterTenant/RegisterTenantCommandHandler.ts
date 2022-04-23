@@ -3,8 +3,9 @@ import { Auth } from "Authorization/Domain/Entities/Auth";
 import { AuthFilter } from "Authorization/Domain/Entities/AuthFilter";
 import { IAuthRepository } from "Authorization/Domain/Entities/IAuthRepository";
 import { TenantAlreadyExistsError } from "Authorization/Domain/Error/TenantAlreadyExistsError";
-import { Name } from "Authorization/Domain/Vo/Name.vo";
+import { Name } from "Shared/Domain/Vo/Name.vo";
 import { CommandHandler } from "Shared/Domain/Decorators/CommandHandler.decorator";
+import { Log } from "Shared/Domain/Decorators/Log";
 import { DomainEventsManager } from "Shared/Domain/Entities/DomainEventsManager";
 import { ICommandHandler } from "Shared/Domain/Interfaces/ICommandHandler";
 import { Email } from "Shared/Domain/Vo/Email.vo";
@@ -14,6 +15,7 @@ import { Password } from "Shared/Domain/Vo/Password.vo";
 export class RegisterTenantCommandHandler implements ICommandHandler {
   constructor(private readonly repository: IAuthRepository) {}
 
+  @Log()
   public async handle(command: RegisterTenantCommand): Promise<void> {
     const name = new Name(command.name);
     const email = new Email(command.email);
