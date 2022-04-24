@@ -6,6 +6,7 @@ import { Roles } from "Shared/Domain/constants";
 import { DomainEventsHandler } from "Shared/Domain/Decorators/DomainEventsHandler.decorator";
 import { Log } from "Shared/Domain/Decorators/Log";
 import { IDomainEventHandler } from "Shared/Domain/Interfaces/IDomainEventHandler";
+import { ID } from "Shared/Domain/Vo/Id.vo";
 import { RoleType } from "Shared/Domain/Vo/RoleType";
 
 @DomainEventsHandler(TenantCreatedDomainEvent)
@@ -19,6 +20,8 @@ export class CreateTenantDomainEventHandler implements IDomainEventHandler {
     const admin = await this.findAdmin();
 
     const tenant = Tenant.build(name, password, email, admin.id(), roleId);
+
+    const subscription = tenant.createSubscription(ID.generate(), 40);
 
     await this.repository.save(tenant);
   }
