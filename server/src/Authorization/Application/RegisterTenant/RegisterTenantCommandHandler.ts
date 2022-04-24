@@ -1,10 +1,10 @@
 import { RegisterTenantCommand } from "Authorization/Application/RegisterTenant/RegisterTenantCommand";
-import { Roles } from "Authorization/Domain/constants";
 import { Auth } from "Authorization/Domain/Entities/Auth";
 import { AuthFilter } from "Authorization/Domain/Entities/AuthFilter";
 import { IAuthRepository } from "Authorization/Domain/Entities/IAuthRepository";
 import { Role } from "Authorization/Domain/Entities/Role";
 import { TenantAlreadyExistsError } from "Authorization/Domain/Error/TenantAlreadyExistsError";
+import { Roles } from "Shared/Domain/constants";
 import { Name } from "Shared/Domain/Vo/Name.vo";
 import { CommandHandler } from "Shared/Domain/Decorators/CommandHandler.decorator";
 import { Log } from "Shared/Domain/Decorators/Log";

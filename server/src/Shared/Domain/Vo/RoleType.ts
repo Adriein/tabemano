@@ -1,4 +1,4 @@
-import { Roles } from "Authorization/Domain/constants";
+import { Roles } from "Shared/Domain/constants";
 import { ValueObject } from "Shared/Domain/Vo/ValueObject";
 import { z } from "zod";
 

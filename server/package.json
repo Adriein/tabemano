@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon"
+    "start:dev": "nodemon",
+    "db:seed": "ts-node ./prisma/seed.ts",
+    "db:populate": "ts-node ./prisma/fake-data-seed.ts",
+    "db:migrate": "prisma migrate dev",
+    "db:schema": "prisma generate"
   },
   "keywords": [],
   "author": "",

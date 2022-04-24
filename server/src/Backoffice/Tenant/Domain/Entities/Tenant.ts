@@ -1,5 +1,7 @@
+import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";
+import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { Name } from "Shared/Domain/Vo/Name.vo";
-import { Config } from "Backoffice/Shared/Domain/Config";
+import { Config } from "Backoffice/Shared/Domain/Config/Config";
 import { AggregateRoot } from "Shared/Domain/Entities/AggregateRoot";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
@@ -66,6 +68,10 @@ export class Tenant extends AggregateRoot {
 
   public sendWarnings = (): boolean => {
     return this._config.sendWarnings();
+  }
+
+  public createSubscription(pricingId: ID, pricingDuration: number): Subscription {
+    return Subscription.build(this.id(), pricingId, DateVo.now(), pricingDuration);
   }
 
   public changePersonalInfo(name: Name, email: Email): void {

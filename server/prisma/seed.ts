@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-import {CryptoService} from "../src/Shared/Domain/Services/CryptoService";
+import { CryptoService } from "../src/Shared/Domain/Services/CryptoService";
 import { ID } from "../src/Shared/Domain/Vo/Id.vo";
 import { Time } from "../src/Shared/Infrastructure/Helper/Time";
 
@@ -11,17 +11,17 @@ async function main() {
   const id = ID.generate().value;
   const password = await crypto.hash(process.env.ADMIN_PASSWORD!);
 
-  const pricing = await prisma.pricing.findMany({
+  const pricing = await prisma.ta_pricing.findMany({
     where: {
       OR: [
         {
-          pricing_name: 'yearly'
+          pr_name: 'yearly'
         },
         {
-          pricing_name: 'quarterly'
+          pr_name: 'quarterly'
         },
         {
-          pricing_name: 'monthly'
+          pr_name: 'monthly'
         },
       ],
     },
@@ -31,106 +31,106 @@ async function main() {
     throw new Error('No seeding needed');
   }
 
-  const clientRole = await prisma.role.create({
+  const clientRole = await prisma.ta_role.create({
     data: {
-      id: ID.generate().value,
-      type: 'client',
-      created_at: new Date(),
-      updated_at: new Date(),
+      ro_id: ID.generate().value,
+      ro_type: 'client',
+      ro_created_at: new Date(),
+      ro_updated_at: new Date(),
     }
   });
 
-  const tenantRole = await prisma.role.create({
+  const tenantRole = await prisma.ta_role.create({
     data: {
-      id: ID.generate().value,
-      type: 'tenant',
-      created_at: new Date(),
-      updated_at: new Date(),
+      ro_id: ID.generate().value,
+      ro_type: 'tenant',
+      ro_created_at: new Date(),
+      ro_updated_at: new Date(),
     }
   });
 
-  const adminRole = await prisma.role.create({
+  const adminRole = await prisma.ta_role.create({
     data: {
-      id: ID.generate().value,
-      type: 'admin',
-      created_at: new Date(),
-      updated_at: new Date(),
+      ro_id: ID.generate().value,
+      ro_type: 'admin',
+      ro_created_at: new Date(),
+      ro_updated_at: new Date(),
     }
   });
 
-  const yearly = await prisma.pricing.create({
+  const yearly = await prisma.ta_pricing.create({
     data: {
-      id: ID.generate().value,
-      pricing_name: 'yearly',
-      amount: 1000,
-      duration: 365,
-      user_id: id,
-      created_at: new Date(),
-      updated_at: new Date(),
+      pr_id: ID.generate().value,
+      pr_name: 'yearly',
+      pr_price: 1000,
+      pr_duration: 365,
+      pr_tenant_id: id,
+      pr_created_at: new Date(),
+      pr_updated_at: new Date(),
     }
   });
 
-  const monthly = await prisma.pricing.create({
+  const monthly = await prisma.ta_pricing.create({
     data: {
-      id: ID.generate().value,
-      pricing_name: 'monthly',
-      amount: 50,
-      duration: 30,
-      user_id: id,
-      created_at: new Date(),
-      updated_at: new Date(),
+      pr_id: ID.generate().value,
+      pr_name: 'monthly',
+      pr_price: 50,
+      pr_duration: 30,
+      pr_tenant_id: id,
+      pr_created_at: new Date(),
+      pr_updated_at: new Date(),
     }
   });
 
-  const quarterly = await prisma.pricing.create({
+  const quarterly = await prisma.ta_pricing.create({
     data: {
-      id: ID.generate().value,
-      pricing_name: 'quarterly',
-      amount: 150,
-      duration: 90,
-      user_id: id,
-      created_at: new Date(),
-      updated_at: new Date(),
+      pr_id: ID.generate().value,
+      pr_name: 'quarterly',
+      pr_price: 150,
+      pr_duration: 90,
+      pr_tenant_id: id,
+      pr_created_at: new Date(),
+      pr_updated_at: new Date(),
     }
   });
 
   const validTo = Time.add(new Date(), 365);
 
-  const user = await prisma.user.create({
+  const user = await prisma.ta_user.create({
     data: {
-      id,
-      username: 'Adria Claret',
-      email: process.env.ADMIN_EMAIL!,
-      password: password,
-      owner_id: id,
-      active: true,
-      created_at: new Date(),
-      updated_at: new Date(),
-      role: {
+      us_id: id,
+      us_name: 'Adria Claret',
+      us_email: process.env.ADMIN_EMAIL!,
+      us_password: password,
+      us_tenant_id: id,
+      us_is_active: true,
+      us_created_at: new Date(),
+      us_updated_at: new Date(),
+      us_role: {
         connect: {
-          id: adminRole.id,
+          ro_id: adminRole.ro_id,
         }
       },
-      config: {
+      us_config: {
         create: {
-          id: ID.generate().value,
-          send_warnings: true,
-          send_notifications: true,
-          language: 'ES',
-          created_at: new Date(),
-          updated_at: new Date()
+          co_id: ID.generate().value,
+          co_send_warnings: true,
+          co_send_notifications: true,
+          co_language: 'ES',
+          co_created_at: new Date(),
+          co_updated_at: new Date()
         }
       },
-      subscriptions: {
+      us_subscriptions: {
         create: {
-          id: ID.generate().value,
-          pricing_id: yearly.id,
-          active: true,
-          expired: false,
-          payment_date: new Date(),
-          valid_to: validTo,
-          created_at: new Date(),
-          updated_at: new Date()
+          su_id: ID.generate().value,
+          su_pricing_id: yearly.pr_id,
+          su_is_active: true,
+          su_is_expired: false,
+          su_payment_date: new Date(),
+          su_valid_to: validTo,
+          su_created_at: new Date(),
+          su_updated_at: new Date()
         }
       }
     }
@@ -161,16 +161,16 @@ async function main() {
 
   for (const entity in ENTITIES) {
     for (const detail of ENTITIES[entity]) {
-      await prisma.app_filter.create(
+      await prisma.ta_app_filter.create(
         {
           data: {
-            id: ID.generate().value,
-            entity: entity,
-            field: detail.field,
-            type: detail.type,
-            tenant_id: id,
-            created_at: new Date(),
-            updated_at: new Date()
+            af_id: ID.generate().value,
+            af_entity: entity,
+            af_field: detail.field,
+            af_type: detail.type,
+            af_tenant_id: id,
+            af_created_at: new Date(),
+            af_updated_at: new Date()
           }
         }
       );
