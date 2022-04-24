@@ -1,9 +1,5 @@
 import { TenantCreatedDomainEvent } from "Authorization/Application/RegisterTenant/TenantCreatedDomainEvent";
-import { FindPricingQuery } from "Backoffice/Pricing/Application/FindPricing/FindPricingQuery";
-import { FindPricingResponse } from "Backoffice/Pricing/Application/FindPricing/FindPricingResponse";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
-import { PricingVo } from "Backoffice/Shared/Domain/Vo/PricingVo";
-import { YEARLY_PRICING } from "Backoffice/Tenant/Domain/constants";
 import { ITenantRepository } from "Backoffice/Tenant/Domain/Entities/ITenantRepository";
 import { Tenant } from "Backoffice/Tenant/Domain/Entities/Tenant";
 import { Roles } from "Shared/Domain/constants";
