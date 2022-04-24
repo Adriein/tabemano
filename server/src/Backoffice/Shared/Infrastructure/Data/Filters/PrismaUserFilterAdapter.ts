@@ -31,7 +31,15 @@ export class PrismaUserFilterAdapter extends PrismaAdapter<Prisma.ta_userFindMan
       this.add(this.pagination(pagination))
     }
 
-    this.add({ include: { us_config: true, us_app_config: true, us_role: true, us_subscriptions: true } })
+    this.add({
+      include: {
+        us_config: true,
+        us_app_config: true,
+        us_role: true,
+        us_subscriptions: true,
+        us_pricing: true
+      }
+    })
 
     return this.prismaFilter;
   }

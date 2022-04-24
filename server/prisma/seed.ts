@@ -58,44 +58,6 @@ async function main() {
     }
   });
 
-  const yearly = await prisma.ta_pricing.create({
-    data: {
-      pr_id: ID.generate().value,
-      pr_name: 'yearly',
-      pr_price: 1000,
-      pr_duration: 365,
-      pr_tenant_id: id,
-      pr_created_at: new Date(),
-      pr_updated_at: new Date(),
-    }
-  });
-
-  const monthly = await prisma.ta_pricing.create({
-    data: {
-      pr_id: ID.generate().value,
-      pr_name: 'monthly',
-      pr_price: 50,
-      pr_duration: 30,
-      pr_tenant_id: id,
-      pr_created_at: new Date(),
-      pr_updated_at: new Date(),
-    }
-  });
-
-  const quarterly = await prisma.ta_pricing.create({
-    data: {
-      pr_id: ID.generate().value,
-      pr_name: 'quarterly',
-      pr_price: 150,
-      pr_duration: 90,
-      pr_tenant_id: id,
-      pr_created_at: new Date(),
-      pr_updated_at: new Date(),
-    }
-  });
-
-  const validTo = Time.add(new Date(), 365);
-
   const user = await prisma.ta_user.create({
     data: {
       us_id: id,
@@ -120,19 +82,79 @@ async function main() {
           co_created_at: new Date(),
           co_updated_at: new Date()
         }
-      },
-      us_subscriptions: {
-        create: {
-          su_id: ID.generate().value,
-          su_pricing_id: yearly.pr_id,
-          su_is_active: true,
-          su_is_expired: false,
-          su_payment_date: new Date(),
-          su_valid_to: validTo,
-          su_created_at: new Date(),
-          su_updated_at: new Date()
-        }
       }
+    }
+  });
+
+  const yearly = await prisma.ta_pricing.create({
+    data: {
+      pr_id: ID.generate().value,
+      pr_name: 'yearly',
+      pr_price: 1000,
+      pr_duration: 365,
+      pr_tenant: {
+        connect: {
+          us_id: id
+        }
+      },
+      pr_created_at: new Date(),
+      pr_updated_at: new Date(),
+    }
+  });
+
+  const monthly = await prisma.ta_pricing.create({
+    data: {
+      pr_id: ID.generate().value,
+      pr_name: 'monthly',
+      pr_price: 50,
+      pr_duration: 30,
+      pr_tenant: {
+        connect: {
+          us_id: id
+        }
+      },
+      pr_created_at: new Date(),
+      pr_updated_at: new Date(),
+    }
+  });
+
+  const quarterly = await prisma.ta_pricing.create({
+    data: {
+      pr_id: ID.generate().value,
+      pr_name: 'quarterly',
+      pr_price: 150,
+      pr_duration: 90,
+      pr_tenant: {
+        connect: {
+          us_id: id
+        }
+      },
+      pr_created_at: new Date(),
+      pr_updated_at: new Date(),
+    }
+  });
+
+  const validTo = Time.add(new Date(), 365);
+
+  const subscription = await prisma.ta_subscription.create({
+    data: {
+      su_id: ID.generate().value,
+      su_is_active: true,
+      su_is_expired: false,
+      su_payment_date: new Date(),
+      su_valid_to: validTo,
+      su_user: {
+        connect: {
+          us_id: id
+        }
+      },
+      su_pricing: {
+        connect: {
+          pr_id: yearly.pr_id
+        }
+      },
+      su_created_at: new Date(),
+      su_updated_at: new Date()
     }
   });
 
@@ -178,7 +200,7 @@ async function main() {
 
   }
 
-  console.log({ yearly, monthly, quarterly, adminRole, clientRole, tenantRole, user })
+  console.log({ yearly, monthly, quarterly, adminRole, clientRole, tenantRole, user, subscription })
 }
 
 main()

@@ -20,6 +20,7 @@ model ta_user {
     us_role ta_role @relation(fields: [us_role_id], references: [ro_id])
     us_role_id String
     us_config ta_config?
+    us_pricing ta_pricing[]
     us_app_config ta_app_config?
     us_is_active Boolean
     us_created_at DateTime @db.Timestamp(0)
@@ -31,7 +32,8 @@ model ta_pricing {
     pr_name String
     pr_duration Int @db.SmallInt
     pr_price Int @db.SmallInt
-    pr_tenant_id String?
+    pr_tenant ta_user @relation(fields: [pr_tenant_id], references: [us_id])
+    pr_tenant_id String
     pr_subscriptions ta_subscription[]
     pr_created_at DateTime @db.Timestamp(0)
     pr_updated_at DateTime @db.Timestamp(0)

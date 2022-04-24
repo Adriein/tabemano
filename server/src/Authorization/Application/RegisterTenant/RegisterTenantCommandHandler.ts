@@ -25,12 +25,8 @@ export class RegisterTenantCommandHandler implements ICommandHandler {
     const password = new Password(command.password);
     const roleType = new RoleType(Roles.TENANT);
 
-    const tenant = await this.findTenant(email);
-
-    if (tenant) {
-      throw new TenantAlreadyExistsError();
-    }
-
+    await this.ensureTenantNotExists(email);
+    
     const role = Role.build(roleType);
 
     const auth = Auth.build(name, email, password, role);
@@ -38,16 +34,14 @@ export class RegisterTenantCommandHandler implements ICommandHandler {
     await DomainEventsManager.publishEvents(auth.id());
   }
 
-  private async findTenant(email: Email): Promise<Auth> {
+  private async ensureTenantNotExists(email: Email): Promise<void> {
     const filter = new AuthFilter();
     filter.withEmail(email);
 
     const result = await this.repository.findOne(filter);
 
-    if (result.isError()) {
-      throw result.value;
+    if (result.isOk()) {
+      throw new TenantAlreadyExistsError();
     }
-
-    return result.value;
   }
 }

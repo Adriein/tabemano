@@ -25,7 +25,7 @@ export default class CommandHandlerFactory {
 
   private register() {
     //Authentication
-    this.handlers.set(RegisterTenantCommand.name, new RegisterTenantCommandHandler(this.authRepository))
+    this.handlers.set(RegisterTenantCommand.name, new RegisterTenantCommandHandler(this.authRepository));
   }
 
   public getContainer(): Map<string, ICommandHandler> {

@@ -19,7 +19,7 @@ CREATE TABLE "ta_pricing" (
     "pr_name" TEXT NOT NULL,
     "pr_duration" SMALLINT NOT NULL,
     "pr_price" SMALLINT NOT NULL,
-    "pr_tenant_id" TEXT,
+    "pr_tenant_id" TEXT NOT NULL,
     "pr_created_at" TIMESTAMP(0) NOT NULL,
     "pr_updated_at" TIMESTAMP(0) NOT NULL,
 
@@ -113,6 +113,9 @@ CREATE UNIQUE INDEX "ta_app_config_ac_user_id_key" ON "ta_app_config"("ac_user_i
 
 -- AddForeignKey
 ALTER TABLE "ta_user" ADD CONSTRAINT "ta_user_us_role_id_fkey" FOREIGN KEY ("us_role_id") REFERENCES "ta_role"("ro_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ta_pricing" ADD CONSTRAINT "ta_pricing_pr_tenant_id_fkey" FOREIGN KEY ("pr_tenant_id") REFERENCES "ta_user"("us_id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ta_subscription" ADD CONSTRAINT "ta_subscription_su_user_id_fkey" FOREIGN KEY ("su_user_id") REFERENCES "ta_user"("us_id") ON DELETE RESTRICT ON UPDATE CASCADE;
