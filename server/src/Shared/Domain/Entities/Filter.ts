@@ -1,7 +1,7 @@
-export interface Filter {
-  setPage(page: number): this;
+import { Pagination } from "Shared/Domain/Entities/Pagination";
 
-  setQuantity(quantity: number): this;
+export interface Filter {
+  paginate(): Pagination;
 
   apply(): Map<string, any>;
 }

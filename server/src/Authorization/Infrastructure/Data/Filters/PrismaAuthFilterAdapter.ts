@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { AuthFilter } from "Authorization/Domain/Entities/AuthFilter";
+import { Pagination } from "Shared/Domain/Entities/Pagination";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { PrismaAdapter } from "Shared/Infrastructure/Data/PrismaAdapter";
 
@@ -11,20 +12,19 @@ export class PrismaAuthFilterAdapter extends PrismaAdapter<Prisma.ta_userFindMan
   public apply(): Prisma.ta_userFindManyArgs {
     const filters = this.filter.apply();
 
-    if (filters.has('email')) {
-      const email = filters.get('email') as Email;
+    if (filters.has(AuthFilter.EMAIL_FILTER)) {
+      const email = filters.get(AuthFilter.EMAIL_FILTER) as Email;
 
-      this.merge({ where: { us_email: email.value } });
+      this.add({ where: { us_email: email.value } });
     }
 
-    if (filters.has('page') && filters.has('quantity')) {
-      const page = filters.get('page') as number;
-      const quantity = filters.get('quantity') as number;
+    if (filters.has(Pagination.PAGINATION_FILTER)) {
+      const pagination = filters.get(Pagination.PAGINATION_FILTER);
 
-      this.merge(this.pagination(page, quantity))
+      this.add(this.pagination(pagination))
     }
 
-    this.merge({ include: { us_config: true, us_app_config: true, us_role: true, us_subscriptions: true } })
+    this.add({ include: { us_config: true, us_app_config: true, us_role: true, us_subscriptions: true } })
 
     return this.prismaFilter;
   }

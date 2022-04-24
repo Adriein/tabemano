@@ -4,7 +4,9 @@ import { AuthFilter } from "Authorization/Domain/Entities/AuthFilter";
 import { IAuthRepository } from "Authorization/Domain/Entities/IAuthRepository";
 import { PrismaAuthFilterAdapter } from "Authorization/Infrastructure/Data/Filters/PrismaAuthFilterAdapter";
 import { PgAuthMapper } from "Authorization/Infrastructure/Data/Mappers/PgAuthMapper";
+import { Left } from "Shared/Domain/Entities/Left";
 import { Right } from "Shared/Domain/Entities/Right";
+import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
 import { Either } from "Shared/Domain/types";
 import Database from "Shared/Infrastructure/Data/Database";
 
@@ -28,9 +30,15 @@ export class PgAuthRepository implements IAuthRepository {
 
   public async findOne(filter: AuthFilter): Promise<Either<Error, Auth>> {
     return await this.database.execute<Auth>(async (connection: PrismaClient) => {
+      filter.paginate().first();
+      
       const adapter = new PrismaAuthFilterAdapter(filter);
 
       const [ result ]: any = await connection.ta_user.findMany(adapter.apply());
+
+      if (!result) {
+        return Left.error(new RecordNotFoundError());
+      }
 
       return Right.success(this.mapper.toDomain(result))
     })

@@ -1,25 +1,24 @@
 import { Filter } from "Shared/Domain/Entities/Filter";
+import { Pagination } from "Shared/Domain/Entities/Pagination";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 
 export class AuthFilter implements Filter {
-  private data: Map<string, number | string | boolean | Email> = new Map();
+  public static EMAIL_FILTER = 'email';
+
+  private data: Map<string, any> = new Map();
 
   public withEmail(email: Email): this {
-    this.data.set('email', email);
+    this.data.set(AuthFilter.EMAIL_FILTER, email);
     return this;
   };
 
-  public setPage(page: number): this {
-    this.data.set('page', page);
-    return this;
+  public paginate(): Pagination {
+    const pagination = new Pagination();
+    this.data.set(Pagination.PAGINATION_FILTER, pagination);
+    return pagination;
   }
 
-  public setQuantity(quantity: number): this {
-    this.data.set('quantity', quantity);
-    return this;
-  }
-
-  public apply(): Map<string, number | string | boolean | Email> {
+  public apply(): Map<string, any> {
     return this.data;
   }
 }
