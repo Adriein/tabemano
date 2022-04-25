@@ -12,7 +12,7 @@ import { Password } from "Shared/Domain/Vo/Password.vo";
 export class Tenant extends User {
   public static build(name: Name, password: Password, email: Email, tenantId: ID, roleId: ID): Tenant {
     const config = Config.build(true, true);
-    const pricingCollection = Tenant.buildBaseTenantPricing();
+    const pricingCollection = Tenant.createBaseTenantPricing();
 
     return new Tenant(
       ID.generate(),
@@ -27,9 +27,9 @@ export class Tenant extends User {
     );
   }
 
-  private static buildBaseTenantPricing(): PricingVoCollection {
-    const quarterly = new PricingVo(ID.generate(), QUARTERLY_PRICING, 150, 90);
-    const monthly = new PricingVo(ID.generate(), MONTHLY_PRICING, 50, 30);
+  private static createBaseTenantPricing(): PricingVoCollection {
+    const quarterly = new PricingVo(QUARTERLY_PRICING, 150, 90);
+    const monthly = new PricingVo(MONTHLY_PRICING, 50, 30);
 
     return PricingVoCollection.build([ monthly, quarterly ]);
   }
