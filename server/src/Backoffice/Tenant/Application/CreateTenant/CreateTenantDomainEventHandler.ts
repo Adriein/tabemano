@@ -5,13 +5,14 @@ import { Tenant } from "Backoffice/Tenant/Domain/Entities/Tenant";
 import { Roles } from "Shared/Domain/constants";
 import { DomainEventsHandler } from "Shared/Domain/Decorators/DomainEventsHandler.decorator";
 import { Log } from "Shared/Domain/Decorators/Log";
+import { DomainEventsManager } from "Shared/Domain/Entities/DomainEventsManager";
 import { IDomainEventHandler } from "Shared/Domain/Interfaces/IDomainEventHandler";
 import { RoleType } from "Shared/Domain/Vo/RoleType";
 
 @DomainEventsHandler(TenantCreatedDomainEvent)
 export class CreateTenantDomainEventHandler implements IDomainEventHandler {
   constructor(
-    private readonly tenantRepository: ITenantRepository,
+    private readonly tenantRepository: ITenantRepository
   ) {}
 
   @Log()
@@ -20,15 +21,17 @@ export class CreateTenantDomainEventHandler implements IDomainEventHandler {
 
     const admin = await this.findAdmin();
 
-    const pricing = admin.getYearlyPricingVo();
+    const pricing = admin.getYearlyPricing();
 
     const tenant = Tenant.build(name, password, email, admin.id(), roleId);
 
-    const subscription = tenant.createSubscription(pricing.id, pricing.duration);
+    const subscription = tenant.createSubscription(pricing);
 
-    //await this.tenantRepository.save(tenant);
+    await this.tenantRepository.save(tenant);
 
     //await this.subscriptionRepository.save(subscription);
+
+    await DomainEventsManager.publishEvents(tenant.id())
   }
 
   private async findAdmin(): Promise<Tenant> {

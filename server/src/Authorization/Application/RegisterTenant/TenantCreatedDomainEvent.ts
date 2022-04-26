@@ -24,11 +24,7 @@ export class TenantCreatedDomainEvent extends DomainEvent {
   public get aggregateId(): ID {
     return this._aggregateId;
   }
-
-  public get dateOccurred(): DateVo {
-    return this._dateOccurred;
-  }
-
+  
   public get name(): Name {
     return this._name;
   }

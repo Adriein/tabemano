@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { Config } from "Backoffice/Shared/Domain/Config/Config";
-import { PricingVo } from "Backoffice/Shared/Domain/Vo/PricingVo";
-import { PricingVoCollection } from "Backoffice/Shared/Domain/Vo/PricingVoCollection";
+import { Pricing } from "Backoffice/Shared/Domain/Pricing/Pricing";
+import { PricingCollection } from "Backoffice/Shared/Domain/Pricing/PricingCollection";
 import { Tenant } from "Backoffice/Tenant/Domain/Entities/Tenant";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
@@ -29,11 +29,13 @@ export class PgTenantMapper {
       dataModel.us_config!.co_send_warnings,
     );
 
-    const pricingVoList = dataModel.us_pricing.map((pricingDataModel) => new PricingVo(
+    const pricingList = dataModel.us_pricing.map((pricingDataModel) => new Pricing(
       new ID(pricingDataModel.pr_id),
       pricingDataModel.pr_name,
       pricingDataModel.pr_price,
       pricingDataModel.pr_duration,
+      pricingDataModel.pr_created_at,
+      pricingDataModel.pr_updated_at,
     ));
 
     return new Tenant(
@@ -45,7 +47,7 @@ export class PgTenantMapper {
       new ID(dataModel.us_tenant_id),
       new ID(dataModel.us_role_id),
       dataModel.us_is_active,
-      PricingVoCollection.build(pricingVoList),
+      PricingCollection.build(pricingList),
       dataModel.us_created_at,
       dataModel.us_updated_at,
     );

@@ -1,7 +1,8 @@
 import { User } from "Backoffice/Shared/Domain/User/User";
-import { PricingVo } from "Backoffice/Shared/Domain/Vo/PricingVo";
-import { PricingVoCollection } from "Backoffice/Shared/Domain/Vo/PricingVoCollection";
-import { MONTHLY_PRICING, QUARTERLY_PRICING, YEARLY_PRICING } from "Backoffice/Tenant/Domain/constants";
+import { Pricing } from "Backoffice/Shared/Domain/Pricing/Pricing";
+import { PricingCollection } from "Backoffice/Shared/Domain/Pricing/PricingCollection";
+import { DefaultPricesCreatedDomainEvent } from "Backoffice/Tenant/Application/CreateTenant/DefaultPricesCreatedDomainEvent";
+import { YEARLY_PRICING } from "Backoffice/Tenant/Domain/constants";
 import { Name } from "Shared/Domain/Vo/Name.vo";
 import { Config } from "Backoffice/Shared/Domain/Config/Config";
 import { Email } from "Shared/Domain/Vo/Email.vo";
@@ -12,9 +13,8 @@ import { Password } from "Shared/Domain/Vo/Password.vo";
 export class Tenant extends User {
   public static build(name: Name, password: Password, email: Email, tenantId: ID, roleId: ID): Tenant {
     const config = Config.build(true, true);
-    const pricingCollection = Tenant.createBaseTenantPricing();
 
-    return new Tenant(
+    const tenant = new Tenant(
       ID.generate(),
       name,
       password,
@@ -23,15 +23,11 @@ export class Tenant extends User {
       tenantId,
       roleId,
       true,
-      pricingCollection
+      PricingCollection.build()
     );
-  }
 
-  private static createBaseTenantPricing(): PricingVoCollection {
-    const quarterly = new PricingVo(QUARTERLY_PRICING, 150, 90);
-    const monthly = new PricingVo(MONTHLY_PRICING, 50, 30);
-
-    return PricingVoCollection.build([ monthly, quarterly ]);
+    tenant.addEvent(new DefaultPricesCreatedDomainEvent(tenant.id()));
+    return tenant;
   }
 
   constructor(
@@ -43,14 +39,14 @@ export class Tenant extends User {
     protected _tenantId: ID,
     protected _roleId: ID,
     protected _active: boolean,
-    protected _pricing: PricingVoCollection,
+    protected _pricing: PricingCollection,
     _createdAt?: Date,
     _updatedAt?: Date
   ) {
     super(_id, _name, _password, _email, _config, _tenantId, _roleId, _active, _createdAt, _updatedAt);
   }
 
-  public getYearlyPricingVo(): PricingVo {
+  public getYearlyPricing(): Pricing {
     return this._pricing.getPricingByName(YEARLY_PRICING);
   }
 }

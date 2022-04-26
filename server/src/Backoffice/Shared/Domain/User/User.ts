@@ -1,3 +1,4 @@
+import { Pricing } from "Backoffice/Shared/Domain/Pricing/Pricing";
 import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { Name } from "Shared/Domain/Vo/Name.vo";
@@ -64,8 +65,8 @@ export abstract class User extends AggregateRoot {
     return this._config.sendWarnings();
   }
 
-  public createSubscription(pricingId: ID, pricingDuration: number): Subscription {
-    return Subscription.build(this.id(), pricingId, DateVo.now(), pricingDuration);
+  public createSubscription(pricing: Pricing): Subscription {
+    return Subscription.build(this.id(), pricing.id(), DateVo.now(), pricing.duration());
   }
 
   public changePersonalInfo(name: Name, email: Email): void {

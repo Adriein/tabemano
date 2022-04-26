@@ -6,7 +6,7 @@ import { RoleType } from "Shared/Domain/Vo/RoleType";
 export class UserFilter implements Filter {
   public static EMAIL_FILTER = 'email';
   public static ROLE_FILTER = 'roleType';
-
+  
   private data: Map<string, any> = new Map();
 
   public withEmail(email: Email): this {
