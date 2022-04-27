@@ -31,7 +31,7 @@ model ta_pricing {
     pr_id String @id
     pr_name String
     pr_duration Int @db.SmallInt
-    pr_price Int @db.SmallInt
+    pr_price Float
     pr_tenant ta_user @relation(fields: [pr_tenant_id], references: [us_id])
     pr_tenant_id String
     pr_subscriptions ta_subscription[]
@@ -45,6 +45,8 @@ model ta_subscription {
     su_valid_to DateTime @db.Timestamp(0)
     su_is_active Boolean
     su_is_expired Boolean
+    su_duration Int @db.SmallInt
+    su_price Float
     su_pricing ta_pricing  @relation(fields: [su_pricing_id], references: [pr_id])
     su_pricing_id String
     su_user ta_user @relation(fields: [su_user_id], references: [us_id])

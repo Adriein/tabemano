@@ -1,0 +1,16 @@
+{
+  "search_filter_placeholder": "Buscar por nombre...",
+  "active_filter_button": "Usuarios activos",
+  "inactive_filter_button": "Usuarios inactivos",
+  "expired_filter_button": "Subscripciones expiradas",
+  "active_subscription_filter_button": "Subscripciones activas",
+  "page_filter_info": "de",
+  "current_page_info": "Estás en la página",
+  "add_filter_button": "Añadir filtro",
+  "username_header": "Nombre",
+  "pricing_header": "Tarifa",
+  "send_warning_notification_header": "Enviar avisos",
+  "subscription_period_header": "Subscripción",
+  "subscription_status_header": "Estado subscripción",
+  "create_user": "Crear usuario"
+}

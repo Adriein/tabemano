@@ -10,7 +10,7 @@ import { Password } from "Shared/Domain/Vo/Password.vo";
 
 
 export abstract class User extends AggregateRoot {
-  constructor(
+  protected constructor(
     _id: ID,
     protected _name: Name,
     protected _password: Password,
@@ -66,7 +66,7 @@ export abstract class User extends AggregateRoot {
   }
 
   public createSubscription(pricing: Pricing): Subscription {
-    return Subscription.build(this.id(), pricing.id(), DateVo.now(), pricing.duration());
+    return Subscription.build(this.id(), pricing.id(), DateVo.now(), pricing.duration(), pricing.price());
   }
 
   public changePersonalInfo(name: Name, email: Email): void {

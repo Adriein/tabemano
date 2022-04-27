@@ -1,8 +1,8 @@
+import { YEARLY_PRICING } from "Backoffice/Shared/constants";
 import { User } from "Backoffice/Shared/Domain/User/User";
 import { Pricing } from "Backoffice/Shared/Domain/Pricing/Pricing";
 import { PricingCollection } from "Backoffice/Shared/Domain/Pricing/PricingCollection";
 import { DefaultPricesCreatedDomainEvent } from "Backoffice/Tenant/Application/CreateTenant/DefaultPricesCreatedDomainEvent";
-import { YEARLY_PRICING } from "Backoffice/Tenant/Domain/constants";
 import { Name } from "Shared/Domain/Vo/Name.vo";
 import { Config } from "Backoffice/Shared/Domain/Config/Config";
 import { Email } from "Shared/Domain/Vo/Email.vo";

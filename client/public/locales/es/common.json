@@ -1,0 +1,34 @@
+{
+  "week_days": {
+    "mon": "lun",
+    "tue": "mar",
+    "wed": "mie",
+    "thu": "jue",
+    "fri": "vie",
+    "sat": "sab",
+    "sun": "dom"
+  },
+  "months": {
+    "jan": "ene",
+    "feb": "feb",
+    "mar": "mar",
+    "apr": "abr",
+    "may": "may",
+    "jun": "jun",
+    "jul": "jul",
+    "aug": "ago",
+    "sep": "sep",
+    "oct": "oct",
+    "nov": "nov",
+    "dec": "dic"
+  },
+  "yearly_pricing": "anual",
+  "quarterly_pricing": "trimestral",
+  "monthly_pricing": "mensual",
+  "enabled": "activado",
+  "disabled": "desactivado",
+  "something_went_wrong_error": "Ha ocurrido un error inesperado",
+  "user_updated": "Usuario modificado correctamente",
+  "subscription_renewed_success": "Subscripción renovada correctamente",
+  "subscription_renewed_error_date": "Error actualizando la subscripción falta fecha válida"
+}

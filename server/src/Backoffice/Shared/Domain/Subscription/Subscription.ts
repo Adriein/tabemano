@@ -14,6 +14,7 @@ export class Subscription extends AggregateRoot {
     pricingId: ID,
     lastPayment: DateVo,
     pricingDuration: number,
+    price: number
   ): Subscription {
     const event = SubscriptionEvent.build(SUBSCRIPTION_STATUS.CREATED);
     return new Subscription(
@@ -24,7 +25,9 @@ export class Subscription extends AggregateRoot {
       Subscription.expirationDate(lastPayment, pricingDuration),
       true,
       false,
-      SubscriptionEventCollection.build([ event ])
+      SubscriptionEventCollection.build([ event ]),
+      pricingDuration,
+      price
     );
   }
 
@@ -37,6 +40,8 @@ export class Subscription extends AggregateRoot {
     private _isActive: boolean,
     private _isExpired: boolean,
     private _events: SubscriptionEventCollection,
+    private _duration: number,
+    private _price: number,
     _createdAt?: Date,
     _updatedAt?: Date
   ) {
@@ -69,6 +74,14 @@ export class Subscription extends AggregateRoot {
 
   public events(): SubscriptionEventCollection {
     return this._events;
+  }
+
+  public duration(): number {
+    return this._duration;
+  }
+
+  public price(): number {
+    return this._price;
   }
 
   public static expirationDate = (lastPaymentDate: DateVo, pricingDuration: number): DateVo => {

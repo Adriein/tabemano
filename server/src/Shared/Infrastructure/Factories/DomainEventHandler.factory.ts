@@ -1,5 +1,8 @@
 import { TenantCreatedDomainEvent } from "Authorization/Application/RegisterTenant/TenantCreatedDomainEvent";
+import { CreateDefaultTenantPricesDomainEventHandler } from "Backoffice/Pricing/Application/CreateDefaultTenantPrices/CreateDefaultTenantPricesDomainEventHandler";
+import { PgPricingRepository } from "Backoffice/Pricing/Infrastructure/Data/Repositories/PgPricingRepository";
 import { CreateTenantDomainEventHandler } from "Backoffice/Tenant/Application/CreateTenant/CreateTenantDomainEventHandler";
+import { DefaultPricesCreatedDomainEvent } from "Backoffice/Tenant/Application/CreateTenant/DefaultPricesCreatedDomainEvent";
 import { PgTenantRepository } from "Backoffice/Tenant/Infrastructure/Data/Repositories/PgTenantRepository";
 import { IDomainEventHandler } from '../../Domain/Interfaces/IDomainEventHandler';
 import { ConstructorFunc } from '../../Domain/types';
@@ -8,6 +11,7 @@ export default class DomainEventHandlerFactory {
   private handlers: Map<string, IDomainEventHandler> = new Map();
 
   private readonly tenantRepository = new PgTenantRepository();
+  private readonly pricingRepository = new PgPricingRepository();
 
   constructor() {
     this.register();
@@ -25,7 +29,15 @@ export default class DomainEventHandlerFactory {
 
   private register(): void {
     //Backoffice
-    this.handlers.set(TenantCreatedDomainEvent.name, new CreateTenantDomainEventHandler(this.tenantRepository))
+    this.handlers.set(
+      TenantCreatedDomainEvent.name,
+      new CreateTenantDomainEventHandler(this.tenantRepository)
+    );
+    
+    this.handlers.set(
+      DefaultPricesCreatedDomainEvent.name,
+      new CreateDefaultTenantPricesDomainEventHandler(this.pricingRepository)
+    );
   }
 
   public getContainer(): Map<string, IDomainEventHandler> {

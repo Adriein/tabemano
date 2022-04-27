@@ -1,0 +1,33 @@
+{
+  "week_days": {
+    "mon": "mon",
+    "tue": "tue",
+    "wed": "wen",
+    "thu": "thu",
+    "fri": "fri",
+    "sat": "sat",
+    "sun": "sun"
+  },
+  "months": {
+    "jan": "jan",
+    "feb": "feb",
+    "mar": "mar",
+    "apr": "apr",
+    "may": "may",
+    "jun": "jun",
+    "jul": "jul",
+    "aug": "aug",
+    "sep": "sep",
+    "oct": "oct",
+    "nov": "nov",
+    "dec": "dec"
+  },
+  "yearly_pricing": "yearly",
+  "quarterly_pricing": "quarterly",
+  "monthly_pricing": "monthly",
+  "enabled": "enabled",
+  "disabled": "disabled",
+  "something_went_wrong_error": "Something went wrong",
+  "subscription_renewed_success": "Success on subscription renewal",
+  "subscription_renewed_error_date": "Error renewing subscription, no valid date provided"
+}

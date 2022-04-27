@@ -1,0 +1,17 @@
+{
+  "search_filter_placeholder": "Search for name...",
+  "active_filter_button": "Active users",
+  "inactive_filter_button": "Inactive users",
+  "expired_filter_button": "Expired subscription",
+  "active_subscription_filter_button": "Active subscription",
+  "page_filter_info": "of",
+  "current_page_info": "The page you're on",
+  "add_filter_button": "Add filter",
+  "username_header": "Name",
+  "pricing_header": "Pricing",
+  "send_warning_notification_header": "Send warnings",
+  "subscription_period_header": "Subscription",
+  "renew_subscription": "Renew subscription",
+  "subscription_status_header": "Subscription status",
+  "create_user": "Create user"
+}

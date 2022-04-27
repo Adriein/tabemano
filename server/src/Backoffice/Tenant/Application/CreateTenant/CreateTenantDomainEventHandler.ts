@@ -12,7 +12,7 @@ import { RoleType } from "Shared/Domain/Vo/RoleType";
 @DomainEventsHandler(TenantCreatedDomainEvent)
 export class CreateTenantDomainEventHandler implements IDomainEventHandler {
   constructor(
-    private readonly tenantRepository: ITenantRepository
+    private readonly tenantRepository: ITenantRepository,
   ) {}
 
   @Log()
