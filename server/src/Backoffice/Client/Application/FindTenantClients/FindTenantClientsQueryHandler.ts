@@ -5,6 +5,7 @@ import { IClientRepository } from "Backoffice/Client/Domain/Repositories/IClient
 import { IFilterFactory } from "Backoffice/Shared/Domain/Services/IFilterFactory";
 import { ISubscriptionRepository } from "Backoffice/Shared/Domain/Subscription/ISubscriptionRepository";
 import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";
+import { SubscriptionFilter } from "Backoffice/Shared/Domain/Subscription/SubscriptionFilter";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
 import { QueryHandler } from "Shared/Domain/Decorators/QueryHandler.decorator";
 import { IQueryHandler } from "Shared/Domain/Interfaces/IQueryHandler";
@@ -28,7 +29,31 @@ export class FindTenantClientsQueryHandler implements IQueryHandler<FindTenantCl
 
     const clientList = result.value;
 
-    return clientList.map((client: Client) => FindTenantClientsResponse.build(client, {} as Subscription))
+    return await this.buildResponse(clientList);
   }
 
+  private async getActiveSubscription(): Promise<Subscription> {
+    const filter = new SubscriptionFilter();
+    filter.isActive(true);
+
+    const result = await this.subscriptionRepository.findOne(filter);
+
+    if (result.isError()) {
+      throw result.value;
+    }
+
+    return result.value;
+  }
+
+  private async buildResponse(list: Client[]): Promise<FindTenantClientsResponse[]> {
+    const response = [];
+
+    for (const client of list) {
+      const subscription = await this.getActiveSubscription();
+
+      response.push(FindTenantClientsResponse.build(client, subscription))
+    }
+
+    return response;
+  }
 }

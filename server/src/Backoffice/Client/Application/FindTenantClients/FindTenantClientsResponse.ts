@@ -10,7 +10,7 @@ export class FindTenantClientsResponse {
       client.email().value,
       client.isActive(),
       client.sendWarnings(),
-      '',
+      subscription.pricingName(),
       Time.format(subscription.validTo(), Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
       Time.format(subscription.paymentDate(), Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
       subscription.isExpired()

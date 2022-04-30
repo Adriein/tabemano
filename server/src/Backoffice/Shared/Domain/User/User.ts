@@ -66,7 +66,7 @@ export abstract class User extends AggregateRoot {
   }
 
   public createSubscription(pricing: Pricing): Subscription {
-    return Subscription.build(this.id(), pricing.id(), DateVo.now(), pricing.duration(), pricing.price());
+    return Subscription.build(this.id(), DateVo.now(), pricing);
   }
 
   public changePersonalInfo(name: Name, email: Email): void {

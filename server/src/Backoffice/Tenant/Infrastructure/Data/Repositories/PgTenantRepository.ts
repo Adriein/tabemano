@@ -4,7 +4,6 @@ import { ITenantRepository } from "Backoffice/Tenant/Domain/Repositories/ITenant
 import { Tenant } from "Backoffice/Tenant/Domain/Entities/Tenant";
 import { PrismaUserFilterAdapter } from "Backoffice/Shared/Infrastructure/Data/Filters/PrismaUserFilterAdapter";
 import { PgTenantMapper } from "Backoffice/Tenant/Infrastructure/Data/Mappers/PgTenantMapper";
-import e from "express";
 import { Left } from "Shared/Domain/Entities/Left";
 import { Right } from "Shared/Domain/Entities/Right";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
