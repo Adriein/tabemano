@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
 import { Pagination } from "Shared/Domain/Entities/Pagination";
+import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { RoleType } from "Shared/Domain/Vo/RoleType";
 import { PrismaAdapter } from "Shared/Infrastructure/Data/PrismaAdapter";
@@ -23,6 +24,60 @@ export class PrismaUserFilterAdapter extends PrismaAdapter<Prisma.ta_userFindMan
       const roleType = filters.get(UserFilter.ROLE_FILTER) as RoleType;
 
       this.add({ where: { us_role: { ro_type: roleType.value } } });
+    }
+
+    if (filters.has(UserFilter.ACTIVE_FILTER)) {
+      const isActive = filters.get(UserFilter.ACTIVE_FILTER) as boolean;
+
+      this.add({ where: { us_is_active: isActive } });
+    }
+
+    if (filters.has(UserFilter.SUBSCRIPTION_IS_ACTIVE_FILTER)) {
+      const isSubscriptionActive = filters.get(UserFilter.SUBSCRIPTION_IS_ACTIVE_FILTER) as boolean;
+
+      this.add({ where: { us_subscriptions: { some: { su_is_active: isSubscriptionActive } } } });
+    }
+
+    if (filters.has(UserFilter.SUBSCRIPTION_PAYMENT_DATE_FILTER)) {
+      const paymentDate = filters.get(UserFilter.SUBSCRIPTION_PAYMENT_DATE_FILTER) as DateVo;
+
+      this.add({ where: { us_subscriptions: { some: { su_payment_date: paymentDate.value } } } });
+    }
+
+    if (filters.has(UserFilter.SUBSCRIPTION_VALID_TO_FILTER)) {
+      const validTo = filters.get(UserFilter.SUBSCRIPTION_VALID_TO_FILTER) as DateVo;
+
+      this.add({ where: { us_subscriptions: { some: { su_valid_to: validTo.value } } } });
+    }
+
+    if (filters.has(UserFilter.SUBSCRIPTION_AMOUNT_FILTER)) {
+      const amount = filters.get(UserFilter.SUBSCRIPTION_AMOUNT_FILTER) as number;
+
+      this.add({ where: { us_subscriptions: { some: { su_pricing: { pr_price: amount } } } } });
+    }
+
+    if (filters.has(UserFilter.SUBSCRIPTION_DURATION_FILTER)) {
+      const duration = filters.get(UserFilter.SUBSCRIPTION_DURATION_FILTER) as number;
+
+      this.add({ where: { us_subscriptions: { some: { su_pricing: { pr_duration: duration } } } } });
+    }
+
+    if (filters.has(UserFilter.SUBSCRIPTION_PRICING_NAME_FILTER)) {
+      const pricingName = filters.get(UserFilter.SUBSCRIPTION_PRICING_NAME_FILTER) as string;
+
+      this.add({ where: { us_subscriptions: { some: { su_pricing: { pr_name: pricingName } } } } });
+    }
+
+    if (filters.has(UserFilter.CONFIG_ALLOW_SEND_NOTIFICATIONS_FILTER)) {
+      const sendNotifications = filters.get(UserFilter.SUBSCRIPTION_PRICING_NAME_FILTER) as boolean;
+
+      this.add({ where: { us_config: { co_send_notifications: sendNotifications } } });
+    }
+
+    if (filters.has(UserFilter.CONFIG_ALLOW_SEND_WARNINGS_FILTER)) {
+      const sendWarnings = filters.get(UserFilter.SUBSCRIPTION_PRICING_NAME_FILTER) as boolean;
+
+      this.add({ where: { us_config: { co_send_warnings: sendWarnings } } });
     }
 
     if (filters.has(Pagination.PAGINATION_FILTER)) {
