@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
-import { ITenantRepository } from "Backoffice/Tenant/Domain/Entities/ITenantRepository";
+import { ITenantRepository } from "Backoffice/Tenant/Domain/Repositories/ITenantRepository";
 import { Tenant } from "Backoffice/Tenant/Domain/Entities/Tenant";
 import { PrismaUserFilterAdapter } from "Backoffice/Shared/Infrastructure/Data/Filters/PrismaUserFilterAdapter";
 import { PgTenantMapper } from "Backoffice/Tenant/Infrastructure/Data/Mappers/PgTenantMapper";

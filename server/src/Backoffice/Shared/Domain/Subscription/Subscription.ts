@@ -1,4 +1,5 @@
 import { SUBSCRIPTION_STATUS } from "Backoffice/Shared/constants";
+import { Pricing } from "Backoffice/Shared/Domain/Pricing/Pricing";
 import { SubscriptionEvent } from "Backoffice/Shared/Domain/Subscription/SubscriptionEvent";
 import { SubscriptionEventCollection } from "Backoffice/Shared/Domain/Subscription/SubscriptionEventCollection";
 import { AggregateRoot } from "Shared/Domain/Entities/AggregateRoot";
@@ -11,45 +12,39 @@ import { Time } from "Shared/Infrastructure/Helper/Time";
 export class Subscription extends AggregateRoot {
   public static build(
     userId: ID,
-    pricingId: ID,
     lastPayment: DateVo,
-    pricingDuration: number,
-    price: number
+    price: Pricing,
   ): Subscription {
     const event = SubscriptionEvent.build(SUBSCRIPTION_STATUS.CREATED);
     return new Subscription(
       ID.generate(),
       userId,
-      pricingId,
       lastPayment,
-      Subscription.expirationDate(lastPayment, pricingDuration),
+      Subscription.expirationDate(lastPayment, price.duration()),
       true,
       false,
+      price,
       SubscriptionEventCollection.build([ event ]),
-      pricingDuration,
-      price
     );
   }
 
   constructor(
     _id: ID,
     private _userId: ID,
-    private _pricingId: ID,
     private _lastPayment: DateVo,
     private _validTo: DateVo,
     private _isActive: boolean,
     private _isExpired: boolean,
+    private _pricing: Pricing,
     private _events: SubscriptionEventCollection,
-    private _duration: number,
-    private _price: number,
     _createdAt?: Date,
     _updatedAt?: Date
   ) {
     super(_id, _createdAt, _updatedAt);
   }
 
-  public pricingId = (): string => {
-    return this._pricingId.value;
+  public pricingId = (): ID => {
+    return this._pricing.id();
   }
 
   public paymentDate = (): Date => {
@@ -76,12 +71,16 @@ export class Subscription extends AggregateRoot {
     return this._events;
   }
 
+  public pricingName(): string {
+    return this._pricing.name();
+  }
+
   public duration(): number {
-    return this._duration;
+    return this._pricing.duration();
   }
 
   public price(): number {
-    return this._price;
+    return this._pricing.price();
   }
 
   public static expirationDate = (lastPaymentDate: DateVo, pricingDuration: number): DateVo => {

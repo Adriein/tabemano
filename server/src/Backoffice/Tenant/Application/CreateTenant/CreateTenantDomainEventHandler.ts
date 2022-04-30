@@ -1,6 +1,6 @@
 import { TenantCreatedDomainEvent } from "Authorization/Application/RegisterTenant/TenantCreatedDomainEvent";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
-import { ITenantRepository } from "Backoffice/Tenant/Domain/Entities/ITenantRepository";
+import { ITenantRepository } from "Backoffice/Tenant/Domain/Repositories/ITenantRepository";
 import { Tenant } from "Backoffice/Tenant/Domain/Entities/Tenant";
 import { Roles } from "Shared/Domain/constants";
 import { DomainEventsHandler } from "Shared/Domain/Decorators/DomainEventsHandler.decorator";

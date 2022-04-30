@@ -46,6 +46,7 @@ model ta_subscription {
     su_is_active Boolean
     su_is_expired Boolean
     su_duration Int @db.SmallInt
+    su_price_name String
     su_price Float
     su_pricing ta_pricing  @relation(fields: [su_pricing_id], references: [pr_id])
     su_pricing_id String
