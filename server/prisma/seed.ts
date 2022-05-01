@@ -143,6 +143,9 @@ async function main() {
       su_is_expired: false,
       su_payment_date: new Date(),
       su_valid_to: validTo,
+      su_price: 1000,
+      su_duration: 365,
+      su_price_name: 'yearly',
       su_user: {
         connect: {
           us_id: id

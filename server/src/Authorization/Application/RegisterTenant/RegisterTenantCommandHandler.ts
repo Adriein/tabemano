@@ -4,7 +4,11 @@ import { AuthFilter } from "Authorization/Domain/Entities/AuthFilter";
 import { IAuthRepository } from "Authorization/Domain/Entities/IAuthRepository";
 import { Role } from "Authorization/Domain/Entities/Role";
 import { TenantAlreadyExistsError } from "Authorization/Domain/Error/TenantAlreadyExistsError";
-import { Roles } from "Shared/Domain/constants";
+import { FindRoleQuery } from "Backoffice/Role/Application/FindRoleQuery";
+import { FindRoleResponse } from "Backoffice/Role/Application/FindRoleResponse";
+import { IQueryBus } from "Shared/Domain/Bus/IQueryBus";
+import { Roles, TENANT_ROLE } from "Shared/Domain/constants";
+import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Name } from "Shared/Domain/Vo/Name.vo";
 import { CommandHandler } from "Shared/Domain/Decorators/CommandHandler.decorator";
 import { Log } from "Shared/Domain/Decorators/Log";
@@ -16,18 +20,17 @@ import { RoleType } from "Shared/Domain/Vo/RoleType";
 
 @CommandHandler(RegisterTenantCommand)
 export class RegisterTenantCommandHandler implements ICommandHandler {
-  constructor(private readonly repository: IAuthRepository) {}
+  constructor(private readonly repository: IAuthRepository, private readonly queryBus: IQueryBus) {}
 
   @Log()
   public async handle(command: RegisterTenantCommand): Promise<void> {
     const name = new Name(command.name);
     const email = new Email(command.email);
     const password = new Password(command.password);
-    const roleType = new RoleType(Roles.TENANT);
 
     await this.ensureTenantNotExists(email);
-    
-    const role = Role.build(roleType);
+
+    const role = await this.findTenantRole();
 
     const auth = Auth.build(name, email, password, role);
 
@@ -43,5 +46,16 @@ export class RegisterTenantCommandHandler implements ICommandHandler {
     if (result.isOk()) {
       throw new TenantAlreadyExistsError();
     }
+  }
+
+  private async findTenantRole(): Promise<Role> {
+    const query = new FindRoleQuery(TENANT_ROLE);
+
+    const role = await this.queryBus.ask<FindRoleResponse>(query);
+
+    return new Role(
+      new ID(role.id),
+      new RoleType(role.type)
+    );
   }
 }
