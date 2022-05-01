@@ -50,7 +50,7 @@ export class PgSubscriptionMapper implements IMapper<Subscription, any> {
           se_updated_at: history.updatedAt()
         },
         where: {
-          se_id: history.id().value
+          se_id: domain.id().value
         }
       }
     });

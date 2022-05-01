@@ -4,7 +4,6 @@ import { Pricing } from "Backoffice/Pricing/Domain/Entities/Pricing";
 import { PricingFilter } from "Backoffice/Pricing/Domain/Entities/PricingFilter";
 import { PrismaPricingFilterAdapter } from "Backoffice/Pricing/Infrastructure/Data/Filters/PrismaPricingFilterAdapter";
 import { PgTenantMapper } from "Backoffice/Pricing/Infrastructure/Data/Mappers/PgPricingMapper";
-import e from "express";
 import { Left } from "Shared/Domain/Entities/Left";
 import { Right } from "Shared/Domain/Entities/Right";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
@@ -39,7 +38,7 @@ export class PgPricingRepository implements IPricingRepository {
 
   public async save(entity: Pricing): Promise<void> {
     await this.database.execute<void>(async (connection: PrismaClient) => {
-      connection.ta_pricing.create({
+      await connection.ta_pricing.create({
         data: {
           pr_id: entity.id().value,
           pr_name: entity.name(),
@@ -50,7 +49,7 @@ export class PgPricingRepository implements IPricingRepository {
           pr_updated_at: entity.updatedAt()
         }
       });
-      
+
       return Right.success({});
     });
   }

@@ -18,7 +18,7 @@ export class Pricing extends AggregateRoot {
   }
 
   public static quarterly(tenantId: ID): Pricing {
-    return Pricing.build(QUARTERLY_PRICING, 30, 50, tenantId);
+    return Pricing.build(QUARTERLY_PRICING, 90, 150, tenantId);
   }
 
   constructor(

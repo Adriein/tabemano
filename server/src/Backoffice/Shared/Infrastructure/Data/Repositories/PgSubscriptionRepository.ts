@@ -25,7 +25,7 @@ export class PgSubscriptionRepository implements ISubscriptionRepository {
 
   public async save(entity: Subscription): Promise<void> {
     await this.database.execute<void>(async (connection: PrismaClient) => {
-      connection.ta_subscription.create({ data: this.mapper.toSaveDataModel(entity) });
+      await connection.ta_subscription.create({ data: this.mapper.toSaveDataModel(entity) });
 
       return Right.success({});
     });
