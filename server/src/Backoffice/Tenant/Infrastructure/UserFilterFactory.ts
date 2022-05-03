@@ -7,42 +7,42 @@ export class UserFilterFactory implements IFilterFactory<UserFilter> {
   public create(query: FindTenantClientsQuery): UserFilter {
     const filter = new UserFilter();
 
-    for (const reqFilter of query.filters) {
-      switch (reqFilter.entity) {
+    for (const { entity, field, value } of query.filters) {
+      switch (entity) {
         case 'user':
-          filter.isActive(Boolean(reqFilter.value));
+          filter.isActive(Boolean(value));
           continue;
         case 'pricing':
-          if (reqFilter.field === 'duration') {
-            filter.withSubscriptionDuration(Number(reqFilter.value));
+          if (field === 'duration') {
+            filter.withSubscriptionDuration(Number(value));
           }
-          if (reqFilter.field === 'amount') {
-            filter.withSubscriptionPrice(Number(reqFilter.value));
+          if (field === 'amount') {
+            filter.withSubscriptionPrice(Number(value));
           }
-          if (reqFilter.field === 'pricing_name') {
-            filter.withPricingName(reqFilter.value);
+          if (field === 'pricing_name') {
+            filter.withPricingName(value);
           }
           continue;
         case 'config':
-          if (reqFilter.field === 'send_warnings') {
-            filter.withAllowSendWarnings(Boolean(reqFilter.value));
+          if (field === 'send_warnings') {
+            filter.withAllowSendWarnings(Boolean(value));
           }
-          if (reqFilter.field === 'send_notifications') {
-            filter.withAllowSendNotifications(Boolean(reqFilter.value));
+          if (field === 'send_notifications') {
+            filter.withAllowSendNotifications(Boolean(value));
           }
           continue;
         case 'subscription':
-          if (reqFilter.field === 'valid_to') {
-            filter.withSubscriptionValidTo(new DateVo(reqFilter.value));
+          if (field === 'valid_to') {
+            filter.withSubscriptionValidTo(new DateVo(value));
           }
-          if (reqFilter.field === 'payment_date') {
-            filter.withSubscriptionPaymentOn(new DateVo(reqFilter.value));
+          if (field === 'payment_date') {
+            filter.withSubscriptionPaymentOn(new DateVo(value));
           }
-          if (reqFilter.field === 'active') {
-            filter.withSubscriptionActive(Boolean(reqFilter.value));
+          if (field === 'active') {
+            filter.withSubscriptionActive(Boolean(value));
           }
-          if (reqFilter.field === 'expired') {
-            filter.withSubscriptionExpired(Boolean(reqFilter.value));
+          if (field === 'expired') {
+            filter.withSubscriptionExpired(Boolean(value));
           }
       }
     }
@@ -53,5 +53,4 @@ export class UserFilterFactory implements IFilterFactory<UserFilter> {
 
     return filter;
   }
-
 }

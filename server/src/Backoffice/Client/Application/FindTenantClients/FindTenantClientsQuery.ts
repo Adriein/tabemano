@@ -2,6 +2,10 @@ import { FilterDto } from "Shared/Application/FilterDto";
 import { IQuery } from "Shared/Domain/Interfaces/IQuery";
 
 export class FindTenantClientsQuery implements IQuery {
+  public static fromJson(json: any): FindTenantClientsQuery {
+    return new FindTenantClientsQuery(json.tenantId, json.page, json.quantity, json.filters);
+  }
+
   constructor(
     private readonly _tenantId: string,
     private readonly _page: number,
