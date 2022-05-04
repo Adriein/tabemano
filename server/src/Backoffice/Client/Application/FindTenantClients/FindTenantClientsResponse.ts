@@ -1,4 +1,4 @@
-import { Client } from "Backoffice/Client/Domain/Entities/Client";
+import { Client } from "Backoffice/Client/Domain/Entity/Client";
 import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";
 import { Time } from "Shared/Infrastructure/Helper/Time";
 

@@ -20,7 +20,7 @@ export default class ExplorerService {
   }
 
   private static isPathOfAController(path: string): void {
-    const isInsideFolderCalledControllersRegex = new RegExp('(?<=/Controllers).*?(?=.ts)');
+    const isInsideFolderCalledControllersRegex = new RegExp('(?<=/Controller).*?(?=.ts)');
     const spliced = path.split('/');
 
     const isController = spliced[spliced.length - 1].includes('Controller');

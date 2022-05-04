@@ -1,7 +1,7 @@
 import { FindTenantClientsQuery } from "Backoffice/Client/Application/FindTenantClients/FindTenantClientsQuery";
 import { FindTenantClientsResponse } from "Backoffice/Client/Application/FindTenantClients/FindTenantClientsResponse";
-import { Client } from "Backoffice/Client/Domain/Entities/Client";
-import { IClientRepository } from "Backoffice/Client/Domain/Repositories/IClientRepository";
+import { Client } from "Backoffice/Client/Domain/Entity/Client";
+import { IClientRepository } from "Backoffice/Client/Domain/Repository/IClientRepository";
 import { IFilterFactory } from "Backoffice/Shared/Domain/Services/IFilterFactory";
 import { ISubscriptionRepository } from "Backoffice/Shared/Domain/Subscription/ISubscriptionRepository";
 import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";
