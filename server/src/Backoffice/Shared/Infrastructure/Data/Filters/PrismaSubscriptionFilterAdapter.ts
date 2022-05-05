@@ -22,7 +22,9 @@ export class PrismaSubscriptionFilterAdapter extends PrismaAdapter<Prisma.ta_sub
 
       this.add(this.pagination(pagination))
     }
-    
+
+    this.add({ include: { su_events: true } });
+
     return this.prismaFilter;
   }
 }

@@ -15,7 +15,7 @@ export const fetchClientList = (dispatch: Dispatch<ActionProps<FetchClientListPa
     const api = ApiService.instance();
 
     const response = await api.post<FetchClientListResponse, FetchClientListRequest>(
-      '/users',
+      '/clients',
       { quantity, page, filters }
     );
 

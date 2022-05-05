@@ -20,9 +20,9 @@ export class FindTenantClientsController extends BaseController {
     try {
       const query = FindTenantClientsQuery.fromJson(req.body);
 
-      const response = await this.queryBus.ask<FindTenantClientsResponse>(query);
+      const response = await this.queryBus.ask<FindTenantClientsResponse[]>(query);
 
-      res.status(200).send(response.serialize());
+      res.status(200).send(response.map((client) => client.serialize()));
     } catch (error) {
       next(error);
     }
