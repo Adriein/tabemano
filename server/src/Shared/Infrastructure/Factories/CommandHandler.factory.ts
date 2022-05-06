@@ -1,6 +1,7 @@
 import { RegisterTenantCommand } from "Authorization/Application/RegisterTenant/RegisterTenantCommand";
 import { RegisterTenantCommandHandler } from "Authorization/Application/RegisterTenant/RegisterTenantCommandHandler";
 import { PgAuthRepository } from "Authorization/Infrastructure/Data/Repositories/PgAuthRepository";
+import { CryptoService } from "Shared/Domain/Services/CryptoService";
 import { QueryBus } from "Shared/Infrastructure/Bus/QueryBus";
 import { ICommandHandler } from "../../Domain/Interfaces/ICommandHandler";
 import { ConstructorFunc } from "../../Domain/types";
@@ -9,6 +10,7 @@ export default class CommandHandlerFactory {
   private handlers: Map<string, ICommandHandler> = new Map();
 
   private authRepository = new PgAuthRepository();
+  private cryptoService = new CryptoService();
 
   constructor() {
     this.register();
@@ -28,7 +30,7 @@ export default class CommandHandlerFactory {
     //Authentication
     this.handlers.set(
       RegisterTenantCommand.name,
-      new RegisterTenantCommandHandler(this.authRepository, QueryBus.instance())
+      new RegisterTenantCommandHandler(this.authRepository, QueryBus.instance(), this.cryptoService)
     );
   }
 

@@ -8,6 +8,7 @@ import { FindRoleQuery } from "Backoffice/Role/Application/FindRoleQuery";
 import { FindRoleResponse } from "Backoffice/Role/Application/FindRoleResponse";
 import { IQueryBus } from "Shared/Domain/Bus/IQueryBus";
 import { Roles, TENANT_ROLE } from "Shared/Domain/constants";
+import { CryptoService } from "Shared/Domain/Services/CryptoService";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Name } from "Shared/Domain/Vo/Name.vo";
 import { CommandHandler } from "Shared/Domain/Decorators/CommandHandler.decorator";
@@ -20,19 +21,23 @@ import { RoleType } from "Shared/Domain/Vo/RoleType";
 
 @CommandHandler(RegisterTenantCommand)
 export class RegisterTenantCommandHandler implements ICommandHandler {
-  constructor(private readonly repository: IAuthRepository, private readonly queryBus: IQueryBus) {}
+  constructor(
+    private readonly repository: IAuthRepository,
+    private readonly queryBus: IQueryBus,
+    private readonly crypto: CryptoService
+  ) {}
 
   @Log()
   public async handle(command: RegisterTenantCommand): Promise<void> {
     const name = new Name(command.name);
     const email = new Email(command.email);
-    const password = new Password(command.password);
+    const password = await this.crypto.hash(command.password);
 
     await this.ensureTenantNotExists(email);
 
     const role = await this.findTenantRole();
 
-    const auth = Auth.build(name, email, password, role);
+    const auth = Auth.build(name, email, new Password(password), role);
 
     await DomainEventsManager.publishEvents(auth.id());
   }
