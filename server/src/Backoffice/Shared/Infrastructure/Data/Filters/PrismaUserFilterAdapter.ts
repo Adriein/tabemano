@@ -3,6 +3,7 @@ import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
 import { Pagination } from "Shared/Domain/Entities/Pagination";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { Email } from "Shared/Domain/Vo/Email.vo";
+import { ID } from "Shared/Domain/Vo/Id.vo";
 import { RoleType } from "Shared/Domain/Vo/RoleType";
 import { PrismaAdapter } from "Shared/Infrastructure/Data/PrismaAdapter";
 
@@ -13,6 +14,12 @@ export class PrismaUserFilterAdapter extends PrismaAdapter<Prisma.ta_userFindMan
 
   public apply(): Prisma.ta_userFindManyArgs {
     const filters = this.filter.apply();
+
+    if (filters.has(UserFilter.TENANT_ID_FILTER)) {
+      const tenantId = filters.get(UserFilter.TENANT_ID_FILTER) as ID;
+
+      this.add({ where: { us_tenant_id: tenantId.value } });
+    }
 
     if (filters.has(UserFilter.EMAIL_FILTER)) {
       const email = filters.get(UserFilter.EMAIL_FILTER) as Email;

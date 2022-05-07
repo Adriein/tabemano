@@ -1,8 +1,9 @@
 import { Client } from "Backoffice/Client/Domain/Entity/Client";
+import { Serializable } from "Backoffice/Shared/Domain/Serializable";
 import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";
 import { Time } from "Shared/Infrastructure/Helper/Time";
 
-export class FindTenantClientsResponse {
+export class FindTenantClientsResponse implements Serializable {
   public static build(client: Client, subscription: Subscription): FindTenantClientsResponse {
     return new FindTenantClientsResponse(
       client.id().value,

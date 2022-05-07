@@ -7,6 +7,7 @@ import { ISubscriptionRepository } from "Backoffice/Shared/Domain/Subscription/I
 import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";
 import { SubscriptionFilter } from "Backoffice/Shared/Domain/Subscription/SubscriptionFilter";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
+import { Log } from "Shared/Domain/Decorators/Log";
 import { QueryHandler } from "Shared/Domain/Decorators/QueryHandler.decorator";
 import { IQueryHandler } from "Shared/Domain/Interfaces/IQueryHandler";
 
@@ -18,18 +19,23 @@ export class FindTenantClientsQueryHandler implements IQueryHandler<FindTenantCl
     private readonly factory: IFilterFactory<UserFilter>
   ) {}
 
+  @Log()
   public async handle(query: FindTenantClientsQuery): Promise<FindTenantClientsResponse[]> {
     const filter = this.factory.create(query);
 
+    const clientList = await this.findClients(filter);
+
+    return await this.buildResponse(clientList);
+  }
+
+  private async findClients(filter: UserFilter): Promise<Client[]> {
     const result = await this.clientRepository.find(filter);
 
     if (result.isError()) {
       throw result.value;
     }
 
-    const clientList = result.value;
-
-    return await this.buildResponse(clientList);
+    return result.value;
   }
 
   private async getActiveSubscription(): Promise<Subscription> {

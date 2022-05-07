@@ -1,5 +1,7 @@
 import { FindTenantClientsQuery } from "Backoffice/Client/Application/FindTenantClients/FindTenantClientsQuery";
 import { FindTenantClientsResponse } from "Backoffice/Client/Application/FindTenantClients/FindTenantClientsResponse";
+import { TabemanoMetadata } from "Backoffice/Shared/Domain/TabemanoMetadata";
+import { TabemanoResponse } from "Backoffice/Shared/Domain/TabemanoResponse";
 import { NextFunction, Request, Response } from "express";
 import { BaseController } from "Shared/Infrastructure/BaseController";
 import { Controller } from "Shared/Infrastructure/Decorators/controller";
@@ -20,11 +22,22 @@ export class FindTenantClientsController extends BaseController {
     try {
       const query = FindTenantClientsQuery.fromJson(req.body);
 
-      const response = await this.queryBus.ask<FindTenantClientsResponse[]>(query);
+      const clients = await this.queryBus.ask<FindTenantClientsResponse[]>(query);
 
-      res.status(200).send(response.map((client) => client.serialize()));
+      const response = this.buildResponse(query, clients);
+
+      res.status(200).send(response.serialize());
     } catch (error) {
       next(error);
     }
+  }
+
+  private buildResponse(
+    query: FindTenantClientsQuery,
+    clients: FindTenantClientsResponse[]
+  ): TabemanoResponse<FindTenantClientsResponse> {
+    const metadata = TabemanoMetadata.build(query.page, query.quantity);
+
+    return TabemanoResponse.build(clients, metadata);
   }
 }

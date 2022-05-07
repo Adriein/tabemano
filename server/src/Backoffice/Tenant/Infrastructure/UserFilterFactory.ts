@@ -2,6 +2,7 @@ import { IFilterFactory } from "Backoffice/Shared/Domain/Services/IFilterFactory
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
 import { FindTenantClientsQuery } from "Backoffice/Client/Application/FindTenantClients/FindTenantClientsQuery";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
+import { ID } from "Shared/Domain/Vo/Id.vo";
 
 export class UserFilterFactory implements IFilterFactory<UserFilter> {
   public create(query: FindTenantClientsQuery): UserFilter {
@@ -47,7 +48,9 @@ export class UserFilterFactory implements IFilterFactory<UserFilter> {
       }
     }
 
-    filter.paginate()
+    filter
+      .withTenantId(new ID(query.tenantId))
+      .paginate()
       .setPage(query.page)
       .setQuantity(query.quantity);
 

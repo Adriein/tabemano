@@ -2,9 +2,11 @@ import { Filter } from "Shared/Domain/Entities/Filter";
 import { Pagination } from "Shared/Domain/Entities/Pagination";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { Email } from "Shared/Domain/Vo/Email.vo";
+import { ID } from "Shared/Domain/Vo/Id.vo";
 import { RoleType } from "Shared/Domain/Vo/RoleType";
 
 export class UserFilter implements Filter {
+  public static TENANT_ID_FILTER = 'tenantId';
   public static EMAIL_FILTER = 'email';
   public static ROLE_FILTER = 'roleType';
   public static ACTIVE_FILTER = 'isActive';
@@ -19,6 +21,11 @@ export class UserFilter implements Filter {
   public static SUBSCRIPTION_IS_EXPIRED_FILTER = 'subscriptionIsExpired';
 
   private data: Map<string, any> = new Map();
+
+  public withTenantId(id: ID): this {
+    this.data.set(UserFilter.TENANT_ID_FILTER, id);
+    return this;
+  }
 
   public withEmail(email: Email): this {
     this.data.set(UserFilter.EMAIL_FILTER, email);
