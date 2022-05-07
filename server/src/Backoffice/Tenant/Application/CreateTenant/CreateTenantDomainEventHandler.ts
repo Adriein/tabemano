@@ -1,8 +1,8 @@
 import { TenantCreatedDomainEvent } from "Authorization/Application/RegisterTenant/TenantCreatedDomainEvent";
 import { ISubscriptionRepository } from "Backoffice/Shared/Domain/Subscription/ISubscriptionRepository";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
-import { ITenantRepository } from "Backoffice/Tenant/Domain/Repositories/ITenantRepository";
-import { Tenant } from "Backoffice/Tenant/Domain/Entities/Tenant";
+import { ITenantRepository } from "Backoffice/Tenant/Domain/Repository/ITenantRepository";
+import { Tenant } from "Backoffice/Tenant/Domain/Entity/Tenant";
 import { Roles } from "Shared/Domain/constants";
 import { DomainEventsHandler } from "Shared/Domain/Decorators/DomainEventsHandler.decorator";
 import { Log } from "Shared/Domain/Decorators/Log";
@@ -35,7 +35,7 @@ export class CreateTenantDomainEventHandler implements IDomainEventHandler {
 
     await DomainEventsManager.publishEvents(tenant.id())
   }
-  
+
   private async findAdmin(): Promise<Tenant> {
     const filter = new UserFilter();
     filter.withRole(new RoleType(Roles.ADMIN));

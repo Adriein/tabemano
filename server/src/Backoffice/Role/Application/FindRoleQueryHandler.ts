@@ -1,7 +1,7 @@
 import { FindRoleQuery } from "Backoffice/Role/Application/FindRoleQuery";
 import { FindRoleResponse } from "Backoffice/Role/Application/FindRoleResponse";
-import { RoleFilter } from "Backoffice/Role/Domain/Entities/RoleFilter";
-import { IRoleRepository } from "Backoffice/Role/Domain/Repositories/IRoleRepository";
+import { RoleFilter } from "Backoffice/Role/Domain/Entity/RoleFilter";
+import { IRoleRepository } from "Backoffice/Role/Domain/Repository/IRoleRepository";
 import { Log } from "Shared/Domain/Decorators/Log";
 import { QueryHandler } from "Shared/Domain/Decorators/QueryHandler.decorator";
 import { IQueryHandler } from "Shared/Domain/Interfaces/IQueryHandler";

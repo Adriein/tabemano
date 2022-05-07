@@ -1,3 +1,4 @@
+import { AppFilterField } from "Backoffice/AppFilter/Domain/Entity/AppFilterField";
 import { AggregateRoot } from "Shared/Domain/Entities/AggregateRoot";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 
@@ -17,7 +18,7 @@ export class AppFilter extends AggregateRoot {
     _id: ID,
     private _tenantId: ID,
     private _entity: string,
-    private _field: any[],
+    private _field: AppFilterField[],
     _createdAt: Date,
     _updatedAt: Date
   ) {
@@ -33,7 +34,7 @@ export class AppFilter extends AggregateRoot {
     return this._entity;
   }
 
-  public field(): any[] {
+  public field(): AppFilterField[] {
     return this._field;
   }
 }

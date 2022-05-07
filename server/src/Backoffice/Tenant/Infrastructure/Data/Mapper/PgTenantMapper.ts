@@ -2,7 +2,7 @@ import { Prisma } from "@prisma/client";
 import { Config } from "Backoffice/Shared/Domain/Config/Config";
 import { Pricing } from "Backoffice/Shared/Domain/Pricing/Pricing";
 import { PricingCollection } from "Backoffice/Shared/Domain/Pricing/PricingCollection";
-import { Tenant } from "Backoffice/Tenant/Domain/Entities/Tenant";
+import { Tenant } from "Backoffice/Tenant/Domain/Entity/Tenant";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Name } from "Shared/Domain/Vo/Name.vo";

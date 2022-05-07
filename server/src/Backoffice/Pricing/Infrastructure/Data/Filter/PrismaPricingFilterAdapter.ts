@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { PricingFilter } from "Backoffice/Pricing/Domain/Entities/PricingFilter";
+import { PricingFilter } from "Backoffice/Pricing/Domain/Entity/PricingFilter";
 import { Pagination } from "Shared/Domain/Entities/Pagination";
 import { PrismaAdapter } from "Shared/Infrastructure/Data/PrismaAdapter";
 

@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
-import { IPricingRepository } from "Backoffice/Pricing/Domain/Entities/IPricingRepository";
-import { Pricing } from "Backoffice/Pricing/Domain/Entities/Pricing";
-import { PricingFilter } from "Backoffice/Pricing/Domain/Entities/PricingFilter";
-import { PrismaPricingFilterAdapter } from "Backoffice/Pricing/Infrastructure/Data/Filters/PrismaPricingFilterAdapter";
-import { PgTenantMapper } from "Backoffice/Pricing/Infrastructure/Data/Mappers/PgPricingMapper";
+import { IPricingRepository } from "Backoffice/Pricing/Domain/Entity/IPricingRepository";
+import { Pricing } from "Backoffice/Pricing/Domain/Entity/Pricing";
+import { PricingFilter } from "Backoffice/Pricing/Domain/Entity/PricingFilter";
+import { PrismaPricingFilterAdapter } from "Backoffice/Pricing/Infrastructure/Data/Filter/PrismaPricingFilterAdapter";
+import { PgTenantMapper } from "Backoffice/Pricing/Infrastructure/Data/Mapper/PgPricingMapper";
 import { Left } from "Shared/Domain/Entities/Left";
 import { Right } from "Shared/Domain/Entities/Right";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";

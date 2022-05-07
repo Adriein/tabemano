@@ -1,5 +1,5 @@
-import { IPricingRepository } from "Backoffice/Pricing/Domain/Entities/IPricingRepository";
-import { Pricing } from "Backoffice/Pricing/Domain/Entities/Pricing";
+import { IPricingRepository } from "Backoffice/Pricing/Domain/Entity/IPricingRepository";
+import { Pricing } from "Backoffice/Pricing/Domain/Entity/Pricing";
 import { DefaultPricesCreatedDomainEvent } from "Backoffice/Tenant/Application/CreateTenant/DefaultPricesCreatedDomainEvent";
 import { DomainEventsHandler } from "Shared/Domain/Decorators/DomainEventsHandler.decorator";
 import { Log } from "Shared/Domain/Decorators/Log";

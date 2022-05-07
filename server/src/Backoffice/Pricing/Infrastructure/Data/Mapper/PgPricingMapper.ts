@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { Pricing } from "Backoffice/Pricing/Domain/Entities/Pricing";
+import { Pricing } from "Backoffice/Pricing/Domain/Entity/Pricing";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 
 const pricingModel = Prisma.validator<Prisma.ta_pricingFindManyArgs>()({});

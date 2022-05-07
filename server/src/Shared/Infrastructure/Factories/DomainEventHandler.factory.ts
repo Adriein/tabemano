@@ -1,10 +1,10 @@
 import { TenantCreatedDomainEvent } from "Authorization/Application/RegisterTenant/TenantCreatedDomainEvent";
 import { CreateDefaultTenantPricesDomainEventHandler } from "Backoffice/Pricing/Application/CreateDefaultTenantPrices/CreateDefaultTenantPricesDomainEventHandler";
-import { PgPricingRepository } from "Backoffice/Pricing/Infrastructure/Data/Repositories/PgPricingRepository";
+import { PgPricingRepository } from "Backoffice/Pricing/Infrastructure/Data/Repository/PgPricingRepository";
 import { PgSubscriptionRepository } from "Backoffice/Shared/Infrastructure/Data/Repositories/PgSubscriptionRepository";
 import { CreateTenantDomainEventHandler } from "Backoffice/Tenant/Application/CreateTenant/CreateTenantDomainEventHandler";
 import { DefaultPricesCreatedDomainEvent } from "Backoffice/Tenant/Application/CreateTenant/DefaultPricesCreatedDomainEvent";
-import { PgTenantRepository } from "Backoffice/Tenant/Infrastructure/Data/Repositories/PgTenantRepository";
+import { PgTenantRepository } from "Backoffice/Tenant/Infrastructure/Data/Repository/PgTenantRepository";
 import { IDomainEventHandler } from '../../Domain/Interfaces/IDomainEventHandler';
 import { ConstructorFunc } from '../../Domain/types';
 

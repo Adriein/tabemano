@@ -1,4 +1,4 @@
-import { Role } from "Backoffice/Role/Domain/Entities/Role";
+import { Role } from "Backoffice/Role/Domain/Entity/Role";
 
 export class FindRoleResponse {
   public static fromDomain(role: Role): FindRoleResponse {
@@ -6,7 +6,7 @@ export class FindRoleResponse {
   }
 
   constructor(private _type: string, private _id: string) {}
-  
+
   public get type(): string {
     return this._type;
   }

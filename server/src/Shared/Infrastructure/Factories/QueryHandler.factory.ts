@@ -6,7 +6,7 @@ import { FindTenantClientsQueryHandler } from "Backoffice/Client/Application/Fin
 import { PgClientRepository } from "Backoffice/Client/Infrastructure/Data/Repository/PgClientRepository";
 import { FindRoleQuery } from "Backoffice/Role/Application/FindRoleQuery";
 import { FindRoleQueryHandler } from "Backoffice/Role/Application/FindRoleQueryHandler";
-import { PgRoleRepository } from "Backoffice/Role/Infrastructure/Data/Repositories/PgRoleRepository";
+import { PgRoleRepository } from "Backoffice/Role/Infrastructure/Data/Repository/PgRoleRepository";
 import { PgSubscriptionRepository } from "Backoffice/Shared/Infrastructure/Data/Repositories/PgSubscriptionRepository";
 import { UserFilterFactory } from "Backoffice/Tenant/Infrastructure/UserFilterFactory";
 import { ConstructorFunc } from '../../Domain/types';
@@ -46,7 +46,7 @@ export default class QueryHandlerFactory {
 
     //Backoffice
     this.handlers.set(FindRoleQuery.name, new FindRoleQueryHandler(this.roleRepository));
-    
+
     this.handlers.set(
       FindTenantClientsQuery.name,
       new FindTenantClientsQueryHandler(this.clientRepository, this.subscriptionRepository, this.userFilterFactory)

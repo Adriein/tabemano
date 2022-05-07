@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
-import { ITenantRepository } from "Backoffice/Tenant/Domain/Repositories/ITenantRepository";
-import { Tenant } from "Backoffice/Tenant/Domain/Entities/Tenant";
+import { ITenantRepository } from "Backoffice/Tenant/Domain/Repository/ITenantRepository";
+import { Tenant } from "Backoffice/Tenant/Domain/Entity/Tenant";
 import { PrismaUserFilterAdapter } from "Backoffice/Shared/Infrastructure/Data/Filters/PrismaUserFilterAdapter";
-import { PgTenantMapper } from "Backoffice/Tenant/Infrastructure/Data/Mappers/PgTenantMapper";
+import { PgTenantMapper } from "Backoffice/Tenant/Infrastructure/Data/Mapper/PgTenantMapper";
 import { Left } from "Shared/Domain/Entities/Left";
 import { Right } from "Shared/Domain/Entities/Right";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";

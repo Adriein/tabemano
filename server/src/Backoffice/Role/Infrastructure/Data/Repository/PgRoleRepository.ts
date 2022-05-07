@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
-import { Role } from "Backoffice/Role/Domain/Entities/Role";
-import { RoleFilter } from "Backoffice/Role/Domain/Entities/RoleFilter";
-import { IRoleRepository } from "Backoffice/Role/Domain/Repositories/IRoleRepository";
-import { PrismaRoleFilterAdapter } from "Backoffice/Role/Infrastructure/Data/Filters/PrismaRoleFilterAdapter";
-import { PgRoleMapper } from "Backoffice/Role/Infrastructure/Data/Mappers/PgRoleMapper";
+import { Role } from "Backoffice/Role/Domain/Entity/Role";
+import { RoleFilter } from "Backoffice/Role/Domain/Entity/RoleFilter";
+import { IRoleRepository } from "Backoffice/Role/Domain/Repository/IRoleRepository";
+import { PrismaRoleFilterAdapter } from "Backoffice/Role/Infrastructure/Data/Filter/PrismaRoleFilterAdapter";
+import { PgRoleMapper } from "Backoffice/Role/Infrastructure/Data/Mapper/PgRoleMapper";
 import { Left } from "Shared/Domain/Entities/Left";
 import { Right } from "Shared/Domain/Entities/Right";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";

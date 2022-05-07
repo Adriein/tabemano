@@ -1,8 +1,8 @@
 import { FindPricingQuery } from "Backoffice/Pricing/Application/FindPricing/FindPricingQuery";
 import { FindPricingResponse } from "Backoffice/Pricing/Application/FindPricing/FindPricingResponse";
-import { IPricingRepository } from "Backoffice/Pricing/Domain/Entities/IPricingRepository";
-import { Pricing } from "Backoffice/Pricing/Domain/Entities/Pricing";
-import { PricingFilter } from "Backoffice/Pricing/Domain/Entities/PricingFilter";
+import { IPricingRepository } from "Backoffice/Pricing/Domain/Entity/IPricingRepository";
+import { Pricing } from "Backoffice/Pricing/Domain/Entity/Pricing";
+import { PricingFilter } from "Backoffice/Pricing/Domain/Entity/PricingFilter";
 import { Log } from "Shared/Domain/Decorators/Log";
 import { QueryHandler } from "Shared/Domain/Decorators/QueryHandler.decorator";
 import { IQueryHandler } from "Shared/Domain/Interfaces/IQueryHandler";

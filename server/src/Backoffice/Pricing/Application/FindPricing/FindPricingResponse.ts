@@ -1,4 +1,4 @@
-import { Pricing } from "Backoffice/Pricing/Domain/Entities/Pricing";
+import { Pricing } from "Backoffice/Pricing/Domain/Entity/Pricing";
 
 
 export class FindPricingResponse {
