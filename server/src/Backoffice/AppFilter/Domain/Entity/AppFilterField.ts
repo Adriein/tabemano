@@ -4,7 +4,7 @@ import { ID } from "Shared/Domain/Vo/Id.vo";
 export class AppFilterField extends BaseEntity {
   constructor(
     _id: ID,
-    private _field: string,
+    private _name: string,
     private _type: string,
     private _values: string[],
     _createdAt: Date,
@@ -14,8 +14,8 @@ export class AppFilterField extends BaseEntity {
   }
 
 
-  public field(): string {
-    return this._field;
+  public name(): string {
+    return this._name;
   }
 
   public type(): string {

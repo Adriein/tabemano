@@ -4,8 +4,7 @@ export class FindAppFiltersQuery {
   }
 
   constructor(private _tenantId: string, private _entities: string[]) {}
-
-
+  
   public get tenantId(): string {
     return this._tenantId;
   }

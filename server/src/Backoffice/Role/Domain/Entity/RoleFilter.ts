@@ -1,6 +1,5 @@
 import { Filter } from "Shared/Domain/Entities/Filter";
 import { Pagination } from "Shared/Domain/Entities/Pagination";
-import { ID } from "Shared/Domain/Vo/Id.vo";
 import { RoleType } from "Shared/Domain/Vo/RoleType";
 
 export class RoleFilter implements Filter {
