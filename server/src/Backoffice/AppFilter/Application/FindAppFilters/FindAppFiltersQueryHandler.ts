@@ -1,7 +1,7 @@
 import { FindAppFiltersQuery } from "Backoffice/AppFilter/Application/FindAppFilters/FindAppFiltersQuery";
 import { FindFiltersResponse } from "Backoffice/AppFilter/Application/FindAppFilters/FindAppFiltersResponse";
 import { AppFilter } from "Backoffice/AppFilter/Domain/Entity/AppFilter";
-import { AppFilterField } from "Backoffice/AppFilter/Domain/Entity/AppFilterField";
+import { FilterableField } from "Backoffice/AppFilter/Domain/Entity/FilterableField";
 import { AppFilterFilter } from "Backoffice/AppFilter/Domain/Entity/AppFilterFilter";
 import { IAppFilterRepository } from "Backoffice/AppFilter/Domain/Repository/IAppFilterRepository";
 import { IQueryHandler } from "Shared/Domain/Interfaces/IQueryHandler";
@@ -43,7 +43,7 @@ export class FindAppFiltersQueryHandler implements IQueryHandler<FindFiltersResp
   }
 
   private buildResponseFields(appFilter: AppFilter): Record<string, string[]> {
-    return appFilter.field().reduce((response: Record<string, string[]>, field: AppFilterField) => {
+    return appFilter.field().reduce((response: Record<string, string[]>, field: FilterableField) => {
       return {
         ...response,
         [field.name()]: field.values()

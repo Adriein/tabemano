@@ -192,7 +192,6 @@ async function main() {
             af_id: ID.generate().value,
             af_entity: entity,
             af_field: detail.field,
-            af_type: detail.type,
             af_tenant_id: id,
             af_created_at: new Date(),
             af_updated_at: new Date()

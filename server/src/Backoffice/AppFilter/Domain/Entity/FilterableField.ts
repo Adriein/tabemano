@@ -1,11 +1,10 @@
 import { BaseEntity } from "Shared/Domain/Entities/BaseEntity";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 
-export class AppFilterField extends BaseEntity {
+export class FilterableField extends BaseEntity {
   constructor(
     _id: ID,
     private _name: string,
-    private _type: string,
     private _values: string[],
     _createdAt: Date,
     _updatedAt: Date
@@ -16,10 +15,6 @@ export class AppFilterField extends BaseEntity {
 
   public name(): string {
     return this._name;
-  }
-
-  public type(): string {
-    return this._type;
   }
 
   public values(): string[] {
