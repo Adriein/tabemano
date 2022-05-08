@@ -3,6 +3,8 @@ import { SignInQueryHandler } from "Authorization/Application/SignIn/SignInQuery
 import { PgAuthRepository } from "Authorization/Infrastructure/Data/Repositories/PgAuthRepository";
 import { FindTenantClientsQuery } from "Backoffice/Client/Application/FindTenantClients/FindTenantClientsQuery";
 import { FindTenantClientsQueryHandler } from "Backoffice/Client/Application/FindTenantClients/FindTenantClientsQueryHandler";
+import { GetClientProfileQuery } from "Backoffice/Client/Application/GetClientProfile/GetClientProfileQuery";
+import { GetClientProfileQueryHandler } from "Backoffice/Client/Application/GetClientProfile/GetClientProfileQueryHandler";
 import { PgClientRepository } from "Backoffice/Client/Infrastructure/Data/Repository/PgClientRepository";
 import { FindRoleQuery } from "Backoffice/Role/Application/FindRoleQuery";
 import { FindRoleQueryHandler } from "Backoffice/Role/Application/FindRoleQueryHandler";
@@ -50,6 +52,11 @@ export default class QueryHandlerFactory {
     this.handlers.set(
       FindTenantClientsQuery.name,
       new FindTenantClientsQueryHandler(this.clientRepository, this.subscriptionRepository, this.userFilterFactory)
+    );
+
+    this.handlers.set(
+      GetClientProfileQuery.name,
+      new GetClientProfileQueryHandler(this.clientRepository, this.subscriptionRepository)
     );
   }
 

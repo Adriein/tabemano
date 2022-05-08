@@ -1,4 +1,5 @@
 import { Config } from "Backoffice/Shared/Domain/Config/Config";
+import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";
 import { User } from "Backoffice/Shared/Domain/User/User";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
@@ -28,5 +29,17 @@ export class Client extends User {
     _updatedAt?: Date
   ) {
     super(_id, _name, _password, _email, _config, _tenantId, _roleId, _active, _createdAt, _updatedAt);
+  }
+
+  public moneySpent(subscriptions: Subscription[]): number {
+    return subscriptions.reduce((total, subscription: Subscription) => {
+      return total + subscription.price();
+    }, 0);
+  }
+
+  public monthlyRecurringRevenue(subscriptions: Subscription[]): number {
+    const spent = this.moneySpent(subscriptions);
+    
+    return spent > 0 && subscriptions.length > 1 ? spent / subscriptions.length : spent;
   }
 }

@@ -55,7 +55,7 @@ const TableHeader = () => {
   }
 
   const getEntities = (): { value: string, label: string }[] => {
-    return values.map((filter: Filter) => ({
+    return values?.map((filter: Filter) => ({
       value: filter.entity,
       label: StringHelper.firstLetterToUpperCase(filter.entity)
     }));

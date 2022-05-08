@@ -15,6 +15,12 @@ export class PrismaUserFilterAdapter extends PrismaAdapter<Prisma.ta_userFindMan
   public apply(): Prisma.ta_userFindManyArgs {
     const filters = this.filter.apply();
 
+    if (filters.has(UserFilter.ID_FILTER)) {
+      const id = filters.get(UserFilter.ID_FILTER) as ID;
+
+      this.add({ where: { us_id: id.value } });
+    }
+
     if (filters.has(UserFilter.TENANT_ID_FILTER)) {
       const tenantId = filters.get(UserFilter.TENANT_ID_FILTER) as ID;
 

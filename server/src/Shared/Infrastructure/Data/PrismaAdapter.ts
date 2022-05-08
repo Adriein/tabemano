@@ -1,4 +1,5 @@
 import { merge } from "merge-anything";
+import { Order } from "Shared/Domain/Entities/Order";
 import { Pagination } from "Shared/Domain/Entities/Pagination";
 
 export abstract class PrismaAdapter<T> {

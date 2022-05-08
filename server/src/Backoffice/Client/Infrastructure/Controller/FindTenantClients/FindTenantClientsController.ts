@@ -20,7 +20,7 @@ export class FindTenantClientsController extends BaseController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const query = FindTenantClientsQuery.fromJson(req.body);
+      const query = FindTenantClientsQuery.fromJson(req);
 
       const clients = await this.queryBus.ask<FindTenantClientsResponse[]>(query);
 

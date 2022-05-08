@@ -1,20 +1,26 @@
 import { Filter } from "Shared/Domain/Entities/Filter";
-import { Pagination } from "Shared/Domain/Entities/Pagination";
+import { Order } from "Shared/Domain/Entities/Order";
+import { ID } from "Shared/Domain/Vo/Id.vo";
 
-export class SubscriptionFilter implements Filter {
+export class SubscriptionFilter extends Filter {
+  public static CREATION_DATE_FILTER = 'createdAt';
   public static ACTIVE_FILTER = 'isActive';
+  public static CLIENT_ID_FILTER = 'clientId';
 
-  private data: Map<string, any> = new Map();
+  protected data: Map<string, any> = new Map();
 
   public isActive(isActive: boolean): this {
     this.data.set(SubscriptionFilter.ACTIVE_FILTER, isActive);
     return this;
   }
 
-  public paginate(): Pagination {
-    const pagination = new Pagination();
-    this.data.set(Pagination.PAGINATION_FILTER, pagination);
-    return pagination;
+  public withClientId(id: ID): this {
+    this.data.set(SubscriptionFilter.CLIENT_ID_FILTER, id);
+    return this;
+  }
+
+  public orderByCreationDate(): Order {
+    return this.orderBy(SubscriptionFilter.CREATION_DATE_FILTER);
   }
 
   public apply(): Map<string, any> {

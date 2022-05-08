@@ -102,7 +102,7 @@ model ta_app_filter {
     af_tenant_id String
     af_entity String
     af_field String
-    af_type String
+    af_values String[]
     af_created_at DateTime @db.Timestamp(0)
     af_updated_at DateTime @db.Timestamp(0)
 }

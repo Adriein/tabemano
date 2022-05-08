@@ -3,7 +3,7 @@ import { IQuery } from "Shared/Domain/Interfaces/IQuery";
 
 export class FindTenantClientsQuery implements IQuery {
   public static fromJson(json: any): FindTenantClientsQuery {
-    return new FindTenantClientsQuery(json.tenantId, json.page, json.quantity, json.filters);
+    return new FindTenantClientsQuery(json.currentUser.id, json.body.page, json.body.quantity, json.body.filters);
   }
 
   constructor(

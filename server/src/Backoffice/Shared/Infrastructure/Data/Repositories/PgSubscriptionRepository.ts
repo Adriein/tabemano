@@ -18,8 +18,14 @@ export class PgSubscriptionRepository implements ISubscriptionRepository {
     return Promise.resolve(undefined);
   }
 
-  find(filter: SubscriptionFilter): Promise<Either<Error, Subscription[]>> {
-    throw new Error();
+  public async find(filter: SubscriptionFilter): Promise<Either<Error, Subscription[]>> {
+    return await this.database.execute<Subscription[]>(async (connection: PrismaClient) => {
+      const adapter = new PrismaSubscriptionFilterAdapter(filter);
+
+      const results = await connection.ta_subscription.findMany(adapter.apply());
+
+      return Right.success(results.map((result: any) => this.mapper.toDomain(result)))
+    });
   }
 
   public async findOne(filter: SubscriptionFilter): Promise<Either<Error, Subscription>> {

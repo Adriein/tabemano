@@ -15,6 +15,6 @@ export const fetchClientProfile = (dispatch: Dispatch<ActionProps<FetchClientPro
 
     const response = await api.get<FetchClientProfileResponse>(`/client/${clientId}/profile`);
 
-    dispatch({ type: FETCH_CLIENT_PROFILE_ACTION, payload: { clientProfile: response.data } });
+    dispatch({ type: FETCH_CLIENT_PROFILE_ACTION, payload: { clientProfile: response.data[0] } });
   };
 };
