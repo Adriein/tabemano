@@ -161,25 +161,25 @@ async function main() {
     }
   });
 
-  const ENTITIES: Record<string, { field: string, type: string }[]> = {
+  const ENTITIES: Record<string, { field: string, values: string[] }[]> = {
     user: [
-      { field: 'active', type: 'boolean' }
+      { field: 'active', values: [ 'true', 'false' ] }
     ],
     subscription: [
-      { field: 'payment_date', type: 'date' },
-      { field: 'valid_to', type: 'date' },
-      { field: 'active', type: 'boolean' },
-      { field: 'expired', type: 'boolean' },
+      { field: 'payment_date', values: [] },
+      { field: 'valid_to', values: [] },
+      { field: 'active', values: [ 'true', 'false' ] },
+      { field: 'expired', values: [ 'true', 'false' ] },
     ],
     config: [
-      { field: 'language', type: 'string' },
-      { field: 'send_notifications', type: 'boolean' },
-      { field: 'send_warnings', type: 'boolean' },
+      { field: 'language', values: [ 'ES', 'EN' ] },
+      { field: 'send_notifications', values: [ 'true', 'false' ] },
+      { field: 'send_warnings', values: [ 'true', 'false' ] },
     ],
     pricing: [
-      { field: 'pricing_name', type: 'string' },
-      { field: 'duration', type: 'number' },
-      { field: 'amount', type: 'number' },
+      { field: 'pricing_name', values: [ yearly.pr_name, monthly.pr_name, quarterly.pr_name ] },
+      { field: 'duration', values: [ `${yearly.pr_duration}`, `${monthly.pr_duration}`, `${quarterly.pr_duration}` ] },
+      { field: 'amount', values: [ `${yearly.pr_price}`, `${monthly.pr_price}`, `${quarterly.pr_price}` ] },
     ],
 
   }
@@ -192,6 +192,7 @@ async function main() {
             af_id: ID.generate().value,
             af_entity: entity,
             af_field: detail.field,
+            af_values: detail.values,
             af_tenant_id: id,
             af_created_at: new Date(),
             af_updated_at: new Date()

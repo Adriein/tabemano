@@ -1,6 +1,9 @@
 import { SignInQuery } from "Authorization/Application/SignIn/SignInQuery";
 import { SignInQueryHandler } from "Authorization/Application/SignIn/SignInQueryHandler";
 import { PgAuthRepository } from "Authorization/Infrastructure/Data/Repositories/PgAuthRepository";
+import { FindAppFiltersQuery } from "Backoffice/AppFilter/Application/FindAppFilters/FindAppFiltersQuery";
+import { FindAppFiltersQueryHandler } from "Backoffice/AppFilter/Application/FindAppFilters/FindAppFiltersQueryHandler";
+import { PgAppFilterRepository } from "Backoffice/AppFilter/Infrastructure/Data/Repository/PgAppFilterRepository";
 import { FindTenantClientsQuery } from "Backoffice/Client/Application/FindTenantClients/FindTenantClientsQuery";
 import { FindTenantClientsQueryHandler } from "Backoffice/Client/Application/FindTenantClients/FindTenantClientsQueryHandler";
 import { GetClientProfileQuery } from "Backoffice/Client/Application/GetClientProfile/GetClientProfileQuery";
@@ -23,6 +26,7 @@ export default class QueryHandlerFactory {
   private subscriptionRepository = new PgSubscriptionRepository();
   private authRepository = new PgAuthRepository();
   private roleRepository = new PgRoleRepository();
+  private appFilterRepository = new PgAppFilterRepository();
   private cryptoService: CryptoService = new CryptoService();
 
   private userFilterFactory = new UserFilterFactory();
@@ -57,6 +61,11 @@ export default class QueryHandlerFactory {
     this.handlers.set(
       GetClientProfileQuery.name,
       new GetClientProfileQueryHandler(this.clientRepository, this.subscriptionRepository)
+    );
+
+    this.handlers.set(
+      FindAppFiltersQuery.name,
+      new FindAppFiltersQueryHandler(this.appFilterRepository)
     );
   }
 

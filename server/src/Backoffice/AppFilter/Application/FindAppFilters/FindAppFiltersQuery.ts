@@ -1,10 +1,10 @@
 export class FindAppFiltersQuery {
-  public static fromJson(json: any): FindAppFiltersQuery {
-    return new FindAppFiltersQuery(json.tenantId, json.entities);
+  public static fromRequest(json: any): FindAppFiltersQuery {
+    return new FindAppFiltersQuery(json.currentUser.id, json.entities);
   }
 
   constructor(private _tenantId: string, private _entities: string[]) {}
-  
+
   public get tenantId(): string {
     return this._tenantId;
   }

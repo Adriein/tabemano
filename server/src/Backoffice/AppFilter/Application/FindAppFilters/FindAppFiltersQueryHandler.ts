@@ -4,9 +4,11 @@ import { AppFilter } from "Backoffice/AppFilter/Domain/Entity/AppFilter";
 import { FilterableField } from "Backoffice/AppFilter/Domain/Entity/FilterableField";
 import { AppFilterFilter } from "Backoffice/AppFilter/Domain/Entity/AppFilterFilter";
 import { IAppFilterRepository } from "Backoffice/AppFilter/Domain/Repository/IAppFilterRepository";
+import { QueryHandler } from "Shared/Domain/Decorators/QueryHandler.decorator";
 import { IQueryHandler } from "Shared/Domain/Interfaces/IQueryHandler";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 
+@QueryHandler(FindAppFiltersQuery)
 export class FindAppFiltersQueryHandler implements IQueryHandler<FindFiltersResponse[]> {
   constructor(private readonly repository: IAppFilterRepository) {}
 
