@@ -37,4 +37,8 @@ export class AppFilter extends AggregateRoot {
   public field(): FilterableField[] {
     return this._field;
   }
+
+  public createField(name: string, values: string[]): void {
+    this._field.push(FilterableField.build(name, values));
+  }
 }

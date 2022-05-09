@@ -23,7 +23,7 @@ export class PgAppFilterRepository implements IAppFilterRepository {
 
       const results = await connection.ta_app_filter.findMany(adapter.apply());
 
-      return Right.success(results.map((result: any) => this.mapper.toDomain(result)));
+      return Right.success(this.mapper.toDomain(results));
     });
   }
 
