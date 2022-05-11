@@ -19,9 +19,9 @@ export class FindAppFiltersController extends BaseController {
   ) {
     try {
       const query = FindAppFiltersQuery.fromRequest(req);
-      const result = await this.queryBus.ask<FindFiltersResponse>(query);
+      const results = await this.queryBus.ask<FindFiltersResponse[]>(query);
 
-      res.status(200).send(result);
+      res.status(200).send(results.map((result: FindFiltersResponse) => result.serialize()));
     } catch (error) {
       next(error);
     }
