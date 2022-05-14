@@ -15,7 +15,8 @@ export class FindFiltersResponse implements Serializable {
 
   public serialize() {
     return {
-      [this._entity]: this._fields
+      entity: this._entity,
+      fields: this._fields
     }
   }
 }

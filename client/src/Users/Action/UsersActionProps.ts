@@ -1,5 +1,6 @@
 import { Dispatch } from "react";
 import { ActionProps } from "../../Shared/Action/ActionProps";
+import { removeFilter } from "../../Shared/Action/Filter/removeFilter";
 import { FetchClientListRequest } from "./FetchClientList/FetchClientListRequest";
 import { FilterProps } from "../../Shared/Action/Filter/FilterProps";
 import { FetchClientProfileRequest } from "./FetchClientProfile/FetchClientProfileRequest";
@@ -18,6 +19,8 @@ export interface UsersActionProps {
   }: FetchClientProfileRequest) => Promise<void>;
 
   addFilter: (dispatch: Dispatch<ActionProps>) => (filter: FilterProps) => void;
+
+  removeFilter: (dispatch: Dispatch<ActionProps>) => (filter: FilterProps) => void;
 
   updateClient: (dispatch: Dispatch<ActionProps>) => (payload: UpdateClientRequest) => Promise<void>;
 

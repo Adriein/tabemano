@@ -10,5 +10,5 @@ export type FetchClientProfilePayload = {
   clientProfile: Client;
 }
 
-export type FilterForm = { entity: string, fields: { value: string, label: string }[], operations: { value: string, label: string }[], values: { value: string, label: string }[] };
-export type SelectedFilterForm = { entity: string, field: string, operation: string, value: string };
+export type FilterForm = { entity: string, fields: { value: string, label: string }[], values: { value: string, label: string }[] };
+export type SelectedFilterForm = { entity: string, field: string, value: string };

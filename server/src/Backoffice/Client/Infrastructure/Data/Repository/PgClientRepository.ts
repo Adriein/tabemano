@@ -21,7 +21,7 @@ export class PgClientRepository implements IClientRepository {
   public async find(filter: UserFilter): Promise<Either<Error, Client[]>> {
     return await this.database.execute<Client[]>(async (connection: PrismaClient) => {
       const adapter = new PrismaUserFilterAdapter(filter);
-
+      console.log(JSON.stringify(adapter.apply(), null, 2))
       const results = await connection.ta_user.findMany(adapter.apply());
 
       return Right.success(results.map((result: any) => this.mapper.toDomain(result)));
@@ -48,6 +48,19 @@ export class PgClientRepository implements IClientRepository {
 
   update(entity: Client): Promise<void> {
     return Promise.resolve(undefined);
+  }
+
+  public async count(): Promise<Either<Error, number>> {
+    return await this.database.execute<number>(async (connection: PrismaClient) => {
+      const result: any = await connection.ta_user.count();
+
+      if (!result) {
+        return Left.error(new RecordNotFoundError());
+      }
+
+      return Right.success(result)
+    })
+      ;
   }
 
 }

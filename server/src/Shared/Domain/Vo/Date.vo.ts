@@ -7,6 +7,11 @@ export class DateVo extends ValueObject {
     return new DateVo(new Date());
   }
 
+
+  public static formatDB(date: DateVo): string {
+    return Time.format(date.value, Time.AMERICAN_DATE_FORMAT)
+  }
+
   private readonly _date: Date;
   private regex = new RegExp(
     '([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})'

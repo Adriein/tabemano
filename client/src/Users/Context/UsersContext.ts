@@ -1,3 +1,4 @@
+import { removeFilter } from "../../Shared/Action/Filter/removeFilter";
 import createDataContext from "../../Shared/Context/createDataContext";
 import { UserStateProps } from "./UserStateProps";
 import { usersReducer } from "./usersReducer";
@@ -13,6 +14,6 @@ export const {
   Context: UsersContext,
 } = createDataContext<UserStateProps, UsersActionProps>(
   usersReducer,
-  { fetchClientList, addFilter, fetchClientProfile, updateClient, renewSubscription },
+  { fetchClientList, addFilter, removeFilter, fetchClientProfile, updateClient, renewSubscription },
   { clientList: [], isLoading: false, filters: [], totalUsers: 0, clientProfile: undefined }
 );

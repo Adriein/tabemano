@@ -1,4 +1,5 @@
 import { ActionProps } from "../../Shared/Action/ActionProps";
+import { removeFilterReducer } from "../../Shared/Reducers/removeFilterReducer";
 import { UserStateProps } from "./UserStateProps";
 import {
   FETCH_CLIENT_LIST_ACTION,
@@ -6,7 +7,7 @@ import {
   RENEW_SUBSCRIPTION_ACTION,
   UPDATE_CLIENT_ACTION
 } from "../constants";
-import { ADD_FILTER_ACTION, ASYNC_ACTION } from "../../Shared/constants";
+import { ADD_FILTER_ACTION, ASYNC_ACTION, REMOVE_FILTER_ACTION } from "../../Shared/constants";
 import { fetchClientListReducer } from "./fetchClientListReducer";
 import { initAsyncAction } from "../../Shared/Reducers/InitAsyncActionReducer";
 import { addFilterReducer } from "../../Shared/Reducers/addFilterReducer";
@@ -23,7 +24,9 @@ export const usersReducer = (state: UserStateProps, action: ActionProps): UserSt
     case FETCH_CLIENT_LIST_ACTION:
       return fetchClientListReducer(state, action as ActionProps<FetchClientListPayload>);
     case ADD_FILTER_ACTION:
-      return addFilterReducer(state, action as ActionProps<FilterProps>);
+      return addFilterReducer(state, action as ActionProps<FilterProps>)
+    case REMOVE_FILTER_ACTION:
+      return removeFilterReducer(state, action as ActionProps<FilterProps>)
     case FETCH_CLIENT_PROFILE_ACTION:
       return fetchClientProfileReducer(state, action as ActionProps<FetchClientProfilePayload>);
     case UPDATE_CLIENT_ACTION:

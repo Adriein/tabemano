@@ -7,6 +7,10 @@ export class SubscriptionFilter extends Filter {
   public static ACTIVE_FILTER = 'isActive';
   public static CLIENT_ID_FILTER = 'clientId';
 
+  public static builder(): SubscriptionFilter {
+    return new SubscriptionFilter();
+  };
+
   protected data: Map<string, any> = new Map();
 
   public isActive(isActive: boolean): this {

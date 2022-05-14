@@ -6,6 +6,7 @@ import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { RoleType } from "Shared/Domain/Vo/RoleType";
 import { PrismaAdapter } from "Shared/Infrastructure/Data/PrismaAdapter";
+import { Time } from "Shared/Infrastructure/Helper/Time";
 
 export class PrismaUserFilterAdapter extends PrismaAdapter<Prisma.ta_userFindManyArgs> {
   constructor(private readonly filter: UserFilter) {
@@ -51,16 +52,44 @@ export class PrismaUserFilterAdapter extends PrismaAdapter<Prisma.ta_userFindMan
       this.add({ where: { us_subscriptions: { some: { su_is_active: isSubscriptionActive } } } });
     }
 
+    if (filters.has(UserFilter.SUBSCRIPTION_IS_EXPIRED_FILTER)) {
+      const isSubscriptionExpired = filters.get(UserFilter.SUBSCRIPTION_IS_EXPIRED_FILTER) as boolean;
+
+      this.add({ where: { us_subscriptions: { some: { su_is_expired: isSubscriptionExpired } } } });
+    }
+
     if (filters.has(UserFilter.SUBSCRIPTION_PAYMENT_DATE_FILTER)) {
       const paymentDate = filters.get(UserFilter.SUBSCRIPTION_PAYMENT_DATE_FILTER) as DateVo;
 
-      this.add({ where: { us_subscriptions: { some: { su_payment_date: paymentDate.value } } } });
+      this.add({
+        where: {
+          us_subscriptions: {
+            some: {
+              su_payment_date: {
+                gte: paymentDate.value,
+                lte: Time.add(paymentDate.value, 1)
+              }
+            }
+          }
+        }
+      });
     }
 
     if (filters.has(UserFilter.SUBSCRIPTION_VALID_TO_FILTER)) {
       const validTo = filters.get(UserFilter.SUBSCRIPTION_VALID_TO_FILTER) as DateVo;
 
-      this.add({ where: { us_subscriptions: { some: { su_valid_to: validTo.value } } } });
+      this.add({
+        where: {
+          us_subscriptions: {
+            some: {
+              su_valid_to: {
+                gte: validTo.value,
+                lte: Time.add(validTo.value, 1)
+              }
+            }
+          }
+        }
+      });
     }
 
     if (filters.has(UserFilter.SUBSCRIPTION_AMOUNT_FILTER)) {

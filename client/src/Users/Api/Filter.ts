@@ -5,7 +5,10 @@ const api = ApiService.instance();
 
 export const FilterCall = {
   async getClientTableFilters(): Promise<Filter[]> {
-    const response = await api.get<{ data: Filter[] }>('/filter');
+    const response = await api.post<{ data: Filter[] }, { entities: string[] }>(
+      '/filter',
+      { entities: [ 'user', 'config', 'pricing', 'subscription' ] }
+    );
 
     return response.data;
   }

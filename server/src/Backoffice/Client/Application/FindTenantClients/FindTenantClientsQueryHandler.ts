@@ -38,9 +38,10 @@ export class FindTenantClientsQueryHandler implements IQueryHandler<FindTenantCl
     return result.value;
   }
 
-  private async getActiveSubscription(): Promise<Subscription> {
-    const filter = new SubscriptionFilter();
-    filter.isActive(true);
+  private async getActiveSubscription(client: Client): Promise<Subscription> {
+    const filter = SubscriptionFilter.builder()
+      .isActive(true)
+      .withClientId(client.id());
 
     const result = await this.subscriptionRepository.findOne(filter);
 
@@ -55,7 +56,7 @@ export class FindTenantClientsQueryHandler implements IQueryHandler<FindTenantCl
     const response = [];
 
     for (const client of list) {
-      const subscription = await this.getActiveSubscription();
+      const subscription = await this.getActiveSubscription(client);
 
       response.push(FindTenantClientsResponse.build(client, subscription))
     }

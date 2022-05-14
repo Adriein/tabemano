@@ -1,5 +1,6 @@
 import { FindAppFiltersQuery } from "Backoffice/AppFilter/Application/FindAppFilters/FindAppFiltersQuery";
 import { FindFiltersResponse } from "Backoffice/AppFilter/Application/FindAppFilters/FindAppFiltersResponse";
+import { TabemanoResponse } from "Backoffice/Shared/Domain/TabemanoResponse";
 import { NextFunction, Request, Response } from "express";
 import { BaseController } from "Shared/Infrastructure/BaseController";
 import { Controller } from "Shared/Infrastructure/Decorators/controller";
@@ -21,7 +22,9 @@ export class FindAppFiltersController extends BaseController {
       const query = FindAppFiltersQuery.fromRequest(req);
       const results = await this.queryBus.ask<FindFiltersResponse[]>(query);
 
-      res.status(200).send(results.map((result: FindFiltersResponse) => result.serialize()));
+      const response = TabemanoResponse.build(results);
+
+      res.status(200).send(response.serialize());
     } catch (error) {
       next(error);
     }
