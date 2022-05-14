@@ -1,7 +1,6 @@
 import { CheckExpiredSubscriptionsCommand } from "Backoffice/Client/Application/CheckExpiredSubscriptions/CheckExpiredSubscriptionsCommand";
 import { Client } from "Backoffice/Client/Domain/Entity/Client";
 import { IClientRepository } from "Backoffice/Client/Domain/Repository/IClientRepository";
-import { CHECK_FOR_EXPIRED_CLIENT_SUBSCRIPTION_JOB } from "Backoffice/Shared/constants";
 import { BackgroundJob } from "Backoffice/Shared/Domain/BackgroundJob/BackgroundJob";
 import { IBackgroundJobRepository } from "Backoffice/Shared/Domain/BackgroundJob/IBackgroundJobRepository";
 import { ISubscriptionRepository } from "Backoffice/Shared/Domain/Subscription/ISubscriptionRepository";
