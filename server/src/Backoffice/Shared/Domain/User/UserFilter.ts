@@ -20,6 +20,10 @@ export class UserFilter extends Filter {
   public static SUBSCRIPTION_IS_ACTIVE_FILTER = 'subscriptionIsActive';
   public static SUBSCRIPTION_IS_EXPIRED_FILTER = 'subscriptionIsExpired';
 
+  public static builder(): UserFilter {
+    return new UserFilter();
+  }
+
   protected data: Map<string, any> = new Map();
 
   public withId(id: ID): this {

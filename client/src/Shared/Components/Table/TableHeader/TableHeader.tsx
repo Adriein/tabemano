@@ -140,10 +140,12 @@ const TableHeader = () => {
           <Group position="right">
             <Popover
               closeOnClickOutside
+              closeOnEscape
               title="Manage Filters"
               position="bottom"
               placement="end"
               opened={open}
+              onClose={() => toggle()}
               target={
                 <ActionIcon
                   color="dark"

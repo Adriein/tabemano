@@ -92,12 +92,14 @@ export class Subscription extends AggregateRoot {
     this._events.add(event);
   }
 
-  public checkIsExpired = (pricingDuration: number): void => {
-    const expirationDate = Subscription.expirationDate(this._lastPayment, pricingDuration);
-    if (Time.equal(Time.now(), expirationDate.value)) {
-      this._isExpired = true;
-      this.addEventToHistory(SubscriptionEvent.build(SUBSCRIPTION_STATUS.EXPIRED));
-    }
+  public checkIsExpired = (): boolean => {
+    const expirationDate = Subscription.expirationDate(this._lastPayment, this._pricing.duration());
+    return Time.equal(Time.now(), expirationDate.value);
+  }
+
+  public makeExpired(): void {
+    this._isExpired = true;
+    this.addEventToHistory(SubscriptionEvent.build(SUBSCRIPTION_STATUS.EXPIRED));
   }
 
   public checkIsAboutToExpire = (daysToWarn: number | undefined = 5): void => {
@@ -109,7 +111,6 @@ export class Subscription extends AggregateRoot {
     if (isAboutToExpire) {
       //this.addEvent(new SendAboutToExpireEmailDomainEvent(this.id(), this.userId()));
       this.addEventToHistory(SubscriptionEvent.build(SUBSCRIPTION_STATUS.ABOUT_TO_EXPIRE));
-      DomainEventsManager.publishEvents(this.id());
     }
   };
 

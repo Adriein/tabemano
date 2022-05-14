@@ -111,13 +111,13 @@ export class PrismaUserFilterAdapter extends PrismaAdapter<Prisma.ta_userFindMan
     }
 
     if (filters.has(UserFilter.CONFIG_ALLOW_SEND_NOTIFICATIONS_FILTER)) {
-      const sendNotifications = filters.get(UserFilter.SUBSCRIPTION_PRICING_NAME_FILTER) as boolean;
+      const sendNotifications = filters.get(UserFilter.CONFIG_ALLOW_SEND_NOTIFICATIONS_FILTER) as boolean;
 
       this.add({ where: { us_config: { co_send_notifications: sendNotifications } } });
     }
 
     if (filters.has(UserFilter.CONFIG_ALLOW_SEND_WARNINGS_FILTER)) {
-      const sendWarnings = filters.get(UserFilter.SUBSCRIPTION_PRICING_NAME_FILTER) as boolean;
+      const sendWarnings = filters.get(UserFilter.CONFIG_ALLOW_SEND_WARNINGS_FILTER) as boolean;
 
       this.add({ where: { us_config: { co_send_warnings: sendWarnings } } });
     }

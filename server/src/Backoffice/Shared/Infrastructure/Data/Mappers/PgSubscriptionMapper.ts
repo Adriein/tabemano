@@ -75,8 +75,32 @@ export class PgSubscriptionMapper {
     }
   }
 
-  public toUpdateDataModel(domain: any): any {
-    return undefined;
+  public toUpdateDataModel(entity: Subscription): Prisma.ta_subscriptionUpdateInput {
+    return {
+      su_id: entity.id().value,
+      su_price_name: entity.pricingName(),
+      su_duration: entity.duration(),
+      su_price: entity.price(),
+      su_is_active: entity.isActive(),
+      su_is_expired: entity.isExpired(),
+      su_payment_date: entity.paymentDate(),
+      su_valid_to: entity.validTo(),
+      su_created_at: entity.createdAt(),
+      su_updated_at: entity.updatedAt(),
+      su_pricing: {
+        connect: {
+          pr_id: entity.pricingId().value
+        }
+      },
+      su_user: {
+        connect: {
+          us_id: entity.userId().value
+        }
+      },
+      su_events: {
+        connectOrCreate: this.subscriptionHistoryCreate(entity)
+      }
+    }
   }
 
   private subscriptionHistoryCreate(domain: Subscription) {

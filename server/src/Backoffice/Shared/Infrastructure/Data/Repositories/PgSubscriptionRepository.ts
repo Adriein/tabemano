@@ -50,8 +50,15 @@ export class PgSubscriptionRepository implements ISubscriptionRepository {
     });
   }
 
-  update(entity: Subscription): Promise<void> {
-    return Promise.resolve(undefined);
+  public async update(entity: Subscription): Promise<void> {
+    await this.database.execute<void>(async (connection: PrismaClient) => {
+      await connection.ta_subscription.update({
+        data: this.mapper.toUpdateDataModel(entity),
+        where: { su_id: entity.id().value }
+      });
+
+      return Right.success({});
+    });
   }
 
 }
