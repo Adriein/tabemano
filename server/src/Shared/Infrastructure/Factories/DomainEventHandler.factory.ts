@@ -1,9 +1,12 @@
 import { TenantCreatedDomainEvent } from "Authorization/Application/RegisterTenant/TenantCreatedDomainEvent";
+import { CreateClientDomainEventHandler } from "Backoffice/Client/Application/CreateClient/CreateClientDomainEventHandler";
+import { PgClientRepository } from "Backoffice/Client/Infrastructure/Data/Repository/PgClientRepository";
 import { CreateDefaultTenantPricesDomainEventHandler } from "Backoffice/Pricing/Application/CreateDefaultTenantPrices/CreateDefaultTenantPricesDomainEventHandler";
 import { PgPricingRepository } from "Backoffice/Pricing/Infrastructure/Data/Repository/PgPricingRepository";
 import { PgSubscriptionRepository } from "Backoffice/Shared/Infrastructure/Data/Repositories/PgSubscriptionRepository";
 import { CreateTenantDomainEventHandler } from "Backoffice/Tenant/Application/CreateTenant/CreateTenantDomainEventHandler";
 import { DefaultPricesCreatedDomainEvent } from "Backoffice/Tenant/Application/CreateTenant/DefaultPricesCreatedDomainEvent";
+import { ClientCreatedDomainEvent } from "Backoffice/Tenant/Application/RegisterClient/ClientCreatedDomainEvent";
 import { PgTenantRepository } from "Backoffice/Tenant/Infrastructure/Data/Repository/PgTenantRepository";
 import { IDomainEventHandler } from '../../Domain/Interfaces/IDomainEventHandler';
 import { ConstructorFunc } from '../../Domain/types';
@@ -12,6 +15,7 @@ export default class DomainEventHandlerFactory {
   private handlers: Map<string, IDomainEventHandler> = new Map();
 
   private readonly tenantRepository = new PgTenantRepository();
+  private readonly clientRepository = new PgClientRepository();
   private readonly pricingRepository = new PgPricingRepository();
   private readonly subscriptionRepository = new PgSubscriptionRepository();
 
@@ -40,6 +44,12 @@ export default class DomainEventHandlerFactory {
       DefaultPricesCreatedDomainEvent.name,
       new CreateDefaultTenantPricesDomainEventHandler(this.pricingRepository)
     );
+
+    this.handlers.set(
+      ClientCreatedDomainEvent.name,
+      new CreateClientDomainEventHandler(this.clientRepository, this.subscriptionRepository)
+    );
+
   }
 
   public getContainer(): Map<string, IDomainEventHandler> {

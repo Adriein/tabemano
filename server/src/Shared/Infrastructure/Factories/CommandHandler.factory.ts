@@ -6,6 +6,9 @@ import { CheckExpiredSubscriptionsCommandHandler } from "Backoffice/Client/Appli
 import { PgClientRepository } from "Backoffice/Client/Infrastructure/Data/Repository/PgClientRepository";
 import { PgBackgroundJobRepository } from "Backoffice/Shared/Infrastructure/Data/Repositories/PgBackgroundJobRepository";
 import { PgSubscriptionRepository } from "Backoffice/Shared/Infrastructure/Data/Repositories/PgSubscriptionRepository";
+import { RegisterClientCommand } from "Backoffice/Tenant/Application/RegisterClient/RegisterClientCommand";
+import { RegisterClientCommandHandler } from "Backoffice/Tenant/Application/RegisterClient/RegisterClientCommandHandler";
+import { PgTenantRepository } from "Backoffice/Tenant/Infrastructure/Data/Repository/PgTenantRepository";
 import { CryptoService } from "Shared/Domain/Services/CryptoService";
 import { QueryBus } from "Shared/Infrastructure/Bus/QueryBus";
 import { ICommandHandler } from "../../Domain/Interfaces/ICommandHandler";
@@ -17,6 +20,7 @@ export default class CommandHandlerFactory {
   private authRepository = new PgAuthRepository();
   private cryptoService = new CryptoService();
   private clientRepository = new PgClientRepository();
+  private tenantRepository = new PgTenantRepository();
   private backgroundJobRepository = new PgBackgroundJobRepository();
   private subscriptionRepository = new PgSubscriptionRepository();
 
@@ -41,6 +45,7 @@ export default class CommandHandlerFactory {
       new RegisterTenantCommandHandler(this.authRepository, QueryBus.instance(), this.cryptoService)
     );
 
+    //Cron
     this.handlers.set(
       CheckExpiredSubscriptionsCommand.name,
       new CheckExpiredSubscriptionsCommandHandler(
@@ -48,6 +53,12 @@ export default class CommandHandlerFactory {
         this.subscriptionRepository,
         this.backgroundJobRepository
       )
+    );
+
+    //Tenant
+    this.handlers.set(
+      RegisterClientCommand.name,
+      new RegisterClientCommandHandler(this.tenantRepository)
     );
   }
 
