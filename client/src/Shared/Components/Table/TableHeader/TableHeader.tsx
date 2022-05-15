@@ -1,5 +1,6 @@
 import { DatePicker } from "@mantine/dates";
 import React, { ChangeEvent, useContext, useEffect, useMemo, useState } from 'react';
+import CreateUserForm from "../../../../Users/Components/Table/CreateUser/CreateUserForm";
 import { StyledContainer } from './Styles';
 import { FiSearch, FiPlus, FiX } from 'react-icons/fi';
 import { IoIosOptions } from 'react-icons/io';
@@ -7,7 +8,7 @@ import { useForm, formList } from '@mantine/form';
 
 import { UsersContext } from "../../../../Users/Context/UsersContext";
 
-import { ActionIcon, TextInput, Button, Select, Grid, Group, Popover } from '@mantine/core';
+import { ActionIcon, TextInput, Button, Select, Grid, Group, Popover, Modal } from '@mantine/core';
 import { debounce } from "lodash";
 import { useToggle } from "../../../Hooks/useToggle";
 import { FilterCall } from "../../../../Users/Api/Filter";
@@ -22,7 +23,8 @@ const TableHeader = () => {
 
   const [ search, setSearch ] = useState('')
   const [ query, setQuery ] = useState('');
-  const [ open, toggle ] = useToggle(false);
+  const [ openFilter, toggleFilter ] = useToggle(false);
+  const [ openCreateUser, toggleOpenCreateUser ] = useToggle(false);
 
   const existingFilter = useForm({
     initialValues: {
@@ -144,14 +146,14 @@ const TableHeader = () => {
               title="Manage Filters"
               position="bottom"
               placement="end"
-              opened={open}
-              onClose={() => toggle()}
+              opened={openFilter}
+              onClose={() => toggleFilter()}
               target={
                 <ActionIcon
                   color="dark"
                   variant="default"
                   size="lg"
-                  onClick={toggle}
+                  onClick={toggleFilter}
                 >
                   <IoIosOptions/>
                 </ActionIcon>
@@ -238,7 +240,15 @@ const TableHeader = () => {
                 </Grid.Col>
               </Grid>
             </Popover>
-            <Button variant={'default'} leftIcon={<FiPlus/>}>
+            <Modal
+              centered
+              opened={openCreateUser}
+              onClose={toggleOpenCreateUser}
+              title={t('clients:create_user')}
+            >
+              <CreateUserForm/>
+            </Modal>
+            <Button variant={'default'} leftIcon={<FiPlus/>} onClick={toggleOpenCreateUser}>
               {t('clients:create_user')}
             </Button>
           </Group>

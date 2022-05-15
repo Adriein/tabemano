@@ -2,6 +2,7 @@ import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
 import { RegisterClientCommand } from "Backoffice/Tenant/Application/RegisterClient/RegisterClientCommand";
 import { ITenantRepository } from "Backoffice/Tenant/Domain/Repository/ITenantRepository";
 import { CommandHandler } from "Shared/Domain/Decorators/CommandHandler.decorator";
+import { Log } from "Shared/Domain/Decorators/Log";
 import { ICommandHandler } from "Shared/Domain/Interfaces/ICommandHandler";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
@@ -11,6 +12,7 @@ import { Name } from "Shared/Domain/Vo/Name.vo";
 export class RegisterClientCommandHandler implements ICommandHandler {
   constructor(private readonly repository: ITenantRepository) {}
 
+  @Log()
   public async handle(command: RegisterClientCommand): Promise<void> {
     const tenantId = new ID(command.tenantId);
     const name = new Name(command.name);

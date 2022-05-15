@@ -1,13 +1,13 @@
 import { IQuery } from "Shared/Domain/Interfaces/IQuery";
 
 export class FindPricingQuery implements IQuery {
-  public static fromJson(json: any): FindPricingQuery {
-    return new FindPricingQuery(json.name);
+  public static fromRequest(req: any): FindPricingQuery {
+    return new FindPricingQuery(req.currentUser.id);
   }
 
-  constructor(private readonly _name: string) {}
+  constructor(private readonly _tenantId: string) {}
 
-  public get name(): string {
-    return this._name;
+  public get tenantId(): string {
+    return this._tenantId;
   }
 }

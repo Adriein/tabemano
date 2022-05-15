@@ -6,24 +6,25 @@ import { PricingFilter } from "Backoffice/Pricing/Domain/Entity/PricingFilter";
 import { Log } from "Shared/Domain/Decorators/Log";
 import { QueryHandler } from "Shared/Domain/Decorators/QueryHandler.decorator";
 import { IQueryHandler } from "Shared/Domain/Interfaces/IQueryHandler";
+import { ID } from "Shared/Domain/Vo/Id.vo";
 
 
 @QueryHandler(FindPricingQuery)
-export class SignInQueryHandler implements IQueryHandler<FindPricingResponse> {
+export class FindPricingQueryHandler implements IQueryHandler<FindPricingResponse[]> {
   constructor(private readonly repository: IPricingRepository) {}
 
   @Log()
-  public async handle(query: FindPricingQuery): Promise<FindPricingResponse> {
-    const pricing = await this.findPricing(query.name);
+  public async handle(query: FindPricingQuery): Promise<FindPricingResponse[]> {
+    const tenantId = new ID(query.tenantId);
+    const pricingList = await this.findPricing(tenantId);
 
-    return FindPricingResponse.fromDomain(pricing);
+    return pricingList.map((pricing: Pricing) => FindPricingResponse.fromDomain(pricing));
   }
 
-  private async findPricing(name: string): Promise<Pricing> {
-    const filter = new PricingFilter();
-    filter.withName(name);
+  private async findPricing(tenantId: ID): Promise<Pricing[]> {
+    const filter = PricingFilter.builder().withTenantId(tenantId);
 
-    const result = await this.repository.findOne(filter);
+    const result = await this.repository.find(filter);
 
     if (result.isError()) {
       throw result.value;

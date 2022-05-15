@@ -18,8 +18,14 @@ export class PgPricingRepository implements IPricingRepository {
     return Promise.resolve(undefined);
   }
 
-  find(filter: PricingFilter): Promise<Either<Error, Pricing[]>> {
-    throw new Error();
+  public async find(filter: PricingFilter): Promise<Either<Error, Pricing[]>> {
+    return this.database.execute<Pricing[]>(async (connection: PrismaClient) => {
+      const adapter = new PrismaPricingFilterAdapter(filter);
+
+      const results: any = await connection.ta_pricing.findMany(adapter.apply());
+
+      return Right.success(results.map((result: any) => this.mapper.toDomain(result)))
+    });
   }
 
   public async findOne(filter: PricingFilter): Promise<Either<Error, Pricing>> {

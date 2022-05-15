@@ -1,7 +1,8 @@
 import { Pricing } from "Backoffice/Pricing/Domain/Entity/Pricing";
+import { Serializable } from "Backoffice/Shared/Domain/Serializable";
 
 
-export class FindPricingResponse {
+export class FindPricingResponse implements Serializable {
   public static fromDomain(pricing: Pricing): FindPricingResponse {
     return new FindPricingResponse(pricing.id().value, pricing.name(), pricing.price(), pricing.duration());
   }
@@ -28,5 +29,14 @@ export class FindPricingResponse {
 
   public get duration(): number {
     return this._duration;
+  }
+
+  public serialize() {
+    return {
+      id: this._id,
+      name: this._name,
+      amount: this._amount,
+      duration: this._duration
+    }
   }
 }

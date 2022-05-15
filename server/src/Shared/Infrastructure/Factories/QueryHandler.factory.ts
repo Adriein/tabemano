@@ -9,6 +9,9 @@ import { FindTenantClientsQueryHandler } from "Backoffice/Client/Application/Fin
 import { GetClientProfileQuery } from "Backoffice/Client/Application/GetClientProfile/GetClientProfileQuery";
 import { GetClientProfileQueryHandler } from "Backoffice/Client/Application/GetClientProfile/GetClientProfileQueryHandler";
 import { PgClientRepository } from "Backoffice/Client/Infrastructure/Data/Repository/PgClientRepository";
+import { FindPricingQuery } from "Backoffice/Pricing/Application/FindPricing/FindPricingQuery";
+import { FindPricingQueryHandler } from "Backoffice/Pricing/Application/FindPricing/FindPricingQueryHandler";
+import { PgPricingRepository } from "Backoffice/Pricing/Infrastructure/Data/Repository/PgPricingRepository";
 import { FindRoleQuery } from "Backoffice/Role/Application/FindRoleQuery";
 import { FindRoleQueryHandler } from "Backoffice/Role/Application/FindRoleQueryHandler";
 import { PgRoleRepository } from "Backoffice/Role/Infrastructure/Data/Repository/PgRoleRepository";
@@ -27,6 +30,7 @@ export default class QueryHandlerFactory {
   private authRepository = new PgAuthRepository();
   private roleRepository = new PgRoleRepository();
   private appFilterRepository = new PgAppFilterRepository();
+  private pricingRepository = new PgPricingRepository();
   private cryptoService: CryptoService = new CryptoService();
 
   private userFilterFactory = new UserFilterFactory();
@@ -66,6 +70,11 @@ export default class QueryHandlerFactory {
     this.handlers.set(
       FindAppFiltersQuery.name,
       new FindAppFiltersQueryHandler(this.appFilterRepository)
+    );
+
+    this.handlers.set(
+      FindPricingQuery.name,
+      new FindPricingQueryHandler(this.pricingRepository)
     );
   }
 

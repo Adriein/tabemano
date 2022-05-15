@@ -46,5 +46,8 @@
   "subscription_action_pause": "Pausar",
   "subscription_action_renew": "Renovar",
   "pick_date": "Selecciona fecha de renovación",
-  "pick_date_placeholder": "Fecha"
+  "pick_date_placeholder": "Fecha",
+  "pricing": "Tarifa",
+  "creation_warning": "Mandar avisos",
+  "warning_description": "Una vez creado el usuario puedes configurar que avisos mandar"
 }

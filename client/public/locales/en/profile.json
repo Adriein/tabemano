@@ -46,5 +46,8 @@
   "subscription_action_pause": "Pause",
   "subscription_action_renew": "Renew",
   "pick_date": "Select renew date",
-  "pick_date_placeholder": "Date"
+  "pick_date_placeholder": "Date",
+  "pricing": "Pricing",
+  "creation_warning": "Send warnings",
+  "warning_description": "Once the user is created you can configure what warnings send"
 }
