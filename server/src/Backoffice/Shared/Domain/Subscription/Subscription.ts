@@ -3,7 +3,6 @@ import { Pricing } from "Backoffice/Shared/Domain/Pricing/Pricing";
 import { SubscriptionEvent } from "Backoffice/Shared/Domain/Subscription/SubscriptionEvent";
 import { SubscriptionEventCollection } from "Backoffice/Shared/Domain/Subscription/SubscriptionEventCollection";
 import { AggregateRoot } from "Shared/Domain/Entities/AggregateRoot";
-import { DomainEventsManager } from "Shared/Domain/Entities/DomainEventsManager";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Time } from "Shared/Infrastructure/Helper/Time";

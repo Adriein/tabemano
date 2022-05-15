@@ -1,20 +1,16 @@
-import { Auth } from "Authorization/Domain/Entities/Auth";
-import { Name } from "Shared/Domain/Vo/Name.vo";
+import { Pricing } from "Backoffice/Shared/Domain/Pricing/Pricing";
 import { DomainEvent } from "Shared/Domain/Entities/DomainEvent";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
-import { Password } from "Shared/Domain/Vo/Password.vo";
+import { Name } from "Shared/Domain/Vo/Name.vo";
 
-export class TenantCreatedDomainEvent extends DomainEvent {
-  public static fromEntity(auth: Auth): TenantCreatedDomainEvent {
-    return new TenantCreatedDomainEvent(auth.id(), auth.name(), auth.email(), auth.password(), auth.roleId());
-  }
-
+export class ClientCreatedDomainEvent extends DomainEvent {
   constructor(
     protected readonly _aggregateId: ID,
     private readonly _name: Name,
     private readonly _email: Email,
-    private readonly _password: Password,
+    private readonly _tenantId: ID,
+    private readonly _pricing: Pricing,
     private readonly _roleId: ID
   ) {
     super();
@@ -32,8 +28,12 @@ export class TenantCreatedDomainEvent extends DomainEvent {
     return this._email;
   }
 
-  public get password(): Password {
-    return this._password;
+  public get tenantId(): ID {
+    return this._tenantId;
+  }
+
+  public get pricing(): Pricing {
+    return this._pricing;
   }
 
   public get roleId(): ID {

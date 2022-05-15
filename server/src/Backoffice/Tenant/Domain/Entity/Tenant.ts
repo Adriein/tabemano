@@ -3,6 +3,8 @@ import { User } from "Backoffice/Shared/Domain/User/User";
 import { Pricing } from "Backoffice/Shared/Domain/Pricing/Pricing";
 import { PricingCollection } from "Backoffice/Shared/Domain/Pricing/PricingCollection";
 import { DefaultPricesCreatedDomainEvent } from "Backoffice/Tenant/Application/CreateTenant/DefaultPricesCreatedDomainEvent";
+import { ClientCreatedDomainEvent } from "Backoffice/Tenant/Application/RegisterClient/ClientCreatedDomainEvent";
+import { DomainEventsManager } from "Shared/Domain/Entities/DomainEventsManager";
 import { Name } from "Shared/Domain/Vo/Name.vo";
 import { Config } from "Backoffice/Shared/Domain/Config/Config";
 import { Email } from "Shared/Domain/Vo/Email.vo";
@@ -48,5 +50,14 @@ export class Tenant extends User {
 
   public getYearlyPricing(): Pricing {
     return this._pricing.getPricingByName(YEARLY_PRICING);
+  }
+
+  public registerClient(name: Name, email: Email, pricingId: ID, roleId: ID): void {
+    const pricing = this._pricing.getPricingById(pricingId);
+    const event = new ClientCreatedDomainEvent(this.id(), name, email, this.id(), pricing, roleId);
+    
+    this.addEvent(event);
+
+    DomainEventsManager.publishEvents(this.id());
   }
 }

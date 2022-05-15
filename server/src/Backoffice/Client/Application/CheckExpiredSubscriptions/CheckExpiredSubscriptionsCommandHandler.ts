@@ -9,6 +9,7 @@ import { SubscriptionFilter } from "Backoffice/Shared/Domain/Subscription/Subscr
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
 import { CLIENT_ROLE } from "Shared/Domain/constants";
 import { CommandHandler } from "Shared/Domain/Decorators/CommandHandler.decorator";
+import { Log } from "Shared/Domain/Decorators/Log";
 import { ICommandHandler } from "Shared/Domain/Interfaces/ICommandHandler";
 import { RoleType } from "Shared/Domain/Vo/RoleType";
 
@@ -20,6 +21,7 @@ export class CheckExpiredSubscriptionsCommandHandler implements ICommandHandler 
     private readonly backgroundJobRepository: IBackgroundJobRepository
   ) {}
 
+  @Log()
   public async handle(command: CheckExpiredSubscriptionsCommand): Promise<void> {
     const backgroundJob = BackgroundJob.expiredSubscription();
     backgroundJob.init();

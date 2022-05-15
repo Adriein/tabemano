@@ -1,6 +1,11 @@
 import { RegisterTenantCommand } from "Authorization/Application/RegisterTenant/RegisterTenantCommand";
 import { RegisterTenantCommandHandler } from "Authorization/Application/RegisterTenant/RegisterTenantCommandHandler";
 import { PgAuthRepository } from "Authorization/Infrastructure/Data/Repositories/PgAuthRepository";
+import { CheckExpiredSubscriptionsCommand } from "Backoffice/Client/Application/CheckExpiredSubscriptions/CheckExpiredSubscriptionsCommand";
+import { CheckExpiredSubscriptionsCommandHandler } from "Backoffice/Client/Application/CheckExpiredSubscriptions/CheckExpiredSubscriptionsCommandHandler";
+import { PgClientRepository } from "Backoffice/Client/Infrastructure/Data/Repository/PgClientRepository";
+import { PgBackgroundJobRepository } from "Backoffice/Shared/Infrastructure/Data/Repositories/PgBackgroundJobRepository";
+import { PgSubscriptionRepository } from "Backoffice/Shared/Infrastructure/Data/Repositories/PgSubscriptionRepository";
 import { CryptoService } from "Shared/Domain/Services/CryptoService";
 import { QueryBus } from "Shared/Infrastructure/Bus/QueryBus";
 import { ICommandHandler } from "../../Domain/Interfaces/ICommandHandler";
@@ -11,6 +16,9 @@ export default class CommandHandlerFactory {
 
   private authRepository = new PgAuthRepository();
   private cryptoService = new CryptoService();
+  private clientRepository = new PgClientRepository();
+  private backgroundJobRepository = new PgBackgroundJobRepository();
+  private subscriptionRepository = new PgSubscriptionRepository();
 
   constructor() {
     this.register();
@@ -31,6 +39,15 @@ export default class CommandHandlerFactory {
     this.handlers.set(
       RegisterTenantCommand.name,
       new RegisterTenantCommandHandler(this.authRepository, QueryBus.instance(), this.cryptoService)
+    );
+
+    this.handlers.set(
+      CheckExpiredSubscriptionsCommand.name,
+      new CheckExpiredSubscriptionsCommandHandler(
+        this.clientRepository,
+        this.subscriptionRepository,
+        this.backgroundJobRepository
+      )
     );
   }
 

@@ -21,7 +21,7 @@ export class PgClientRepository implements IClientRepository {
   public async find(filter: UserFilter): Promise<Either<Error, Client[]>> {
     return await this.database.execute<Client[]>(async (connection: PrismaClient) => {
       const adapter = new PrismaUserFilterAdapter(filter);
-      console.log(JSON.stringify(adapter.apply(), null, 2))
+
       const results = await connection.ta_user.findMany(adapter.apply());
 
       return Right.success(results.map((result: any) => this.mapper.toDomain(result)));
@@ -42,8 +42,34 @@ export class PgClientRepository implements IClientRepository {
     });
   }
 
-  save(entity: Client): Promise<void> {
-    return Promise.resolve(undefined);
+  public async save(entity: Client): Promise<void> {
+    await this.database.execute<void>(async (connection: PrismaClient) => {
+      await connection.ta_user.create({
+        data: {
+          us_id: entity.id().value,
+          us_tenant_id: entity.tenantId().value,
+          us_name: entity.name().value,
+          us_is_active: entity.isActive(),
+          us_role_id: entity.roleId().value,
+          us_email: entity.email().value,
+          us_password: entity.password().value,
+          us_config: {
+            create: {
+              co_id: entity.configId().value,
+              co_language: entity.language(),
+              co_send_warnings: entity.sendWarnings(),
+              co_send_notifications: entity.sendNotifications(),
+              co_created_at: entity.createdAt(),
+              co_updated_at: entity.updatedAt()
+            }
+          },
+          us_created_at: entity.createdAt(),
+          us_updated_at: entity.updatedAt(),
+        }
+      });
+
+      return Right.success({})
+    });
   }
 
   update(entity: Client): Promise<void> {
