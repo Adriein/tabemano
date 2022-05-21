@@ -5,6 +5,7 @@ import { ISubscriptionRepository } from "Backoffice/Shared/Domain/Subscription/I
 import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";
 import { SubscriptionFilter } from "Backoffice/Shared/Domain/Subscription/SubscriptionFilter";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
+import { IQueryBus } from "Shared/Domain/Bus/IQueryBus";
 import { CommandHandler } from "Shared/Domain/Decorators/CommandHandler.decorator";
 import { ICommandHandler } from "Shared/Domain/Interfaces/ICommandHandler";
 import { ID } from "Shared/Domain/Vo/Id.vo";
@@ -14,7 +15,8 @@ import { RoleType } from "Shared/Domain/Vo/RoleType";
 export class CheckAboutToExpireSubscriptionsCommandHandler implements ICommandHandler {
   constructor(
     private readonly clientRepository: IClientRepository,
-    private readonly subscriptionRepository: ISubscriptionRepository
+    private readonly subscriptionRepository: ISubscriptionRepository,
+    private readonly queryBus: IQueryBus,
   ) {}
 
   public async handle(command: CheckAboutToExpireSubscriptionsCommand): Promise<void> {
@@ -22,7 +24,9 @@ export class CheckAboutToExpireSubscriptionsCommandHandler implements ICommandHa
 
     for (const client of clientList) {
       const subscription = await this.getClientCurrentSubscription(client.id());
-      subscription.checkIsAboutToExpire();
+      const warningDelay = await this.getTenantWarningDelayDays(client.tenantId());
+      
+      subscription.checkIsAboutToExpire(warningDelay);
     }
   }
 
@@ -56,4 +60,7 @@ export class CheckAboutToExpireSubscriptionsCommandHandler implements ICommandHa
     return result.value;
   }
 
+  private async getTenantWarningDelayDays(tenantId: ID): Promise<number> {
+    return Promise.resolve(5);
+  }
 }
