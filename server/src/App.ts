@@ -17,7 +17,6 @@ import { CommandBus } from "Shared/Infrastructure/Bus/CommandBus";
 import { QueryBus } from "Shared/Infrastructure/Bus/QueryBus";
 import QueryHandlerFactory from "Shared/Infrastructure/Factories/QueryHandler.factory";
 import CommandHandlerFactory from "Shared/Infrastructure/Factories/CommandHandler.factory";
-import { DirectoryTree } from "Shared/Domain/Services/FileCrawler/DirectoryTree";
 
 
 export default class App {

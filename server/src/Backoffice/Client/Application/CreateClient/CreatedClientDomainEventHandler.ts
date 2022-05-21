@@ -7,7 +7,7 @@ import { Log } from "Shared/Domain/Decorators/Log";
 import { IDomainEventHandler } from "Shared/Domain/Interfaces/IDomainEventHandler";
 
 @DomainEventsHandler(ClientCreatedDomainEvent)
-export class CreateClientDomainEventHandler implements IDomainEventHandler {
+export class CreatedClientDomainEventHandler implements IDomainEventHandler {
   constructor(private clientRepository: IClientRepository, private subscriptionRepository: ISubscriptionRepository) {}
 
   @Log()

@@ -1,5 +1,5 @@
 import { TenantCreatedDomainEvent } from "Authorization/Application/RegisterTenant/TenantCreatedDomainEvent";
-import { CreateClientDomainEventHandler } from "Backoffice/Client/Application/CreateClient/CreateClientDomainEventHandler";
+import { CreatedClientDomainEventHandler } from "Backoffice/Client/Application/CreateClient/CreatedClientDomainEventHandler";
 import { PgClientRepository } from "Backoffice/Client/Infrastructure/Data/Repository/PgClientRepository";
 import { CreateDefaultTenantPricesDomainEventHandler } from "Backoffice/Pricing/Application/CreateDefaultTenantPrices/CreateDefaultTenantPricesDomainEventHandler";
 import { PgPricingRepository } from "Backoffice/Pricing/Infrastructure/Data/Repository/PgPricingRepository";
@@ -47,7 +47,7 @@ export default class DomainEventHandlerFactory {
 
     this.handlers.set(
       ClientCreatedDomainEvent.name,
-      new CreateClientDomainEventHandler(this.clientRepository, this.subscriptionRepository)
+      new CreatedClientDomainEventHandler(this.clientRepository, this.subscriptionRepository)
     );
 
   }

@@ -1,8 +1,10 @@
+import { SubscriptionMarkedAsAboutToExpireDomainEvent } from "Backoffice/Client/Application/CheckAboutToExpireSubscriptions/SubscriptionMarkedAsAboutToExpireDomainEvent";
 import { SUBSCRIPTION_STATUS } from "Backoffice/Shared/constants";
 import { Pricing } from "Backoffice/Shared/Domain/Pricing/Pricing";
 import { SubscriptionEvent } from "Backoffice/Shared/Domain/Subscription/SubscriptionEvent";
 import { SubscriptionEventCollection } from "Backoffice/Shared/Domain/Subscription/SubscriptionEventCollection";
 import { AggregateRoot } from "Shared/Domain/Entities/AggregateRoot";
+import { DomainEventsManager } from "Shared/Domain/Entities/DomainEventsManager";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Time } from "Shared/Infrastructure/Helper/Time";
@@ -108,8 +110,9 @@ export class Subscription extends AggregateRoot {
     const isAboutToExpire = Time.equal(Time.now(), warningDate);
 
     if (isAboutToExpire) {
-      //this.addEvent(new SendAboutToExpireEmailDomainEvent(this.id(), this.userId()));
+      this.addEvent(new SubscriptionMarkedAsAboutToExpireDomainEvent(this.id(), this.userId()));
       this.addEventToHistory(SubscriptionEvent.build(SUBSCRIPTION_STATUS.ABOUT_TO_EXPIRE));
+      DomainEventsManager.publishEvents(this.id());
     }
   };
 

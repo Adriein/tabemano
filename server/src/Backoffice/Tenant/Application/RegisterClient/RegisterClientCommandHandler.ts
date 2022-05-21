@@ -32,5 +32,4 @@ export class RegisterClientCommandHandler implements ICommandHandler {
 
     tenant.registerClient(name, email, pricingId, roleId);
   }
-
 }
