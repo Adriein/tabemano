@@ -1,7 +1,7 @@
 import { ID } from '../Vo/Id.vo';
 
 export abstract class BaseEntity {
-  constructor(
+  protected constructor(
     private _id: ID,
     private _dateCreated?: Date,
     private _dateUpdated?: Date

@@ -1,20 +1,28 @@
-import { BaseEntity } from './BaseEntity';
-import { DomainEvent } from './DomainEvent';
-import { DomainEventsManager } from './DomainEventsManager';
+import { AggregateRoot } from "@nestjs/cqrs";
+import { ID } from "Shared/Domain/Vo/Id.vo";
 
-export abstract class AggregateRoot extends BaseEntity {
-  private _domainEvents: DomainEvent[] = [];
-
-  public domainEvents(): DomainEvent[] {
-    return this._domainEvents;
+export abstract class Aggregate extends AggregateRoot {
+  protected constructor(
+    private _id: ID,
+    private _dateCreated?: Date,
+    private _dateUpdated?: Date
+  ) {
+    super();
   }
 
-  public addEvent(domainEvent: DomainEvent): void {
-    this._domainEvents.push(domainEvent);
-    DomainEventsManager.prepareForPublish(this);
+  public id(): ID {
+    return this._id;
   }
 
-  public clearEvents(): void {
-    this._domainEvents = [];
+  public createdAt(): Date {
+    return this._dateCreated ? this._dateCreated : new Date();
+  }
+
+  public updatedAt(): Date {
+    return this._dateUpdated ? this._dateUpdated : new Date();
+  }
+
+  public entityUpdated(): void {
+    this._dateUpdated = new Date();
   }
 }

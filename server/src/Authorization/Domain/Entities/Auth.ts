@@ -1,20 +1,20 @@
 import { Role } from "Authorization/Domain/Entities/Role";
 import { NotAuthorizedError } from "Authorization/Domain/Error/NotAuthorizedError";
+import { Aggregate } from "Shared/Domain/Entities/AggregateRoot";
 import { Name } from "Shared/Domain/Vo/Name.vo";
 import { TenantCreatedDomainEvent } from "Authorization/Application/RegisterTenant/TenantCreatedDomainEvent";
-import { AggregateRoot } from "Shared/Domain/Entities/AggregateRoot";
 import { CryptoService } from "Shared/Domain/Services/CryptoService";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Password } from "Shared/Domain/Vo/Password.vo";
 
-export class Auth extends AggregateRoot {
+export class Auth extends Aggregate {
   private crypto: CryptoService = new CryptoService();
 
   public static build(name: Name, email: Email, password: Password, role: Role): Auth {
     const auth = new Auth(ID.generate(), name, email, password, role);
     const event = TenantCreatedDomainEvent.fromEntity(auth);
-    auth.addEvent(event);
+    auth.publish(event);
 
     return auth;
   }

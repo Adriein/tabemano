@@ -1,4 +1,3 @@
-import { CryptoService } from '../Services/CryptoService';
 import { ValueObject } from './ValueObject';
 import { ArrayUtils } from "../Helper/Array.utils";
 
@@ -35,7 +34,7 @@ export class Password extends ValueObject {
     })
 
     const password = basePassword.concat(...passwordSlug);
-    
+
     return new Password(password);
   }
 }
