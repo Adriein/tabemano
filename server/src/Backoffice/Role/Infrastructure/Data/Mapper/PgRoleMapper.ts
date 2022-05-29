@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { Role } from "Authorization/Domain/Entities/Role";
+import { Role } from "Authorization/Domain/Entity/Role";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { RoleType } from "Shared/Domain/Vo/RoleType";
 

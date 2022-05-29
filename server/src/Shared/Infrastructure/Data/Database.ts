@@ -1,57 +1,27 @@
-import chalk from 'chalk';
-import { PrismaClient } from "@prisma/client";
-import { Left } from "Shared/Domain/Entities/Left";
-import { Either } from "Shared/Domain/types";
+import { DataSource } from 'typeorm';
 
 export default class Database {
-  private static _instance: Database;
-  private readonly prismaClient: PrismaClient;
+  private static _instance: DataSource;
 
-  private constructor() {
-    console.log(chalk.yellow('> Establishing db connection... 💫'));
-    try {
-      // const ssl = process.env.NODE_ENV === 'PRO' ? { ssl: { rejectUnauthorized: false } } : {};
-      /*this.pool = new pg.Pool({
-       host: process.env.DATABASE_HOST!,
-       port: parseInt(process.env.DATABASE_PORT!),
-       database: process.env.DATABASE_NAME!,
-       user: process.env.DATABASE_USER!,
-       password: process.env.DATABASE_PASSWORD!,
-       ...ssl
-       });*/
-
-      this.prismaClient = new PrismaClient();
-    } catch (error) {
-      console.log(
-        chalk.red(`> Error connecting to ${process.env.DATABASE_NAME!} DB 😶`)
-      );
-      throw new Error();
+  public static instance(): DataSource {
+    if (Database._instance) {
+      return this._instance;
     }
 
-    console.log(
-      chalk.yellow(`> Connected to ${process.env.DATABASE_NAME!} DB ✨`)
-    );
-  }
-
-  public static instance(): Database {
-    if (!Database._instance) {
-      Database._instance = new Database();
-    }
+    Database._instance = new DataSource({
+      type: "postgres",
+      host: process.env.DATABASE_HOST,
+      port: Number(process.env.DATABASE_PORT),
+      username: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
+      entities: [],
+      synchronize: false,
+      logging: false,
+    });
 
     return Database._instance;
   }
 
-  public connection(): PrismaClient {
-    return this.prismaClient!;
-  }
-
-  public async execute<T>(fn: (connection: PrismaClient) => Promise<Either<Error, T>>): Promise<Either<Error, T>> {
-    try {
-      return fn(this.connection());
-    } catch (error: any) {
-      return Left.error(error)
-    } finally {
-      this.connection().$disconnect();
-    }
-  }
+  private constructor() {}
 }

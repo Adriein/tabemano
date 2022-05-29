@@ -1,4 +1,4 @@
-import { Auth } from "Authorization/Domain/Entities/Auth";
+import { Auth } from "Authorization/Domain/Entity/Auth";
 
 export class SignInResponse {
   public static fromDomain(auth: Auth): SignInResponse {

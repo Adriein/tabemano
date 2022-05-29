@@ -1,16 +1,17 @@
+import { Inject } from "@nestjs/common";
 import { IQueryHandler, QueryHandler } from "@nestjs/cqrs";
 import { SignInQuery } from "Authorization/Application/SignIn/SignInQuery";
 import { SignInResponse } from "Authorization/Application/SignIn/SignInResponse";
-import { Auth } from "Authorization/Domain/Entities/Auth";
-import { AuthFilter } from "Authorization/Domain/Entities/AuthFilter";
-import { IAuthRepository } from "Authorization/Domain/Entities/IAuthRepository";
+import { Auth } from "Authorization/Domain/Entity/Auth";
+import { AuthFilter } from "Authorization/Domain/Entity/AuthFilter";
+import { IAuthRepository } from "Authorization/Domain/Entity/IAuthRepository";
 import { Log } from "Shared/Domain/Decorators/Log";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { Password } from "Shared/Domain/Vo/Password.vo";
 
 @QueryHandler(SignInQuery)
 export class SignInQueryHandler implements IQueryHandler {
-  constructor(private readonly repository: IAuthRepository) {}
+  constructor(@Inject('IAuthRepository') private readonly repository: IAuthRepository,) {}
 
   @Log()
   public async execute(command: SignInQuery): Promise<SignInResponse> {

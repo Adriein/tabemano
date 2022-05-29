@@ -1,4 +1,4 @@
-import { Auth } from "Authorization/Domain/Entities/Auth";
+import { Auth } from "Authorization/Domain/Entity/Auth";
 import { Name } from "Shared/Domain/Vo/Name.vo";
 import { DomainEvent } from "Shared/Domain/Entities/DomainEvent";
 import { Email } from "Shared/Domain/Vo/Email.vo";

@@ -1,9 +1,10 @@
+import { Inject } from "@nestjs/common";
 import { CommandHandler, ICommandHandler, QueryBus } from "@nestjs/cqrs";
 import { RegisterTenantCommand } from "Authorization/Application/RegisterTenant/RegisterTenantCommand";
-import { Auth } from "Authorization/Domain/Entities/Auth";
-import { AuthFilter } from "Authorization/Domain/Entities/AuthFilter";
-import { IAuthRepository } from "Authorization/Domain/Entities/IAuthRepository";
-import { Role } from "Authorization/Domain/Entities/Role";
+import { Auth } from "Authorization/Domain/Entity/Auth";
+import { AuthFilter } from "Authorization/Domain/Entity/AuthFilter";
+import { IAuthRepository } from "Authorization/Domain/Entity/IAuthRepository";
+import { Role } from "Authorization/Domain/Entity/Role";
 import { TenantAlreadyExistsError } from "Authorization/Domain/Error/TenantAlreadyExistsError";
 import { FindRoleQuery } from "Backoffice/Role/Application/FindRoleQuery";
 import { FindRoleResponse } from "Backoffice/Role/Application/FindRoleResponse";
@@ -19,6 +20,7 @@ import { RoleType } from "Shared/Domain/Vo/RoleType";
 @CommandHandler(RegisterTenantCommand)
 export class RegisterTenantCommandHandler implements ICommandHandler {
   constructor(
+    @Inject('IAuthRepository')
     private readonly repository: IAuthRepository,
     private readonly queryBus: QueryBus,
     private readonly crypto: CryptoService

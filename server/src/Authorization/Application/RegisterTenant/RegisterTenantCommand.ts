@@ -1,4 +1,4 @@
-import { RegisterTenantApiRequest } from "Authorization/Infrastructure/Controllers/RegisterTenant/RegisterTenantApiRequest";
+import { RegisterTenantApiRequest } from "Authorization/Infrastructure/Controller/RegisterTenant/RegisterTenantApiRequest";
 import { ICommand } from "Shared/Domain/Interfaces/ICommand";
 
 export class RegisterTenantCommand implements ICommand {

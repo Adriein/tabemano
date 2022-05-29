@@ -1,4 +1,4 @@
-import { SignInApiRequest } from "Authorization/Infrastructure/Controllers/SignIn/SignInApiRequest";
+import { SignInApiRequest } from "Authorization/Infrastructure/Controller/SignIn/SignInApiRequest";
 import { IQuery } from "Shared/Domain/Interfaces/IQuery";
 
 export class SignInQuery implements IQuery {

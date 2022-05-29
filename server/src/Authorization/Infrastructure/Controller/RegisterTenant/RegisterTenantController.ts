@@ -1,7 +1,7 @@
 import { Controller, Post } from "@nestjs/common";
 import { CommandBus } from "@nestjs/cqrs";
 import { RegisterTenantCommand } from "Authorization/Application/RegisterTenant/RegisterTenantCommand";
-import { RegisterTenantApiRequest } from "Authorization/Infrastructure/Controllers/RegisterTenant/RegisterTenantApiRequest";
+import { RegisterTenantApiRequest } from "Authorization/Infrastructure/Controller/RegisterTenant/RegisterTenantApiRequest";
 import { NextFunction, Request, Response } from "express";
 
 @Controller()

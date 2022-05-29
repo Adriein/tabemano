@@ -1,4 +1,4 @@
-import { Role } from "Authorization/Domain/Entities/Role";
+import { Role } from "Authorization/Domain/Entity/Role";
 import { NotAuthorizedError } from "Authorization/Domain/Error/NotAuthorizedError";
 import { Aggregate } from "Shared/Domain/Entities/AggregateRoot";
 import { Name } from "Shared/Domain/Vo/Name.vo";

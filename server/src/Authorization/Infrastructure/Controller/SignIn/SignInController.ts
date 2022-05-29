@@ -2,8 +2,8 @@ import { Controller, Post } from "@nestjs/common";
 import { QueryBus } from "@nestjs/cqrs";
 import { SignInQuery } from "Authorization/Application/SignIn/SignInQuery";
 import { SignInResponse } from "Authorization/Application/SignIn/SignInResponse";
-import { SignInApiRequest } from "Authorization/Infrastructure/Controllers/SignIn/SignInApiRequest";
-import { SignInApiResponse } from "Authorization/Infrastructure/Controllers/SignIn/SignInApiResponse";
+import { SignInApiRequest } from "Authorization/Infrastructure/Controller/SignIn/SignInApiRequest";
+import { SignInApiResponse } from "Authorization/Infrastructure/Controller/SignIn/SignInApiResponse";
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
