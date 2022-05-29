@@ -4,7 +4,7 @@ import { Pagination } from "Shared/Domain/Entities/Pagination";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { PrismaAdapter } from "Shared/Infrastructure/Data/PrismaAdapter";
 
-export class PrismaAuthFilterAdapter extends PrismaAdapter<Prisma.ta_userFindManyArgs> {
+export class TypeOrmAuthFilterAdapter extends PrismaAdapter<Prisma.ta_userFindManyArgs> {
   constructor(private readonly filter: AuthFilter) {
     super();
   }

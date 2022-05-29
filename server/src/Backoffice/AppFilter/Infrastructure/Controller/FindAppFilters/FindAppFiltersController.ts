@@ -1,18 +1,15 @@
+import { Controller, Post } from "@nestjs/common";
+import { QueryBus } from "@nestjs/cqrs";
 import { FindAppFiltersQuery } from "Backoffice/AppFilter/Application/FindAppFilters/FindAppFiltersQuery";
 import { FindFiltersResponse } from "Backoffice/AppFilter/Application/FindAppFilters/FindAppFiltersResponse";
 import { TabemanoResponse } from "Backoffice/Shared/Domain/TabemanoResponse";
 import { NextFunction, Request, Response } from "express";
-import { BaseController } from "Shared/Infrastructure/BaseController";
-import { Controller } from "Shared/Infrastructure/Decorators/controller";
-import { post } from "Shared/Infrastructure/Decorators/routes";
-import { use } from "Shared/Infrastructure/Decorators/use";
-import { currentUser, requireAuth } from "Shared/Infrastructure/Middlewares/auth";
 
 @Controller()
-export class FindAppFiltersController extends BaseController {
-  @post('/filter')
-  @use(requireAuth)
-  @use(currentUser)
+export class FindAppFiltersController {
+  constructor(private readonly queryBus: QueryBus) {}
+
+  @Post('/filter')
   public async getAppFilters(
     req: Request,
     res: Response,
@@ -20,7 +17,7 @@ export class FindAppFiltersController extends BaseController {
   ) {
     try {
       const query = FindAppFiltersQuery.fromRequest(req);
-      const results = await this.queryBus.ask<FindFiltersResponse[]>(query);
+      const results = await this.queryBus.execute<FindAppFiltersQuery, FindFiltersResponse[]>(query);
 
       const response = TabemanoResponse.build(results);
 

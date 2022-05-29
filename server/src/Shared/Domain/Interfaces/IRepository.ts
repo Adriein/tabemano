@@ -1,10 +1,10 @@
-import { Either } from "../types";
+import { Result } from "@badrap/result";
 import { Filter } from "../Entities/Filter";
 
 export interface IRepository<T> {
-  findOne(filter: Filter): Promise<Either<Error, T>>;
+  findOne(filter: Filter): Promise<Result<T, Error>>;
 
-  find(filter: Filter): Promise<Either<Error, T[]>>;
+  find(filter: Filter): Promise<Result<T[], Error>>;
 
   save(entity: T): Promise<void>;
 

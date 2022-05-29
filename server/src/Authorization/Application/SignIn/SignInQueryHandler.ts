@@ -32,10 +32,6 @@ export class SignInQueryHandler implements IQueryHandler {
 
     const result = await this.repository.findOne(filter);
 
-    if (result.isError()) {
-      throw result.value;
-    }
-
-    return result.value;
+    return result.unwrap();
   }
 }

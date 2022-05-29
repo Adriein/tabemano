@@ -1,5 +1,6 @@
 import { Auth } from "Authorization/Domain/Entity/Auth";
 import { Role } from "Authorization/Domain/Entity/Role";
+import { AuthModel } from "Authorization/Infrastructure/Data/Model/AuthModel";
 import { IMapper } from "Shared/Domain/Interfaces/IMapper";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
@@ -8,7 +9,7 @@ import { Password } from "Shared/Domain/Vo/Password.vo";
 import { RoleType } from "Shared/Domain/Vo/RoleType";
 
 
-export class PgAuthMapper implements IMapper<Auth, any> {
+export class PgAuthMapper implements IMapper<Auth, AuthModel> {
   public toDomain(dataModel: any): Auth {
     const role = new Role(
       new ID(dataModel.us_role.ro_id),

@@ -45,7 +45,7 @@ export class RegisterTenantCommandHandler implements ICommandHandler {
 
     const result = await this.repository.findOne(filter);
 
-    if (result.isOk()) {
+    if (result.isOk) {
       throw new TenantAlreadyExistsError();
     }
   }

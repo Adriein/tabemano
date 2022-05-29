@@ -1,15 +1,12 @@
-import { Prisma } from "@prisma/client";
 import { AppFilter } from "Backoffice/AppFilter/Domain/Entity/AppFilter";
 import { FilterableField } from "Backoffice/AppFilter/Domain/Entity/FilterableField";
+import { AppFilterModel } from "Backoffice/AppFilter/Infrastructure/Data/Model/AppFilterModel";
+import { IMapper } from "Shared/Domain/Interfaces/IMapper";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 
-const appFilterModel = Prisma.validator<Prisma.ta_app_filterFindManyArgs>()({});
-
-type AppFilterModel = Prisma.ta_app_filterGetPayload<typeof appFilterModel>
-
-export class AppFilterMapper {
-  public toDomain(dataModel: AppFilterModel[]): AppFilter[] {
-    return dataModel.reduce((filters: AppFilter[], data: AppFilterModel) => {
+export class AppFilterMapper implements IMapper<AppFilter[], AppFilterModel> {
+  public toDomain(dataModel: any): AppFilter[] {
+    return dataModel.reduce((filters: AppFilter[], data: any) => {
       const filter = filters.find((filter: AppFilter) => filter.entity() === data.af_entity);
 
       if (filter) {
@@ -28,5 +25,9 @@ export class AppFilterMapper {
 
       return [ ...filters, newFilter ];
     }, [])
+  }
+
+  toModel(entity: AppFilter[]): any {
+    return undefined;
   }
 }

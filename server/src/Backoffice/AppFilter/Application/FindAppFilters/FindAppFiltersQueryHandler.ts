@@ -1,18 +1,17 @@
+import { IQueryHandler, QueryHandler } from "@nestjs/cqrs";
 import { FindAppFiltersQuery } from "Backoffice/AppFilter/Application/FindAppFilters/FindAppFiltersQuery";
 import { FindFiltersResponse } from "Backoffice/AppFilter/Application/FindAppFilters/FindAppFiltersResponse";
 import { AppFilter } from "Backoffice/AppFilter/Domain/Entity/AppFilter";
 import { FilterableField } from "Backoffice/AppFilter/Domain/Entity/FilterableField";
 import { AppFilterFilter } from "Backoffice/AppFilter/Domain/Entity/AppFilterFilter";
 import { IAppFilterRepository } from "Backoffice/AppFilter/Domain/Repository/IAppFilterRepository";
-import { QueryHandler } from "Shared/Domain/Decorators/QueryHandler.decorator";
-import { IQueryHandler } from "Shared/Domain/Interfaces/IQueryHandler";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 
 @QueryHandler(FindAppFiltersQuery)
-export class FindAppFiltersQueryHandler implements IQueryHandler<FindFiltersResponse[]> {
+export class FindAppFiltersQueryHandler implements IQueryHandler {
   constructor(private readonly repository: IAppFilterRepository) {}
 
-  public async handle(query: FindAppFiltersQuery): Promise<FindFiltersResponse[]> {
+  public async execute(query: FindAppFiltersQuery): Promise<FindFiltersResponse[]> {
     const tenantId = new ID(query.tenantId);
 
     const appFilters = await this.getAppFiltersByTenant(tenantId, query.entities);
@@ -26,11 +25,7 @@ export class FindAppFiltersQueryHandler implements IQueryHandler<FindFiltersResp
 
     const result = await this.repository.find(filter);
 
-    if (result.isError()) {
-      throw result.value;
-    }
-
-    return result.value;
+    return result.unwrap();
   }
 
   private buildResponse(filters: AppFilter[]): FindFiltersResponse[] {

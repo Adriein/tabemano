@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon",
+    "start:dev": "nest start --watch",
+    "start:dev-old": "nodemon",
     "db:seed": "ts-node ./prisma/seed.ts",
     "db:populate": "ts-node ./prisma/fake-data-seed.ts",
     "db:migrate": "prisma migrate dev",
