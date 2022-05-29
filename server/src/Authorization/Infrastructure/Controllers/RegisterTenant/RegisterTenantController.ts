@@ -1,13 +1,14 @@
+import { Controller, Post } from "@nestjs/common";
+import { CommandBus } from "@nestjs/cqrs";
 import { RegisterTenantCommand } from "Authorization/Application/RegisterTenant/RegisterTenantCommand";
 import { RegisterTenantApiRequest } from "Authorization/Infrastructure/Controllers/RegisterTenant/RegisterTenantApiRequest";
 import { NextFunction, Request, Response } from "express";
-import { BaseController } from "Shared/Infrastructure/BaseController";
-import { Controller } from "Shared/Infrastructure/Decorators/controller";
-import { post } from "Shared/Infrastructure/Decorators/routes";
 
 @Controller()
-export class RegisterTenantController extends BaseController {
-  @post('/register')
+export class RegisterTenantController {
+  constructor(private readonly commandBus: CommandBus) {}
+
+  @Post('/register')
   public async register(
     req: Request<{}, {}, RegisterTenantApiRequest>,
     res: Response<void>,
@@ -16,7 +17,7 @@ export class RegisterTenantController extends BaseController {
     try {
       const command = RegisterTenantCommand.fromJson(req.body);
 
-      await this.commandBus.dispatch(command);
+      await this.commandBus.execute(command);
 
       res.status(200).send();
     } catch (error) {

@@ -9,7 +9,7 @@ import { CqrsModule } from "@nestjs/cqrs";
   ],
   controllers: [],
   providers: [],
-  exports: [],
+  exports: [ CqrsModule ],
 })
 export default class App {}
 

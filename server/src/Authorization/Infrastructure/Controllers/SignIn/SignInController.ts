@@ -1,16 +1,17 @@
+import { Controller, Post } from "@nestjs/common";
+import { QueryBus } from "@nestjs/cqrs";
 import { SignInQuery } from "Authorization/Application/SignIn/SignInQuery";
 import { SignInResponse } from "Authorization/Application/SignIn/SignInResponse";
 import { SignInApiRequest } from "Authorization/Infrastructure/Controllers/SignIn/SignInApiRequest";
 import { SignInApiResponse } from "Authorization/Infrastructure/Controllers/SignIn/SignInApiResponse";
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { BaseController } from "Shared/Infrastructure/BaseController";
-import { Controller } from "Shared/Infrastructure/Decorators/controller";
-import { post } from "Shared/Infrastructure/Decorators/routes";
 
 @Controller()
-export class SignInController extends BaseController {
-  @post('/signin')
+export class SignInController {
+  constructor(private readonly queryBus: QueryBus) {}
+
+  @Post('/signin')
   public async signIn(
     req: Request<{}, {}, SignInApiRequest>,
     res: Response<SignInApiResponse>,
@@ -19,7 +20,7 @@ export class SignInController extends BaseController {
     try {
       const query = SignInQuery.fromJson(req.body);
 
-      const response = await this.queryBus.ask<SignInResponse>(query);
+      const response = await this.queryBus.execute<SignInQuery, SignInResponse>(query);
 
       const userJwt = jwt.sign(
         {
