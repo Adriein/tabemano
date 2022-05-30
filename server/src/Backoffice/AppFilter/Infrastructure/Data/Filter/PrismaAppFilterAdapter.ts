@@ -2,7 +2,7 @@ import { Prisma } from "@prisma/client";
 import { AppFilterFilter } from "Backoffice/AppFilter/Domain/Entity/AppFilterFilter";
 import { Pagination } from "Shared/Domain/Entities/Pagination";
 import { ID } from "Shared/Domain/Vo/Id.vo";
-import { PrismaAdapter } from "Shared/Infrastructure/Data/PrismaAdapter";
+import { PrismaAdapter } from "Shared/Infrastructure/Persistance/PrismaAdapter";
 
 export class PrismaAppFilterAdapter extends PrismaAdapter<Prisma.ta_app_filterFindManyArgs> {
   constructor(private readonly filter: AppFilterFilter) {

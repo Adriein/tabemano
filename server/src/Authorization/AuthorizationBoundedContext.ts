@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
 import { RegisterTenantController } from "Authorization/Infrastructure/Controller/RegisterTenant/RegisterTenantController";
 import { SignInController } from "Authorization/Infrastructure/Controller/SignIn/SignInController";
-import { PgAuthMapper } from "Authorization/Infrastructure/Data/Mapper/PgAuthMapper";
-import { AuthModel } from "Authorization/Infrastructure/Data/Model/AuthModel";
-import { PgAuthRepository } from "Authorization/Infrastructure/Data/Repository/PgAuthRepository";
+import { PgAuthMapper } from "Authorization/Infrastructure/Persistance/Mapper/PgAuthMapper";
+import { AuthModel } from "Authorization/Infrastructure/Persistance/Model/AuthModel";
+import { PgAuthRepository } from "Authorization/Infrastructure/Persistance/Repository/PgAuthRepository";
 import { DataSource } from "typeorm";
 
 const Mappers = [ PgAuthMapper ];

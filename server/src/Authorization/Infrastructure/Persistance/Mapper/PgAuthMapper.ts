@@ -1,6 +1,6 @@
 import { Auth } from "Authorization/Domain/Entity/Auth";
 import { Role } from "Authorization/Domain/Entity/Role";
-import { AuthModel } from "Authorization/Infrastructure/Data/Model/AuthModel";
+import { AuthModel } from "Authorization/Infrastructure/Persistance/Model/AuthModel";
 import { IMapper } from "Shared/Domain/Interfaces/IMapper";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";

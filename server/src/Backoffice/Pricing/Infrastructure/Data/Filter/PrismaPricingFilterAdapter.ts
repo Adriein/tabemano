@@ -2,7 +2,7 @@ import { Prisma } from "@prisma/client";
 import { PricingFilter } from "Backoffice/Pricing/Domain/Entity/PricingFilter";
 import { Pagination } from "Shared/Domain/Entities/Pagination";
 import { ID } from "Shared/Domain/Vo/Id.vo";
-import { PrismaAdapter } from "Shared/Infrastructure/Data/PrismaAdapter";
+import { PrismaAdapter } from "Shared/Infrastructure/Persistance/PrismaAdapter";
 
 export class PrismaPricingFilterAdapter extends PrismaAdapter<Prisma.ta_pricingFindManyArgs> {
   constructor(private readonly filter: PricingFilter) {

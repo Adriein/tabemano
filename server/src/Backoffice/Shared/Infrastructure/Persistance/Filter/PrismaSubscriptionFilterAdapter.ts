@@ -3,7 +3,7 @@ import { SubscriptionFilter } from "Backoffice/Shared/Domain/Subscription/Subscr
 import { Order } from "Shared/Domain/Entities/Order";
 import { Pagination } from "Shared/Domain/Entities/Pagination";
 import { ID } from "Shared/Domain/Vo/Id.vo";
-import { PrismaAdapter } from "Shared/Infrastructure/Data/PrismaAdapter";
+import { PrismaAdapter } from "Shared/Infrastructure/Persistance/PrismaAdapter";
 
 export class PrismaSubscriptionFilterAdapter extends PrismaAdapter<Prisma.ta_subscriptionFindManyArgs> {
   constructor(private readonly filter: SubscriptionFilter) {

@@ -1,5 +1,7 @@
+import { Primitives } from "Shared/Infrastructure/Types";
+
 export abstract class ValueObject {
-  protected abstract validate(primitive: string | boolean | number | Date): boolean;
+  protected abstract validate(primitive: Primitives): boolean;
 
   abstract get value(): string | boolean | number | Date;
 }

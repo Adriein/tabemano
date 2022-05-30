@@ -5,7 +5,7 @@ import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { RoleType } from "Shared/Domain/Vo/RoleType";
-import { PrismaAdapter } from "Shared/Infrastructure/Data/PrismaAdapter";
+import { PrismaAdapter } from "Shared/Infrastructure/Persistance/PrismaAdapter";
 import { Time } from "Shared/Infrastructure/Helper/Time";
 
 export class PrismaUserFilterAdapter extends PrismaAdapter<Prisma.ta_userFindManyArgs> {

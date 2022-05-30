@@ -3,15 +3,14 @@ import { Inject, Injectable } from "@nestjs/common";
 import { Auth } from "Authorization/Domain/Entity/Auth";
 import { AuthFilter } from "Authorization/Domain/Entity/AuthFilter";
 import { IAuthRepository } from "Authorization/Domain/Entity/IAuthRepository";
-import { PgAuthMapper } from "Authorization/Infrastructure/Data/Mapper/PgAuthMapper";
+import { IAuthModel } from "Authorization/Infrastructure/Persistance/Model/IAuthModel";
 import { Repository } from "typeorm";
 
 @Injectable()
 export class PgAuthRepository implements IAuthRepository {
   constructor(
     @Inject('AuthModelRepository')
-    private typeOrmRepository: Repository<any>,
-    private mapper: PgAuthMapper
+    private typeOrmRepository: Repository<IAuthModel>,
   ) {}
 
   public async delete(entity: Auth): Promise<void> {

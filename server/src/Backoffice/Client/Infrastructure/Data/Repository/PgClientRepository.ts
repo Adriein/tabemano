@@ -3,12 +3,12 @@ import { Client } from "Backoffice/Client/Domain/Entity/Client";
 import { IClientRepository } from "Backoffice/Client/Domain/Repository/IClientRepository";
 import { PgClientMapper } from "Backoffice/Client/Infrastructure/Data/Mapper/PgClientMapper";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
-import { PrismaUserFilterAdapter } from "Backoffice/Shared/Infrastructure/Data/Filters/PrismaUserFilterAdapter";
+import { PrismaUserFilterAdapter } from "Backoffice/Shared/Infrastructure/Persistance/Filter/PrismaUserFilterAdapter";
 import { Left } from "Shared/Domain/Entities/Left";
 import { Right } from "Shared/Domain/Entities/Right";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
 import { Either } from "Shared/Domain/types";
-import Database from "Shared/Infrastructure/Data/Database";
+import Database from "Shared/Infrastructure/Persistance/Database";
 
 export class PgClientRepository implements IClientRepository {
   private database = Database.instance();

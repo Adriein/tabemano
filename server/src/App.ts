@@ -3,7 +3,7 @@ import { ConfigModule } from "@nestjs/config";
 import { CqrsModule } from "@nestjs/cqrs";
 import { AuthorizationBoundedContext } from "Authorization/AuthorizationBoundedContext";
 import { CryptoService } from "Shared/Domain/Services/CryptoService";
-import Database from "Shared/Infrastructure/Data/Database";
+import Database from "Shared/Infrastructure/Persistance/Database";
 
 const DatabaseProvider = {
   provide: 'DATABASE_CONNECTION',

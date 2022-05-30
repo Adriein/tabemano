@@ -2,7 +2,7 @@ import { Prisma } from "@prisma/client";
 import { RoleFilter } from "Backoffice/Role/Domain/Entity/RoleFilter";
 import { Pagination } from "Shared/Domain/Entities/Pagination";
 import { RoleType } from "Shared/Domain/Vo/RoleType";
-import { PrismaAdapter } from "Shared/Infrastructure/Data/PrismaAdapter";
+import { PrismaAdapter } from "Shared/Infrastructure/Persistance/PrismaAdapter";
 
 export class PrismaRoleFilterAdapter extends PrismaAdapter<Prisma.ta_roleFindManyArgs> {
   constructor(private readonly filter: RoleFilter) {

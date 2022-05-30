@@ -2,13 +2,13 @@ import { PrismaClient } from "@prisma/client";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
 import { ITenantRepository } from "Backoffice/Tenant/Domain/Repository/ITenantRepository";
 import { Tenant } from "Backoffice/Tenant/Domain/Entity/Tenant";
-import { PrismaUserFilterAdapter } from "Backoffice/Shared/Infrastructure/Data/Filters/PrismaUserFilterAdapter";
+import { PrismaUserFilterAdapter } from "Backoffice/Shared/Infrastructure/Persistance/Filter/PrismaUserFilterAdapter";
 import { PgTenantMapper } from "Backoffice/Tenant/Infrastructure/Data/Mapper/PgTenantMapper";
 import { Left } from "Shared/Domain/Entities/Left";
 import { Right } from "Shared/Domain/Entities/Right";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
 import { Either } from "Shared/Domain/types";
-import Database from "Shared/Infrastructure/Data/Database";
+import Database from "Shared/Infrastructure/Persistance/Database";
 
 export class PgTenantRepository implements ITenantRepository {
   private database = Database.instance();

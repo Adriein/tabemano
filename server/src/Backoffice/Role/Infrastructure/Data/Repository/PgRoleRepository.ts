@@ -8,7 +8,7 @@ import { Left } from "Shared/Domain/Entities/Left";
 import { Right } from "Shared/Domain/Entities/Right";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
 import { Either } from "Shared/Domain/types";
-import Database from "Shared/Infrastructure/Data/Database";
+import Database from "Shared/Infrastructure/Persistance/Database";
 
 export class PgRoleRepository implements IRoleRepository {
   private database = Database.instance();
