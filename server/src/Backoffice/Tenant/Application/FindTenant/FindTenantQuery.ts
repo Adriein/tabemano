@@ -1,4 +1,4 @@
-import { IQuery } from "Shared/Domain/Interfaces/IQuery";
+import { IQuery } from "@nestjs/cqrs";
 
 export class FindTenantQuery implements IQuery {
   constructor(private readonly _tenantId: string) {}

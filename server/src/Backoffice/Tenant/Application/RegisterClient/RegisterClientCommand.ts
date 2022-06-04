@@ -1,4 +1,4 @@
-import { ICommand } from "Shared/Domain/Interfaces/ICommand";
+import { ICommand } from "@nestjs/cqrs";
 
 export class RegisterClientCommand implements ICommand {
   public static fromRequest(req: any): RegisterClientCommand {

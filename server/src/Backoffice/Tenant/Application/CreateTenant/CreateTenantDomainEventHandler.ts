@@ -1,17 +1,15 @@
+import { EventsHandler, IEventHandler } from "@nestjs/cqrs";
 import { TenantCreatedDomainEvent } from "Authorization/Application/RegisterTenant/TenantCreatedDomainEvent";
 import { ISubscriptionRepository } from "Backoffice/Shared/Domain/Subscription/ISubscriptionRepository";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
 import { ITenantRepository } from "Backoffice/Tenant/Domain/Repository/ITenantRepository";
 import { Tenant } from "Backoffice/Tenant/Domain/Entity/Tenant";
 import { Roles } from "Shared/Domain/constants";
-import { DomainEventsHandler } from "Shared/Domain/Decorators/DomainEventsHandler.decorator";
 import { Log } from "Shared/Domain/Decorators/Log";
-import { DomainEventsManager } from "Shared/Domain/Entities/DomainEventsManager";
-import { IDomainEventHandler } from "Shared/Domain/Interfaces/IDomainEventHandler";
 import { RoleType } from "Shared/Domain/Vo/RoleType";
 
-@DomainEventsHandler(TenantCreatedDomainEvent)
-export class CreateTenantDomainEventHandler implements IDomainEventHandler {
+@EventsHandler(TenantCreatedDomainEvent)
+export class CreateTenantDomainEventHandler implements IEventHandler {
   constructor(
     private readonly tenantRepository: ITenantRepository,
     private readonly subscriptionRepository: ISubscriptionRepository,
@@ -32,8 +30,6 @@ export class CreateTenantDomainEventHandler implements IDomainEventHandler {
     await this.tenantRepository.save(tenant);
 
     await this.subscriptionRepository.save(subscription);
-
-    await DomainEventsManager.publishEvents(tenant.id())
   }
 
   private async findAdmin(): Promise<Tenant> {
@@ -42,10 +38,6 @@ export class CreateTenantDomainEventHandler implements IDomainEventHandler {
 
     const result = await this.tenantRepository.findOne(filter);
 
-    if (result.isError()) {
-      throw result.value;
-    }
-
-    return result.value;
+    return result.unwrap();
   }
 }
