@@ -1,3 +1,4 @@
+import { CommandHandler, ICommandHandler, QueryBus } from "@nestjs/cqrs";
 import { CheckAboutToExpireSubscriptionsCommand } from "Backoffice/Client/Application/CheckAboutToExpireSubscriptions/CheckAboutToExpireSubscriptionsCommand";
 import { Client } from "Backoffice/Client/Domain/Entity/Client";
 import { IClientRepository } from "Backoffice/Client/Domain/Repository/IClientRepository";
@@ -5,9 +6,6 @@ import { ISubscriptionRepository } from "Backoffice/Shared/Domain/Subscription/I
 import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";
 import { SubscriptionFilter } from "Backoffice/Shared/Domain/Subscription/SubscriptionFilter";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
-import { IQueryBus } from "Shared/Domain/Bus/IQueryBus";
-import { CommandHandler } from "Shared/Domain/Decorators/CommandHandler.decorator";
-import { ICommandHandler } from "Shared/Domain/Interfaces/ICommandHandler";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { RoleType } from "Shared/Domain/Vo/RoleType";
 
@@ -16,16 +14,16 @@ export class CheckAboutToExpireSubscriptionsCommandHandler implements ICommandHa
   constructor(
     private readonly clientRepository: IClientRepository,
     private readonly subscriptionRepository: ISubscriptionRepository,
-    private readonly queryBus: IQueryBus,
+    private readonly queryBus: QueryBus,
   ) {}
 
-  public async handle(command: CheckAboutToExpireSubscriptionsCommand): Promise<void> {
+  public async execute(command: CheckAboutToExpireSubscriptionsCommand): Promise<void> {
     const clientList = await this.findClients();
 
     for (const client of clientList) {
       const subscription = await this.getClientCurrentSubscription(client.id());
       const warningDelay = await this.getTenantWarningDelayDays(client.tenantId());
-      
+
       subscription.checkIsAboutToExpire(warningDelay);
     }
   }
@@ -39,11 +37,7 @@ export class CheckAboutToExpireSubscriptionsCommandHandler implements ICommandHa
 
     const result = await this.clientRepository.find(filter);
 
-    if (result.isError()) {
-      throw result.value;
-    }
-
-    return result.value;
+    return result.unwrap();
   }
 
   private async getClientCurrentSubscription(clientId: ID): Promise<Subscription> {
@@ -53,11 +47,7 @@ export class CheckAboutToExpireSubscriptionsCommandHandler implements ICommandHa
 
     const result = await this.subscriptionRepository.findOne(filter);
 
-    if (result.isError()) {
-      throw result.value
-    }
-
-    return result.value;
+    return result.unwrap();
   }
 
   private async getTenantWarningDelayDays(tenantId: ID): Promise<number> {

@@ -1,3 +1,3 @@
-import { ICommand } from "Shared/Domain/Interfaces/ICommand";
+import { ICommand } from "@nestjs/cqrs";
 
 export class CheckAboutToExpireSubscriptionsCommand implements ICommand {}

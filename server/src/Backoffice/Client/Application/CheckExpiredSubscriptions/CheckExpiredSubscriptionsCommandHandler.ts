@@ -1,3 +1,4 @@
+import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { CheckExpiredSubscriptionsCommand } from "Backoffice/Client/Application/CheckExpiredSubscriptions/CheckExpiredSubscriptionsCommand";
 import { Client } from "Backoffice/Client/Domain/Entity/Client";
 import { IClientRepository } from "Backoffice/Client/Domain/Repository/IClientRepository";
@@ -8,9 +9,7 @@ import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription
 import { SubscriptionFilter } from "Backoffice/Shared/Domain/Subscription/SubscriptionFilter";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
 import { CLIENT_ROLE } from "Shared/Domain/constants";
-import { CommandHandler } from "Shared/Domain/Decorators/CommandHandler.decorator";
 import { Log } from "Shared/Domain/Decorators/Log";
-import { ICommandHandler } from "Shared/Domain/Interfaces/ICommandHandler";
 import { RoleType } from "Shared/Domain/Vo/RoleType";
 
 @CommandHandler(CheckExpiredSubscriptionsCommand)
@@ -22,7 +21,7 @@ export class CheckExpiredSubscriptionsCommandHandler implements ICommandHandler 
   ) {}
 
   @Log()
-  public async handle(command: CheckExpiredSubscriptionsCommand): Promise<void> {
+  public async execute(command: CheckExpiredSubscriptionsCommand): Promise<void> {
     const backgroundJob = BackgroundJob.expiredSubscription();
     backgroundJob.init();
 
@@ -52,11 +51,7 @@ export class CheckExpiredSubscriptionsCommandHandler implements ICommandHandler 
 
     const result = await this.clientRepository.find(filter);
 
-    if (result.isError()) {
-      throw result.value;
-    }
-
-    return result.value;
+    return result.unwrap();
   }
 
   private async getActiveSubscription(client: Client): Promise<Subscription> {
@@ -66,10 +61,6 @@ export class CheckExpiredSubscriptionsCommandHandler implements ICommandHandler 
 
     const result = await this.subscriptionRepository.findOne(subscriptionFilter);
 
-    if (result.isError()) {
-      throw result.value;
-    }
-
-    return result.value;
+    return result.unwrap();
   }
 }

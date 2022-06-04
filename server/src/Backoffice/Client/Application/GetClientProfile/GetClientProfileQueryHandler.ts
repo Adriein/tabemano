@@ -1,3 +1,4 @@
+import { IQueryHandler, QueryHandler } from "@nestjs/cqrs";
 import { GetClientProfileQuery } from "Backoffice/Client/Application/GetClientProfile/GetClientProfileQuery";
 import { GetClientProfileResponse } from "Backoffice/Client/Application/GetClientProfile/GetClientProfileResponse";
 import { Client } from "Backoffice/Client/Domain/Entity/Client";
@@ -7,19 +8,17 @@ import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription
 import { SubscriptionFilter } from "Backoffice/Shared/Domain/Subscription/SubscriptionFilter";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
 import { Log } from "Shared/Domain/Decorators/Log";
-import { QueryHandler } from "Shared/Domain/Decorators/QueryHandler.decorator";
-import { IQueryHandler } from "Shared/Domain/Interfaces/IQueryHandler";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 
 @QueryHandler(GetClientProfileQuery)
-export class GetClientProfileQueryHandler implements IQueryHandler<GetClientProfileResponse> {
+export class GetClientProfileQueryHandler implements IQueryHandler {
   constructor(
     private readonly clientRepository: IClientRepository,
     private readonly subscriptionRepository: ISubscriptionRepository
   ) {}
 
   @Log()
-  public async handle(query: GetClientProfileQuery): Promise<GetClientProfileResponse> {
+  public async execute(query: GetClientProfileQuery): Promise<GetClientProfileResponse> {
     const id = new ID(query.clientId);
 
     const client = await this.getClient(id);
@@ -35,11 +34,7 @@ export class GetClientProfileQueryHandler implements IQueryHandler<GetClientProf
 
     const result = await this.clientRepository.findOne(filter);
 
-    if (result.isError()) {
-      throw result.value
-    }
-
-    return result.value;
+    return result.unwrap();
   }
 
   private async getSubscriptions(clientId: ID): Promise<Subscription[]> {
@@ -50,11 +45,7 @@ export class GetClientProfileQueryHandler implements IQueryHandler<GetClientProf
 
     const result = await this.subscriptionRepository.find(filter);
 
-    if (result.isError()) {
-      throw result.value;
-    }
-
-    return result.value;
+    return result.unwrap();
   }
 
 }

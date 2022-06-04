@@ -1,12 +1,11 @@
+import { EventsHandler, IEventHandler } from "@nestjs/cqrs";
 import { IPricingRepository } from "Backoffice/Pricing/Domain/Entity/IPricingRepository";
 import { Pricing } from "Backoffice/Pricing/Domain/Entity/Pricing";
 import { DefaultPricesCreatedDomainEvent } from "Backoffice/Tenant/Application/CreateTenant/DefaultPricesCreatedDomainEvent";
-import { DomainEventsHandler } from "Shared/Domain/Decorators/DomainEventsHandler.decorator";
 import { Log } from "Shared/Domain/Decorators/Log";
-import { IDomainEventHandler } from "Shared/Domain/Interfaces/IDomainEventHandler";
 
-@DomainEventsHandler(DefaultPricesCreatedDomainEvent)
-export class CreateDefaultTenantPricesDomainEventHandler implements IDomainEventHandler {
+@EventsHandler(DefaultPricesCreatedDomainEvent)
+export class CreateDefaultTenantPricesDomainEventHandler implements IEventHandler {
   constructor(private readonly repository: IPricingRepository) {}
 
   @Log()

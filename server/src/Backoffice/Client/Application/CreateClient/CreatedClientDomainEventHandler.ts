@@ -1,13 +1,12 @@
+import { EventsHandler, IEventHandler } from "@nestjs/cqrs";
 import { Client } from "Backoffice/Client/Domain/Entity/Client";
 import { IClientRepository } from "Backoffice/Client/Domain/Repository/IClientRepository";
 import { ISubscriptionRepository } from "Backoffice/Shared/Domain/Subscription/ISubscriptionRepository";
 import { ClientCreatedDomainEvent } from "Backoffice/Tenant/Application/RegisterClient/ClientCreatedDomainEvent";
-import { DomainEventsHandler } from "Shared/Domain/Decorators/DomainEventsHandler.decorator";
 import { Log } from "Shared/Domain/Decorators/Log";
-import { IDomainEventHandler } from "Shared/Domain/Interfaces/IDomainEventHandler";
 
-@DomainEventsHandler(ClientCreatedDomainEvent)
-export class CreatedClientDomainEventHandler implements IDomainEventHandler {
+@EventsHandler(ClientCreatedDomainEvent)
+export class CreatedClientDomainEventHandler implements IEventHandler<ClientCreatedDomainEvent> {
   constructor(private clientRepository: IClientRepository, private subscriptionRepository: ISubscriptionRepository) {}
 
   @Log()

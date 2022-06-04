@@ -1,4 +1,4 @@
-import { IQuery } from "Shared/Domain/Interfaces/IQuery";
+import { IQuery } from "@nestjs/cqrs";
 
 export class GetClientProfileQuery implements IQuery {
   public static fromRequest(json: any): GetClientProfileQuery {

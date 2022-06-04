@@ -1,13 +1,13 @@
+import { Controller, Get } from "@nestjs/common";
+import { CommandBus } from "@nestjs/cqrs";
 import { CheckExpiredSubscriptionsCommand } from "Backoffice/Client/Application/CheckExpiredSubscriptions/CheckExpiredSubscriptionsCommand";
 import { NextFunction, Request, Response } from "express";
-import { BaseController } from "Shared/Infrastructure/BaseController";
-import { Controller } from "Shared/Infrastructure/Decorators/controller";
-import { get } from "Shared/Infrastructure/Decorators/routes";
-
 
 @Controller()
-export class CheckExpiredSubscriptionsController extends BaseController {
-  @get('/subscription/expired')
+export class CheckExpiredSubscriptionsController {
+  constructor(private readonly commandBus: CommandBus) {}
+
+  @Get('/subscription/expired')
   public async checkExpiredSubscriptions(
     req: Request,
     res: Response,
@@ -16,7 +16,7 @@ export class CheckExpiredSubscriptionsController extends BaseController {
     try {
       const command = new CheckExpiredSubscriptionsCommand();
 
-      await this.commandBus.dispatch(command);
+      await this.commandBus.execute(command);
 
       res.status(200).send();
     } catch (error) {

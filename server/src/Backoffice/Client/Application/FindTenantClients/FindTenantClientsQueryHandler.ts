@@ -1,3 +1,4 @@
+import { IQueryHandler, QueryHandler } from "@nestjs/cqrs";
 import { FindTenantClientsQuery } from "Backoffice/Client/Application/FindTenantClients/FindTenantClientsQuery";
 import { FindTenantClientsResponse } from "Backoffice/Client/Application/FindTenantClients/FindTenantClientsResponse";
 import { Client } from "Backoffice/Client/Domain/Entity/Client";
@@ -8,11 +9,9 @@ import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription
 import { SubscriptionFilter } from "Backoffice/Shared/Domain/Subscription/SubscriptionFilter";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
 import { Log } from "Shared/Domain/Decorators/Log";
-import { QueryHandler } from "Shared/Domain/Decorators/QueryHandler.decorator";
-import { IQueryHandler } from "Shared/Domain/Interfaces/IQueryHandler";
 
 @QueryHandler(FindTenantClientsQuery)
-export class FindTenantClientsQueryHandler implements IQueryHandler<FindTenantClientsResponse[]> {
+export class FindTenantClientsQueryHandler implements IQueryHandler {
   constructor(
     private readonly clientRepository: IClientRepository,
     private readonly subscriptionRepository: ISubscriptionRepository,
@@ -20,7 +19,7 @@ export class FindTenantClientsQueryHandler implements IQueryHandler<FindTenantCl
   ) {}
 
   @Log()
-  public async handle(query: FindTenantClientsQuery): Promise<FindTenantClientsResponse[]> {
+  public async execute(query: FindTenantClientsQuery): Promise<FindTenantClientsResponse[]> {
     const filter = this.factory.create(query);
 
     const clientList = await this.findClients(filter);
@@ -31,11 +30,7 @@ export class FindTenantClientsQueryHandler implements IQueryHandler<FindTenantCl
   private async findClients(filter: UserFilter): Promise<Client[]> {
     const result = await this.clientRepository.find(filter);
 
-    if (result.isError()) {
-      throw result.value;
-    }
-
-    return result.value;
+    return result.unwrap();
   }
 
   private async getActiveSubscription(client: Client): Promise<Subscription> {
@@ -45,11 +40,7 @@ export class FindTenantClientsQueryHandler implements IQueryHandler<FindTenantCl
 
     const result = await this.subscriptionRepository.findOne(filter);
 
-    if (result.isError()) {
-      throw result.value;
-    }
-
-    return result.value;
+    return result.unwrap();
   }
 
   private async buildResponse(list: Client[]): Promise<FindTenantClientsResponse[]> {

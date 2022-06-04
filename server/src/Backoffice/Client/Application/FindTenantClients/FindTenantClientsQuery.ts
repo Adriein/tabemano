@@ -1,5 +1,5 @@
+import { IQuery } from "@nestjs/cqrs";
 import { FilterDto } from "Shared/Application/FilterDto";
-import { IQuery } from "Shared/Domain/Interfaces/IQuery";
 
 export class FindTenantClientsQuery implements IQuery {
   public static fromJson(json: any): FindTenantClientsQuery {

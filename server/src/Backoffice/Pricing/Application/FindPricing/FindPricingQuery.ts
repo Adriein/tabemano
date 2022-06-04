@@ -1,4 +1,4 @@
-import { IQuery } from "Shared/Domain/Interfaces/IQuery";
+import { IQuery } from "@nestjs/cqrs";
 
 export class FindPricingQuery implements IQuery {
   public static fromRequest(req: any): FindPricingQuery {
