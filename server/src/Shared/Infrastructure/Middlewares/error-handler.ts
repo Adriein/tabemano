@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
 import chalk from 'chalk';
-import { CustomError } from "../../Domain/Error/CustomError";
+import { DomainError } from "../../Domain/Error/DomainError";
 
 export const errorHandler = (
   err: Error,
@@ -9,7 +9,7 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  if (err instanceof CustomError) {
+  if (err instanceof DomainError) {
     console.log(chalk.red.bold(`> Controlled Application Error: ${err.message}`));
     return res
       .status(err.statusCode)

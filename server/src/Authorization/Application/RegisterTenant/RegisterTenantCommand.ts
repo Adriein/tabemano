@@ -1,5 +1,5 @@
+import { ICommand } from "@nestjs/cqrs";
 import { RegisterTenantApiRequest } from "Authorization/Infrastructure/Controller/RegisterTenant/RegisterTenantApiRequest";
-import { ICommand } from "Shared/Domain/Interfaces/ICommand";
 
 export class RegisterTenantCommand implements ICommand {
   public static fromJson(json: RegisterTenantApiRequest): RegisterTenantCommand {

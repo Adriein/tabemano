@@ -1,6 +1,6 @@
-import { CustomError } from "Shared/Domain/Error/CustomError";
+import { DomainError } from "Shared/Domain/Error/DomainError";
 
-export class RecordNotFoundError extends CustomError {
+export class RecordNotFoundError extends DomainError {
   statusCode = 400;
 
   constructor() {

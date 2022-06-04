@@ -19,7 +19,7 @@ export class SignInController {
   ): Promise<void> {
     try {
       const query = SignInQuery.fromJson(req.body);
-
+      console.log('result1');
       const response = await this.queryBus.execute<SignInQuery, SignInResponse>(query);
 
       const userJwt = jwt.sign(

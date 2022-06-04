@@ -1,6 +1,6 @@
-import { CustomError } from "Shared/Domain/Error/CustomError";
+import { DomainError } from "Shared/Domain/Error/DomainError";
 
-export class TenantAlreadyExistsError extends CustomError {
+export class TenantAlreadyExistsError extends DomainError {
   statusCode = 400;
 
   constructor() {

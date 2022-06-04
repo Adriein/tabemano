@@ -1,10 +1,17 @@
 import { Module } from "@nestjs/common";
+import { CqrsModule } from "@nestjs/cqrs";
 import { RegisterTenantController } from "Authorization/Infrastructure/Controller/RegisterTenant/RegisterTenantController";
 import { SignInController } from "Authorization/Infrastructure/Controller/SignIn/SignInController";
 import { PgAuthMapper } from "Authorization/Infrastructure/Persistance/Mapper/PgAuthMapper";
 import { AuthModel } from "Authorization/Infrastructure/Persistance/Model/AuthModel";
 import { PgAuthRepository } from "Authorization/Infrastructure/Persistance/Repository/PgAuthRepository";
+import Database from "Shared/Infrastructure/Persistance/Database";
 import { DataSource } from "typeorm";
+
+const DatabaseProvider = {
+  provide: 'DATABASE_CONNECTION',
+  useFactory: async () => Database.instance().initialize(),
+};
 
 const Mappers = [ PgAuthMapper ];
 const Repositories = [
@@ -25,11 +32,12 @@ const Controllers = [
 ];
 
 @Module({
-  imports: [],
+  imports: [ CqrsModule ],
   controllers: [
     ...Controllers
   ],
   providers: [
+    DatabaseProvider,
     ...Mappers,
     ...Repositories,
   ],

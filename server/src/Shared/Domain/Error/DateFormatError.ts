@@ -1,6 +1,6 @@
-import { CustomError } from "./CustomError";
+import { DomainError } from "./DomainError";
 
-export class DateFormatError extends CustomError {
+export class DateFormatError extends DomainError {
   statusCode = 400;
 
   constructor() {

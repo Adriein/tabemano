@@ -1,5 +1,5 @@
+import { IQuery } from "@nestjs/cqrs";
 import { SignInApiRequest } from "Authorization/Infrastructure/Controller/SignIn/SignInApiRequest";
-import { IQuery } from "Shared/Domain/Interfaces/IQuery";
 
 export class SignInQuery implements IQuery {
   constructor(private readonly _email: string, private readonly _password: string) {}

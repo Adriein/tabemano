@@ -1,7 +1,7 @@
-import { CustomError } from "Shared/Domain/Error/CustomError";
+import { DomainError } from "Shared/Domain/Error/DomainError";
 
 
-export class NotAuthorizedError extends CustomError {
+export class NotAuthorizedError extends DomainError {
   statusCode = 401;
 
   constructor() {

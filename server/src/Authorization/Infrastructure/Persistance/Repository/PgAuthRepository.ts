@@ -22,6 +22,9 @@ export class PgAuthRepository implements IAuthRepository {
   }
 
   public async findOne(filter: AuthFilter): Promise<Result<Auth, Error>> {
+    console.log('result');
+    const result = await this.typeOrmRepository.findOne({ where: { email: 'adria.claret@gmail.com' } });
+    console.log(result);
     throw new Error();
   }
 
