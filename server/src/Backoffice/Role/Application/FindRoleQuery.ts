@@ -1,5 +1,4 @@
-import { IQuery } from "Shared/Domain/Interfaces/IQuery";
-
+import { IQuery } from "@nestjs/cqrs";
 
 export class FindRoleQuery implements IQuery {
   constructor(private _type: string) {}
