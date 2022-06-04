@@ -15,7 +15,7 @@ export class ErrorsInterceptor implements NestInterceptor {
       .handle()
       .pipe(
         catchError(err => {
-          if(err instanceof DomainError) {
+          if (err instanceof DomainError) {
             return throwError(() => new BadRequestException({
               errorType: 'DomainError',
               statusCode: 400,
@@ -24,7 +24,7 @@ export class ErrorsInterceptor implements NestInterceptor {
             }));
           }
 
-          return err;
+          return throwError(err);
         }),
       );
   }

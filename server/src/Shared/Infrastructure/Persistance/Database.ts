@@ -1,3 +1,4 @@
+import { AuthModel } from "Authorization/Infrastructure/Persistance/Model/AuthModel";
 import { DataSource } from 'typeorm';
 
 export default class Database {
@@ -15,7 +16,7 @@ export default class Database {
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [],
+      entities: [ AuthModel ],
       synchronize: false,
       logging: false,
     });

@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { CqrsModule } from "@nestjs/cqrs";
+import { SignInQueryHandler } from "Authorization/Application/SignIn/SignInQueryHandler";
 import { RegisterTenantController } from "Authorization/Infrastructure/Controller/RegisterTenant/RegisterTenantController";
 import { SignInController } from "Authorization/Infrastructure/Controller/SignIn/SignInController";
 import { PgAuthMapper } from "Authorization/Infrastructure/Persistance/Mapper/PgAuthMapper";
@@ -31,6 +32,8 @@ const Controllers = [
   RegisterTenantController
 ];
 
+const Handlers = [ SignInQueryHandler ];
+
 @Module({
   imports: [ CqrsModule ],
   controllers: [
@@ -40,6 +43,7 @@ const Controllers = [
     DatabaseProvider,
     ...Mappers,
     ...Repositories,
+    ...Handlers
   ],
   exports: [],
 })
