@@ -1,9 +1,13 @@
+import { Email } from "Shared/Domain/Vo/Email.vo";
+import { ID } from "Shared/Domain/Vo/Id.vo";
+import { Password } from "Shared/Domain/Vo/Password.vo";
+
 export interface IAuthModel {
-  id: string;
+  id: ID;
   name: string;
-  email: string;
-  password: string;
-  roleId: string;
+  email: Email;
+  password: Password;
+  roleId: ID;
   createdAt: Date;
   updatedAt: Date;
 }

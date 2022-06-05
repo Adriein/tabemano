@@ -4,13 +4,15 @@ import { Auth } from "Authorization/Domain/Entity/Auth";
 import { AuthFilter } from "Authorization/Domain/Entity/AuthFilter";
 import { IAuthRepository } from "Authorization/Domain/Entity/IAuthRepository";
 import { IAuthModel } from "Authorization/Infrastructure/Persistance/Model/IAuthModel";
+import { Email } from "Shared/Domain/Vo/Email.vo";
+import { Password } from "Shared/Domain/Vo/Password.vo";
 import { Repository } from "typeorm";
 
 @Injectable()
 export class PgAuthRepository implements IAuthRepository {
   constructor(
     @Inject('AuthModelRepository')
-    private typeOrmRepository: Repository<IAuthModel>,
+    private typeOrmRepository: Repository<any>,
   ) {}
 
   public async delete(entity: Auth): Promise<void> {
@@ -22,9 +24,8 @@ export class PgAuthRepository implements IAuthRepository {
   }
 
   public async findOne(filter: AuthFilter): Promise<Result<Auth, Error>> {
-    console.log('result');
-    const result = await this.typeOrmRepository.findOne({ where: { email: 'adria.claret@gmail.com' } });
-    console.log(result);
+    const result = await this.typeOrmRepository.findOne({ where: { _email: new Email('adria.claret@gmail.com') } });
+    console.log(result.checkIsAValidPassword(new Password('aaaa')));
     throw new Error();
   }
 

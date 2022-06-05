@@ -4,8 +4,8 @@ import { ID } from "Shared/Domain/Vo/Id.vo";
 export abstract class Aggregate extends AggregateRoot {
   protected constructor(
     private _id: ID,
-    private _dateCreated?: Date,
-    private _dateUpdated?: Date
+    private _createdAt?: Date,
+    private _updatedAt?: Date
   ) {
     super();
   }
@@ -15,14 +15,14 @@ export abstract class Aggregate extends AggregateRoot {
   }
 
   public createdAt(): Date {
-    return this._dateCreated ? this._dateCreated : new Date();
+    return this._createdAt ? this._createdAt : new Date();
   }
 
   public updatedAt(): Date {
-    return this._dateUpdated ? this._dateUpdated : new Date();
+    return this._updatedAt ? this._updatedAt : new Date();
   }
 
   public entityUpdated(): void {
-    this._dateUpdated = new Date();
+    this._updatedAt = new Date();
   }
 }

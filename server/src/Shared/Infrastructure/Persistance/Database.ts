@@ -18,7 +18,7 @@ export default class Database {
       database: process.env.DATABASE_NAME,
       entities: [ AuthModel ],
       synchronize: false,
-      logging: false,
+      logging: true,
     });
 
     return Database._instance;

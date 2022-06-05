@@ -5,43 +5,43 @@ import { Password } from "Shared/Domain/Vo/Password.vo";
 import { ValueObjectTransformer } from "Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer";
 import { EntitySchema } from "typeorm";
 
-export const AuthModel = new EntitySchema<Auth>({
-  name: 'AuthModel',
+export const AuthModel = new EntitySchema<any>({
+  name: 'Auth',
   tableName: 'ta_user',
   target: Auth,
   columns: {
-    id: {
+    _id: {
       type: 'varchar',
       primary: true,
       name: 'us_id',
       transformer: new ValueObjectTransformer<string, ID>(ID)
     },
-    name: {
+    _name: {
       type: 'varchar',
       name: 'us_name',
     },
-    email: {
+    _email: {
       type: 'varchar',
       name: 'us_email',
       transformer: new ValueObjectTransformer<string, Email>(Email)
     },
-    password: {
+    _password: {
       type: 'varchar',
       name: 'us_password',
       transformer: new ValueObjectTransformer<string, Password>(Password)
     },
-    roleId: {
+    _roleId: {
       type: 'varchar',
       name: 'us_role_id',
       transformer: new ValueObjectTransformer<string, ID>(ID)
     },
-    createdAt: {
+    _createdAt: {
       type: 'timestamp',
       name: 'us_created_at',
       precision: 0,
       createDate: true,
     },
-    updatedAt: {
+    _updatedAt: {
       type: 'timestamp',
       name: 'us_updated_at',
       precision: 0,
