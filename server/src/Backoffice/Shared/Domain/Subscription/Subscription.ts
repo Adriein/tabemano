@@ -88,7 +88,6 @@ export class Subscription extends Aggregate {
   }
 
   private addEventToHistory(event: SubscriptionEvent): void {
-    this.entityUpdated();
     this._events.add(event);
   }
 
@@ -109,7 +108,7 @@ export class Subscription extends Aggregate {
     const isAboutToExpire = Time.equal(Time.now(), warningDate);
 
     if (isAboutToExpire) {
-      this.publish(new SubscriptionMarkedAsAboutToExpireDomainEvent(this.id(), this.userId()));
+      this.publish(new SubscriptionMarkedAsAboutToExpireDomainEvent(this.id, this.userId()));
       this.addEventToHistory(SubscriptionEvent.build(SUBSCRIPTION_STATUS.ABOUT_TO_EXPIRE));
     }
   };
@@ -135,6 +134,5 @@ export class Subscription extends Aggregate {
     }
 
     this.addEventToHistory(SubscriptionEvent.build(SUBSCRIPTION_STATUS.INACTIVE));
-    this.entityUpdated();
   }
 }

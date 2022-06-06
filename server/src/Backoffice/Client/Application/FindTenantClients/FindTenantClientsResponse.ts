@@ -6,7 +6,7 @@ import { Time } from "Shared/Infrastructure/Helper/Time";
 export class FindTenantClientsResponse implements Serializable {
   public static build(client: Client, subscription: Subscription): FindTenantClientsResponse {
     return new FindTenantClientsResponse(
-      client.id().value,
+      client.id.value,
       client.name().value,
       client.email().value,
       client.isActive(),

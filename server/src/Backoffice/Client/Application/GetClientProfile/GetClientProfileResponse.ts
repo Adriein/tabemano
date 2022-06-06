@@ -19,7 +19,7 @@ export class GetClientProfileResponse implements Serializable {
     const monthlyRecurringRevenue = this.client.monthlyRecurringRevenue(this.subscriptions);
 
     return {
-      id: this.client.id().value,
+      id: this.client.id.value,
       username: this.client.name().value,
       email: this.client.email().value,
       active: this.client.isActive(),
@@ -31,7 +31,7 @@ export class GetClientProfileResponse implements Serializable {
       },
       subscription: subscriptionResponse,
       revenue: {
-        since: Time.format(this.client.createdAt(), Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
+        since: Time.format(this.client.createdAt, Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
         spent: `${spent} €`,
         monthlyRecurringRevenue: `${monthlyRecurringRevenue} €`
       }
@@ -43,7 +43,7 @@ export class GetClientProfileResponse implements Serializable {
 
     for (const subscription of this.subscriptions) {
       response.push({
-        id: subscription.id().value,
+        id: subscription.id.value,
         pricing: {
           id: subscription.pricingId().value,
           price: subscription.price(),

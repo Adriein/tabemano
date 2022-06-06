@@ -7,7 +7,7 @@ import { Password } from "Shared/Domain/Vo/Password.vo";
 
 export class TenantCreatedDomainEvent extends DomainEvent {
   public static fromEntity(auth: Auth): TenantCreatedDomainEvent {
-    return new TenantCreatedDomainEvent(auth.id(), auth.name(), auth.email(), auth.password(), auth.roleId());
+    return new TenantCreatedDomainEvent(auth.id, auth.name, auth.email, auth.password, auth.roleId);
   }
 
   constructor(

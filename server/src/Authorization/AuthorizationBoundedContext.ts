@@ -10,7 +10,7 @@ import Database from "Shared/Infrastructure/Persistance/Database";
 import { DataSource } from "typeorm";
 
 const DatabaseProvider = {
-  provide: 'DATABASE_CONNECTION',
+  provide: Database.DATABASE_CONNECTION,
   useFactory: async () => Database.instance().initialize(),
 };
 
@@ -19,7 +19,7 @@ const Repositories = [
   {
     provide: 'AuthModelRepository',
     useFactory: (connection: DataSource) => connection.getRepository(AuthModel),
-    inject: [ 'DATABASE_CONNECTION' ],
+    inject: [ Database.DATABASE_CONNECTION ],
   },
   {
     provide: 'IAuthRepository',

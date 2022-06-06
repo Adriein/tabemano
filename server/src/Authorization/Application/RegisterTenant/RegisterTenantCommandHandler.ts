@@ -36,7 +36,7 @@ export class RegisterTenantCommandHandler implements ICommandHandler {
 
     const role = await this.findTenantRole();
 
-    Auth.build(name, email, new Password(password), role);
+    Auth.build(name, email, new Password(password), role.id());
   }
 
   private async ensureTenantNotExists(email: Email): Promise<void> {

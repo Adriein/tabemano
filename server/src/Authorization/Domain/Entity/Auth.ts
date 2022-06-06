@@ -1,4 +1,3 @@
-import { Role } from "Authorization/Domain/Entity/Role";
 import { NotAuthorizedError } from "Authorization/Domain/Error/NotAuthorizedError";
 import { Aggregate } from "Shared/Domain/Entities/AggregateRoot";
 import { Name } from "Shared/Domain/Vo/Name.vo";
@@ -11,8 +10,8 @@ import { Password } from "Shared/Domain/Vo/Password.vo";
 export class Auth extends Aggregate {
   private crypto: CryptoService = new CryptoService();
 
-  public static build(name: Name, email: Email, password: Password, role: Role): Auth {
-    const auth = new Auth(ID.generate(), name, email, password, role);
+  public static build(name: Name, email: Email, password: Password, roleId: ID): Auth {
+    const auth = new Auth(ID.generate(), name, email, password, roleId);
     const event = TenantCreatedDomainEvent.fromEntity(auth);
     auth.publish(event);
 
@@ -20,33 +19,17 @@ export class Auth extends Aggregate {
   }
 
   constructor(
-    _id: ID,
-    private readonly _name: Name,
-    private readonly _email: Email,
-    private readonly _password: Password,
-    private readonly _role: Role
+    readonly id: ID,
+    readonly name: Name,
+    readonly email: Email,
+    readonly password: Password,
+    readonly roleId: ID
   ) {
-    super(_id);
-  }
-
-  public name(): Name {
-    return this._name;
-  }
-
-  public email(): Email {
-    return this._email;
-  }
-
-  public password(): Password {
-    return this._password;
-  }
-
-  public roleId(): ID {
-    return this._role.id();
+    super(id);
   }
 
   public async checkIsAValidPassword(supplied: Password): Promise<void> {
-    const valid = await this.crypto.compare(this._password.value, supplied.value);
+    const valid = await this.crypto.compare(this.password.value, supplied.value);
 
     if (!valid) {
       throw new NotAuthorizedError();

@@ -3,17 +3,23 @@ import { Inject, Injectable } from "@nestjs/common";
 import { Auth } from "Authorization/Domain/Entity/Auth";
 import { AuthFilter } from "Authorization/Domain/Entity/AuthFilter";
 import { IAuthRepository } from "Authorization/Domain/Entity/IAuthRepository";
+import { AuthModel } from "Authorization/Infrastructure/Persistance/Model/AuthModel";
 import { IAuthModel } from "Authorization/Infrastructure/Persistance/Model/IAuthModel";
+import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { Password } from "Shared/Domain/Vo/Password.vo";
-import { Repository } from "typeorm";
+import Database from "Shared/Infrastructure/Persistance/Database";
+import { TypeOrmRepository } from "Shared/Infrastructure/Persistance/Repository/TypeOrmRepository";
+import { DataSource, EntitySchema, Repository } from "typeorm";
 
 @Injectable()
-export class PgAuthRepository implements IAuthRepository {
+export class PgAuthRepository extends TypeOrmRepository<Auth> implements IAuthRepository {
   constructor(
-    @Inject('AuthModelRepository')
-    private typeOrmRepository: Repository<any>,
-  ) {}
+    @Inject(Database.DATABASE_CONNECTION)
+    protected readonly dataSource: DataSource,
+  ) {
+    super();
+  }
 
   public async delete(entity: Auth): Promise<void> {
     throw new Error();
@@ -23,10 +29,10 @@ export class PgAuthRepository implements IAuthRepository {
     throw new Error();
   }
 
-  public async findOne(filter: AuthFilter): Promise<Result<Auth, Error>> {
-    const result = await this.typeOrmRepository.findOne({ where: { _email: new Email('adria.claret@gmail.com') } });
-    console.log(result.checkIsAValidPassword(new Password('aaaa')));
-    throw new Error();
+  public async findOne(filter: AuthFilter): Promise<Result<Auth, RecordNotFoundError>> {
+    const result = await this.repository().findOne({ where: { email: new Email('adria.claret@gmail.com') } });
+
+    return result ? Result.ok(result) : Result.err(new RecordNotFoundError());
   }
 
   public async save(entity: Auth): Promise<void> {
@@ -37,4 +43,7 @@ export class PgAuthRepository implements IAuthRepository {
     throw new Error();
   }
 
+  protected entitySchema(): EntitySchema<Auth> {
+    return AuthModel;
+  }
 }

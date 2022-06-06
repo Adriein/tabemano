@@ -2,6 +2,7 @@ import { Result } from "@badrap/result";
 import { ISubscriptionRepository } from "Backoffice/Shared/Domain/Subscription/ISubscriptionRepository";
 import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";
 import { SubscriptionFilter } from "Backoffice/Shared/Domain/Subscription/SubscriptionFilter";
+import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
 
 export class PgSubscriptionRepository implements ISubscriptionRepository {
   delete(entity: Subscription): Promise<void> {
@@ -12,7 +13,7 @@ export class PgSubscriptionRepository implements ISubscriptionRepository {
     throw new Error();
   }
 
-  public async findOne(filter: SubscriptionFilter): Promise<Result<Subscription, Error>> {
+  public async findOne(filter: SubscriptionFilter): Promise<Result<Subscription, RecordNotFoundError>> {
     throw new Error();
   }
 

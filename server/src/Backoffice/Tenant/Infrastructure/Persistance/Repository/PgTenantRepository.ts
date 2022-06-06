@@ -2,6 +2,7 @@ import { Result } from "@badrap/result";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
 import { ITenantRepository } from "Backoffice/Tenant/Domain/Repository/ITenantRepository";
 import { Tenant } from "Backoffice/Tenant/Domain/Entity/Tenant";
+import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
 
 export class PgTenantRepository implements ITenantRepository {
   delete(entity: Tenant): Promise<void> {
@@ -12,7 +13,7 @@ export class PgTenantRepository implements ITenantRepository {
     throw new Error();
   }
 
-  public async findOne(filter: UserFilter): Promise<Result<Tenant, Error>> {
+  public async findOne(filter: UserFilter): Promise<Result<Tenant, RecordNotFoundError>> {
     throw new Error();
   }
 

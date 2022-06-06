@@ -2,6 +2,7 @@ import { Result } from "@badrap/result";
 import { IPricingRepository } from "Backoffice/Pricing/Domain/Entity/IPricingRepository";
 import { Pricing } from "Backoffice/Pricing/Domain/Entity/Pricing";
 import { PricingFilter } from "Backoffice/Pricing/Domain/Entity/PricingFilter";
+import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
 
 export class PgPricingRepository implements IPricingRepository {
   delete(entity: Pricing): Promise<void> {
@@ -12,7 +13,7 @@ export class PgPricingRepository implements IPricingRepository {
     throw new Error();
   }
 
-  public async findOne(filter: PricingFilter): Promise<Result<Pricing, Error>> {
+  public async findOne(filter: PricingFilter): Promise<Result<Pricing, RecordNotFoundError>> {
     throw new Error();
   }
 

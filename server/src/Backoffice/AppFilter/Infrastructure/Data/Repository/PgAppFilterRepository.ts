@@ -3,6 +3,7 @@ import { AppFilter } from "Backoffice/AppFilter/Domain/Entity/AppFilter";
 import { AppFilterFilter } from "Backoffice/AppFilter/Domain/Entity/AppFilterFilter";
 import { IAppFilterRepository } from "Backoffice/AppFilter/Domain/Repository/IAppFilterRepository";
 import { Filter } from "Shared/Domain/Entities/Filter";
+import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
 
 export class PgAppFilterRepository implements IAppFilterRepository {
   delete(entity: AppFilter): Promise<void> {
@@ -13,7 +14,7 @@ export class PgAppFilterRepository implements IAppFilterRepository {
     throw new Error();
   }
 
-  findOne(filter: Filter): Promise<Result<AppFilter, Error>> {
+  findOne(filter: Filter): Promise<Result<AppFilter, RecordNotFoundError>> {
     throw new Error();
   }
 

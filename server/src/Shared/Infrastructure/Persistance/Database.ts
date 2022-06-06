@@ -2,6 +2,7 @@ import { AuthModel } from "Authorization/Infrastructure/Persistance/Model/AuthMo
 import { DataSource } from 'typeorm';
 
 export default class Database {
+  public static readonly DATABASE_CONNECTION = 'DATABASE_CONNECTION';
   private static _instance: DataSource;
 
   public static instance(): DataSource {

@@ -23,7 +23,7 @@ export class PgAuthMapper implements IMapper<Auth, IAuthModel> {
       new Name(dataModel.us_name),
       new Email(dataModel.us_email),
       new Password(dataModel.us_password),
-      role
+      new ID('')
     );
   }
 

@@ -29,7 +29,7 @@ export class Tenant extends User {
       AppConfig.build()
     );
 
-    tenant.publish(new DefaultPricesCreatedDomainEvent(tenant.id()));
+    tenant.publish(new DefaultPricesCreatedDomainEvent(tenant.id));
     return tenant;
   }
 
@@ -56,7 +56,7 @@ export class Tenant extends User {
 
   public registerClient(name: Name, email: Email, pricingId: ID, roleId: ID): void {
     const pricing = this._pricing.getPricingById(pricingId);
-    const event = new ClientCreatedDomainEvent(this.id(), name, email, this.id(), pricing, roleId);
+    const event = new ClientCreatedDomainEvent(this.id, name, email, this.id, pricing, roleId);
 
     this.publish(event);
   }

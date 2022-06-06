@@ -1,8 +1,9 @@
 import { Result } from "@badrap/result";
+import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
 import { Filter } from "../Entities/Filter";
 
 export interface IRepository<T> {
-  findOne(filter: Filter): Promise<Result<T, Error>>;
+  findOne(filter: Filter): Promise<Result<T, RecordNotFoundError>>;
 
   find(filter: Filter): Promise<Result<T[], Error>>;
 

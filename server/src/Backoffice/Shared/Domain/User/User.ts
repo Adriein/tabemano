@@ -67,13 +67,12 @@ export abstract class User extends Aggregate {
   }
 
   public createSubscription(pricing: Pricing): Subscription {
-    return Subscription.build(this.id(), DateVo.now(), pricing);
+    return Subscription.build(this.id, DateVo.now(), pricing);
   }
 
   public changePersonalInfo(name: Name, email: Email): void {
     this._name = name;
     this._email = email;
-    this.entityUpdated();
   }
 
   public changeConfig(warnings: boolean, notifications: boolean, language: string,): void {
@@ -94,6 +93,5 @@ export abstract class User extends Aggregate {
     }
 
     this._config.changeLanguage(language);
-    this.entityUpdated();
   }
 }
