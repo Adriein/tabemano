@@ -20,14 +20,14 @@ export class GetClientProfileResponse implements Serializable {
 
     return {
       id: this.client.id.value,
-      username: this.client.name().value,
-      email: this.client.email().value,
-      active: this.client.isActive(),
+      username: this.client.name.value,
+      email: this.client.email.value,
+      active: this.client.isActive,
       config: {
         sendWarnings: this.client.sendWarnings(),
         language: this.client.language(),
         sendNotifications: this.client.sendNotifications(),
-        role: this.client.roleId().value
+        role: this.client.roleId.value
       },
       subscription: subscriptionResponse,
       revenue: {

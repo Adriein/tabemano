@@ -7,9 +7,9 @@ export class FindTenantClientsResponse implements Serializable {
   public static build(client: Client, subscription: Subscription): FindTenantClientsResponse {
     return new FindTenantClientsResponse(
       client.id.value,
-      client.name().value,
-      client.email().value,
-      client.isActive(),
+      client.name.value,
+      client.email.value,
+      client.isActive,
       client.sendWarnings(),
       subscription.pricingName(),
       Time.format(subscription.validTo(), Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
