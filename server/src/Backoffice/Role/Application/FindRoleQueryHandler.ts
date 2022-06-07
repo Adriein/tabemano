@@ -1,3 +1,4 @@
+import { Inject } from "@nestjs/common";
 import { IQueryHandler, QueryHandler } from "@nestjs/cqrs";
 import { FindRoleQuery } from "Backoffice/Role/Application/FindRoleQuery";
 import { FindRoleResponse } from "Backoffice/Role/Application/FindRoleResponse";
@@ -8,7 +9,7 @@ import { RoleType } from "Shared/Domain/Vo/RoleType";
 
 @QueryHandler(FindRoleQuery)
 export class FindRoleQueryHandler implements IQueryHandler {
-  constructor(private readonly repository: IRoleRepository) {}
+  constructor(@Inject('IRoleRepository') private readonly repository: IRoleRepository) {}
 
   @Log()
   public async execute(query: FindRoleQuery): Promise<FindRoleResponse> {
@@ -20,11 +21,9 @@ export class FindRoleQueryHandler implements IQueryHandler {
 
     const result = await this.repository.findOne(filter);
 
-    if (result.isErr) {
-      throw result.error;
-    }
+    const role = result.unwrap();
 
-    return FindRoleResponse.fromDomain(result.value);
+    return FindRoleResponse.fromDomain(role);
   }
 
 }

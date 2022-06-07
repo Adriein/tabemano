@@ -15,7 +15,6 @@ import { Name } from "Shared/Domain/Vo/Name.vo";
 import { Log } from "Shared/Domain/Decorators/Log";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { Password } from "Shared/Domain/Vo/Password.vo";
-import { RoleType } from "Shared/Domain/Vo/RoleType";
 
 @CommandHandler(RegisterTenantCommand)
 export class RegisterTenantCommandHandler implements ICommandHandler {
@@ -36,7 +35,7 @@ export class RegisterTenantCommandHandler implements ICommandHandler {
 
     const role = await this.findTenantRole();
 
-    Auth.build(name, email, new Password(password), role.id());
+    Auth.build(name, email, new Password(password), new ID(role.id));
   }
 
   private async ensureTenantNotExists(email: Email): Promise<void> {
@@ -50,14 +49,9 @@ export class RegisterTenantCommandHandler implements ICommandHandler {
     }
   }
 
-  private async findTenantRole(): Promise<Role> {
+  private async findTenantRole(): Promise<FindRoleResponse> {
     const query = new FindRoleQuery(TENANT_ROLE);
 
-    const role = await this.queryBus.execute<FindRoleQuery, FindRoleResponse>(query);
-
-    return new Role(
-      new ID(role.id),
-      new RoleType(role.type)
-    );
+    return await this.queryBus.execute<FindRoleQuery, FindRoleResponse>(query);
   }
 }

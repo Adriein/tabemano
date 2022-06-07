@@ -18,6 +18,8 @@ export class CreateTenantDomainEventHandler implements IEventHandler {
   @Log()
   public async handle(event: TenantCreatedDomainEvent): Promise<void> {
     const { name, email, password, roleId } = event;
+    console.log('llego aqui man');
+    throw new Error();
 
     const admin = await this.findAdmin();
 

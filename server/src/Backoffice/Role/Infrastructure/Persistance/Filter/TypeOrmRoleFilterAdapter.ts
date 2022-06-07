@@ -1,21 +1,22 @@
-import { Prisma } from "@prisma/client";
+import { Role } from "Backoffice/Role/Domain/Entity/Role";
 import { RoleFilter } from "Backoffice/Role/Domain/Entity/RoleFilter";
 import { Pagination } from "Shared/Domain/Entities/Pagination";
 import { RoleType } from "Shared/Domain/Vo/RoleType";
-import { PrismaAdapter } from "Shared/Infrastructure/Persistance/PrismaAdapter";
+import { TypeOrmAdapter } from "Shared/Infrastructure/Persistance/Adapter/TypeOrmAdapter";
+import { FindManyOptions } from "typeorm";
 
-export class PrismaRoleFilterAdapter extends PrismaAdapter<Prisma.ta_roleFindManyArgs> {
+export class TypeOrmRoleFilterAdapter extends TypeOrmAdapter<FindManyOptions<Role>> {
   constructor(private readonly filter: RoleFilter) {
     super();
   }
 
-  public apply(): Prisma.ta_roleFindManyArgs {
+  public apply(): FindManyOptions<Role> {
     const filters = this.filter.apply();
 
     if (filters.has(RoleFilter.ROLE_TYPE_FILTER)) {
       const type = filters.get(RoleFilter.ROLE_TYPE_FILTER) as RoleType;
 
-      this.add({ where: { ro_type: type.value } });
+      this.add({ where: { type: type } });
     }
 
     if (filters.has(Pagination.PAGINATION_FILTER)) {
@@ -24,6 +25,6 @@ export class PrismaRoleFilterAdapter extends PrismaAdapter<Prisma.ta_roleFindMan
       this.add(this.pagination(pagination))
     }
 
-    return this.prismaFilter;
+    return this.typeOrmFilter;
   }
 }

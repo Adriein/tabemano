@@ -8,15 +8,9 @@ export class Role extends Aggregate {
   }
 
   constructor(
-    _id: ID,
-    private _type: RoleType,
-    _createdAt?: Date,
-    _updatedAt?: Date
+    readonly id: ID,
+    readonly type: RoleType,
   ) {
-    super(_id, _createdAt, _updatedAt);
-  }
-
-  public type(): RoleType {
-    return this._type;
+    super(id);
   }
 }

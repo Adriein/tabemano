@@ -1,4 +1,5 @@
 import { AuthModel } from "Authorization/Infrastructure/Persistance/Model/AuthModel";
+import { RoleModel } from "Backoffice/Role/Infrastructure/Persistance/Model/RoleModel";
 import { DataSource } from 'typeorm';
 
 export default class Database {
@@ -17,7 +18,7 @@ export default class Database {
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [ AuthModel ],
+      entities: [ AuthModel, RoleModel ],
       synchronize: false,
       logging: true,
     });

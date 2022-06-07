@@ -1,8 +1,7 @@
-import { Controller, Post } from "@nestjs/common";
+import { Body, Controller, Post } from "@nestjs/common";
 import { CommandBus } from "@nestjs/cqrs";
 import { RegisterTenantCommand } from "Authorization/Application/RegisterTenant/RegisterTenantCommand";
 import { RegisterTenantApiRequest } from "Authorization/Infrastructure/Controller/RegisterTenant/RegisterTenantApiRequest";
-import { NextFunction, Request, Response } from "express";
 
 @Controller()
 export class RegisterTenantController {
@@ -10,18 +9,10 @@ export class RegisterTenantController {
 
   @Post('/register')
   public async register(
-    req: Request<{}, {}, RegisterTenantApiRequest>,
-    res: Response<void>,
-    next: NextFunction
+    @Body() body: RegisterTenantApiRequest
   ): Promise<void> {
-    try {
-      const command = RegisterTenantCommand.fromJson(req.body);
+    const command = RegisterTenantCommand.fromJson(body);
 
-      await this.commandBus.execute(command);
-
-      res.status(200).send();
-    } catch (error) {
-      next(error);
-    }
+    await this.commandBus.execute(command);
   }
 }

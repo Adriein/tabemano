@@ -1,21 +1,22 @@
-import { Prisma } from "@prisma/client";
+import { Auth } from "Authorization/Domain/Entity/Auth";
 import { AuthFilter } from "Authorization/Domain/Entity/AuthFilter";
 import { Pagination } from "Shared/Domain/Entities/Pagination";
 import { Email } from "Shared/Domain/Vo/Email.vo";
-import { PrismaAdapter } from "Shared/Infrastructure/Persistance/PrismaAdapter";
+import { TypeOrmAdapter } from "Shared/Infrastructure/Persistance/Adapter/TypeOrmAdapter";
+import { FindManyOptions } from "typeorm";
 
-export class TypeOrmAuthFilterAdapter extends PrismaAdapter<Prisma.ta_userFindManyArgs> {
+export class TypeOrmAuthFilterAdapter extends TypeOrmAdapter<FindManyOptions<Auth>> {
   constructor(private readonly filter: AuthFilter) {
     super();
   }
 
-  public apply(): Prisma.ta_userFindManyArgs {
+  public apply(): FindManyOptions<Auth> {
     const filters = this.filter.apply();
 
     if (filters.has(AuthFilter.EMAIL_FILTER)) {
       const email = filters.get(AuthFilter.EMAIL_FILTER) as Email;
 
-      this.add({ where: { us_email: email.value } });
+      this.add({ where: { email } });
     }
 
     if (filters.has(Pagination.PAGINATION_FILTER)) {
@@ -23,9 +24,7 @@ export class TypeOrmAuthFilterAdapter extends PrismaAdapter<Prisma.ta_userFindMa
 
       this.add(this.pagination(pagination))
     }
-
-    this.add({ include: { us_config: true, us_app_config: true, us_role: true, us_subscriptions: true } })
-
-    return this.prismaFilter;
+    
+    return this.typeOrmFilter;
   }
 }
