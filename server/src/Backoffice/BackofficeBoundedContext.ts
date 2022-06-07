@@ -2,13 +2,11 @@ import { Module } from "@nestjs/common";
 import { CqrsModule } from "@nestjs/cqrs";
 import { RoleModule } from "Backoffice/Role/Infrastructure/RoleModule";
 import { TenantModule } from "Backoffice/Tenant/Infrastructure/TenantModule";
-import { TypeOrmModule } from "Shared/Infrastructure/Persistance/TypeOrmModule";
-
 
 @Module({
-  imports: [ CqrsModule, TypeOrmModule, RoleModule, TenantModule ],
+  imports: [ CqrsModule, RoleModule, TenantModule ],
   controllers: [],
   providers: [],
-  exports: [ CqrsModule, TypeOrmModule, RoleModule ],
+  exports: [ CqrsModule, RoleModule ],
 })
 export class BackofficeBoundedContext {}

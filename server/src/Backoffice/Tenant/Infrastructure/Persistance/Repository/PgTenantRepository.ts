@@ -1,10 +1,24 @@
 import { Result } from "@badrap/result";
+import { Inject, Injectable } from "@nestjs/common";
+import { User } from "Backoffice/Shared/Domain/User/User";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
+import { UserModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/UserModel";
 import { ITenantRepository } from "Backoffice/Tenant/Domain/Repository/ITenantRepository";
 import { Tenant } from "Backoffice/Tenant/Domain/Entity/Tenant";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
+import Database from "Shared/Infrastructure/Persistance/Database";
+import { TypeOrmRepository } from "Shared/Infrastructure/Persistance/Repository/TypeOrmRepository";
+import { DataSource, EntitySchema } from "typeorm";
 
-export class PgTenantRepository implements ITenantRepository {
+@Injectable()
+export class PgTenantRepository extends TypeOrmRepository<User> implements ITenantRepository {
+  constructor(
+    @Inject(Database.DATABASE_CONNECTION)
+    protected readonly dataSource: DataSource,
+  ) {
+    super();
+  }
+
   delete(entity: Tenant): Promise<void> {
     return Promise.resolve(undefined);
   }
@@ -23,6 +37,10 @@ export class PgTenantRepository implements ITenantRepository {
 
   update(entity: Tenant): Promise<void> {
     return Promise.resolve(undefined);
+  }
+
+  protected entitySchema(): EntitySchema<User> {
+    return UserModel;
   }
 
 }

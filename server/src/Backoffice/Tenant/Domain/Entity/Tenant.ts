@@ -34,28 +34,28 @@ export class Tenant extends User {
   }
 
   constructor(
-    _id: ID,
-    protected _name: Name,
-    protected _password: Password,
-    protected _email: Email,
-    protected _config: Config,
-    protected _tenantId: ID,
-    protected _roleId: ID,
-    protected _active: boolean,
-    protected _pricing: PricingCollection,
-    protected _appConfig: AppConfig,
-    _createdAt?: Date,
-    _updatedAt?: Date
+    readonly id: ID,
+    readonly name: Name,
+    readonly password: Password,
+    readonly email: Email,
+    readonly config: Config,
+    readonly tenantId: ID,
+    readonly roleId: ID,
+    readonly isActive: boolean,
+    readonly pricing: PricingCollection,
+    readonly appConfig: AppConfig,
+    readonly createdAt: Date = new Date(),
+    readonly updatedAt: Date = new Date(),
   ) {
-    super(_id, _name, _password, _email, _config, _tenantId, _roleId, _active, _createdAt, _updatedAt);
+    super(id, name, password, email, config, tenantId, roleId, isActive, createdAt, updatedAt);
   }
 
   public getYearlyPricing(): Pricing {
-    return this._pricing.getPricingByName(YEARLY_PRICING);
+    return this.pricing.getPricingByName(YEARLY_PRICING);
   }
 
   public registerClient(name: Name, email: Email, pricingId: ID, roleId: ID): void {
-    const pricing = this._pricing.getPricingById(pricingId);
+    const pricing = this.pricing.getPricingById(pricingId);
     const event = new ClientCreatedDomainEvent(this.id, name, email, this.id, pricing, roleId);
 
     this.publish(event);

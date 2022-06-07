@@ -1,6 +1,7 @@
 import { Inject } from "@nestjs/common";
-import { CommandHandler, ICommandHandler, QueryBus } from "@nestjs/cqrs";
+import { CommandHandler, EventBus, EventPublisher, ICommandHandler, QueryBus } from "@nestjs/cqrs";
 import { RegisterTenantCommand } from "Authorization/Application/RegisterTenant/RegisterTenantCommand";
+import { TenantCreatedDomainEvent } from "Authorization/Application/RegisterTenant/TenantCreatedDomainEvent";
 import { Auth } from "Authorization/Domain/Entity/Auth";
 import { AuthFilter } from "Authorization/Domain/Entity/AuthFilter";
 import { IAuthRepository } from "Authorization/Domain/Entity/IAuthRepository";
@@ -22,7 +23,8 @@ export class RegisterTenantCommandHandler implements ICommandHandler {
     @Inject('IAuthRepository')
     private readonly repository: IAuthRepository,
     private readonly queryBus: QueryBus,
-    private readonly crypto: CryptoService
+    private readonly crypto: CryptoService,
+    private readonly eventBus: EventBus,
   ) {}
 
   @Log()
@@ -35,7 +37,9 @@ export class RegisterTenantCommandHandler implements ICommandHandler {
 
     const role = await this.findTenantRole();
 
-    Auth.build(name, email, new Password(password), new ID(role.id));
+    const auth = Auth.build(name, email, new Password(password), new ID(role.id));
+
+    this.publishTenantRegisteredEvent(auth);
   }
 
   private async ensureTenantNotExists(email: Email): Promise<void> {
@@ -53,5 +57,9 @@ export class RegisterTenantCommandHandler implements ICommandHandler {
     const query = new FindRoleQuery(TENANT_ROLE);
 
     return await this.queryBus.execute<FindRoleQuery, FindRoleResponse>(query);
+  }
+
+  private publishTenantRegisteredEvent(auth: Auth): void {
+    this.eventBus.publish(TenantCreatedDomainEvent.fromEntity(auth));
   }
 }

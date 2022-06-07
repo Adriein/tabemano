@@ -1,5 +1,5 @@
 import { Result } from "@badrap/result";
-import { Inject } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { Role } from "Backoffice/Role/Domain/Entity/Role";
 import { RoleFilter } from "Backoffice/Role/Domain/Entity/RoleFilter";
 import { IRoleRepository } from "Backoffice/Role/Domain/Repository/IRoleRepository";
@@ -10,6 +10,7 @@ import Database from "Shared/Infrastructure/Persistance/Database";
 import { TypeOrmRepository } from "Shared/Infrastructure/Persistance/Repository/TypeOrmRepository";
 import { DataSource, EntitySchema } from "typeorm";
 
+@Injectable()
 export class PgRoleRepository extends TypeOrmRepository<Role> implements IRoleRepository {
   constructor(
     @Inject(Database.DATABASE_CONNECTION)
