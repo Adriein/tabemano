@@ -34,7 +34,7 @@ export class Tenant extends User {
   }
 
   constructor(
-    _id: ID,
+    readonly id: ID,
     readonly name: Name,
     readonly password: Password,
     readonly email: Email,
@@ -44,10 +44,10 @@ export class Tenant extends User {
     readonly isActive: boolean,
     readonly pricing: PricingCollection,
     readonly appConfig: AppConfig,
-    _createdAt: Date = new Date(),
-    _updatedAt: Date = new Date(),
+    readonly createdAt: Date = new Date(),
+    readonly updatedAt: Date = new Date(),
   ) {
-    super(_id, name, password, email, config, tenantId, roleId, isActive, _createdAt, _updatedAt);
+    super(id, name, password, email, config, tenantId, roleId, isActive, createdAt, updatedAt);
   }
 
   public getYearlyPricing(): Pricing {

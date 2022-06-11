@@ -1,7 +1,6 @@
 import { Auth } from "Authorization/Domain/Entity/Auth";
 import { AuthFilter } from "Authorization/Domain/Entity/AuthFilter";
 import { Pagination } from "Shared/Domain/Entities/Pagination";
-import { Describer } from "Shared/Domain/types";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { TypeOrmAdapter } from "Shared/Infrastructure/Persistance/Adapter/TypeOrmAdapter";
 import { FindManyOptions } from "typeorm";
@@ -25,7 +24,7 @@ export class TypeOrmAuthFilterAdapter extends TypeOrmAdapter<FindManyOptions<Aut
 
       this.add(this.pagination(pagination))
     }
-
+    
     return this.typeOrmFilter;
   }
 }

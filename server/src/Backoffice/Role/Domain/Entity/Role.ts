@@ -8,9 +8,9 @@ export class Role extends Aggregate {
   }
 
   constructor(
-    _id: ID,
+    readonly id: ID,
     readonly type: RoleType,
   ) {
-    super(_id);
+    super(id);
   }
 }

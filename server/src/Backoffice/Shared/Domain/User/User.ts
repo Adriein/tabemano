@@ -11,7 +11,7 @@ import { Password } from "Shared/Domain/Vo/Password.vo";
 
 export abstract class User extends Aggregate {
   protected constructor(
-    _id: ID,
+    readonly id: ID,
     readonly name: Name,
     readonly password: Password,
     readonly email: Email,
@@ -19,10 +19,10 @@ export abstract class User extends Aggregate {
     readonly tenantId: ID,
     readonly roleId: ID,
     readonly isActive: boolean,
-    _createdAt: Date = new Date(),
-    _updatedAt: Date = new Date()
+    readonly createdAt: Date = new Date(),
+    readonly updatedAt: Date = new Date()
   ) {
-    super(_id, _createdAt, _updatedAt);
+    super(id, createdAt, updatedAt);
   }
 
   public configId = (): ID => {

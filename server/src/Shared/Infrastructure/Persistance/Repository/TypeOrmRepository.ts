@@ -1,5 +1,4 @@
 import { Aggregate } from "Shared/Domain/Entities/AggregateRoot";
-import { Describer } from "Shared/Domain/types";
 import { DataSource, EntitySchema, Repository } from "typeorm";
 
 

@@ -19,8 +19,7 @@ export class SignInQueryHandler implements IQueryHandler {
     const password = new Password(command.password);
 
     const auth = await this.findUser(email);
-    console.log(auth);
-    throw new Error();
+
     await auth.checkIsAValidPassword(password);
 
     return SignInResponse.fromDomain(auth);

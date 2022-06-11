@@ -1,5 +1,4 @@
 import { Auth } from "Authorization/Domain/Entity/Auth";
-import { Describer } from "Shared/Domain/types";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Name } from "Shared/Domain/Vo/Name.vo";
