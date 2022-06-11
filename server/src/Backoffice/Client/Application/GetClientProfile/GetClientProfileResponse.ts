@@ -50,7 +50,7 @@ export class GetClientProfileResponse implements Serializable {
           name: subscription.pricingName(),
           duration: subscription.duration()
         },
-        lastPayment: Time.format(subscription.lastPayment.value, Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
+        lastPayment: Time.format(subscription.paymentDate.value, Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
         validTo: Time.format(subscription.validTo.value, Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
         isExpired: subscription.isExpired,
         isActive: subscription.isActive,

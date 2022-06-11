@@ -13,7 +13,7 @@ export class FindTenantClientsResponse implements Serializable {
       client.sendWarnings(),
       subscription.pricingName(),
       Time.format(subscription.validTo.value, Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
-      Time.format(subscription.lastPayment.value, Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
+      Time.format(subscription.paymentDate.value, Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
       subscription.isExpired
     )
   }

@@ -31,7 +31,7 @@ export class Subscription extends Aggregate {
   constructor(
     readonly id: ID,
     readonly userId: ID,
-    readonly lastPayment: DateVo,
+    readonly paymentDate: DateVo,
     readonly validTo: DateVo,
     public isActive: boolean,
     public isExpired: boolean,
@@ -69,7 +69,7 @@ export class Subscription extends Aggregate {
   }
 
   public checkIsExpired = (): boolean => {
-    const expirationDate = Subscription.expirationDate(this.lastPayment, this.pricing.duration());
+    const expirationDate = Subscription.expirationDate(this.paymentDate, this.pricing.duration());
     return Time.equal(Time.now(), expirationDate.value);
   }
 
@@ -79,7 +79,7 @@ export class Subscription extends Aggregate {
   }
 
   public checkIsAboutToExpire = (daysToWarn: number | undefined = 5): void => {
-    const expirationDate = Time.add(this.lastPayment.value, 5);
+    const expirationDate = Time.add(this.paymentDate.value, 5);
     const warningDate = Time.subtract(expirationDate, daysToWarn)
 
     const isAboutToExpire = Time.equal(Time.now(), warningDate);
