@@ -50,10 +50,10 @@ export class GetClientProfileResponse implements Serializable {
           name: subscription.pricingName(),
           duration: subscription.duration()
         },
-        lastPayment: Time.format(subscription.paymentDate(), Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
-        validTo: Time.format(subscription.validTo(), Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
-        isExpired: subscription.isExpired(),
-        isActive: subscription.isActive(),
+        lastPayment: Time.format(subscription.lastPayment.value, Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
+        validTo: Time.format(subscription.validTo.value, Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
+        isExpired: subscription.isExpired,
+        isActive: subscription.isActive,
         history: this.mountSubscriptionEventsResponse(subscription)
       });
     }
@@ -62,7 +62,7 @@ export class GetClientProfileResponse implements Serializable {
   }
 
   private mountSubscriptionEventsResponse(subscription: Subscription) {
-    return subscription.events().data().map((event: SubscriptionEvent) => {
+    return subscription.events.data().map((event: SubscriptionEvent) => {
       return {
         event: event.event(),
         createdAt: Time.format(event.createdAt(), Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),

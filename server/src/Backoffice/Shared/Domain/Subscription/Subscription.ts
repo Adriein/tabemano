@@ -29,58 +29,35 @@ export class Subscription extends Aggregate {
   }
 
   constructor(
-    _id: ID,
-    private _userId: ID,
-    private _lastPayment: DateVo,
-    private _validTo: DateVo,
-    private _isActive: boolean,
-    private _isExpired: boolean,
-    private _pricing: Pricing,
-    private _events: SubscriptionEventCollection,
-    _createdAt?: Date,
-    _updatedAt?: Date
+    readonly id: ID,
+    readonly userId: ID,
+    readonly lastPayment: DateVo,
+    readonly validTo: DateVo,
+    public isActive: boolean,
+    public isExpired: boolean,
+    readonly pricing: Pricing,
+    readonly events: SubscriptionEventCollection,
+    readonly createdAt: Date = new Date(),
+    readonly updatedAt: Date = new Date()
   ) {
-    super(_id, _createdAt, _updatedAt);
+    super(id, createdAt, updatedAt);
   }
 
   public pricingId = (): ID => {
-    return this._pricing.id();
+    return this.pricing.id();
   }
 
-  public paymentDate = (): Date => {
-    return this._lastPayment.value;
-  };
-
-  public validTo(): Date {
-    return this._validTo.value;
-  }
-
-  public isActive = (): boolean => {
-    return this._isActive;
-  };
-
-  public userId = (): ID => {
-    return this._userId;
-  }
-
-  public isExpired = (): boolean => {
-    return this._isExpired;
-  };
-
-  public events(): SubscriptionEventCollection {
-    return this._events;
-  }
 
   public pricingName(): string {
-    return this._pricing.name();
+    return this.pricing.name();
   }
 
   public duration(): number {
-    return this._pricing.duration();
+    return this.pricing.duration();
   }
 
   public price(): number {
-    return this._pricing.price();
+    return this.pricing.price();
   }
 
   public static expirationDate = (lastPaymentDate: DateVo, pricingDuration: number): DateVo => {
@@ -88,46 +65,46 @@ export class Subscription extends Aggregate {
   }
 
   private addEventToHistory(event: SubscriptionEvent): void {
-    this._events.add(event);
+    this.events.add(event);
   }
 
   public checkIsExpired = (): boolean => {
-    const expirationDate = Subscription.expirationDate(this._lastPayment, this._pricing.duration());
+    const expirationDate = Subscription.expirationDate(this.lastPayment, this.pricing.duration());
     return Time.equal(Time.now(), expirationDate.value);
   }
 
   public makeExpired(): void {
-    this._isExpired = true;
+    this.isExpired = true;
     this.addEventToHistory(SubscriptionEvent.build(SUBSCRIPTION_STATUS.EXPIRED));
   }
 
   public checkIsAboutToExpire = (daysToWarn: number | undefined = 5): void => {
-    const expirationDate = Time.add(this._lastPayment.value, 5);
+    const expirationDate = Time.add(this.lastPayment.value, 5);
     const warningDate = Time.subtract(expirationDate, daysToWarn)
 
     const isAboutToExpire = Time.equal(Time.now(), warningDate);
 
     if (isAboutToExpire) {
-      this.publish(new SubscriptionMarkedAsAboutToExpireDomainEvent(this.id, this.userId()));
+      this.publish(new SubscriptionMarkedAsAboutToExpireDomainEvent(this.id, this.userId));
       this.addEventToHistory(SubscriptionEvent.build(SUBSCRIPTION_STATUS.ABOUT_TO_EXPIRE));
     }
   };
 
   public isAboutToExpire(): boolean {
-    return this._events.containsEvent(SUBSCRIPTION_STATUS.ABOUT_TO_EXPIRE);
+    return this.events.containsEvent(SUBSCRIPTION_STATUS.ABOUT_TO_EXPIRE);
   }
 
   public isExpirationDateOlderThan(days: number) {
-    const diff = Time.diff(Time.now(), this.validTo());
+    const diff = Time.diff(Time.now(), this.validTo.value);
 
     return diff >= days;
   }
 
   public deactivate = (): void => {
-    this._isActive = false;
-    this._isExpired = true;
+    this.isActive = false;
+    this.isExpired = true;
 
-    const isExpired = this._events.containsEvent(SUBSCRIPTION_STATUS.EXPIRED);
+    const isExpired = this.events.containsEvent(SUBSCRIPTION_STATUS.EXPIRED);
 
     if (!isExpired) {
       this.addEventToHistory(SubscriptionEvent.build(SUBSCRIPTION_STATUS.EXPIRED));
