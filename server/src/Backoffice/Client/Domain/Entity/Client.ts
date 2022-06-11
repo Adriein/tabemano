@@ -19,7 +19,7 @@ export class Client extends User {
   }
 
   constructor(
-    readonly id: ID,
+    _id: ID,
     readonly name: Name,
     readonly password: Password,
     readonly email: Email,
@@ -27,10 +27,10 @@ export class Client extends User {
     readonly tenantId: ID,
     readonly roleId: ID,
     readonly isActive: boolean,
-    readonly createdAt: Date = new Date(),
-    readonly updatedAt: Date = new Date()
+    _createdAt: Date = new Date(),
+    _updatedAt: Date = new Date()
   ) {
-    super(id, name, password, email, config, tenantId, roleId, isActive, createdAt, updatedAt);
+    super(_id, name, password, email, config, tenantId, roleId, isActive, _createdAt, _updatedAt);
   }
 
   public moneySpent(subscriptions: Subscription[]): number {

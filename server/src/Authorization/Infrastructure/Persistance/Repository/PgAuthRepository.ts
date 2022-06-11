@@ -6,6 +6,7 @@ import { IAuthRepository } from "Authorization/Domain/Entity/IAuthRepository";
 import { TypeOrmAuthFilterAdapter } from "Authorization/Infrastructure/Persistance/Filter/TypeOrmAuthFilterAdapter";
 import { AuthModel } from "Authorization/Infrastructure/Persistance/Model/AuthModel";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
+import { Describer } from "Shared/Domain/types";
 import Database from "Shared/Infrastructure/Persistance/Database";
 import { TypeOrmRepository } from "Shared/Infrastructure/Persistance/Repository/TypeOrmRepository";
 import { DataSource, EntitySchema } from "typeorm";

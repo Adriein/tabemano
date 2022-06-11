@@ -1,5 +1,5 @@
-import { Auth } from "Authorization/Domain/Entity/Auth";
-import { Describer } from "Shared/Domain/types";
+import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";
+import { User } from "Backoffice/Shared/Domain/User/User";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Name } from "Shared/Domain/Vo/Name.vo";
@@ -7,10 +7,10 @@ import { Password } from "Shared/Domain/Vo/Password.vo";
 import { ValueObjectTransformer } from "Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer";
 import { EntitySchema } from "typeorm";
 
-export const AuthModel = new EntitySchema<Auth>({
-  name: 'Auth',
+export const SubscriptionModel = new EntitySchema<any>({
+  name: 'User',
   tableName: 'ta_user',
-  target: Auth,
+  target: User,
   columns: {
     id: {
       type: 'varchar',
@@ -33,10 +33,19 @@ export const AuthModel = new EntitySchema<Auth>({
       name: 'us_password',
       transformer: new ValueObjectTransformer<string, Password>(Password)
     },
+    tenantId: {
+      type: 'varchar',
+      name: 'us_tenant_id',
+      transformer: new ValueObjectTransformer<string, ID>(ID)
+    },
     roleId: {
       type: 'varchar',
       name: 'us_role_id',
       transformer: new ValueObjectTransformer<string, ID>(ID)
+    },
+    isActive: {
+      type: 'boolean',
+      name: 'us_is_active',
     },
     createdAt: {
       type: 'timestamp',
@@ -51,5 +60,4 @@ export const AuthModel = new EntitySchema<Auth>({
       updateDate: true,
     }
   }
-});
-
+})
