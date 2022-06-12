@@ -35,7 +35,7 @@ export class Client extends User {
 
   public moneySpent(subscriptions: Subscription[]): number {
     return subscriptions.reduce((total, subscription: Subscription) => {
-      return total + subscription.price();
+      return total + subscription.price;
     }, 0);
   }
 
@@ -46,6 +46,6 @@ export class Client extends User {
   }
 
   public createSubscription(pricing: Pricing): Subscription {
-    return Subscription.build(this.id, DateVo.now(), pricing);
+    return Subscription.build(this.id, DateVo.now(), pricing.name(), pricing.duration(), pricing.price());
   }
 }

@@ -45,10 +45,10 @@ export class GetClientProfileResponse implements Serializable {
       response.push({
         id: subscription.id.value,
         pricing: {
-          id: subscription.pricingId().value,
-          price: subscription.price(),
-          name: subscription.pricingName(),
-          duration: subscription.duration()
+          id: 'subscription.pricingId',
+          price: subscription.price,
+          name: subscription.pricingName,
+          duration: subscription.duration
         },
         lastPayment: Time.format(subscription.paymentDate.value, Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
         validTo: Time.format(subscription.validTo.value, Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),

@@ -1,6 +1,5 @@
 import { SubscriptionMarkedAsAboutToExpireDomainEvent } from "Backoffice/Client/Application/CheckAboutToExpireSubscriptions/SubscriptionMarkedAsAboutToExpireDomainEvent";
 import { SUBSCRIPTION_STATUS } from "Backoffice/Shared/constants";
-import { Pricing } from "Backoffice/Shared/Domain/Pricing/Pricing";
 import { SubscriptionEvent } from "Backoffice/Shared/Domain/Subscription/SubscriptionEvent";
 import { SubscriptionEventCollection } from "Backoffice/Shared/Domain/Subscription/SubscriptionEventCollection";
 import { Aggregate } from "Shared/Domain/Entities/AggregateRoot";
@@ -13,19 +12,24 @@ export class Subscription extends Aggregate {
   public static build(
     userId: ID,
     lastPayment: DateVo,
-    price: Pricing,
+    pricingName: string,
+    pricingDuration: number,
+    pricingAmount: number
   ): Subscription {
     const event = SubscriptionEvent.build(SUBSCRIPTION_STATUS.CREATED);
     return new Subscription(
       ID.generate(),
       userId,
       lastPayment,
-      Subscription.expirationDate(lastPayment, price.duration()),
+      Subscription.expirationDate(lastPayment, pricingDuration),
       true,
       false,
-      price,
+      pricingName,
+      pricingDuration,
+      pricingAmount,
       SubscriptionEventCollection.build([ event ]),
-    );
+    )
+      ;
   }
 
   constructor(
@@ -35,29 +39,14 @@ export class Subscription extends Aggregate {
     readonly validTo: DateVo,
     public isActive: boolean,
     public isExpired: boolean,
-    readonly pricing: Pricing,
+    readonly pricingName: string,
+    readonly duration: number,
+    readonly price: number,
     readonly events: SubscriptionEventCollection,
     readonly createdAt: Date = new Date(),
     readonly updatedAt: Date = new Date()
   ) {
     super(id, createdAt, updatedAt);
-  }
-
-  public pricingId = (): ID => {
-    return this.pricing.id();
-  }
-
-
-  public pricingName(): string {
-    return this.pricing.name();
-  }
-
-  public duration(): number {
-    return this.pricing.duration();
-  }
-
-  public price(): number {
-    return this.pricing.price();
   }
 
   public static expirationDate = (lastPaymentDate: DateVo, pricingDuration: number): DateVo => {
@@ -69,7 +58,7 @@ export class Subscription extends Aggregate {
   }
 
   public checkIsExpired = (): boolean => {
-    const expirationDate = Subscription.expirationDate(this.paymentDate, this.pricing.duration());
+    const expirationDate = Subscription.expirationDate(this.paymentDate, this.duration);
     return Time.equal(Time.now(), expirationDate.value);
   }
 

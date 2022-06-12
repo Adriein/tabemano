@@ -42,6 +42,6 @@ export abstract class User extends Aggregate {
   }
 
   public createSubscription(pricing: Pricing): Subscription {
-    return Subscription.build(this.id, DateVo.now(), pricing);
+    return Subscription.build(this.id, DateVo.now(), pricing.name(), pricing.duration(), pricing.price());
   }
 }

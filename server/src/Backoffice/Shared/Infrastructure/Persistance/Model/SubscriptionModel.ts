@@ -1,10 +1,6 @@
 import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";
-import { User } from "Backoffice/Shared/Domain/User/User";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
-import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
-import { Name } from "Shared/Domain/Vo/Name.vo";
-import { Password } from "Shared/Domain/Vo/Password.vo";
 import { ValueObjectTransformer } from "Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer";
 import { EntitySchema } from "typeorm";
 
@@ -46,7 +42,6 @@ export const SubscriptionModel = new EntitySchema<Subscription>({
     pricingName: {
       type: 'varchar',
       name: 'su_price_name',
-      transformer: new ValueObjectTransformer<string, ID>(ID)
     },
     createdAt: {
       type: 'timestamp',

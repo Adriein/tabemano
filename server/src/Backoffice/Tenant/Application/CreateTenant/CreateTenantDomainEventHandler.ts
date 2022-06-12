@@ -14,14 +14,13 @@ export class CreateTenantDomainEventHandler implements IEventHandler {
   constructor(
     @Inject('ITenantRepository')
     private readonly tenantRepository: ITenantRepository,
-    //private readonly subscriptionRepository: ISubscriptionRepository,
+    @Inject('ISubscriptionRepository')
+    private readonly subscriptionRepository: ISubscriptionRepository,
   ) {}
 
   @Log()
   public async handle(event: TenantCreatedDomainEvent): Promise<void> {
     const { name, email, password, roleId } = event;
-    console.log('llego aqui man');
-    throw new Error();
 
     const admin = await this.findAdmin();
 
@@ -33,7 +32,7 @@ export class CreateTenantDomainEventHandler implements IEventHandler {
 
     await this.tenantRepository.save(tenant);
 
-    //await this.subscriptionRepository.save(subscription);
+    await this.subscriptionRepository.save(subscription);
   }
 
   private async findAdmin(): Promise<Tenant> {

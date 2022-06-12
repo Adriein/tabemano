@@ -4,6 +4,7 @@ import dayjs, { OpUnitType } from "dayjs";
 export class Time {
   private static DAY_UNIT: OpUnitType = 'day';
   public static EUROPEAN_DATE_FORMAT = 'DD/MM/YYYY';
+  public static EUROPEAN_COMPLETE_DATE_FORMAT = 'DD/MM/YYYY HH:mm:ss';
   public static STANDARD_DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss';
   public static AMERICAN_DATE_FORMAT = 'YYYY-MM-DD';
   public static AMERICAN_BEAUTIFIED_DATE_FORMAT = 'ddd-MMM-DD-YYYY';
