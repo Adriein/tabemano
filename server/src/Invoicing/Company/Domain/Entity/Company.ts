@@ -1,3 +1,4 @@
+import { CompanyType } from "Invoicing/Company/Domain/Vo/CompanyType";
 import { Address } from "Shared/Domain/Vo/Address";
 import { CompanyName } from "Invoicing/Company/Domain/Vo/CompanyName";
 import { FiscalId } from "Invoicing/Company/Domain/Vo/FiscalId";
@@ -11,7 +12,8 @@ export class Company extends Aggregate {
     readonly name: CompanyName,
     readonly fiscalId: FiscalId,
     readonly address: Address,
-    readonly phone: Phone
+    readonly phone: Phone,
+    readonly type: CompanyType
   ) {
     super(id);
   }

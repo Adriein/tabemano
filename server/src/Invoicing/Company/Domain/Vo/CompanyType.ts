@@ -1,3 +1,3 @@
 import { StringVo } from "Shared/Domain/Vo/String.vo";
 
-export class FiscalId extends StringVo {}
+export class CompanyType extends StringVo {}

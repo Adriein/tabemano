@@ -1,3 +1,4 @@
+import { Money } from "Shared/Domain/Entities/Money";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 
 export class InvoiceRow {
@@ -5,9 +6,10 @@ export class InvoiceRow {
     invoiceId: ID,
     description: string,
     quantity: number,
-    price: number,
-    total: number
+    price: Money,
   ): InvoiceRow {
+    const total = price.amount().value * quantity;
+
     return new InvoiceRow(ID.generate(), invoiceId, description, quantity, price, total);
   }
 
@@ -16,7 +18,7 @@ export class InvoiceRow {
     readonly invoiceId: ID,
     readonly description: string,
     readonly quantity: number,
-    readonly price: number,
-    readonly total: number
+    readonly price: Money,
+    readonly total: number,
   ) {}
 }
