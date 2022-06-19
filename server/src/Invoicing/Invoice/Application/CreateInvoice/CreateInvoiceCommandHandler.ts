@@ -19,9 +19,11 @@ export class CreateInvoiceCommandHandler implements ICommandHandler {
 
     const invoice = Invoice.build(DateVo.now(), company, client);
 
-    for (const item of client.subscriptions) {
-      invoice.addRow(item.pricingName, 1, item.pricingAmount)
+    for (const subscription of client.subscriptions) {
+      invoice.addRow(subscription.pricingName, 1, subscription.pricingAmount)
     }
+
+    invoice.addTaxes();
 
     await this.repository.save(invoice);
   }

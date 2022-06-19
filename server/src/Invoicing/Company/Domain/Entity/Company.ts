@@ -1,10 +1,10 @@
 import { CompanyType } from "Invoicing/Company/Domain/Vo/CompanyType";
-import { Address } from "Shared/Domain/Vo/Address";
+import { Address } from "Shared/Domain/Vo/Address.vo";
 import { CompanyName } from "Invoicing/Company/Domain/Vo/CompanyName";
 import { FiscalId } from "Invoicing/Company/Domain/Vo/FiscalId";
 import { Aggregate } from "Shared/Domain/Entities/AggregateRoot";
 import { ID } from "Shared/Domain/Vo/Id.vo";
-import { Phone } from "Shared/Domain/Vo/Phone";
+import { Phone } from "Shared/Domain/Vo/Phone.vo";
 
 export class Company extends Aggregate {
   constructor(

@@ -2,9 +2,9 @@ import { FindCompanyResponse } from "Invoicing/Company/Application/FindCompany/F
 import { CompanyName } from "Invoicing/Company/Domain/Vo/CompanyName";
 import { CompanyType } from "Invoicing/Company/Domain/Vo/CompanyType";
 import { FiscalId } from "Invoicing/Company/Domain/Vo/FiscalId";
-import { Address } from "Shared/Domain/Vo/Address";
+import { Address } from "Shared/Domain/Vo/Address.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
-import { Phone } from "Shared/Domain/Vo/Phone";
+import { Phone } from "Shared/Domain/Vo/Phone.vo";
 
 export class Company {
   public static fromQuery(response: FindCompanyResponse): Company {

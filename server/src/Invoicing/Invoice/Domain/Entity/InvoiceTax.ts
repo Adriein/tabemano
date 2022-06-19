@@ -1,3 +1,4 @@
+import { IvaTax } from "Invoicing/Invoice/Domain/Entity/IvaTax";
 import { Tax } from "Invoicing/Invoice/Domain/Entity/Tax";
 import { Money } from "Shared/Domain/Entities/Money";
 
@@ -13,5 +14,9 @@ export class InvoiceTax {
 
       return total + tax.total;
     }, 0)
+  }
+
+  public static iva(baseAmount: Money): InvoiceTax {
+    return new InvoiceTax(baseAmount, [ new IvaTax() ]);
   }
 }
