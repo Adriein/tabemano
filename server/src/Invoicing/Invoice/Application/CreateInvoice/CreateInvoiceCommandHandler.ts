@@ -1,3 +1,4 @@
+import { Inject } from "@nestjs/common";
 import { CommandHandler, ICommandHandler, IQueryBus } from "@nestjs/cqrs";
 import { GetClientProfileQuery } from "Backoffice/Client/Application/GetClientProfile/GetClientProfileQuery";
 import { FindCompanyQuery } from "Invoicing/Company/Application/FindCompany/FindCompanyQuery";
@@ -21,7 +22,10 @@ import { Phone } from "Shared/Domain/Vo/Phone.vo";
 
 @CommandHandler(CreateInvoiceCommand)
 export class CreateInvoiceCommandHandler implements ICommandHandler {
-  constructor(private readonly queryBus: IQueryBus, private readonly repository: InvoiceRepository) {}
+  constructor(
+    @Inject('IQueryBus') private readonly queryBus: IQueryBus,
+    private readonly repository: InvoiceRepository
+  ) {}
 
   public async execute(command: CreateInvoiceCommand): Promise<void> {
     const client = await this.getClient(new ID(command.clientId));

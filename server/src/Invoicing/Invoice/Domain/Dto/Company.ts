@@ -1,4 +1,3 @@
-import { FindCompanyResponse } from "Invoicing/Company/Application/FindCompany/FindCompanyResponse";
 import { CompanyName } from "Invoicing/Company/Domain/Vo/CompanyName";
 import { CompanyType } from "Invoicing/Company/Domain/Vo/CompanyType";
 import { Country } from "Invoicing/Company/Domain/Vo/Country";

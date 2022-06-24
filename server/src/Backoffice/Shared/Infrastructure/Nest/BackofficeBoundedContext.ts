@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { CqrsModule } from "@nestjs/cqrs";
 import { RoleModule } from "Backoffice/Role/Infrastructure/RoleModule";
-import { TenantModule } from "Backoffice/Tenant/Infrastructure/TenantModule";
+import { TenantModule } from "Backoffice/Tenant/Infrastructure/Nest/TenantModule";
 
 @Module({
   imports: [ CqrsModule, RoleModule, TenantModule ],
