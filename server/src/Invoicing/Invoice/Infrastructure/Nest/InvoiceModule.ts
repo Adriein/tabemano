@@ -1,5 +1,5 @@
 import { Module } from "@nestjs/common";
-import { QueryBus } from "@nestjs/cqrs";
+import { CqrsModule, QueryBus } from "@nestjs/cqrs";
 import { CreateInvoiceCommandHandler } from "Invoicing/Invoice/Application/CreateInvoice/CreateInvoiceCommandHandler";
 import { CreateInvoiceController } from "Invoicing/Invoice/Infrastructure/Controller/CreateInvoice/CreateInvoiceController";
 import { PgInvoiceRepository } from "Invoicing/Invoice/Infrastructure/Persistance/Repository/PgInvoiceRepository";
@@ -19,7 +19,7 @@ const Repository = [
 ];
 
 @Module({
-  imports: [ TypeOrmModule ],
+  imports: [ CqrsModule, TypeOrmModule ],
   controllers: [],
   providers: [
     ...Handlers,

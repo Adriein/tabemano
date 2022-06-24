@@ -24,7 +24,7 @@ import { Phone } from "Shared/Domain/Vo/Phone.vo";
 export class CreateInvoiceCommandHandler implements ICommandHandler {
   constructor(
     @Inject('IQueryBus') private readonly queryBus: IQueryBus,
-    private readonly repository: InvoiceRepository
+    @Inject('InvoiceRepository') private readonly repository: InvoiceRepository
   ) {}
 
   public async execute(command: CreateInvoiceCommand): Promise<void> {
