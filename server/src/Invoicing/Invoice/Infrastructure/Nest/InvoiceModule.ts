@@ -20,10 +20,11 @@ const Repository = [
 
 @Module({
   imports: [ CqrsModule, TypeOrmModule ],
-  controllers: [],
+  controllers: [
+    ...Controllers,
+  ],
   providers: [
     ...Handlers,
-    ...Controllers,
     ...Repository
   ],
   exports: [],

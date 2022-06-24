@@ -32,7 +32,8 @@ export class CreateInvoiceCommandHandler implements ICommandHandler {
     const company = await this.getCompany(new ID(command.tenantId));
 
     const invoice = Invoice.build(DateVo.now(), company, client);
-
+    console.log(invoice);
+    throw new Error();
     await this.repository.save(invoice);
   }
 

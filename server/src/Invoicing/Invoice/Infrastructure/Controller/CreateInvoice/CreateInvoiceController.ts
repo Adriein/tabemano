@@ -1,16 +1,20 @@
-import { Body, ClassSerializerInterceptor, Controller, Get, Session, UseInterceptors } from "@nestjs/common";
+import { Body, ClassSerializerInterceptor, Controller, Post, Session, UseInterceptors } from "@nestjs/common";
 import { CommandBus } from "@nestjs/cqrs";
+import { CreateInvoiceCommand } from "Invoicing/Invoice/Application/CreateInvoice/CreateInvoiceCommand";
 
 @Controller('/create/invoice')
 export class CreateInvoiceController {
   constructor(private readonly commandBus: CommandBus) {}
 
-  @Get()
+  @Post()
   @UseInterceptors(ClassSerializerInterceptor)
   public async createInvoice(
     @Body() body: any,
     @Session() session: any
   ): Promise<any> {
-    return await this.commandBus.execute({});
+    return await this.commandBus.execute(new CreateInvoiceCommand(
+      '10fd679e-0fc1-45ed-98b1-f9988fb76e3f',
+      'e2691b41-20a7-4586-8c92-003a47d9da27'
+    ));
   }
 }
