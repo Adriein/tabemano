@@ -16,7 +16,7 @@ export class InvoiceTax {
     }, 0)
   }
 
-  public static iva(baseAmount: Money): InvoiceTax {
+  public static spanishMarket(baseAmount: Money): InvoiceTax {
     return new InvoiceTax(baseAmount, [ new IvaTax() ]);
   }
 }

@@ -3,6 +3,7 @@ import { InvoiceRow } from "Invoicing/Invoice/Domain/Entity/InvoiceRow";
 import { InvoiceTax } from "Invoicing/Invoice/Domain/Entity/InvoiceTax";
 import { InvoiceNumber } from "Invoicing/Invoice/Domain/Vo/InvoiceNumber";
 import { Client } from "Invoicing/Shared/Domain/Client";
+import { MARKET } from "Shared/Domain/constants";
 import { Aggregate } from "Shared/Domain/Entities/AggregateRoot";
 import { Money } from "Shared/Domain/Entities/Money";
 import { Currency } from "Shared/Domain/Vo/Currency.vo";
@@ -14,7 +15,7 @@ export class Invoice extends Aggregate {
   public invoiceTax?: InvoiceTax;
 
   public static build(occurred: DateVo, company: Company, client: Client): Invoice {
-    return new Invoice(
+    const invoice = new Invoice(
       ID.generate(),
       InvoiceNumber.generate(),
       occurred,
@@ -24,6 +25,11 @@ export class Invoice extends Aggregate {
       new Date(),
       new Date()
     );
+
+    invoice.constructRows();
+    invoice.addTaxes();
+
+    return invoice;
   }
 
   constructor(
@@ -39,17 +45,29 @@ export class Invoice extends Aggregate {
     super(id, createdAt, updatedAt);
   }
 
-  public addRow(description: string, quantity: number, price: Money): void {
+  private constructRows(): void {
+    for (const subscription of this.client.subscriptions) {
+      this.addRow(subscription.pricingName, 1, subscription.pricingAmount)
+    }
+  }
+
+  private addRow(description: string, quantity: number, price: Money): void {
     const row = InvoiceRow.build(this.id, description, quantity, price);
 
     this.rows.push(row);
   }
 
-  public addTaxes(): void {
-    this.invoiceTax = InvoiceTax.iva(this.calculateBaseAmount())
+  private addTaxes(): void {
+    switch (this.company.country.value) {
+      case MARKET.ES:
+        this.invoiceTax = InvoiceTax.spanishMarket(this.baseAmount());
+        break;
+      default:
+        this.invoiceTax = InvoiceTax.spanishMarket(this.baseAmount());
+    }
   }
 
-  public calculateBaseAmount(): Money {
+  private baseAmount(): Money {
     const baseAmount = this.rows.reduce((total: number, row: InvoiceRow) => {
       return row.total + total;
     }, 0);

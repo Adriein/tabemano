@@ -6,5 +6,6 @@ export class FindCompanyResponse {
     readonly address: string,
     readonly phone: number,
     readonly type: string,
+    readonly country: string,
   ) {}
 }

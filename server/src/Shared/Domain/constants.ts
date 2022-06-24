@@ -23,3 +23,7 @@ export enum Roles {
   ADMIN = 'admin',
   TENANT = 'tenant'
 }
+
+export enum MARKET {
+  ES = 'ES'
+}
