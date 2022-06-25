@@ -26,19 +26,19 @@ export abstract class User extends Aggregate {
   }
 
   public configId = (): ID => {
-    return this.config.id();
+    return this.config.id;
   }
 
   public language = (): string => {
-    return this.config.lang();
+    return this.config.lang;
   }
 
   public sendNotifications = (): boolean => {
-    return this.config.sendNotifications();
+    return this.config.sendNotifications;
   }
 
   public sendWarnings = (): boolean => {
-    return this.config.sendWarnings();
+    return this.config.sendWarnings;
   }
 
   public createSubscription(pricing: Pricing): Subscription {
