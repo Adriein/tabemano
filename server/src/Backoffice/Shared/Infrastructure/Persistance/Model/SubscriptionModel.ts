@@ -43,6 +43,10 @@ export const SubscriptionModel = new EntitySchema<Subscription>({
       type: 'varchar',
       name: 'su_price_name',
     },
+    price: {
+      type: 'double precision',
+      name: 'su_price',
+    },
     createdAt: {
       type: 'timestamp',
       name: 'us_created_at',

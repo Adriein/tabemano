@@ -3,6 +3,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { ISubscriptionRepository } from "Backoffice/Shared/Domain/Subscription/ISubscriptionRepository";
 import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";
 import { SubscriptionFilter } from "Backoffice/Shared/Domain/Subscription/SubscriptionFilter";
+import { TypeOrmSubscriptionFilterAdapter } from "Backoffice/Shared/Infrastructure/Persistance/Filter/TypeOrmSubscriptionFilterAdapter";
 import { SubscriptionModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionModel";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
 import Database from "Shared/Infrastructure/Persistance/Database";
@@ -23,7 +24,15 @@ export class PgSubscriptionRepository extends TypeOrmRepository<Subscription> im
   }
 
   public async find(filter: SubscriptionFilter): Promise<Result<Subscription[], Error>> {
-    throw new Error();
+    try {
+      const adapter = new TypeOrmSubscriptionFilterAdapter(filter);
+
+      const result = await this.repository().find(adapter.apply());
+
+      return Result.ok(result);
+    } catch (error) {
+      return Result.err(error as Error);
+    }
   }
 
   public async findOne(filter: SubscriptionFilter): Promise<Result<Subscription, RecordNotFoundError>> {
