@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+import { CqrsModule } from "@nestjs/cqrs";
 import { GetClientProfileQueryHandler } from "Backoffice/Client/Application/GetClientProfile/GetClientProfileQueryHandler";
 import { GetClientProfileController } from "Backoffice/Client/Infrastructure/Controller/GetClientProfile/GetClientProfileController";
 import { PgClientRepository } from "Backoffice/Client/Infrastructure/Persistance/Repository/PgClientRepository";
@@ -21,7 +22,7 @@ const Repository = [
 const Controllers = [ GetClientProfileController ]
 
 @Module({
-  imports: [ TypeOrmModule ],
+  imports: [ CqrsModule, TypeOrmModule ],
   controllers: [ ...Controllers ],
   providers: [
     ...Handlers,
@@ -29,4 +30,4 @@ const Controllers = [ GetClientProfileController ]
   ],
   exports: [],
 })
-export class TenantModule {}
+export class ClientModule {}

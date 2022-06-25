@@ -1,3 +1,4 @@
+import { Inject } from "@nestjs/common";
 import { IQueryHandler, QueryHandler } from "@nestjs/cqrs";
 import { GetClientProfileQuery } from "Backoffice/Client/Application/GetClientProfile/GetClientProfileQuery";
 import { GetClientProfileResponse } from "Backoffice/Client/Application/GetClientProfile/GetClientProfileResponse";
@@ -13,8 +14,8 @@ import { ID } from "Shared/Domain/Vo/Id.vo";
 @QueryHandler(GetClientProfileQuery)
 export class GetClientProfileQueryHandler implements IQueryHandler {
   constructor(
-    private readonly clientRepository: IClientRepository,
-    private readonly subscriptionRepository: ISubscriptionRepository
+    @Inject('IClientRepository') private readonly clientRepository: IClientRepository,
+    @Inject('ISubscriptionRepository') private readonly subscriptionRepository: ISubscriptionRepository
   ) {}
 
   @Log()
