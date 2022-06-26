@@ -129,6 +129,8 @@ export class TypeOrmClientFilterAdapter extends TypeOrmAdapter<FindManyOptions<C
       this.add(this.pagination(pagination))
     }
 
+    this.add({ relations: { config: true } });
+
     return this.typeOrmFilter;
   }
 }

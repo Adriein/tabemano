@@ -11,10 +11,6 @@ const Repository = [
   {
     provide: 'InvoiceRepository',
     useClass: PgInvoiceRepository
-  },
-  {
-    provide: 'IQueryBus',
-    useClass: QueryBus
   }
 ];
 

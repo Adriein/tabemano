@@ -60,7 +60,11 @@ export const ClientModel = new EntitySchema<Client>({
     },
   },
   relations: {
-    config: { type: 'one-to-one', target: 'Config' }
+    config: {
+      type: 'one-to-one',
+      target: 'Config',
+      inverseSide: 'Client'
+    }
   }
 });
 

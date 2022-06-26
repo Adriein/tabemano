@@ -14,6 +14,6 @@ export class SubscriptionEventCollection extends Collection<SubscriptionEvent> {
 
   public containsEvent(event: SUBSCRIPTION_STATUS): boolean {
     return !!this.data()
-      .find((history: SubscriptionEvent) => history.event() === event);
+      .find((history: SubscriptionEvent) => history.event === event);
   }
 }

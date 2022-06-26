@@ -2,12 +2,13 @@ import { LANG_ES } from "Backoffice/Shared/constants";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 
 export class Config {
-  public static build(sendNotifications: boolean = false, sendWarnings: boolean = false) {
-    return new Config(ID.generate(), LANG_ES, sendNotifications, sendWarnings);
+  public static build(userId: ID, sendNotifications: boolean = false, sendWarnings: boolean = false) {
+    return new Config(ID.generate(), userId, LANG_ES, sendNotifications, sendWarnings);
   }
 
   constructor(
     public readonly id: ID,
+    public readonly userId: ID,
     public lang: string,
     public sendNotifications: boolean = false,
     public sendWarnings: boolean = false,

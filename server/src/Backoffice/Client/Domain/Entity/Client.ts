@@ -15,7 +15,8 @@ export class Client extends User {
     tenantId: ID,
     roleId: ID,
   ): Client {
-    return new Client(ID.generate(), name, Password.generate(), email, Config.build(), tenantId, roleId, true);
+    const clientId = ID.generate();
+    return new Client(ID.generate(), name, Password.generate(), email, Config.build(clientId), tenantId, roleId, true);
   }
 
   constructor(

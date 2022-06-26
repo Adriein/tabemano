@@ -1,6 +1,6 @@
 import { BaseEntity } from "./BaseEntity";
 
-export class Collection<T extends BaseEntity> {
+export class Collection<T> {
   constructor(private collection: T[]) {}
 
   public isEmpty(): boolean {

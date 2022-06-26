@@ -42,6 +42,8 @@ export class TypeOrmSubscriptionFilterAdapter extends TypeOrmAdapter<FindManyOpt
       }
     }
 
+    this.add({ relations: { events: true } });
+
     return this.typeOrmFilter;
   }
 }

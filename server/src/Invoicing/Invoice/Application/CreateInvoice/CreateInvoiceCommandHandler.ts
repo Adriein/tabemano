@@ -1,5 +1,5 @@
 import { Inject } from "@nestjs/common";
-import { CommandHandler, ICommandHandler, IQueryBus } from "@nestjs/cqrs";
+import { CommandHandler, ICommandHandler, QueryBus } from "@nestjs/cqrs";
 import { GetClientProfileQuery } from "Backoffice/Client/Application/GetClientProfile/GetClientProfileQuery";
 import { FindCompanyQuery } from "Invoicing/Company/Application/FindCompany/FindCompanyQuery";
 import { CompanyName } from "Invoicing/Company/Domain/Vo/CompanyName";
@@ -23,7 +23,7 @@ import { Phone } from "Shared/Domain/Vo/Phone.vo";
 @CommandHandler(CreateInvoiceCommand)
 export class CreateInvoiceCommandHandler implements ICommandHandler {
   constructor(
-    @Inject('IQueryBus') private readonly queryBus: IQueryBus,
+    private readonly queryBus: QueryBus,
     @Inject('InvoiceRepository') private readonly repository: InvoiceRepository
   ) {}
 

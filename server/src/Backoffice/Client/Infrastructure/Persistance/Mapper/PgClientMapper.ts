@@ -18,6 +18,7 @@ export class PgClientMapper {
   public toDomain(dataModel: UserWithRelations): Client {
     const config = new Config(
       new ID(dataModel.us_config!.co_id),
+      new ID(''),
       dataModel.us_config!.co_language,
       dataModel.us_config!.co_send_notifications,
       dataModel.us_config!.co_send_warnings,

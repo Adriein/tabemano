@@ -16,9 +16,10 @@ export class Subscription extends Aggregate {
     pricingDuration: number,
     pricingAmount: number
   ): Subscription {
-    const event = SubscriptionEvent.build(SUBSCRIPTION_STATUS.CREATED);
+    const subscriptionId = ID.generate();
+    const event = SubscriptionEvent.build(SUBSCRIPTION_STATUS.CREATED, subscriptionId);
     return new Subscription(
-      ID.generate(),
+      subscriptionId,
       userId,
       lastPayment,
       Subscription.expirationDate(lastPayment, pricingDuration),
@@ -28,8 +29,7 @@ export class Subscription extends Aggregate {
       pricingDuration,
       pricingAmount,
       SubscriptionEventCollection.build([ event ]),
-    )
-      ;
+    );
   }
 
   constructor(
@@ -64,7 +64,7 @@ export class Subscription extends Aggregate {
 
   public makeExpired(): void {
     this.isExpired = true;
-    this.addEventToHistory(SubscriptionEvent.build(SUBSCRIPTION_STATUS.EXPIRED));
+    this.addEventToHistory(SubscriptionEvent.build(SUBSCRIPTION_STATUS.EXPIRED, this.id));
   }
 
   public checkIsAboutToExpire = (daysToWarn: number | undefined = 5): void => {
@@ -75,7 +75,7 @@ export class Subscription extends Aggregate {
 
     if (isAboutToExpire) {
       this.publish(new SubscriptionMarkedAsAboutToExpireDomainEvent(this.id, this.userId));
-      this.addEventToHistory(SubscriptionEvent.build(SUBSCRIPTION_STATUS.ABOUT_TO_EXPIRE));
+      this.addEventToHistory(SubscriptionEvent.build(SUBSCRIPTION_STATUS.ABOUT_TO_EXPIRE, this.id));
     }
   };
 
@@ -96,9 +96,9 @@ export class Subscription extends Aggregate {
     const isExpired = this.events.containsEvent(SUBSCRIPTION_STATUS.EXPIRED);
 
     if (!isExpired) {
-      this.addEventToHistory(SubscriptionEvent.build(SUBSCRIPTION_STATUS.EXPIRED));
+      this.addEventToHistory(SubscriptionEvent.build(SUBSCRIPTION_STATUS.EXPIRED, this.id));
     }
 
-    this.addEventToHistory(SubscriptionEvent.build(SUBSCRIPTION_STATUS.INACTIVE));
+    this.addEventToHistory(SubscriptionEvent.build(SUBSCRIPTION_STATUS.INACTIVE, this.id));
   }
 }

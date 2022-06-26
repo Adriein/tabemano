@@ -14,10 +14,11 @@ import { Password } from "Shared/Domain/Vo/Password.vo";
 
 export class Tenant extends User {
   public static build(name: Name, password: Password, email: Email, tenantId: ID, roleId: ID): Tenant {
-    const config = Config.build(true, true);
+    const id = ID.generate();
+    const config = Config.build(id, true, true);
 
     const tenant = new Tenant(
-      ID.generate(),
+      id,
       name,
       password,
       email,

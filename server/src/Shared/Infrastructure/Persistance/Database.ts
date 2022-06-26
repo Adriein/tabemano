@@ -2,6 +2,8 @@ import { AuthModel } from "Authorization/Infrastructure/Persistance/Model/AuthMo
 import { ClientModel } from "Backoffice/Client/Infrastructure/Persistance/Model/ClientModel";
 import { RoleModel } from "Backoffice/Role/Infrastructure/Persistance/Model/RoleModel";
 import { ConfigModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/ConfigModel";
+import { SubscriptionEventModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionEventModel";
+import { SubscriptionModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionModel";
 import { UserModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/UserModel";
 import { DataSource } from 'typeorm';
 
@@ -21,7 +23,15 @@ export default class Database {
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [ AuthModel, RoleModel, UserModel, ClientModel, ConfigModel ],
+      entities: [
+        AuthModel,
+        RoleModel,
+        UserModel,
+        ClientModel,
+        ConfigModel,
+        SubscriptionModel,
+        SubscriptionEventModel
+      ],
       synchronize: false,
       logging: true,
     });

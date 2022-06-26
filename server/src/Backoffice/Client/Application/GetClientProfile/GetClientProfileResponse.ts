@@ -64,9 +64,9 @@ export class GetClientProfileResponse implements Serializable {
   private mountSubscriptionEventsResponse(subscription: Subscription) {
     return subscription.events.data().map((event: SubscriptionEvent) => {
       return {
-        event: event.event(),
-        createdAt: Time.format(event.createdAt(), Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
-        updatedAt: Time.format(event.updatedAt(), Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
+        event: event.event,
+        createdAt: Time.format(event.createdAt, Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
+        updatedAt: Time.format(event.updatedAt, Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
       }
     });
   }

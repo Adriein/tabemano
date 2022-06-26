@@ -14,6 +14,11 @@ export const ConfigModel = new EntitySchema<Config>({
       name: 'co_id',
       transformer: new ValueObjectTransformer<string, ID>(ID)
     },
+    userId: {
+      type: 'varchar',
+      name: 'co_user_id',
+      transformer: new ValueObjectTransformer<string, ID>(ID)
+    },
     lang: {
       type: 'varchar',
       name: 'co_language',
@@ -25,6 +30,14 @@ export const ConfigModel = new EntitySchema<Config>({
     sendWarnings: {
       type: 'varchar',
       name: 'co_send_warnings',
+    }
+  },
+  relations: {
+    userId: {
+      type: 'one-to-one',
+      target: 'Client',
+      inverseSide: 'Config',
+      joinColumn: { name: 'co_user_id', referencedColumnName: 'id' }
     }
   }
 });
