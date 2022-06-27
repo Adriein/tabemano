@@ -2,6 +2,7 @@ import { MigrationInterface, QueryRunner, TableForeignKey } from "typeorm"
 import { ConfigTableDefinition } from "../table/ConfigTableDefinition";
 import { PricingTableDefinition } from "../table/PricingTableDefinition";
 import { RoleTableDefinition } from "../table/RoleTableDefinition";
+import { SubscriptionTableDefinition } from "../table/SubscriptionTableDefinition";
 import { UserTableDefinition } from "../table/UserTableDefinition";
 
 export class databaseCreation1656251078878 implements MigrationInterface {
@@ -24,6 +25,8 @@ export class databaseCreation1656251078878 implements MigrationInterface {
     }));
 
     await queryRunner.createTable(PricingTableDefinition, true, true);
+    
+    await queryRunner.createTable(SubscriptionTableDefinition, true, true);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {

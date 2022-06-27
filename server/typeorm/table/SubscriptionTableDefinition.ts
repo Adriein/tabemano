@@ -1,62 +1,72 @@
 import { Table } from "typeorm";
 
-export const UserTableDefinition = new Table({
-  name: 'ta_user',
+export const SubscriptionTableDefinition = new Table({
+  name: 'ta_subscription',
   columns: [
     {
-      name: 'us_id',
+      name: 'su_id',
       type: 'varchar',
       isPrimary: true
     },
     {
-      name: 'us_name',
-      type: 'varchar',
-    },
-    {
-      name: 'us_email',
-      type: 'varchar',
-    },
-    {
-      name: 'us_password',
-      type: 'varchar',
-    },
-    {
-      name: 'us_tenant_id',
-      type: 'varchar',
-    },
-    {
-      name: 'us_role_id',
-      type: 'varchar',
-    },
-    {
-      name: 'us_config_id',
-      type: 'varchar',
-    },
-    {
-      name: 'us_is_active',
-      type: 'boolean',
-    },
-    {
-      name: 'us_created_at',
+      name: 'su_payment_date',
       type: 'timestamp',
       precision: 0
     },
     {
-      name: 'us_updated_at',
+      name: 'su_valid_to',
+      type: 'timestamp',
+      precision: 0
+    },
+    {
+      name: 'su_is_active',
+      type: 'boolean',
+    },
+    {
+      name: 'su_is_expired',
+      type: 'boolean',
+    },
+    {
+      name: 'su_duration',
+      type: 'smallint',
+    },
+    {
+      name: 'su_price_name',
+      type: 'varchar',
+    },
+    {
+      name: 'su_price',
+      type: 'double precision',
+    },
+    {
+      name: 'su_pricing_id',
+      type: 'varchar',
+    },
+    {
+      name: 'su_user_id',
+      type: 'varchar',
+    },
+    {
+      name: 'su_created_at',
+      type: 'timestamp',
+      precision: 0
+    },
+    {
+      name: 'su_updated_at',
       type: 'timestamp',
       precision: 0
     }
   ],
   foreignKeys: [
     {
-      columnNames: [ 'us_role_id' ],
-      referencedColumnNames: [ 'ro_id' ],
-      referencedTableName: 'ta_role'
+      columnNames: [ 'su_pricing_id' ],
+      referencedColumnNames: [ 'pr_id' ],
+      referencedTableName: 'ta_pricing'
     },
     {
-      columnNames: [ 'us_config_id' ],
-      referencedColumnNames: [ 'co_id' ],
-      referencedTableName: 'ta_config'
+      columnNames: [ 'su_user_id' ],
+      referencedColumnNames: [ 'us_id' ],
+      referencedTableName: 'ta_user'
     }
   ]
 });
