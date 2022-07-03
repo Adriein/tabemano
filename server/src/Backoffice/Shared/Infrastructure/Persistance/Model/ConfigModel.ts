@@ -30,14 +30,18 @@ export const ConfigModel = new EntitySchema<Config>({
     sendWarnings: {
       type: 'varchar',
       name: 'co_send_warnings',
-    }
-  },
-  relations: {
-    userId: {
-      type: 'one-to-one',
-      target: 'Client',
-      inverseSide: 'Config',
-      joinColumn: { name: 'co_user_id', referencedColumnName: 'id' }
+    },
+    createdAt: {
+      type: 'timestamp',
+      name: 'co_created_at',
+      precision: 0,
+      createDate: true,
+    },
+    updatedAt: {
+      type: 'timestamp',
+      name: 'co_updated_at',
+      precision: 0,
+      updateDate: true,
     }
   }
 });

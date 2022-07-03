@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, TableForeignKey } from "typeorm"
+import { MigrationInterface, QueryRunner } from "typeorm"
 import { ConfigTableDefinition } from "../table/ConfigTableDefinition";
 import { PricingTableDefinition } from "../table/PricingTableDefinition";
 import { RoleTableDefinition } from "../table/RoleTableDefinition";
@@ -17,14 +17,6 @@ export class databaseCreation1656251078878 implements MigrationInterface {
     await queryRunner.createTable(ConfigTableDefinition, true);
 
     await queryRunner.createTable(UserTableDefinition, true, true);
-
-    await queryRunner.createForeignKey('ta_config', new TableForeignKey({
-      name: 'ta_config_ta_user',
-      columnNames: [ "co_user_id" ],
-      referencedColumnNames: [ "us_id" ],
-      referencedTableName: "ta_user",
-      onDelete: "CASCADE",
-    }));
 
     await queryRunner.createTable(PricingTableDefinition, true, true);
 

@@ -12,6 +12,7 @@ export class Subscription extends Aggregate {
   public static build(
     userId: ID,
     lastPayment: DateVo,
+    pricingId: ID,
     pricingName: string,
     pricingDuration: number,
     pricingAmount: number
@@ -21,6 +22,7 @@ export class Subscription extends Aggregate {
     return new Subscription(
       subscriptionId,
       userId,
+      pricingId,
       lastPayment,
       Subscription.expirationDate(lastPayment, pricingDuration),
       true,
@@ -35,6 +37,7 @@ export class Subscription extends Aggregate {
   constructor(
     readonly id: ID,
     readonly userId: ID,
+    readonly pricingId: ID,
     readonly paymentDate: DateVo,
     readonly validTo: DateVo,
     public isActive: boolean,

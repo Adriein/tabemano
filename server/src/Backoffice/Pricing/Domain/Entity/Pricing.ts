@@ -22,28 +22,12 @@ export class Pricing extends Aggregate {
   }
 
   constructor(
-    _id: ID,
-    private _name: string,
-    private _duration: number,
-    private _price: number,
-    private _tenantId: ID
+    readonly id: ID,
+    readonly name: string,
+    readonly duration: number,
+    readonly price: number,
+    readonly tenantId: ID
   ) {
-    super(_id);
-  }
-
-  public name(): string {
-    return this._name;
-  }
-
-  public duration(): number {
-    return this._duration;
-  }
-
-  public price(): number {
-    return this._price;
-  }
-
-  public tenantId(): ID {
-    return this._tenantId;
+    super(id);
   }
 }

@@ -47,6 +47,13 @@ export class Client extends User {
   }
 
   public createSubscription(pricing: Pricing): Subscription {
-    return Subscription.build(this.id, DateVo.now(), pricing.name(), pricing.duration(), pricing.price());
+    return Subscription.build(
+      this.id,
+      DateVo.now(),
+      pricing.id(),
+      pricing.name(),
+      pricing.duration(),
+      pricing.price()
+    );
   }
 }

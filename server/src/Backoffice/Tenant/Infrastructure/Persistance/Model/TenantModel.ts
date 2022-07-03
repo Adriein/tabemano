@@ -1,16 +1,17 @@
-import { Client } from "Backoffice/Client/Domain/Entity/Client";
 import { Config } from "Backoffice/Shared/Domain/Config/Config";
+import { User } from "Backoffice/Shared/Domain/User/User";
+import { Tenant } from "Backoffice/Tenant/Domain/Entity/Tenant";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Name } from "Shared/Domain/Vo/Name.vo";
 import { Password } from "Shared/Domain/Vo/Password.vo";
 import { ValueObjectTransformer } from "Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer";
-import { EntitySchema } from "typeorm";
+import { EntitySchema, OneToOne, Column, ValueTransformer } from "typeorm";
 
-export const ClientModel = new EntitySchema<Client>({
-  name: 'Client',
+export const TenantModel = new EntitySchema<Tenant>({
+  name: 'Tenant',
   tableName: 'ta_user',
-  target: Client,
+  target: Tenant,
   columns: {
     id: {
       type: 'varchar',
@@ -50,12 +51,6 @@ export const ClientModel = new EntitySchema<Client>({
     config: {
       type: 'varchar',
       name: 'us_config_id',
-      transformer: {
-        to(value: Config): string {
-          return value.id.value
-        },
-        from(value: any): any {}
-      }
     },
     createdAt: {
       type: 'timestamp',
@@ -68,14 +63,12 @@ export const ClientModel = new EntitySchema<Client>({
       name: 'us_updated_at',
       precision: 0,
       updateDate: true,
-    },
+    }
   },
   relations: {
     config: {
       type: 'one-to-one',
       target: 'Config',
-      inverseSide: 'Tenant',
-      primary: true,
       joinColumn: {
         name: 'us_config_id',
         referencedColumnName: 'id'

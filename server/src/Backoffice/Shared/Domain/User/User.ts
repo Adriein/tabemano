@@ -24,24 +24,8 @@ export abstract class User extends Aggregate {
   ) {
     super(id, createdAt, updatedAt);
   }
-
-  public configId = (): ID => {
-    return this.config.id;
-  }
-
-  public language = (): string => {
-    return this.config.lang;
-  }
-
-  public sendNotifications = (): boolean => {
-    return this.config.sendNotifications;
-  }
-
-  public sendWarnings = (): boolean => {
-    return this.config.sendWarnings;
-  }
-
+  
   public createSubscription(pricing: Pricing): Subscription {
-    return Subscription.build(this.id, DateVo.now(), pricing.name(), pricing.duration(), pricing.price());
+    return Subscription.build(this.id, DateVo.now(), pricing.id(), pricing.name(), pricing.duration(), pricing.price());
   }
 }

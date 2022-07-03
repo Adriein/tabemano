@@ -11,6 +11,7 @@
     "db:migrate": "prisma migrate dev",
     "db:schema": "prisma generate",
     "typeorm": "typeorm-ts-node-commonjs",
+    "typeorm:seed": "ts-node -r tsconfig-paths/register ./typeorm/script/seed.ts",
     "typeorm:migrate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli migration:run -d ./typeorm/config.ts"
   },
   "keywords": [],

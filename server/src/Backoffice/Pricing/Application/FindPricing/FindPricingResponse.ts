@@ -4,7 +4,7 @@ import { Serializable } from "Backoffice/Shared/Domain/Serializable";
 
 export class FindPricingResponse implements Serializable {
   public static fromDomain(pricing: Pricing): FindPricingResponse {
-    return new FindPricingResponse(pricing.id.value, pricing.name(), pricing.price(), pricing.duration());
+    return new FindPricingResponse(pricing.id.value, pricing.name, pricing.price, pricing.duration);
   }
 
   constructor(

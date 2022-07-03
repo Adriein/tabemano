@@ -12,6 +12,8 @@ export class Config {
     public lang: string,
     public sendNotifications: boolean = false,
     public sendWarnings: boolean = false,
+    public createdAt: Date = new Date(),
+    public updatedAt: Date = new Date()
   ) {
   }
 

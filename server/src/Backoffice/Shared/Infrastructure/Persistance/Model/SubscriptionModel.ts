@@ -67,12 +67,6 @@ export const SubscriptionModel = new EntitySchema<Subscription>({
       precision: 0,
       updateDate: true,
     }
-  },
-  relations: {
-    events: {
-      type: 'one-to-many',
-      target: 'SubscriptionEvent',
-    }
   }
 });
 
