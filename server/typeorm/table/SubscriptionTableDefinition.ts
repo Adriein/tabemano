@@ -59,11 +59,13 @@ export const SubscriptionTableDefinition = new Table({
   ],
   foreignKeys: [
     {
+      name: 'ta_subscription_ta_pricing',
       columnNames: [ 'su_pricing_id' ],
       referencedColumnNames: [ 'pr_id' ],
       referencedTableName: 'ta_pricing'
     },
     {
+      name: 'ta_subscription_ta_user',
       columnNames: [ 'su_user_id' ],
       referencedColumnNames: [ 'us_id' ],
       referencedTableName: 'ta_user'

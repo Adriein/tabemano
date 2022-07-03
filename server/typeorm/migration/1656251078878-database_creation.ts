@@ -19,6 +19,7 @@ export class databaseCreation1656251078878 implements MigrationInterface {
     await queryRunner.createTable(UserTableDefinition, true, true);
 
     await queryRunner.createForeignKey('ta_config', new TableForeignKey({
+      name: 'ta_config_ta_user',
       columnNames: [ "co_user_id" ],
       referencedColumnNames: [ "us_id" ],
       referencedTableName: "ta_user",

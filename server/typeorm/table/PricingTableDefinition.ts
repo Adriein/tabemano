@@ -37,6 +37,7 @@ export const PricingTableDefinition = new Table({
   ],
   foreignKeys: [
     {
+      name: 'ta_pricing_ta_user',
       columnNames: [ 'pr_tenant_id' ],
       referencedColumnNames: [ 'us_id' ],
       referencedTableName: 'ta_user'

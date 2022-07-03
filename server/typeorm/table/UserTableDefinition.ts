@@ -49,11 +49,13 @@ export const UserTableDefinition = new Table({
   ],
   foreignKeys: [
     {
+      name: 'ta_user_ta_role',
       columnNames: [ 'us_role_id' ],
       referencedColumnNames: [ 'ro_id' ],
       referencedTableName: 'ta_role'
     },
     {
+      name: 'ta_user_ta_config',
       columnNames: [ 'us_config_id' ],
       referencedColumnNames: [ 'co_id' ],
       referencedTableName: 'ta_config'
