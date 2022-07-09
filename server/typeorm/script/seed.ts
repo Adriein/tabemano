@@ -1,3 +1,4 @@
+import { DataSource } from "typeorm";
 import { PricingModel } from "../../src/Backoffice/Pricing/Infrastructure/Persistance/Model/PricingModel";
 import { RoleModel } from "../../src/Backoffice/Role/Infrastructure/Persistance/Model/RoleModel";
 import { MONTHLY_PRICING, QUARTERLY_PRICING, YEARLY_PRICING } from "../../src/Backoffice/Shared/constants";
@@ -17,18 +18,12 @@ import Database from "../../src/Shared/Infrastructure/Persistance/Database";
 require('dotenv').config();
 
 const crypto = new CryptoService();
+const id = ID.generate();
+const adminRoleId = ID.generate();
+const yearlyPricingId = ID.generate();
 
-async function seed() {
-  const id = ID.generate();
-  const adminId = ID.generate();
-  const password = await crypto.hash(process.env.ADMIN_PASSWORD!);
-
-  const database = await Database.instance().initialize();
-
+const createBasicRoles = async (database: DataSource) => {
   const roleRepository = database.getRepository(RoleModel);
-  const userRepository = database.getRepository(TenantModel);
-  const pricingRepository = database.getRepository(PricingModel);
-  const subscriptionRepository = database.getRepository(SubscriptionModel);
 
   await roleRepository.save([
     {
@@ -44,12 +39,17 @@ async function seed() {
       updatedAt: DateVo.now().value
     },
     {
-      id: adminId,
+      id: adminRoleId,
       type: new RoleType(ADMIN_ROLE),
       createdAt: DateVo.now().value,
       updatedAt: DateVo.now().value
     },
   ]);
+}
+
+const createAdminUser = async (database: DataSource) => {
+  const userRepository = database.getRepository(TenantModel);
+  const password = await crypto.hash(process.env.ADMIN_PASSWORD!);
 
   await userRepository.save({
     id: id,
@@ -57,7 +57,7 @@ async function seed() {
     email: new Email(process.env.ADMIN_EMAIL!),
     password: new Password(password),
     tenantId: id,
-    roleId: adminId,
+    roleId: adminRoleId,
     isActive: true,
     config: {
       id: ID.generate(),
@@ -72,9 +72,14 @@ async function seed() {
     updatedAt: DateVo.now().value
   });
 
+}
+
+const createBasicPricing = async (database: DataSource) => {
+  const pricingRepository = database.getRepository(PricingModel);
+
   await pricingRepository.save([
     {
-      id: ID.generate(),
+      id: yearlyPricingId,
       name: YEARLY_PRICING,
       tenantId: id,
       price: 1000,
@@ -101,7 +106,10 @@ async function seed() {
       updatedAt: DateVo.now().value
     }
   ]);
+}
 
+const createAdminSubscription = async (database: DataSource) => {
+  const subscriptionRepository = database.getRepository(SubscriptionModel);
   const validTo = Time.add(new Date(), 100000);
 
   await subscriptionRepository.save({
@@ -113,10 +121,25 @@ async function seed() {
     price: 1000,
     duration: 10,
     pricingName: YEARLY_PRICING,
+    pricingId: yearlyPricingId,
     userId: id,
     createdAt: DateVo.now().value,
     updatedAt: DateVo.now().value,
   });
+}
+
+async function seed() {
+
+  const database = await Database.instance().initialize();
+
+  await createBasicRoles(database);
+
+  await createAdminUser(database);
+
+  await createBasicPricing(database);
+
+  await createAdminSubscription(database);
+
 }
 
 seed()
@@ -125,5 +148,5 @@ seed()
     process.exit(1)
   })
   .finally(async () => {
-    console.error('FINISH SEEDING DB')
+    console.error('FINISH SEEDING DB');
   })
