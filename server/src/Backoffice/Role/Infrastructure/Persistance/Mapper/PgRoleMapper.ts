@@ -1,28 +1,16 @@
-import { Prisma } from "@prisma/client";
-import { Role } from "Authorization/Domain/Entity/Role";
-import { ID } from "Shared/Domain/Vo/Id.vo";
-import { RoleType } from "Shared/Domain/Vo/RoleType";
+import { Role } from "Backoffice/Role/Domain/Entity/Role";
+import { RoleModel } from "Backoffice/Role/Infrastructure/Persistance/Model/RoleModel";
+import { IMapper } from "Shared/Domain/Interfaces/IMapper";
 
-const roleModel = Prisma.validator<Prisma.ta_roleFindManyArgs>()({});
-
-type RoleModel = Prisma.ta_roleGetPayload<typeof roleModel>
-
-export class PgRoleMapper {
+export class PgRoleMapper implements IMapper<Role, RoleModel> {
   public toDomain(dataModel: RoleModel): Role {
     return new Role(
-      new ID(dataModel.ro_id),
-      new RoleType(dataModel.ro_type),
-      new Date(dataModel.ro_created_at),
-      new Date(dataModel.ro_updated_at),
+      dataModel.id,
+      dataModel.type,
     )
   }
 
-  toSaveDataModel(domain: Role): any {
-    return undefined;
+  public toModel(entity: Role): RoleModel {
+    throw new Error();
   }
-
-  toUpdateDataModel(domain: Role): any {
-    return undefined;
-  }
-
 }

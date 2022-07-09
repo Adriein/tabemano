@@ -26,14 +26,9 @@ export default class Database {
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       entities: [
-        AuthModel,
         RoleModel,
-        UserModel,
-        ClientModel,
         TenantModel,
         ConfigModel,
-        SubscriptionModel,
-        SubscriptionEventModel,
         PricingModel
       ],
       synchronize: false,

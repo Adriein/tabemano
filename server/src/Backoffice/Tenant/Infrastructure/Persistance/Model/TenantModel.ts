@@ -1,79 +1,44 @@
-import { Config } from "Backoffice/Shared/Domain/Config/Config";
-import { User } from "Backoffice/Shared/Domain/User/User";
-import { Tenant } from "Backoffice/Tenant/Domain/Entity/Tenant";
+import { ConfigModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/ConfigModel";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Name } from "Shared/Domain/Vo/Name.vo";
 import { Password } from "Shared/Domain/Vo/Password.vo";
 import { ValueObjectTransformer } from "Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer";
-import { EntitySchema, OneToOne, Column, ValueTransformer } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from "typeorm";
 
-export const TenantModel = new EntitySchema<Tenant>({
-  name: 'Tenant',
-  tableName: 'ta_user',
-  target: Tenant,
-  columns: {
-    id: {
-      type: 'varchar',
-      primary: true,
-      name: 'us_id',
-      transformer: new ValueObjectTransformer<string, ID>(ID)
-    },
-    name: {
-      type: 'varchar',
-      name: 'us_name',
-      transformer: new ValueObjectTransformer<string, Name>(Name)
-    },
-    email: {
-      type: 'varchar',
-      name: 'us_email',
-      transformer: new ValueObjectTransformer<string, Email>(Email)
-    },
-    password: {
-      type: 'varchar',
-      name: 'us_password',
-      transformer: new ValueObjectTransformer<string, Password>(Password)
-    },
-    tenantId: {
-      type: 'varchar',
-      name: 'us_tenant_id',
-      transformer: new ValueObjectTransformer<string, ID>(ID)
-    },
-    roleId: {
-      type: 'varchar',
-      name: 'us_role_id',
-      transformer: new ValueObjectTransformer<string, ID>(ID)
-    },
-    isActive: {
-      type: 'boolean',
-      name: 'us_is_active',
-    },
-    config: {
-      type: 'varchar',
-      name: 'us_config_id',
-    },
-    createdAt: {
-      type: 'timestamp',
-      name: 'us_created_at',
-      precision: 0,
-      createDate: true,
-    },
-    updatedAt: {
-      type: 'timestamp',
-      name: 'us_updated_at',
-      precision: 0,
-      updateDate: true,
-    }
-  },
-  relations: {
-    config: {
-      type: 'one-to-one',
-      target: 'Config',
-      joinColumn: {
-        name: 'us_config_id',
-        referencedColumnName: 'id'
-      }
-    }
-  }
-});
+@Entity({ name: 'ta_user' })
+export class TenantModel {
+  @PrimaryColumn({ name: 'us_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID) })
+  id!: ID;
 
+  @Column({ name: 'us_name', type: 'varchar', transformer: new ValueObjectTransformer<string, Name>(Name) })
+  name!: Name;
+
+  @Column({ name: 'us_email', type: 'varchar', transformer: new ValueObjectTransformer<string, Email>(Email) })
+  email!: Email;
+
+  @Column({ name: 'us_password', type: 'varchar', transformer: new ValueObjectTransformer<string, Password>(Password) })
+  password!: Password;
+
+  @Column({ name: 'us_tenant_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID) })
+  tenantId!: ID;
+
+  @Column({ name: 'us_role_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID) })
+  roleId!: ID;
+
+  @Column({ name: 'us_config_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID) })
+  configId!: ID;
+
+  @Column({ name: 'us_is_active' })
+  isActive!: boolean;
+
+  @Column({ name: 'us_created_at', type: 'timestamp', precision: 0 })
+  createdAt!: Date;
+
+  @Column({ name: 'us_updated_at', type: 'timestamp', precision: 0 })
+  updatedAt!: Date;
+
+  @OneToOne(() => ConfigModel, { cascade: true })
+  @JoinColumn({ name: 'us_config_id', referencedColumnName: 'id' })
+  config!: ConfigModel
+}

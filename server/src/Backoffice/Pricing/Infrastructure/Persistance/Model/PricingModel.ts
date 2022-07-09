@@ -1,43 +1,25 @@
-import { Pricing } from "Backoffice/Pricing/Domain/Entity/Pricing";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { ValueObjectTransformer } from "Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer";
-import { EntitySchema } from "typeorm";
+import { Column, Entity, EntitySchema, PrimaryColumn } from "typeorm";
 
-export const PricingModel = new EntitySchema<Pricing>({
-  name: 'Pricing',
-  tableName: 'ta_pricing',
-  target: Pricing,
-  columns: {
-    id: {
-      type: 'varchar',
-      primary: true,
-      name: 'pr_id',
-      transformer: new ValueObjectTransformer<string, ID>(ID)
-    },
-    name: {
-      type: 'varchar',
-      name: 'pr_name',
-    },
-    duration: {
-      type: 'smallint',
-      name: 'pr_duration',
-    },
-    price: {
-      type: 'double precision',
-      name: 'pr_price',
-    },
-    createdAt: {
-      type: 'timestamp',
-      name: 'pr_created_at',
-      precision: 0,
-      createDate: true,
-    },
-    updatedAt: {
-      type: 'timestamp',
-      name: 'pr_updated_at',
-      precision: 0,
-      updateDate: true,
-    }
-  }
-});
+@Entity({ name: 'ta_pricing' })
+export class PricingModel {
+  @PrimaryColumn({ name: 'pr_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID) })
+  id!: ID;
+
+  @Column({ name: 'pr_name', type: 'varchar' })
+  name!: string;
+
+  @Column({ name: 'pr_duration', type: 'smallint' })
+  duration!: number;
+
+  @Column({ name: 'pr_price', type: 'double precision' })
+  price!: number;
+
+  @Column({ name: 'pr_created_at', type: 'timestamp', precision: 0 })
+  createdAt!: Date;
+
+  @Column({ name: 'pr_updated_at', type: 'timestamp', precision: 0 })
+  updatedAt!: Date;
+}
 

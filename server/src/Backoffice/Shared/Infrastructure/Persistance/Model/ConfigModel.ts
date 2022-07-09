@@ -1,48 +1,28 @@
-import { Config } from "Backoffice/Shared/Domain/Config/Config";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { ValueObjectTransformer } from "Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer";
-import { EntitySchema } from "typeorm";
+import { Column, Entity, PrimaryColumn } from "typeorm";
 
-export const ConfigModel = new EntitySchema<Config>({
-  name: 'Config',
-  tableName: 'ta_config',
-  target: Config,
-  columns: {
-    id: {
-      type: 'varchar',
-      primary: true,
-      name: 'co_id',
-      transformer: new ValueObjectTransformer<string, ID>(ID)
-    },
-    userId: {
-      type: 'varchar',
-      name: 'co_user_id',
-      transformer: new ValueObjectTransformer<string, ID>(ID)
-    },
-    lang: {
-      type: 'varchar',
-      name: 'co_language',
-    },
-    sendNotifications: {
-      type: 'varchar',
-      name: 'co_send_notifications',
-    },
-    sendWarnings: {
-      type: 'varchar',
-      name: 'co_send_warnings',
-    },
-    createdAt: {
-      type: 'timestamp',
-      name: 'co_created_at',
-      precision: 0,
-      createDate: true,
-    },
-    updatedAt: {
-      type: 'timestamp',
-      name: 'co_updated_at',
-      precision: 0,
-      updateDate: true,
-    }
-  }
-});
+@Entity({ name: 'ta_config' })
+export class ConfigModel {
+  @PrimaryColumn({ name: 'co_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID) })
+  id!: ID;
+
+  @Column({ name: 'co_user_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID) })
+  userId!: ID;
+
+  @Column({ name: 'co_language' })
+  lang!: string;
+
+  @Column({ name: 'co_send_notifications' })
+  sendNotifications!: boolean;
+
+  @Column({ name: 'co_send_warnings' })
+  sendWarnings!: boolean;
+
+  @Column({ name: 'co_created_at', type: 'timestamp', precision: 0 })
+  createdAt!: Date;
+
+  @Column({ name: 'co_updated_at', type: 'timestamp', precision: 0 })
+  updatedAt!: Date;
+}
 

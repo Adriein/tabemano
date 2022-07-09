@@ -33,12 +33,6 @@ async function seed() {
   const subscriptionRepository = database.getRepository(SubscriptionModel);
   const configRepository = database.getRepository(ConfigModel);
 
-  /*const result = await userRepository.findOne({
-   where: { name: new Name('Adria Claret') },
-   relations: { config: true }
-   });
-   console.log(result);*/
-
   await roleRepository.save([
     {
       id: ID.generate(),
@@ -60,17 +54,6 @@ async function seed() {
     },
   ]);
 
-  const configId = ID.generate();
-  await configRepository.save({
-    id: configId,
-    userId: id,
-    sendNotifications: true,
-    sendWarnings: true,
-    lang: 'ES',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  })
-
   await userRepository.save({
     id: id,
     name: new Name('Adria Claret'),
@@ -80,7 +63,7 @@ async function seed() {
     roleId: adminId,
     isActive: true,
     config: {
-      id: configId,
+      id: ID.generate(),
       userId: id,
       sendNotifications: true,
       sendWarnings: true,
@@ -92,30 +75,30 @@ async function seed() {
     updatedAt: DateVo.now().value
   });
 
-  /*await pricingRepository.save([
-   {
-   id: ID.generate(),
-   name: YEARLY_PRICING,
-   tenantId: adminId,
-   price: 1000,
-   duration: 365
-   },
-   {
-   id: ID.generate(),
-   name: MONTHLY_PRICING,
-   tenantId: adminId,
-   price: 50,
-   duration: 30
-   },
-   {
-   id: ID.generate(),
-   name: QUARTERLY_PRICING,
-   tenantId: adminId,
-   price: 150,
-   duration: 90
-   }
-   ]);
-
+  await pricingRepository.save([
+    {
+      id: ID.generate(),
+      name: YEARLY_PRICING,
+      tenantId: adminId,
+      price: 1000,
+      duration: 365
+    },
+    {
+      id: ID.generate(),
+      name: MONTHLY_PRICING,
+      tenantId: adminId,
+      price: 50,
+      duration: 30
+    },
+    {
+      id: ID.generate(),
+      name: QUARTERLY_PRICING,
+      tenantId: adminId,
+      price: 150,
+      duration: 90
+    }
+  ]);
+  /*
    const validTo = Time.add(new Date(), 1000000000000);
 
    await subscriptionRepository.save({
