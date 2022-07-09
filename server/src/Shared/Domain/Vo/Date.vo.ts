@@ -20,7 +20,7 @@ export class DateVo extends ValueObject {
   constructor(date: string | Date) {
     super();
     if (!date) {
-      throw new DateFormatError();
+      throw new DateFormatError(date);
     }
 
     if (date instanceof Date) {
@@ -34,7 +34,7 @@ export class DateVo extends ValueObject {
     const parsedDate = Time.format(new Date(formattedDate), Time.AMERICAN_DATE_FORMAT);
 
     if (this.validate(parsedDate)) {
-      throw new DateFormatError();
+      throw new DateFormatError(parsedDate);
     }
     this._date = new Date(formattedDate);
   }

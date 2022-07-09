@@ -3,8 +3,8 @@ import { DomainError } from "./DomainError";
 export class DateFormatError extends DomainError {
   statusCode = 400;
 
-  constructor() {
-    super('Date must have the format of YYYY-MM-DD');
+  constructor(wrongDate: Date | string) {
+    super(`Date must have the format of YYYY-MM-DD, the passed date: ${wrongDate} is incorrect`);
 
     Object.setPrototypeOf(this, DateFormatError.prototype);
   }

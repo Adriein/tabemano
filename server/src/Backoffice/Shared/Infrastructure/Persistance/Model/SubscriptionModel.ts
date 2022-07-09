@@ -1,72 +1,58 @@
-import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";
-import { SubscriptionEvent } from "Backoffice/Shared/Domain/Subscription/SubscriptionEvent";
-import { SubscriptionEventCollection } from "Backoffice/Shared/Domain/Subscription/SubscriptionEventCollection";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { ValueObjectTransformer } from "Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer";
-import { EntitySchema } from "typeorm";
+import { Column, Entity, EntitySchema, PrimaryColumn } from "typeorm";
 
-export const SubscriptionModel = new EntitySchema<Subscription>({
-  name: 'Subscription',
-  tableName: 'ta_subscription',
-  target: Subscription,
-  columns: {
-    id: {
-      type: 'varchar',
-      primary: true,
-      name: 'su_id',
-      transformer: new ValueObjectTransformer<string, ID>(ID)
-    },
-    paymentDate: {
-      type: 'timestamp',
-      name: 'su_payment_date',
-      precision: 0,
-      transformer: new ValueObjectTransformer<string, DateVo>(DateVo)
-    },
-    validTo: {
-      type: 'timestamp',
-      name: 'su_valid_to',
-      precision: 0,
-      transformer: new ValueObjectTransformer<string, DateVo>(DateVo)
-    },
-    isActive: {
-      type: 'boolean',
-      name: 'su_is_active',
-    },
-    isExpired: {
-      type: 'boolean',
-      name: 'su_is_expired',
-    },
-    duration: {
-      type: 'smallint',
-      name: 'su_duration',
-    },
-    pricingName: {
-      type: 'varchar',
-      name: 'su_price_name',
-    },
-    price: {
-      type: 'double precision',
-      name: 'su_price',
-    },
-    userId: {
-      type: 'varchar',
-      primary: true,
-      name: 'su_user_id',
-      transformer: new ValueObjectTransformer<string, ID>(ID)
-    },
-    createdAt: {
-      type: 'timestamp',
-      name: 'su_created_at',
-      precision: 0,
-      createDate: true,
-    },
-    updatedAt: {
-      type: 'timestamp',
-      name: 'su_updated_at',
-      precision: 0,
-      updateDate: true,
-    }
-  }
-});
+@Entity({ name: 'ta_subscription' })
+export class SubscriptionModel {
+  @PrimaryColumn({
+    name: 'su_id',
+    type: 'varchar',
+    transformer: new ValueObjectTransformer<string, ID>(ID)
+  })
+  id!: ID;
+
+  @Column({
+    name: 'su_payment_date',
+    type: 'timestamp',
+    precision: 0,
+    transformer: new ValueObjectTransformer<string, DateVo>(DateVo)
+  })
+  paymentDate!: DateVo;
+
+  @Column({
+    name: 'su_valid_to',
+    type: 'timestamp',
+    precision: 0,
+    transformer: new ValueObjectTransformer<string, DateVo>(DateVo)
+  })
+  validTo!: DateVo;
+
+  @Column({ name: 'su_is_active' })
+  isActive!: boolean;
+
+  @Column({ name: 'su_is_expired' })
+  isExpired!: boolean;
+
+  @Column({ name: 'su_duration', type: 'smallint' })
+  duration!: number;
+
+  @Column({ name: 'su_price_name' })
+  pricingName!: string;
+
+  @Column({ name: 'su_price', type: 'double precision' })
+  price!: number;
+
+  @Column({ name: 'su_pricing_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID) })
+  pricingId!: ID;
+
+  @Column({ name: 'su_user_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID) })
+  userId!: ID;
+
+  @Column({ name: 'su_created_at', type: 'timestamp', precision: 0 })
+  createdAt!: Date;
+
+  @Column({ name: 'su_updated_at', type: 'timestamp', precision: 0 })
+  updatedAt!: Date;
+}
 

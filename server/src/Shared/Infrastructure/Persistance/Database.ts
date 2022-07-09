@@ -29,7 +29,8 @@ export default class Database {
         RoleModel,
         TenantModel,
         ConfigModel,
-        PricingModel
+        PricingModel,
+        SubscriptionModel
       ],
       synchronize: false,
       logging: true,

@@ -16,6 +16,9 @@ export class PricingModel {
   @Column({ name: 'pr_price', type: 'double precision' })
   price!: number;
 
+  @Column({ name: 'pr_tenant_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID) })
+  tenantId!: ID;
+
   @Column({ name: 'pr_created_at', type: 'timestamp', precision: 0 })
   createdAt!: Date;
 

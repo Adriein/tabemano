@@ -1,9 +1,7 @@
 import { PricingModel } from "../../src/Backoffice/Pricing/Infrastructure/Persistance/Model/PricingModel";
 import { RoleModel } from "../../src/Backoffice/Role/Infrastructure/Persistance/Model/RoleModel";
 import { MONTHLY_PRICING, QUARTERLY_PRICING, YEARLY_PRICING } from "../../src/Backoffice/Shared/constants";
-import { ConfigModel } from "../../src/Backoffice/Shared/Infrastructure/Persistance/Model/ConfigModel";
 import { SubscriptionModel } from "../../src/Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionModel";
-import { UserModel } from "../../src/Backoffice/Shared/Infrastructure/Persistance/Model/UserModel";
 import { TenantModel } from "../../src/Backoffice/Tenant/Infrastructure/Persistance/Model/TenantModel";
 import { ADMIN_ROLE, CLIENT_ROLE, TENANT_ROLE } from "../../src/Shared/Domain/constants";
 import { CryptoService } from "../../src/Shared/Domain/Services/CryptoService";
@@ -31,7 +29,6 @@ async function seed() {
   const userRepository = database.getRepository(TenantModel);
   const pricingRepository = database.getRepository(PricingModel);
   const subscriptionRepository = database.getRepository(SubscriptionModel);
-  const configRepository = database.getRepository(ConfigModel);
 
   await roleRepository.save([
     {
@@ -79,38 +76,47 @@ async function seed() {
     {
       id: ID.generate(),
       name: YEARLY_PRICING,
-      tenantId: adminId,
+      tenantId: id,
       price: 1000,
-      duration: 365
+      duration: 365,
+      createdAt: DateVo.now().value,
+      updatedAt: DateVo.now().value
     },
     {
       id: ID.generate(),
       name: MONTHLY_PRICING,
-      tenantId: adminId,
+      tenantId: id,
       price: 50,
-      duration: 30
+      duration: 30,
+      createdAt: DateVo.now().value,
+      updatedAt: DateVo.now().value
     },
     {
       id: ID.generate(),
       name: QUARTERLY_PRICING,
-      tenantId: adminId,
+      tenantId: id,
       price: 150,
-      duration: 90
+      duration: 90,
+      createdAt: DateVo.now().value,
+      updatedAt: DateVo.now().value
     }
   ]);
-  /*
-   const validTo = Time.add(new Date(), 1000000000000);
 
-   await subscriptionRepository.save({
-   id: ID.generate(),
-   isActive: true,
-   isExpired: false,
-   paymentDate: DateVo.now(),
-   validTo: new DateVo(validTo),
-   price: 1000,
-   duration: 1000000000000,
-   pricingName: YEARLY_PRICING,
-   });*/
+  const validTo = Time.add(new Date(), 100000);
+
+  await subscriptionRepository.save({
+    id: ID.generate(),
+    isActive: true,
+    isExpired: false,
+    paymentDate: DateVo.now(),
+    validTo: new DateVo(validTo),
+    price: 1000,
+    duration: 10,
+    pricingName: YEARLY_PRICING,
+    userId: id,
+    createdAt: DateVo.now().value,
+    updatedAt: DateVo.now().value,
+  });
 }
 
 seed()
