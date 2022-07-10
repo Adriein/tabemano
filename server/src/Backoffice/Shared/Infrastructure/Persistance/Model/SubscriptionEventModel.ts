@@ -1,40 +1,26 @@
-import { SubscriptionEvent } from "Backoffice/Shared/Domain/Subscription/SubscriptionEvent";
+import { SubscriptionModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionModel";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { ValueObjectTransformer } from "Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer";
-import { EntitySchema } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 
-export const SubscriptionEventModel = new EntitySchema<SubscriptionEvent>({
-  name: 'SubscriptionEvent',
-  tableName: 'ta_subscription_events',
-  target: SubscriptionEvent,
-  columns: {
-    id: {
-      type: 'varchar',
-      primary: true,
-      name: 'se_id',
-      transformer: new ValueObjectTransformer<string, ID>(ID)
-    },
-    event: {
-      type: 'varchar',
-      name: 'se_event',
-    },
-    subscriptionId: {
-      type: 'varchar',
-      name: 'se_subscription_id',
-      transformer: new ValueObjectTransformer<string, ID>(ID)
-    },
-    createdAt: {
-      type: 'timestamp',
-      name: 'se_created_at',
-      precision: 0,
-      createDate: true,
-    },
-    updatedAt: {
-      type: 'timestamp',
-      name: 'se_updated_at',
-      precision: 0,
-      updateDate: true,
-    }
-  }
-});
+@Entity({ name: 'ta_subscription_events' })
+export class SubscriptionEventModel {
+  @PrimaryColumn({ name: 'se_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID) })
+  id!: ID;
 
+  @Column({ name: 'se_event', type: 'varchar' })
+  event!: string;
+
+  @Column({ name: 'se_subscription_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID) })
+  subscriptionId!: ID;
+
+  @Column({ name: 'se_created_at', type: 'timestamp', precision: 0 })
+  createdAt!: Date;
+
+  @Column({ name: 'se_updated_at', type: 'timestamp', precision: 0 })
+  updatedAt!: Date;
+
+  @ManyToOne(() => SubscriptionModel, (subscription: SubscriptionModel) => subscription.events)
+  @JoinColumn({ name: 'se_subscription_id', referencedColumnName: 'id' })
+  subscription!: SubscriptionModel;
+}

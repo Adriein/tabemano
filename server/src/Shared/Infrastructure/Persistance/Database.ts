@@ -30,7 +30,8 @@ export default class Database {
         TenantModel,
         ConfigModel,
         PricingModel,
-        SubscriptionModel
+        SubscriptionModel,
+        SubscriptionEventModel
       ],
       synchronize: false,
       logging: true,

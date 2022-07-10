@@ -1,7 +1,8 @@
+import { SubscriptionEventModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionEventModel";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { ValueObjectTransformer } from "Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer";
-import { Column, Entity, EntitySchema, PrimaryColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 
 @Entity({ name: 'ta_subscription' })
 export class SubscriptionModel {
@@ -54,5 +55,11 @@ export class SubscriptionModel {
 
   @Column({ name: 'su_updated_at', type: 'timestamp', precision: 0 })
   updatedAt!: Date;
-}
 
+  @OneToMany(
+    () => SubscriptionEventModel,
+    (events: SubscriptionEventModel) => events.subscription,
+    { cascade: true }
+  )
+  events!: SubscriptionEventModel[];
+}
