@@ -1,8 +1,8 @@
 import { FilterableField } from "Backoffice/AppFilter/Domain/Entity/FilterableField";
-import { Aggregate } from "Shared/Domain/Entities/AggregateRoot";
+import { AggregateRoot } from "Shared/Domain/Entities/AggregateRoot";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 
-export class AppFilter extends Aggregate {
+export class AppFilter extends AggregateRoot {
   public static build(tenantId: ID, entity: string): AppFilter {
     return new AppFilter(
       ID.generate(),

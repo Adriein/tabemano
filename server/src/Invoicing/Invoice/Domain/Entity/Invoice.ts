@@ -4,14 +4,14 @@ import { InvoiceTax } from "Invoicing/Invoice/Domain/Entity/InvoiceTax";
 import { InvoiceNumber } from "Invoicing/Invoice/Domain/Vo/InvoiceNumber";
 import { Client } from "Invoicing/Shared/Domain/Client";
 import { MARKET } from "Shared/Domain/constants";
-import { Aggregate } from "Shared/Domain/Entities/AggregateRoot";
+import { AggregateRoot } from "Shared/Domain/Entities/AggregateRoot";
 import { Money } from "Shared/Domain/Entities/Money";
 import { Currency } from "Shared/Domain/Vo/Currency.vo";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { NumberVo } from "Shared/Domain/Vo/Number.vo";
 
-export class Invoice extends Aggregate {
+export class Invoice extends AggregateRoot {
   public invoiceTax?: InvoiceTax;
 
   public static build(occurred: DateVo, company: Company, client: Client): Invoice {

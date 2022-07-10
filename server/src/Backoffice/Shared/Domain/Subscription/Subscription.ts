@@ -2,13 +2,13 @@ import { SubscriptionMarkedAsAboutToExpireDomainEvent } from "Backoffice/Client/
 import { SUBSCRIPTION_STATUS } from "Backoffice/Shared/constants";
 import { SubscriptionEvent } from "Backoffice/Shared/Domain/Subscription/SubscriptionEvent";
 import { SubscriptionEventCollection } from "Backoffice/Shared/Domain/Subscription/SubscriptionEventCollection";
-import { Aggregate } from "Shared/Domain/Entities/AggregateRoot";
+import { AggregateRoot } from "Shared/Domain/Entities/AggregateRoot";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Time } from "Shared/Infrastructure/Helper/Time";
 
 
-export class Subscription extends Aggregate {
+export class Subscription extends AggregateRoot {
   public static build(
     userId: ID,
     lastPayment: DateVo,

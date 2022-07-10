@@ -1,9 +1,9 @@
 import { CHECK_FOR_EXPIRED_CLIENT_SUBSCRIPTION_JOB } from "Backoffice/Shared/constants";
-import { Aggregate } from "Shared/Domain/Entities/AggregateRoot";
+import { AggregateRoot } from "Shared/Domain/Entities/AggregateRoot";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 
-export class BackgroundJob extends Aggregate {
+export class BackgroundJob extends AggregateRoot {
   private _timeInit: DateVo | undefined;
   private _timeEnd: DateVo | undefined;
 

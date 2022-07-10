@@ -1,6 +1,6 @@
 import { Pricing } from "Backoffice/Shared/Domain/Pricing/Pricing";
 import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";
-import { Aggregate } from "Shared/Domain/Entities/AggregateRoot";
+import { AggregateRoot } from "Shared/Domain/Entities/AggregateRoot";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { Name } from "Shared/Domain/Vo/Name.vo";
 import { Config } from "Backoffice/Shared/Domain/Config/Config";
@@ -9,7 +9,7 @@ import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Password } from "Shared/Domain/Vo/Password.vo";
 
 
-export abstract class User extends Aggregate {
+export abstract class User extends AggregateRoot {
   protected constructor(
     readonly id: ID,
     readonly name: Name,
@@ -24,7 +24,7 @@ export abstract class User extends Aggregate {
   ) {
     super(id, createdAt, updatedAt);
   }
-  
+
   public createSubscription(pricing: Pricing): Subscription {
     return Subscription.build(this.id, DateVo.now(), pricing.id(), pricing.name(), pricing.duration(), pricing.price());
   }

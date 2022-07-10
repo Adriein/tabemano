@@ -1,8 +1,8 @@
 import { MONTHLY_PRICING, QUARTERLY_PRICING } from "Backoffice/Shared/constants";
-import { Aggregate } from "Shared/Domain/Entities/AggregateRoot";
+import { AggregateRoot } from "Shared/Domain/Entities/AggregateRoot";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 
-export class Pricing extends Aggregate {
+export class Pricing extends AggregateRoot {
   public static build(name: string, duration: number, price: number, tenantId: ID): Pricing {
     return new Pricing(
       ID.generate(),
