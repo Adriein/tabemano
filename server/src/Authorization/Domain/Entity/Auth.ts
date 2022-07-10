@@ -7,27 +7,48 @@ import { Name } from "Shared/Domain/Vo/Name.vo";
 import { Password } from "Shared/Domain/Vo/Password.vo";
 
 export class Auth extends AggregateRoot {
-  private crypto: CryptoService = new CryptoService();
+  private _crypto: CryptoService = new CryptoService();
 
   public static build(name: Name, email: Email, password: Password, roleId: ID): Auth {
     return new Auth(ID.generate(), name, email, password, roleId);
   }
 
   constructor(
-    readonly id: ID,
-    readonly name: Name,
-    readonly email: Email,
-    readonly password: Password,
-    readonly roleId: ID
+    _id: ID,
+    private _name: Name,
+    private _email: Email,
+    private _password: Password,
+    private _roleId: ID
   ) {
-    super(id);
+    super(_id);
   }
 
   public async checkIsAValidPassword(supplied: Password): Promise<void> {
-    const valid = await this.crypto.compare(this.password.value, supplied.value);
+    const valid = await this._crypto.compare(this._password.value, supplied.value);
 
     if (!valid) {
       throw new NotAuthorizedError();
     }
+  }
+
+
+  public crypto(): CryptoService {
+    return this._crypto;
+  }
+
+  public name(): Name {
+    return this._name;
+  }
+
+  public email(): Email {
+    return this._email;
+  }
+
+  public password(): Password {
+    return this._password;
+  }
+
+  public roleId(): ID {
+    return this._roleId;
   }
 }

@@ -1,8 +1,8 @@
 import { Result } from "@badrap/result";
 import { Inject, Injectable } from "@nestjs/common";
 import { Auth } from "Authorization/Domain/Entity/Auth";
-import { AuthFilter } from "Authorization/Domain/Entity/AuthFilter";
-import { IAuthRepository } from "Authorization/Domain/Entity/IAuthRepository";
+import { AuthFilter } from "Authorization/Domain/Filter/AuthFilter";
+import { IAuthRepository } from "Authorization/Domain/Repository/IAuthRepository";
 import { TypeOrmAuthFilterAdapter } from "Authorization/Infrastructure/Persistance/Filter/TypeOrmAuthFilterAdapter";
 import { AuthModel } from "Authorization/Infrastructure/Persistance/Model/AuthModel";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";

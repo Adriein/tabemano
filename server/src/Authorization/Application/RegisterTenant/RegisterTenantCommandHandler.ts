@@ -3,8 +3,8 @@ import { CommandHandler, EventBus, EventPublisher, ICommandHandler, QueryBus } f
 import { RegisterTenantCommand } from "Authorization/Application/RegisterTenant/RegisterTenantCommand";
 import { TenantCreatedDomainEvent } from "Authorization/Application/RegisterTenant/TenantCreatedDomainEvent";
 import { Auth } from "Authorization/Domain/Entity/Auth";
-import { AuthFilter } from "Authorization/Domain/Entity/AuthFilter";
-import { IAuthRepository } from "Authorization/Domain/Entity/IAuthRepository";
+import { AuthFilter } from "Authorization/Domain/Filter/AuthFilter";
+import { IAuthRepository } from "Authorization/Domain/Repository/IAuthRepository";
 import { Role } from "Authorization/Domain/Entity/Role";
 import { TenantAlreadyExistsError } from "Authorization/Domain/Error/TenantAlreadyExistsError";
 import { FindRoleQuery } from "Backoffice/Role/Application/FindRoleQuery";
