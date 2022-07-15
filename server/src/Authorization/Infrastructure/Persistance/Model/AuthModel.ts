@@ -1,54 +1,35 @@
-import { Auth } from "Authorization/Domain/Entity/Auth";
+import { RoleModel } from "Backoffice/Role/Infrastructure/Persistance/Model/RoleModel";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Name } from "Shared/Domain/Vo/Name.vo";
 import { Password } from "Shared/Domain/Vo/Password.vo";
 import { ValueObjectTransformer } from "Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer";
-import { EntitySchema } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn } from "typeorm";
 
-export const AuthModel = new EntitySchema<Auth>({
-  name: 'Auth',
-  tableName: 'ta_user',
-  target: Auth,
-  columns: {
-    id: {
-      type: 'varchar',
-      primary: true,
-      name: 'us_id',
-      transformer: new ValueObjectTransformer<string, ID>(ID)
-    },
-    name: {
-      type: 'varchar',
-      name: 'us_name',
-      transformer: new ValueObjectTransformer<string, Name>(Name)
-    },
-    email: {
-      type: 'varchar',
-      name: 'us_email',
-      transformer: new ValueObjectTransformer<string, Email>(Email)
-    },
-    password: {
-      type: 'varchar',
-      name: 'us_password',
-      transformer: new ValueObjectTransformer<string, Password>(Password)
-    },
-    roleId: {
-      type: 'varchar',
-      name: 'us_role_id',
-      transformer: new ValueObjectTransformer<string, ID>(ID)
-    },
-    createdAt: {
-      type: 'timestamp',
-      name: 'us_created_at',
-      precision: 0,
-      createDate: true,
-    },
-    updatedAt: {
-      type: 'timestamp',
-      name: 'us_updated_at',
-      precision: 0,
-      updateDate: true,
-    }
-  }
-});
+@Entity('ta_user')
+export class AuthModel {
+  @PrimaryColumn({ name: 'us_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID) })
+  id!: ID;
 
+  @Column({ name: 'us_name', type: 'varchar', transformer: new ValueObjectTransformer<string, Name>(Name) })
+  name!: Name;
+
+  @Column({ name: 'us_email', type: 'varchar', transformer: new ValueObjectTransformer<string, Email>(Email) })
+  email!: Email;
+
+  @Column({ name: 'us_password', type: 'varchar', transformer: new ValueObjectTransformer<string, Password>(Password) })
+  password!: Password;
+
+  @Column({ name: 'us_role_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID) })
+  roleId!: ID;
+
+  @OneToOne(() => RoleModel)
+  @JoinColumn({ name: 'us_role_id', referencedColumnName: 'id' })
+  role!: RoleModel;
+
+  @Column({ name: 'us_created_at', type: 'timestamp', precision: 0 })
+  createdAt!: Date;
+
+  @Column({ name: 'us_updated_at', type: 'timestamp', precision: 0 })
+  updatedAt!: Date;
+}
