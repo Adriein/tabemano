@@ -1,17 +1,18 @@
 import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";
 import { SubscriptionFilter } from "Backoffice/Shared/Domain/Subscription/SubscriptionFilter";
+import { SubscriptionModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionModel";
 import { Order } from "Shared/Domain/Entities/Order";
 import { Pagination } from "Shared/Domain/Entities/Pagination";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { TypeOrmAdapter } from "Shared/Infrastructure/Persistance/Adapter/TypeOrmAdapter";
 import { FindManyOptions } from "typeorm";
 
-export class TypeOrmSubscriptionFilterAdapter extends TypeOrmAdapter<FindManyOptions<Subscription>> {
+export class TypeOrmSubscriptionFilterAdapter extends TypeOrmAdapter<FindManyOptions<SubscriptionModel>> {
   constructor(private readonly filter: SubscriptionFilter) {
     super();
   }
 
-  public apply(): FindManyOptions<Subscription> {
+  public apply(): FindManyOptions<SubscriptionModel> {
     const filters = this.filter.apply();
 
     if (filters.has(SubscriptionFilter.ACTIVE_FILTER)) {

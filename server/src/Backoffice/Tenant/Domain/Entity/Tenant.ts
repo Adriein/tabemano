@@ -30,34 +30,34 @@ export class Tenant extends User {
       AppConfig.build()
     );
 
-    tenant.publish(new DefaultPricesCreatedDomainEvent(tenant.id));
+    tenant.publish(new DefaultPricesCreatedDomainEvent(tenant.id()));
     return tenant;
   }
 
   constructor(
-    readonly id: ID,
-    readonly name: Name,
-    readonly password: Password,
-    readonly email: Email,
-    readonly config: Config,
-    readonly tenantId: ID,
-    readonly roleId: ID,
-    readonly isActive: boolean,
-    readonly pricing: PricingCollection,
-    readonly appConfig: AppConfig,
-    readonly createdAt: Date = new Date(),
-    readonly updatedAt: Date = new Date(),
+    _id: ID,
+    _name: Name,
+    _password: Password,
+    _email: Email,
+    _config: Config,
+    _tenantId: ID,
+    _roleId: ID,
+    _isActive: boolean,
+    private _pricing: PricingCollection,
+    private _appConfig: AppConfig,
+    _createdAt?: Date,
+    _updatedAt?: Date
   ) {
-    super(id, name, password, email, config, tenantId, roleId, isActive, createdAt, updatedAt);
+    super(_id, _name, _password, _email, _config, _tenantId, _roleId, _isActive, _createdAt, _updatedAt);
   }
 
   public getYearlyPricing(): Pricing {
-    return this.pricing.getPricingByName(YEARLY_PRICING);
+    return this._pricing.getPricingByName(YEARLY_PRICING);
   }
 
   public registerClient(name: Name, email: Email, pricingId: ID, roleId: ID): void {
-    const pricing = this.pricing.getPricingById(pricingId);
-    const event = new ClientCreatedDomainEvent(this.id, name, email, this.id, pricing, roleId);
+    const pricing = this._pricing.getPricingById(pricingId);
+    const event = new ClientCreatedDomainEvent(this.id(), name, email, this.id(), pricing, roleId);
 
     this.publish(event);
   }

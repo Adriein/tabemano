@@ -4,7 +4,7 @@ import { ValueObjectTransformer } from "Shared/Infrastructure/Persistance/Transf
 import { Column, Entity, PrimaryColumn } from "typeorm";
 
 @Entity({ name: 'ta_role' })
-export class RoleModel {
+export class AuthRoleModel {
   @PrimaryColumn({ name: 'ro_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID) })
   id!: ID;
 

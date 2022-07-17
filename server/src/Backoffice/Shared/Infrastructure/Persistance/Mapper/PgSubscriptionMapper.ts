@@ -1,121 +1,77 @@
-import { Prisma } from "@prisma/client";
 import { SUBSCRIPTION_STATUS } from "Backoffice/Shared/constants";
-import { Pricing } from "Backoffice/Shared/Domain/Pricing/Pricing";
 import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";
 import { SubscriptionEvent } from "Backoffice/Shared/Domain/Subscription/SubscriptionEvent";
 import { SubscriptionEventCollection } from "Backoffice/Shared/Domain/Subscription/SubscriptionEventCollection";
-import { DateVo } from "Shared/Domain/Vo/Date.vo";
-import { ID } from "Shared/Domain/Vo/Id.vo";
+import { SubscriptionEventModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionEventModel";
+import { SubscriptionModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionModel";
+import { IMapper } from "Shared/Domain/Interfaces/IMapper";
 
-const subscriptionModel = Prisma.validator<Prisma.ta_subscriptionFindManyArgs>()({
-  include: {
-    su_events: true
+
+export class PgSubscriptionMapper implements IMapper<Subscription, SubscriptionModel> {
+  public toDomain(dataModel: SubscriptionModel): Subscription {
+    const eventCollection = this.buildEventCollection(dataModel);
+    return new Subscription(
+      dataModel.id,
+      dataModel.userId,
+      dataModel.pricingId,
+      dataModel.paymentDate,
+      dataModel.validTo,
+      dataModel.isActive,
+      dataModel.isExpired,
+      dataModel.pricingName,
+      dataModel.duration,
+      dataModel.price,
+      eventCollection,
+      dataModel.createdAt,
+      dataModel.updatedAt
+    );
   }
-});
 
-type SubscriptionModel = Prisma.ta_subscriptionGetPayload<typeof subscriptionModel>
+  public toModel(entity: Subscription): SubscriptionModel {
+    const events = this.buildEventModel(entity);
 
-export class PgSubscriptionMapper {
-  /*public toDomain(dataModel: SubscriptionModel): Subscription {
-   const pricing = new Pricing(
-   new ID(dataModel.su_pricing_id),
-   dataModel.su_price_name,
-   dataModel.su_price,
-   dataModel.su_duration,
-   );
+    const model = new SubscriptionModel();
 
-   const events = new SubscriptionEventCollection(
-   dataModel.su_events.map((event) => new SubscriptionEvent(
-   new ID(event.se_id),
-   event.se_event as SUBSCRIPTION_STATUS,
-   event.se_created_at,
-   event.se_updated_at
-   ))
-   );
+    model.id = entity.id();
+    model.userId = entity.userId();
+    model.isExpired = entity.isExpired();
+    model.isActive = entity.isActive();
+    model.paymentDate = entity.paymentDate();
+    model.validTo = entity.validTo();
+    model.pricingId = entity.pricingId();
+    model.pricingName = entity.pricingName();
+    model.duration = entity.duration();
+    model.price = entity.price();
+    model.events = events;
+    model.createdAt = entity.createdAt();
+    model.updatedAt = entity.updatedAt();
 
-   return new Subscription(
-   new ID(dataModel.su_id),
-   new ID(dataModel.su_user_id),
-   new DateVo(dataModel.su_payment_date),
-   new DateVo(dataModel.su_valid_to),
-   dataModel.su_is_active,
-   dataModel.su_is_expired,
-   pricing,
-   events,
-   dataModel.su_created_at,
-   dataModel.su_updated_at
-   );
-   }
+    return model;
+  }
 
-   public toSaveDataModel(entity: Subscription): Prisma.ta_subscriptionCreateInput {
-   return {
-   su_id: entity.id().value,
-   su_price_name: entity.pricingName(),
-   su_duration: entity.duration(),
-   su_price: entity.price(),
-   su_is_active: entity.isActive(),
-   su_is_expired: entity.isExpired(),
-   su_payment_date: entity.paymentDate(),
-   su_valid_to: entity.validTo(),
-   su_created_at: entity.createdAt(),
-   su_updated_at: entity.updatedAt(),
-   su_pricing: {
-   connect: {
-   pr_id: entity.pricingId().value
-   }
-   },
-   su_user: {
-   connect: {
-   us_id: entity.userId().value
-   }
-   },
-   su_events: {
-   connectOrCreate: this.subscriptionHistoryCreate(entity)
-   }
-   }
-   }
+  private buildEventCollection(dataModel: SubscriptionModel): SubscriptionEventCollection {
+    return new SubscriptionEventCollection(dataModel.events.map((event: SubscriptionEventModel) => {
+      return new SubscriptionEvent(
+        event.id,
+        event.event as SUBSCRIPTION_STATUS,
+        event.subscriptionId,
+        event.createdAt,
+        event.updatedAt
+      )
+    }));
+  }
 
-   public toUpdateDataModel(entity: Subscription): Prisma.ta_subscriptionUpdateInput {
-   return {
-   su_id: entity.id().value,
-   su_price_name: entity.pricingName(),
-   su_duration: entity.duration(),
-   su_price: entity.price(),
-   su_is_active: entity.isActive(),
-   su_is_expired: entity.isExpired(),
-   su_payment_date: entity.paymentDate(),
-   su_valid_to: entity.validTo(),
-   su_created_at: entity.createdAt(),
-   su_updated_at: entity.updatedAt(),
-   su_pricing: {
-   connect: {
-   pr_id: entity.pricingId().value
-   }
-   },
-   su_user: {
-   connect: {
-   us_id: entity.userId().value
-   }
-   },
-   su_events: {
-   connectOrCreate: this.subscriptionHistoryCreate(entity)
-   }
-   }
-   }
+  private buildEventModel(entity: Subscription): SubscriptionEventModel[] {
+    return entity.events().data().map((event: SubscriptionEvent) => {
+      const model = new SubscriptionEventModel();
 
-   private subscriptionHistoryCreate(domain: Subscription) {
-   return domain.events().data().map((history: SubscriptionEvent) => {
-   return {
-   create: {
-   se_id: history.id().value,
-   se_event: history.event(),
-   se_created_at: history.createdAt(),
-   se_updated_at: history.updatedAt()
-   },
-   where: {
-   se_id: domain.id().value
-   }
-   }
-   });
-   }*/
+      model.id = event.id();
+      model.event = event.event();
+      model.subscriptionId = event.subscriptionId();
+      model.createdAt = event.createdAt();
+      model.updatedAt = event.updatedAt();
+
+      return model;
+    })
+  }
 }

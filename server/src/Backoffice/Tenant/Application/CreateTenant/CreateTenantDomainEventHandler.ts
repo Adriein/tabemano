@@ -26,7 +26,7 @@ export class CreateTenantDomainEventHandler implements IEventHandler {
 
     const pricing = admin.getYearlyPricing();
 
-    const tenant = Tenant.build(name, password, email, admin.id, roleId);
+    const tenant = Tenant.build(name, password, email, admin.id(), roleId);
 
     const subscription = tenant.createSubscription(pricing);
 

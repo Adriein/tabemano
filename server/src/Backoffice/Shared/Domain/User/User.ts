@@ -11,21 +11,57 @@ import { Password } from "Shared/Domain/Vo/Password.vo";
 
 export abstract class User extends AggregateRoot {
   protected constructor(
-    readonly id: ID,
-    readonly name: Name,
-    readonly password: Password,
-    readonly email: Email,
-    readonly config: Config,
-    readonly tenantId: ID,
-    readonly roleId: ID,
-    readonly isActive: boolean,
-    readonly createdAt: Date = new Date(),
-    readonly updatedAt: Date = new Date()
+    _id: ID,
+    private _name: Name,
+    private _password: Password,
+    private _email: Email,
+    private _config: Config,
+    private _tenantId: ID,
+    private _roleId: ID,
+    private _isActive: boolean,
+    _createdAt: Date = new Date(),
+    _updatedAt: Date = new Date()
   ) {
-    super(id, createdAt, updatedAt);
+    super(_id, _createdAt, _updatedAt);
   }
 
   public createSubscription(pricing: Pricing): Subscription {
-    return Subscription.build(this.id, DateVo.now(), pricing.id(), pricing.name(), pricing.duration(), pricing.price());
+    return Subscription.build(
+      this.id(),
+      DateVo.now(),
+      pricing.id(),
+      pricing.name(),
+      pricing.duration(),
+      pricing.price()
+    );
+  }
+
+
+  public name(): Name {
+    return this._name;
+  }
+
+  public password(): Password {
+    return this._password;
+  }
+
+  public email(): Email {
+    return this._email;
+  }
+
+  public config(): Config {
+    return this._config;
+  }
+
+  public tenantId(): ID {
+    return this._tenantId;
+  }
+
+  public roleId(): ID {
+    return this._roleId;
+  }
+
+  public isActive(): boolean {
+    return this._isActive;
   }
 }

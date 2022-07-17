@@ -4,17 +4,19 @@ import { ISubscriptionRepository } from "Backoffice/Shared/Domain/Subscription/I
 import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";
 import { SubscriptionFilter } from "Backoffice/Shared/Domain/Subscription/SubscriptionFilter";
 import { TypeOrmSubscriptionFilterAdapter } from "Backoffice/Shared/Infrastructure/Persistance/Filter/TypeOrmSubscriptionFilterAdapter";
+import { PgSubscriptionMapper } from "Backoffice/Shared/Infrastructure/Persistance/Mapper/PgSubscriptionMapper";
 import { SubscriptionModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionModel";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
 import Database from "Shared/Infrastructure/Persistance/Database";
 import { TypeOrmRepository } from "Shared/Infrastructure/Persistance/Repository/TypeOrmRepository";
-import { DataSource, EntitySchema } from "typeorm";
+import { DataSource } from "typeorm";
 
 @Injectable()
-export class PgSubscriptionRepository extends TypeOrmRepository<Subscription> implements ISubscriptionRepository {
+export class PgSubscriptionRepository extends TypeOrmRepository<SubscriptionModel> implements ISubscriptionRepository {
   constructor(
     @Inject(Database.DATABASE_CONNECTION)
     protected readonly dataSource: DataSource,
+    private readonly mapper: PgSubscriptionMapper,
   ) {
     super();
   }
@@ -27,9 +29,9 @@ export class PgSubscriptionRepository extends TypeOrmRepository<Subscription> im
     try {
       const adapter = new TypeOrmSubscriptionFilterAdapter(filter);
 
-      const result = await this.repository().find(adapter.apply());
+      const results = await this.repository().find(adapter.apply());
 
-      return Result.ok(result);
+      return Result.ok(results.map((result: SubscriptionModel) => this.mapper.toDomain(result)));
     } catch (error) {
       return Result.err(error as Error);
     }
@@ -47,7 +49,7 @@ export class PgSubscriptionRepository extends TypeOrmRepository<Subscription> im
     throw new Error();
   }
 
-  protected entitySchema(): EntitySchema<Subscription> {
+  protected entitySchema() {
     return SubscriptionModel;
   }
 

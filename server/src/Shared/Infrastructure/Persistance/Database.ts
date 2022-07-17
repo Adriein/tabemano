@@ -1,11 +1,10 @@
 import { AuthModel } from "Authorization/Infrastructure/Persistance/Model/AuthModel";
-import { ClientModel } from "Backoffice/Client/Infrastructure/Persistance/Model/ClientModel";
+import { AuthRoleModel } from "Authorization/Infrastructure/Persistance/Model/AuthRoleModel";
 import { PricingModel } from "Backoffice/Pricing/Infrastructure/Persistance/Model/PricingModel";
 import { RoleModel } from "Backoffice/Role/Infrastructure/Persistance/Model/RoleModel";
 import { ConfigModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/ConfigModel";
 import { SubscriptionEventModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionEventModel";
 import { SubscriptionModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionModel";
-import { UserModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/UserModel";
 import { TenantModel } from "Backoffice/Tenant/Infrastructure/Persistance/Model/TenantModel";
 import { DataSource } from 'typeorm';
 
@@ -31,7 +30,9 @@ export default class Database {
         ConfigModel,
         PricingModel,
         SubscriptionModel,
-        SubscriptionEventModel
+        SubscriptionEventModel,
+        AuthModel,
+        AuthRoleModel,
       ],
       synchronize: false,
       logging: true,

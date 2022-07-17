@@ -1,6 +1,7 @@
 import { IFilterFactory } from "Backoffice/Shared/Domain/Services/IFilterFactory";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
 import { FindTenantClientsQuery } from "Backoffice/Client/Application/FindTenantClients/FindTenantClientsQuery";
+import { CLIENT_ROLE } from "Shared/Domain/constants";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { RoleType } from "Shared/Domain/Vo/RoleType";
@@ -50,7 +51,7 @@ export class UserFilterFactory implements IFilterFactory<UserFilter> {
     }
 
     filter
-      .withRole(new RoleType('client'))
+      .withRole(new RoleType(CLIENT_ROLE))
       .withTenantId(new ID(query.tenantId))
       .paginate()
       .setPage(query.page)

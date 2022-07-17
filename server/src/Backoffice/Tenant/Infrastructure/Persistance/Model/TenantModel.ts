@@ -1,10 +1,13 @@
+import { PricingModel } from "Backoffice/Pricing/Infrastructure/Persistance/Model/PricingModel";
+import { RoleModel } from "Backoffice/Role/Infrastructure/Persistance/Model/RoleModel";
 import { ConfigModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/ConfigModel";
+import { SubscriptionModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionModel";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Name } from "Shared/Domain/Vo/Name.vo";
 import { Password } from "Shared/Domain/Vo/Password.vo";
 import { ValueObjectTransformer } from "Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer";
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn } from "typeorm";
 
 @Entity({ name: 'ta_user' })
 export class TenantModel {
@@ -40,5 +43,12 @@ export class TenantModel {
 
   @OneToOne(() => ConfigModel, { cascade: true })
   @JoinColumn({ name: 'us_config_id', referencedColumnName: 'id' })
-  config!: ConfigModel
+  config!: ConfigModel;
+
+  @OneToMany(() => PricingModel, (pricing: PricingModel) => pricing.tenant)
+  pricing!: PricingModel[];
+
+  @OneToOne(() => RoleModel)
+  @JoinColumn({ name: 'us_role_id', referencedColumnName: 'id' })
+  role!: RoleModel;
 }
