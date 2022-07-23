@@ -42,7 +42,9 @@ export class PgSubscriptionRepository extends TypeOrmRepository<SubscriptionMode
   }
 
   public async save(entity: Subscription): Promise<void> {
-    throw new Error();
+    const model = this.mapper.toModel(entity);
+
+    await this.repository().save(model);
   }
 
   public async update(entity: Subscription): Promise<void> {

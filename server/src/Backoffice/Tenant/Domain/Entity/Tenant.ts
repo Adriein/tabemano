@@ -2,7 +2,6 @@ import { YEARLY_PRICING } from "Backoffice/Shared/constants";
 import { User } from "Backoffice/Shared/Domain/User/User";
 import { Pricing } from "Backoffice/Shared/Domain/Pricing/Pricing";
 import { PricingCollection } from "Backoffice/Shared/Domain/Pricing/PricingCollection";
-import { DefaultPricesCreatedDomainEvent } from "Backoffice/Tenant/Application/CreateTenant/DefaultPricesCreatedDomainEvent";
 import { ClientCreatedDomainEvent } from "Backoffice/Tenant/Application/RegisterClient/ClientCreatedDomainEvent";
 import { AppConfig } from "Backoffice/Tenant/Domain/Entity/AppConfig";
 import { Name } from "Shared/Domain/Vo/Name.vo";
@@ -17,7 +16,7 @@ export class Tenant extends User {
     const id = ID.generate();
     const config = Config.build(id, true, true);
 
-    const tenant = new Tenant(
+    return new Tenant(
       id,
       name,
       password,
@@ -29,9 +28,6 @@ export class Tenant extends User {
       PricingCollection.build(),
       AppConfig.build()
     );
-
-    tenant.publish(new DefaultPricesCreatedDomainEvent(tenant.id()));
-    return tenant;
   }
 
   constructor(

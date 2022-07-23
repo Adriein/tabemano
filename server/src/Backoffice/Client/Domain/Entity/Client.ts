@@ -20,23 +20,23 @@ export class Client extends User {
   }
 
   constructor(
-    readonly id: ID,
-    readonly name: Name,
-    readonly password: Password,
-    readonly email: Email,
-    readonly config: Config,
-    readonly tenantId: ID,
-    readonly roleId: ID,
-    readonly isActive: boolean,
-    readonly createdAt: Date = new Date(),
-    readonly updatedAt: Date = new Date()
+    _id: ID,
+    _name: Name,
+    _password: Password,
+    _email: Email,
+    _config: Config,
+    _tenantId: ID,
+    _roleId: ID,
+    _isActive: boolean,
+    _createdAt?: Date,
+    _updatedAt?: Date
   ) {
-    super(id, name, password, email, config, tenantId, roleId, isActive, createdAt, updatedAt);
+    super(_id, _name, _password, _email, _config, _tenantId, _roleId, _isActive, _createdAt, _updatedAt);
   }
 
   public moneySpent(subscriptions: Subscription[]): number {
     return subscriptions.reduce((total, subscription: Subscription) => {
-      return total + subscription.price;
+      return total + subscription.price();
     }, 0);
   }
 
@@ -48,7 +48,7 @@ export class Client extends User {
 
   public createSubscription(pricing: Pricing): Subscription {
     return Subscription.build(
-      this.id,
+      this.id(),
       DateVo.now(),
       pricing.id(),
       pricing.name(),
