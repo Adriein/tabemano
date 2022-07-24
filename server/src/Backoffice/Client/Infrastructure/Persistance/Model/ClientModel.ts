@@ -1,4 +1,4 @@
-import { Client } from "Backoffice/Client/Domain/Entity/Client";
+import { Client } from "Backoffice/Shared/Domain/Client/Client";
 import { Config } from "Backoffice/Shared/Domain/Config/Config";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";

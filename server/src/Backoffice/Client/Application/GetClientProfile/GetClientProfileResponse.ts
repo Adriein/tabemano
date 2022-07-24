@@ -1,4 +1,4 @@
-import { Client } from "Backoffice/Client/Domain/Entity/Client";
+import { Client } from "Backoffice/Shared/Domain/Client/Client";
 import { GetClientProfileResponseType, SubscriptionResponse } from "Backoffice/Client/types";
 import { Serializable } from "Backoffice/Shared/Domain/Serializable";
 import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";

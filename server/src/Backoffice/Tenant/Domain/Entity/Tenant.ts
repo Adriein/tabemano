@@ -1,4 +1,5 @@
 import { YEARLY_PRICING } from "Backoffice/Shared/constants";
+import { Client } from "Backoffice/Shared/Domain/Client/Client";
 import { User } from "Backoffice/Shared/Domain/User/User";
 import { Pricing } from "Backoffice/Shared/Domain/Pricing/Pricing";
 import { PricingCollection } from "Backoffice/Shared/Domain/Pricing/PricingCollection";
@@ -51,10 +52,11 @@ export class Tenant extends User {
     return this._pricing.getPricingByName(YEARLY_PRICING);
   }
 
-  public registerClient(name: Name, email: Email, pricingId: ID, roleId: ID): void {
-    const pricing = this._pricing.getPricingById(pricingId);
-    const event = new ClientCreatedDomainEvent(this.id(), name, email, this.id(), pricing, roleId);
+  public registerClient(name: Name, email: Email, pricingId: ID, roleId: ID): Client {
+    return Client.build(name, email, this.id(), roleId);
+  }
 
-    this.publish(event);
+  public getAvailablePricing(): PricingCollection {
+    return this._pricing;
   }
 }

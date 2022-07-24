@@ -1,5 +1,5 @@
 import { EventsHandler, IEventHandler } from "@nestjs/cqrs";
-import { Client } from "Backoffice/Client/Domain/Entity/Client";
+import { Client } from "Backoffice/Shared/Domain/Client/Client";
 import { IClientRepository } from "Backoffice/Client/Domain/Repository/IClientRepository";
 import { ISubscriptionRepository } from "Backoffice/Shared/Domain/Subscription/ISubscriptionRepository";
 import { ClientCreatedDomainEvent } from "Backoffice/Tenant/Application/RegisterClient/ClientCreatedDomainEvent";

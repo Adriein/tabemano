@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler, QueryBus } from "@nestjs/cqrs";
 import { CheckAboutToExpireSubscriptionsCommand } from "Backoffice/Client/Application/CheckAboutToExpireSubscriptions/CheckAboutToExpireSubscriptionsCommand";
-import { Client } from "Backoffice/Client/Domain/Entity/Client";
+import { Client } from "Backoffice/Shared/Domain/Client/Client";
 import { IClientRepository } from "Backoffice/Client/Domain/Repository/IClientRepository";
 import { ISubscriptionRepository } from "Backoffice/Shared/Domain/Subscription/ISubscriptionRepository";
 import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";

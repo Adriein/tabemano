@@ -1,4 +1,4 @@
-import { Client } from "Backoffice/Client/Domain/Entity/Client";
+import { Client } from "Backoffice/Shared/Domain/Client/Client";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
 import { Pagination } from "Shared/Domain/Entities/Pagination";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";

@@ -7,7 +7,7 @@ import { RegisterTenantApiRequest } from "Authorization/Infrastructure/Controlle
 export class RegisterTenantController {
   constructor(private readonly commandBus: CommandBus) {}
 
-  @Post('/register')
+  @Post('/register/tenant')
   public async register(
     @Body() body: RegisterTenantApiRequest
   ): Promise<void> {

@@ -1,7 +1,7 @@
 import { ICommand } from "@nestjs/cqrs";
 
 export class RegisterClientCommand implements ICommand {
-  public static fromRequest(req: any): RegisterClientCommand {
+  public static fromJson(req: any): RegisterClientCommand {
     return new RegisterClientCommand(
       req.body.name,
       req.body.email,

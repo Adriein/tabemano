@@ -1,6 +1,6 @@
 import { Result } from "@badrap/result";
 import { Inject } from "@nestjs/common";
-import { Client } from "Backoffice/Client/Domain/Entity/Client";
+import { Client } from "Backoffice/Shared/Domain/Client/Client";
 import { IClientRepository } from "Backoffice/Client/Domain/Repository/IClientRepository";
 import { TypeOrmClientFilterAdapter } from "Backoffice/Client/Infrastructure/Persistance/Filter/TypeOrmClientFilterAdapter";
 import { ClientModel } from "Backoffice/Client/Infrastructure/Persistance/Model/ClientModel";
