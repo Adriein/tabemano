@@ -4,10 +4,10 @@ import { Pagination } from "Shared/Domain/Entities/Pagination";
 export abstract class Filter {
   protected abstract data: Map<string, any>;
 
-  public paginate(): Pagination {
+  public paginate(): this {
     const pagination = new Pagination();
     this.data.set(Pagination.PAGINATION_FILTER, pagination);
-    return pagination;
+    return this;
   }
 
   public orderBy(field: string): Order {
@@ -17,4 +17,28 @@ export abstract class Filter {
   }
 
   public abstract apply(): Map<string, any>;
+
+  public setQuantity(quantity: number): this {
+    const pagination = this.data.get(Pagination.PAGINATION_FILTER) as Pagination | undefined;
+
+    if (!pagination) {
+      throw new Error();
+    }
+
+    pagination.setQuantity(quantity);
+
+    return this;
+  }
+
+  public setPage(page: number): this {
+    const pagination = this.data.get(Pagination.PAGINATION_FILTER) as Pagination | undefined;
+
+    if (!pagination) {
+      throw new Error();
+    }
+
+    pagination.setPage(page);
+
+    return this;
+  }
 }
