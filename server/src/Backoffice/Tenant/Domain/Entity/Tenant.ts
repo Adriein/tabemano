@@ -3,7 +3,7 @@ import { Client } from "Backoffice/Shared/Domain/Client/Client";
 import { User } from "Backoffice/Shared/Domain/User/User";
 import { Pricing } from "Backoffice/Shared/Domain/Pricing/Pricing";
 import { PricingCollection } from "Backoffice/Shared/Domain/Pricing/PricingCollection";
-import { ClientCreatedDomainEvent } from "Backoffice/Tenant/Application/RegisterClient/ClientCreatedDomainEvent";
+import { ClientRegisteredDomainEvent } from "Backoffice/Tenant/Application/RegisterClient/ClientRegisteredDomainEvent";
 import { AppConfig } from "Backoffice/Tenant/Domain/Entity/AppConfig";
 import { Name } from "Shared/Domain/Vo/Name.vo";
 import { Config } from "Backoffice/Shared/Domain/Config/Config";

@@ -5,9 +5,9 @@ import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Password } from "Shared/Domain/Vo/Password.vo";
 
-export class TenantCreatedDomainEvent extends DomainEvent {
-  public static fromEntity(auth: Auth): TenantCreatedDomainEvent {
-    return new TenantCreatedDomainEvent(auth.id(), auth.name(), auth.email(), auth.password(), auth.roleId());
+export class TenantRegisteredDomainEvent extends DomainEvent {
+  public static fromEntity(auth: Auth): TenantRegisteredDomainEvent {
+    return new TenantRegisteredDomainEvent(auth.id(), auth.name(), auth.email(), auth.password(), auth.roleId());
   }
 
   constructor(

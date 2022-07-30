@@ -1,7 +1,7 @@
 import { Inject } from "@nestjs/common";
 import { CommandHandler, EventBus, ICommandHandler } from "@nestjs/cqrs";
 import { RegisterTenantCommand } from "Authorization/Application/RegisterTenant/RegisterTenantCommand";
-import { TenantCreatedDomainEvent } from "Authorization/Application/RegisterTenant/TenantCreatedDomainEvent";
+import { TenantRegisteredDomainEvent } from "Authorization/Application/RegisterTenant/TenantRegisteredDomainEvent";
 import { Auth } from "Authorization/Domain/Entity/Auth";
 import { AuthFilter } from "Authorization/Domain/Filter/AuthFilter";
 import { RoleFilter } from "Authorization/Domain/Filter/RoleFilter";
@@ -44,7 +44,7 @@ export class RegisterTenantCommandHandler implements ICommandHandler {
   }
 
   private async ensureTenantNotExists(email: Email): Promise<void> {
-    const filter = AuthFilter.builder().withEmail(email);
+    const filter = AuthFilter.create().withEmail(email);
 
     const result = await this.authRepository.findOne(filter);
 
@@ -61,6 +61,6 @@ export class RegisterTenantCommandHandler implements ICommandHandler {
   }
 
   private publishTenantRegisteredEvent(auth: Auth): void {
-    this.eventBus.publish(TenantCreatedDomainEvent.fromEntity(auth));
+    this.eventBus.publish(TenantRegisteredDomainEvent.fromEntity(auth));
   }
 }

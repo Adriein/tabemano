@@ -4,7 +4,7 @@ import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Name } from "Shared/Domain/Vo/Name.vo";
 
-export class ClientCreatedDomainEvent extends DomainEvent {
+export class ClientRegisteredDomainEvent extends DomainEvent {
   constructor(
     protected readonly _aggregateId: ID,
     private readonly _name: Name,

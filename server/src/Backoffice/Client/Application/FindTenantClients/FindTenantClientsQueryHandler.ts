@@ -34,7 +34,7 @@ export class FindTenantClientsQueryHandler implements IQueryHandler {
   }
 
   private async getActiveSubscription(client: Client): Promise<Subscription> {
-    const filter = SubscriptionFilter.builder()
+    const filter = SubscriptionFilter.create()
       .isActive(true)
       .withClientId(client.id());
 

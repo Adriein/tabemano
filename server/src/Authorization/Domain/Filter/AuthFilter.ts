@@ -4,7 +4,7 @@ import { Email } from "Shared/Domain/Vo/Email.vo";
 export class AuthFilter extends Filter {
   public static EMAIL_FILTER = 'email';
 
-  public static builder(): AuthFilter {
+  public static create(): AuthFilter {
     return new AuthFilter();
   }
 

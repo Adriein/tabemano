@@ -44,7 +44,7 @@ export class CheckExpiredSubscriptionsCommandHandler implements ICommandHandler 
   private async getActiveClients(): Promise<Client[]> {
     const clientRole = new RoleType(CLIENT_ROLE);
 
-    const filter = UserFilter.builder()
+    const filter = UserFilter.create()
       .withRole(clientRole)
       .isActive(true)
       .withSubscriptionActive(true);
@@ -55,7 +55,7 @@ export class CheckExpiredSubscriptionsCommandHandler implements ICommandHandler 
   }
 
   private async getActiveSubscription(client: Client): Promise<Subscription> {
-    const subscriptionFilter = SubscriptionFilter.builder()
+    const subscriptionFilter = SubscriptionFilter.create()
       .withClientId(client.id)
       .isActive(true);
 

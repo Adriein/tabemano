@@ -10,35 +10,62 @@ export abstract class Filter {
     return this;
   }
 
-  public orderBy(field: string): Order {
+  public orderBy(field: string): this {
+    const existingOrderFilter = this.data.get(Order.ORDER_FILTER) as Order | undefined;
+
+    if (existingOrderFilter) {
+      existingOrderFilter.field = field;
+
+      return this;
+    }
+
     const order = new Order(field);
     this.data.set(Order.ORDER_FILTER, order);
-    return order;
+
+    return this;
   }
 
   public abstract apply(): Map<string, any>;
 
   public setQuantity(quantity: number): this {
-    const pagination = this.data.get(Pagination.PAGINATION_FILTER) as Pagination | undefined;
-
-    if (!pagination) {
-      throw new Error();
-    }
-
+    const pagination = this.getFilter<Pagination>(Pagination.PAGINATION_FILTER);
+    
     pagination.setQuantity(quantity);
 
     return this;
   }
 
   public setPage(page: number): this {
-    const pagination = this.data.get(Pagination.PAGINATION_FILTER) as Pagination | undefined;
-
-    if (!pagination) {
-      throw new Error();
-    }
+    const pagination = this.getFilter<Pagination>(Pagination.PAGINATION_FILTER);
 
     pagination.setPage(page);
 
     return this;
+  }
+
+  public desc(): this {
+    const order = this.getFilter<Order>(Order.ORDER_FILTER)
+
+    order.desc();
+
+    return this;
+  }
+
+  public asc(): this {
+    const order = this.getFilter<Order>(Order.ORDER_FILTER);
+
+    order.asc();
+
+    return this;
+  }
+
+  private getFilter<T>(filterName: string): T {
+    const filter: T | undefined = this.data.get(filterName);
+
+    if (!filter) {
+      throw new Error();
+    }
+
+    return filter;
   }
 }

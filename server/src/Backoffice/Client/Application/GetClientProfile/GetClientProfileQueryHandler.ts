@@ -39,8 +39,8 @@ export class GetClientProfileQueryHandler implements IQueryHandler {
   }
 
   private async getSubscriptions(clientId: ID): Promise<Subscription[]> {
-    const filter = new SubscriptionFilter();
-    filter.withClientId(clientId)
+    const filter = SubscriptionFilter.create()
+      .withClientId(clientId)
       .orderByCreationDate()
       .desc();
 

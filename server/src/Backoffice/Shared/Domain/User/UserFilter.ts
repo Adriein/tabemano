@@ -20,7 +20,7 @@ export class UserFilter extends Filter {
   public static SUBSCRIPTION_IS_ACTIVE_FILTER = 'subscriptionIsActive';
   public static SUBSCRIPTION_IS_EXPIRED_FILTER = 'subscriptionIsExpired';
 
-  public static builder(): UserFilter {
+  public static create(): UserFilter {
     return new UserFilter();
   }
 

@@ -21,6 +21,10 @@ export class Order {
     return this.order;
   }
 
+  public set field(value: string) {
+    this._field = value;
+  }
+
 
   get field(): string {
     return this._field;

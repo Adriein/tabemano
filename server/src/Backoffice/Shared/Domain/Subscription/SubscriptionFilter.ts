@@ -7,7 +7,7 @@ export class SubscriptionFilter extends Filter {
   public static ACTIVE_FILTER = 'isActive';
   public static CLIENT_ID_FILTER = 'clientId';
 
-  public static builder(): SubscriptionFilter {
+  public static create(): SubscriptionFilter {
     return new SubscriptionFilter();
   };
 
@@ -23,7 +23,7 @@ export class SubscriptionFilter extends Filter {
     return this;
   }
 
-  public orderByCreationDate(): Order {
+  public orderByCreationDate(): this {
     return this.orderBy(SubscriptionFilter.CREATION_DATE_FILTER);
   }
 

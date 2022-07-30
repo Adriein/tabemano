@@ -1,6 +1,6 @@
 import { CommandHandler, EventBus, ICommandHandler } from "@nestjs/cqrs";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
-import { ClientCreatedDomainEvent } from "Backoffice/Tenant/Application/RegisterClient/ClientCreatedDomainEvent";
+import { ClientRegisteredDomainEvent } from "Backoffice/Tenant/Application/RegisterClient/ClientRegisteredDomainEvent";
 import { RegisterClientCommand } from "Backoffice/Tenant/Application/RegisterClient/RegisterClientCommand";
 import { Tenant } from "Backoffice/Tenant/Domain/Entity/Tenant";
 import { ITenantRepository } from "Backoffice/Tenant/Domain/Repository/ITenantRepository";
@@ -30,7 +30,7 @@ export class RegisterClientCommandHandler implements ICommandHandler {
 
     const pricing = tenant.getAvailablePricing();
 
-    await this.eventBus.publish(new ClientCreatedDomainEvent(
+    await this.eventBus.publish(new ClientRegisteredDomainEvent(
       client.id(),
       client.name(),
       client.email(),
@@ -41,7 +41,7 @@ export class RegisterClientCommandHandler implements ICommandHandler {
   }
 
   private async getTenant(tenantId: ID): Promise<Tenant> {
-    const filter = UserFilter.builder().withId(tenantId);
+    const filter = UserFilter.create().withId(tenantId);
 
     const result = await this.repository.findOne(filter);
 

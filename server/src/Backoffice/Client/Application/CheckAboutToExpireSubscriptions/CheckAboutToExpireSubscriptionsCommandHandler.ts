@@ -29,7 +29,7 @@ export class CheckAboutToExpireSubscriptionsCommandHandler implements ICommandHa
   }
 
   private async findClients(): Promise<Client[]> {
-    const filter = UserFilter.builder()
+    const filter = UserFilter.create()
       .withSubscriptionActive(true)
       .isActive(true)
       .withAllowSendWarnings(true)
@@ -41,7 +41,7 @@ export class CheckAboutToExpireSubscriptionsCommandHandler implements ICommandHa
   }
 
   private async getClientCurrentSubscription(clientId: ID): Promise<Subscription> {
-    const filter = SubscriptionFilter.builder()
+    const filter = SubscriptionFilter.create()
       .withClientId(clientId)
       .isActive(true);
 
