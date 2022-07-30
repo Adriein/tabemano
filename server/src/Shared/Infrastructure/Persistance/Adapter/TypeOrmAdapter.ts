@@ -1,4 +1,5 @@
 import { merge } from "merge-anything";
+import { Order } from "Shared/Domain/Entities/Order";
 import { Pagination } from "Shared/Domain/Entities/Pagination";
 
 export abstract class TypeOrmAdapter<T> {
@@ -28,4 +29,16 @@ export abstract class TypeOrmAdapter<T> {
 
     return filter;
   }
+
+
+  protected order(order: Order) {
+    let filter = {};
+
+    const orderFilter = order.build();
+
+    for (const [ field, direction ] of orderFilter) {
+
+    }
+  }
+
 }
