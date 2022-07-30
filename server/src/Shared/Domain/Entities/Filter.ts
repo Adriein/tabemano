@@ -1,5 +1,6 @@
 import { Order } from "Shared/Domain/Entities/Order";
 import { Pagination } from "Shared/Domain/Entities/Pagination";
+import { FilterError } from "Shared/Domain/Error/FilterError";
 
 export abstract class Filter {
   protected abstract data: Map<string, any>;
@@ -29,7 +30,7 @@ export abstract class Filter {
 
   public setQuantity(quantity: number): this {
     const pagination = this.getFilter<Pagination>(Pagination.PAGINATION_FILTER);
-    
+
     pagination.setQuantity(quantity);
 
     return this;
@@ -63,7 +64,7 @@ export abstract class Filter {
     const filter: T | undefined = this.data.get(filterName);
 
     if (!filter) {
-      throw new Error();
+      throw new FilterError(`${filterName} is not in filter collection`);
     }
 
     return filter;
