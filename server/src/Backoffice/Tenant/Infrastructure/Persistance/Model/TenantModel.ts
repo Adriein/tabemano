@@ -1,7 +1,6 @@
 import { PricingModel } from "Backoffice/Pricing/Infrastructure/Persistance/Model/PricingModel";
 import { RoleModel } from "Backoffice/Role/Infrastructure/Persistance/Model/RoleModel";
 import { ConfigModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/ConfigModel";
-import { SubscriptionModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionModel";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Name } from "Shared/Domain/Vo/Name.vo";

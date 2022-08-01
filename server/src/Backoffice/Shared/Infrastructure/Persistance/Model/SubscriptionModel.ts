@@ -1,8 +1,9 @@
+import { ClientModel } from "Backoffice/Client/Infrastructure/Persistance/Model/ClientModel";
 import { SubscriptionEventModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionEventModel";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { ValueObjectTransformer } from "Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer";
-import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from "typeorm";
 
 @Entity({ name: 'ta_subscription' })
 export class SubscriptionModel {
@@ -62,4 +63,7 @@ export class SubscriptionModel {
     { cascade: true }
   )
   events!: SubscriptionEventModel[];
+
+  @ManyToOne(() => ClientModel, (client: ClientModel) => client.subscriptions)
+  user!: ClientModel;
 }
