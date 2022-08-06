@@ -56,7 +56,7 @@ export class CheckExpiredSubscriptionsCommandHandler implements ICommandHandler 
 
   private async getActiveSubscription(client: Client): Promise<Subscription> {
     const subscriptionFilter = SubscriptionFilter.create()
-      .withClientId(client.id)
+      .withClientId(client.id())
       .isActive(true);
 
     const result = await this.subscriptionRepository.findOne(subscriptionFilter);

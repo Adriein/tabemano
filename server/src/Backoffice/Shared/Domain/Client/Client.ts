@@ -56,4 +56,16 @@ export class Client extends User {
       pricing.price()
     );
   }
+
+  public canSendWarnings(): boolean {
+    return this.config().sendWarnings;
+  }
+
+  public canSendNotifications(): boolean {
+    return this.config().sendNotifications;
+  }
+
+  public language(): string {
+    return this.config().lang;
+  }
 }

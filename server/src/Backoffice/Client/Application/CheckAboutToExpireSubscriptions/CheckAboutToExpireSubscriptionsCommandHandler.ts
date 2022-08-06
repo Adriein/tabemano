@@ -21,8 +21,8 @@ export class CheckAboutToExpireSubscriptionsCommandHandler implements ICommandHa
     const clientList = await this.findClients();
 
     for (const client of clientList) {
-      const subscription = await this.getClientCurrentSubscription(client.id);
-      const warningDelay = await this.getTenantWarningDelayDays(client.tenantId);
+      const subscription = await this.getClientCurrentSubscription(client.id());
+      const warningDelay = await this.getTenantWarningDelayDays(client.tenantId());
 
       subscription.checkIsAboutToExpire(warningDelay);
     }

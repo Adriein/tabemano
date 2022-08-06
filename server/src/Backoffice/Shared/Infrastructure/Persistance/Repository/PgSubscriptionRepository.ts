@@ -37,8 +37,16 @@ export class PgSubscriptionRepository extends TypeOrmRepository<SubscriptionMode
     }
   }
 
-  public async findOne(filter: SubscriptionFilter): Promise<Result<Subscription, RecordNotFoundError>> {
-    throw new Error();
+  public async findOne(filter: SubscriptionFilter): Promise<Result<Subscription, Error | RecordNotFoundError>> {
+    try {
+      const adapter = new TypeOrmSubscriptionFilterAdapter(filter);
+
+      const result = await this.repository().findOne(adapter.apply());
+
+      return result ? Result.ok(this.mapper.toDomain(result)) : Result.err(new RecordNotFoundError())
+    } catch (error) {
+      return Result.err(error as Error);
+    }
   }
 
   public async save(entity: Subscription): Promise<void> {

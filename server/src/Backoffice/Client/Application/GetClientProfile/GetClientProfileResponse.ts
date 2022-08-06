@@ -19,19 +19,19 @@ export class GetClientProfileResponse implements Serializable {
     const monthlyRecurringRevenue = this.client.monthlyRecurringRevenue(this.subscriptions);
 
     return {
-      id: this.client.id.value,
-      username: this.client.name.value,
-      email: this.client.email.value,
-      active: this.client.isActive,
+      id: this.client.id().value,
+      username: this.client.name().value,
+      email: this.client.email().value,
+      active: this.client.isActive(),
       config: {
-        sendWarnings: this.client.sendWarnings(),
+        sendWarnings: this.client.canSendWarnings(),
         language: this.client.language(),
-        sendNotifications: this.client.sendNotifications(),
-        role: this.client.roleId.value
+        sendNotifications: this.client.canSendNotifications(),
+        role: this.client.roleId().value
       },
       subscription: subscriptionResponse,
       revenue: {
-        since: Time.format(this.client.createdAt, Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
+        since: Time.format(this.client.createdAt(), Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
         spent: `${spent} €`,
         monthlyRecurringRevenue: `${monthlyRecurringRevenue} €`
       }
@@ -43,17 +43,17 @@ export class GetClientProfileResponse implements Serializable {
 
     for (const subscription of this.subscriptions) {
       response.push({
-        id: subscription.id.value,
+        id: subscription.id().value,
         pricing: {
           id: 'subscription.pricingId',
-          price: subscription.price,
-          name: subscription.pricingName,
-          duration: subscription.duration
+          price: subscription.price(),
+          name: subscription.pricingName(),
+          duration: subscription.duration()
         },
-        lastPayment: Time.format(subscription.paymentDate.value, Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
-        validTo: Time.format(subscription.validTo.value, Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
-        isExpired: subscription.isExpired,
-        isActive: subscription.isActive,
+        lastPayment: Time.format(subscription.paymentDate().value, Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
+        validTo: Time.format(subscription.validTo().value, Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
+        isExpired: subscription.isExpired(),
+        isActive: subscription.isActive(),
         history: this.mountSubscriptionEventsResponse(subscription)
       });
     }
@@ -62,11 +62,11 @@ export class GetClientProfileResponse implements Serializable {
   }
 
   private mountSubscriptionEventsResponse(subscription: Subscription) {
-    return subscription.events.data().map((event: SubscriptionEvent) => {
+    return subscription.events().data().map((event: SubscriptionEvent) => {
       return {
-        event: event.event,
-        createdAt: Time.format(event.createdAt, Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
-        updatedAt: Time.format(event.updatedAt, Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
+        event: event.event(),
+        createdAt: Time.format(event.createdAt(), Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
+        updatedAt: Time.format(event.updatedAt(), Time.AMERICAN_BEAUTIFIED_DATE_FORMAT),
       }
     });
   }
