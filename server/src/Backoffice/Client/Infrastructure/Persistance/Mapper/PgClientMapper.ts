@@ -1,39 +1,36 @@
-import { Prisma } from "@prisma/client";
+import { ClientModel } from "Backoffice/Client/Infrastructure/Persistance/Model/ClientModel";
 import { Client } from "Backoffice/Shared/Domain/Client/Client";
 import { Config } from "Backoffice/Shared/Domain/Config/Config";
-import { Email } from "Shared/Domain/Vo/Email.vo";
-import { ID } from "Shared/Domain/Vo/Id.vo";
-import { Name } from "Shared/Domain/Vo/Name.vo";
-import { Password } from "Shared/Domain/Vo/Password.vo";
+import { IMapper } from "Shared/Domain/Interfaces/IMapper";
 
-const userWithRelations = Prisma.validator<Prisma.ta_userFindManyArgs>()({
-  include: {
-    us_config: true,
-  }
-});
 
-type UserWithRelations = Prisma.ta_userGetPayload<typeof userWithRelations>
-
-export class PgClientMapper {
-  public toDomain(dataModel: UserWithRelations): Client {
+export class PgClientMapper implements IMapper<Client, ClientModel> {
+  public toDomain(dataModel: ClientModel): Client {
     const config = new Config(
-      new ID(dataModel.us_config!.co_id),
-      new ID(''),
-      dataModel.us_config!.co_language,
-      dataModel.us_config!.co_send_notifications,
-      dataModel.us_config!.co_send_warnings,
+      dataModel.config.id,
+      dataModel.config.userId,
+      dataModel.config.lang,
+      dataModel.config.sendNotifications,
+      dataModel.config.sendWarnings,
+      dataModel.config.createdAt,
+      dataModel.config.updatedAt
     );
+
     return new Client(
-      new ID(dataModel.us_id),
-      new Name(dataModel.us_name),
-      new Password(dataModel.us_password),
-      new Email(dataModel.us_email),
+      dataModel.id,
+      dataModel.name,
+      dataModel.password,
+      dataModel.email,
       config,
-      new ID(dataModel.us_tenant_id),
-      new ID(dataModel.us_role_id),
-      dataModel.us_is_active,
-      dataModel.us_created_at,
-      dataModel.us_updated_at,
+      dataModel.tenantId,
+      dataModel.roleId,
+      dataModel.isActive,
+      dataModel.createdAt,
+      dataModel.updatedAt
     );
+  }
+
+  public toModel(entity: Client): ClientModel {
+    throw new Error();
   }
 }
