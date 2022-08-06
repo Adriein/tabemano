@@ -5,24 +5,15 @@ import { PricingModule } from "Backoffice/Pricing/Infrastructure/Nest/PricingMod
 import { RoleModule } from "Backoffice/Role/Infrastructure/Nest/RoleModule";
 import { PgConfigMapper } from "Backoffice/Shared/Infrastructure/Persistance/Mapper/PgConfigMapper";
 import { PgSubscriptionMapper } from "Backoffice/Shared/Infrastructure/Persistance/Mapper/PgSubscriptionMapper";
-import { PgSubscriptionRepository } from "Backoffice/Shared/Infrastructure/Persistance/Repository/PgSubscriptionRepository";
 import { TenantModule } from "Backoffice/Tenant/Infrastructure/Nest/TenantModule";
 
 const Mappers = [ PgConfigMapper, PgSubscriptionMapper ];
-
-const Repositories = [
-  {
-    provide: 'ISubscriptionRepository',
-    useClass: PgSubscriptionRepository
-  }
-];
 
 @Module({
   imports: [ CqrsModule, RoleModule, TenantModule, ClientModule, PricingModule ],
   controllers: [],
   providers: [
     ...Mappers,
-    ...Repositories
   ],
   exports: [ CqrsModule, RoleModule, TenantModule, ClientModule, PricingModule ],
 })

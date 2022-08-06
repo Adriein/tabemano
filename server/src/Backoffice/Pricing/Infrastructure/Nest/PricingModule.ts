@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+import { CqrsModule } from "@nestjs/cqrs";
 import { CreateDefaultTenantPricesDomainEventHandler } from "Backoffice/Pricing/Application/CreateDefaultTenantPrices/CreateDefaultTenantPricesDomainEventHandler";
 import { FindPricingQueryHandler } from "Backoffice/Pricing/Application/FindPricing/FindPricingQueryHandler";
 import { FindPricingController } from "Backoffice/Pricing/Infrastructure/Controller/FindPricing/FindPricingController";
@@ -21,7 +22,7 @@ const Repositories = [
 const Mappers = [ PgPricingMapper ];
 
 @Module({
-  imports: [ TypeOrmModule ],
+  imports: [ CqrsModule, TypeOrmModule ],
   controllers: [ FindPricingController ],
   providers: [
     ...Handlers,

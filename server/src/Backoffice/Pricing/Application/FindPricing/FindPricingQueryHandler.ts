@@ -1,3 +1,4 @@
+import { Inject } from "@nestjs/common";
 import { IQueryHandler, QueryHandler } from "@nestjs/cqrs";
 import { FindPricingQuery } from "Backoffice/Pricing/Application/FindPricing/FindPricingQuery";
 import { FindPricingResponse } from "Backoffice/Pricing/Application/FindPricing/FindPricingResponse";
@@ -10,7 +11,7 @@ import { ID } from "Shared/Domain/Vo/Id.vo";
 
 @QueryHandler(FindPricingQuery)
 export class FindPricingQueryHandler implements IQueryHandler {
-  constructor(private readonly repository: IPricingRepository) {}
+  constructor(@Inject('IPricingRepository') private readonly repository: IPricingRepository) {}
 
   @Log()
   public async execute(query: FindPricingQuery): Promise<FindPricingResponse[]> {

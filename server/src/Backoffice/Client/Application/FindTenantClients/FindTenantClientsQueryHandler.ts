@@ -1,3 +1,4 @@
+import { Inject } from "@nestjs/common";
 import { IQueryHandler, QueryHandler } from "@nestjs/cqrs";
 import { FindTenantClientsQuery } from "Backoffice/Client/Application/FindTenantClients/FindTenantClientsQuery";
 import { FindTenantClientsResponse } from "Backoffice/Client/Application/FindTenantClients/FindTenantClientsResponse";
@@ -13,9 +14,9 @@ import { Log } from "Shared/Domain/Decorators/Log";
 @QueryHandler(FindTenantClientsQuery)
 export class FindTenantClientsQueryHandler implements IQueryHandler {
   constructor(
-    private readonly clientRepository: IClientRepository,
-    private readonly subscriptionRepository: ISubscriptionRepository,
-    private readonly factory: IFilterFactory<UserFilter>
+    @Inject('IClientRepository') private readonly clientRepository: IClientRepository,
+    @Inject('ISubscriptionRepository') private readonly subscriptionRepository: ISubscriptionRepository,
+    @Inject('IFilterFactory') private readonly factory: IFilterFactory<UserFilter>
   ) {}
 
   @Log()

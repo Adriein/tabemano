@@ -1,5 +1,6 @@
 import { AuthModel } from "Authorization/Infrastructure/Persistance/Model/AuthModel";
 import { AuthRoleModel } from "Authorization/Infrastructure/Persistance/Model/AuthRoleModel";
+import { ClientModel } from "Backoffice/Client/Infrastructure/Persistance/Model/ClientModel";
 import { PricingModel } from "Backoffice/Pricing/Infrastructure/Persistance/Model/PricingModel";
 import { RoleModel } from "Backoffice/Role/Infrastructure/Persistance/Model/RoleModel";
 import { ConfigModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/ConfigModel";
@@ -33,6 +34,7 @@ export default class Database {
         SubscriptionEventModel,
         AuthModel,
         AuthRoleModel,
+        ClientModel
       ],
       synchronize: false,
       logging: true,

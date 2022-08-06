@@ -4,7 +4,11 @@ import { ClientRegisteredDomainEventHandler } from "Backoffice/Client/Applicatio
 import { FindTenantClientsQueryHandler } from "Backoffice/Client/Application/FindTenantClients/FindTenantClientsQueryHandler";
 import { GetClientProfileQueryHandler } from "Backoffice/Client/Application/GetClientProfile/GetClientProfileQueryHandler";
 import { GetClientProfileController } from "Backoffice/Client/Infrastructure/Controller/GetClientProfile/GetClientProfileController";
+import { PgClientMapper } from "Backoffice/Client/Infrastructure/Persistance/Mapper/PgClientMapper";
 import { PgClientRepository } from "Backoffice/Client/Infrastructure/Persistance/Repository/PgClientRepository";
+import { PgSubscriptionMapper } from "Backoffice/Shared/Infrastructure/Persistance/Mapper/PgSubscriptionMapper";
+import { PgSubscriptionRepository } from "Backoffice/Shared/Infrastructure/Persistance/Repository/PgSubscriptionRepository";
+import { UserFilterFactory } from "Backoffice/Tenant/Infrastructure/UserFilterFactory";
 import { TypeOrmModule } from "Shared/Infrastructure/Persistance/TypeOrmModule";
 
 const Handlers = [
@@ -13,11 +17,27 @@ const Handlers = [
   ClientRegisteredDomainEventHandler
 ];
 
+const Factory = [
+  {
+    provide: 'IFilterFactory',
+    useClass: UserFilterFactory
+  },
+]
+
 const Repository = [
   {
     provide: 'IClientRepository',
     useClass: PgClientRepository
+  },
+  {
+    provide: 'ISubscriptionRepository',
+    useClass: PgSubscriptionRepository
   }
+];
+
+const Mappers = [
+  PgSubscriptionMapper,
+  PgClientMapper
 ];
 
 const Controllers = [ GetClientProfileController ]
@@ -27,7 +47,9 @@ const Controllers = [ GetClientProfileController ]
   controllers: [ ...Controllers ],
   providers: [
     ...Handlers,
-    ...Repository
+    ...Repository,
+    ...Mappers,
+    ...Factory
   ],
   exports: [],
 })

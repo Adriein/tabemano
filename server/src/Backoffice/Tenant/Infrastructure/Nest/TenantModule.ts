@@ -1,4 +1,7 @@
 import { Module } from "@nestjs/common";
+import { CqrsModule } from "@nestjs/cqrs";
+import { PgSubscriptionMapper } from "Backoffice/Shared/Infrastructure/Persistance/Mapper/PgSubscriptionMapper";
+import { PgSubscriptionRepository } from "Backoffice/Shared/Infrastructure/Persistance/Repository/PgSubscriptionRepository";
 import { CreateTenantDomainEventHandler } from "Backoffice/Tenant/Application/CreateTenant/CreateTenantDomainEventHandler";
 import { RegisterClientCommandHandler } from "Backoffice/Tenant/Application/RegisterClient/RegisterClientCommandHandler";
 import { RegisterClientController } from "Backoffice/Tenant/Infrastructure/Controller/RegisterClient/RegisterClientController";
@@ -15,15 +18,20 @@ const Repository = [
   {
     provide: 'ITenantRepository',
     useClass: PgTenantRepository
+  },
+  {
+    provide: 'ISubscriptionRepository',
+    useClass: PgSubscriptionRepository
   }
 ];
 
 const Mappers = [
   PgTenantMapper,
+  PgSubscriptionMapper
 ];
 
 @Module({
-  imports: [ TypeOrmModule ],
+  imports: [ CqrsModule, TypeOrmModule ],
   controllers: [ RegisterClientController ],
   providers: [
     ...Handlers,

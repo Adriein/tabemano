@@ -1,3 +1,4 @@
+import { Inject } from "@nestjs/common";
 import { CommandHandler, EventBus, ICommandHandler } from "@nestjs/cqrs";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
 import { ClientRegisteredDomainEvent } from "Backoffice/Tenant/Application/RegisterClient/ClientRegisteredDomainEvent";
@@ -12,7 +13,7 @@ import { Name } from "Shared/Domain/Vo/Name.vo";
 @CommandHandler(RegisterClientCommand)
 export class RegisterClientCommandHandler implements ICommandHandler {
   constructor(
-    private readonly repository: ITenantRepository,
+    @Inject('ITenantRepository') private readonly repository: ITenantRepository,
     private readonly eventBus: EventBus,
   ) {}
 

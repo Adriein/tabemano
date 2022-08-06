@@ -1,3 +1,4 @@
+import { Inject } from "@nestjs/common";
 import { EventsHandler, IEventHandler } from "@nestjs/cqrs";
 import { IPricingRepository } from "Backoffice/Pricing/Domain/Entity/IPricingRepository";
 import { Pricing } from "Backoffice/Pricing/Domain/Entity/Pricing";
@@ -6,7 +7,7 @@ import { Log } from "Shared/Domain/Decorators/Log";
 
 @EventsHandler(DefaultPricesCreatedDomainEvent)
 export class CreateDefaultTenantPricesDomainEventHandler implements IEventHandler {
-  constructor(private readonly repository: IPricingRepository) {}
+  constructor(@Inject('IPricingRepository') private readonly repository: IPricingRepository) {}
 
   @Log()
   public async handle(event: DefaultPricesCreatedDomainEvent): Promise<void> {
