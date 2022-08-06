@@ -23,6 +23,10 @@
       "Invoicing/*": [
         "./src/Invoicing/*",
         "./src/Invoicing"
+      ],
+      "Cron/*": [
+        "./src/Cron/*",
+        "./src/Cron"
       ]
     }
   },

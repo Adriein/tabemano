@@ -2,8 +2,8 @@ import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { CheckExpiredSubscriptionsCommand } from "./CheckExpiredSubscriptionsCommand";
 import { Client } from "Backoffice/Shared/Domain/Client/Client";
 import { IClientRepository } from "Backoffice/Client/Domain/Repository/IClientRepository";
-import { BackgroundJob } from "../../../Shared/Domain/Entity/BackGroundJob";
-import { IBackgroundJobRepository } from "../../../Shared/Domain/Repository/IBackgroundJobRepository";
+import { BackGroundJob } from "../../../Shared/Domain/Entity/BackGroundJob";
+import { IBackGroundJobRepository } from "../../../Shared/Domain/Repository/IBackGroundJobRepository";
 import { ISubscriptionRepository } from "Backoffice/Shared/Domain/Subscription/ISubscriptionRepository";
 import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";
 import { SubscriptionFilter } from "Backoffice/Shared/Domain/Subscription/SubscriptionFilter";
@@ -17,12 +17,12 @@ export class CheckExpiredSubscriptionsCommandHandler implements ICommandHandler 
   constructor(
     private readonly clientRepository: IClientRepository,
     private readonly subscriptionRepository: ISubscriptionRepository,
-    private readonly backgroundJobRepository: IBackgroundJobRepository
+    private readonly backgroundJobRepository: IBackGroundJobRepository
   ) {}
 
   @Log()
   public async execute(command: CheckExpiredSubscriptionsCommand): Promise<void> {
-    const backgroundJob = BackgroundJob.expiredSubscription();
+    const backgroundJob = BackGroundJob.expiredSubscription();
     backgroundJob.init();
 
     const clients = await this.getActiveClients();

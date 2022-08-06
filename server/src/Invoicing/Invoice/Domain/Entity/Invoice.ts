@@ -33,32 +33,32 @@ export class Invoice extends AggregateRoot {
   }
 
   constructor(
-    readonly id: ID,
-    readonly invoiceNumber: InvoiceNumber,
-    readonly transactionOccurred: DateVo,
-    readonly company: Company,
-    readonly client: Client,
-    readonly rows: InvoiceRow[],
-    readonly createdAt: Date,
-    readonly updatedAt: Date,
+    _id: ID,
+    private _invoiceNumber: InvoiceNumber,
+    private _transactionOccurred: DateVo,
+    private _company: Company,
+    private _client: Client,
+    private _rows: InvoiceRow[],
+    _createdAt?: Date,
+    _updatedAt?: Date,
   ) {
-    super(id, createdAt, updatedAt);
+    super(_id, _createdAt, _updatedAt);
   }
 
   private constructRows(): void {
-    for (const subscription of this.client.subscriptions) {
+    for (const subscription of this._client.subscriptions) {
       this.addRow(subscription.pricingName, 1, subscription.pricingAmount)
     }
   }
 
   private addRow(description: string, quantity: number, price: Money): void {
-    const row = InvoiceRow.build(this.id, description, quantity, price);
+    const row = InvoiceRow.build(this.id(), description, quantity, price);
 
-    this.rows.push(row);
+    this._rows.push(row);
   }
 
   private addTaxes(): void {
-    switch (this.company.country.value) {
+    switch (this._company.country.value) {
       case MARKET.ES:
         this.invoiceTax = InvoiceTax.spanishMarket(this.baseAmount());
         break;
@@ -68,7 +68,7 @@ export class Invoice extends AggregateRoot {
   }
 
   private baseAmount(): Money {
-    const baseAmount = this.rows.reduce((total: number, row: InvoiceRow) => {
+    const baseAmount = this._rows.reduce((total: number, row: InvoiceRow) => {
       return row.total + total;
     }, 0);
 

@@ -8,9 +8,13 @@ export class Role extends AggregateRoot {
   }
 
   constructor(
-    readonly id: ID,
-    readonly type: RoleType,
+    _id: ID,
+    private readonly _type: RoleType,
   ) {
-    super(id);
+    super(_id);
+  }
+
+  public type(): RoleType {
+    return this._type;
   }
 }
