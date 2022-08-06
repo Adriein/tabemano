@@ -1,6 +1,6 @@
 import { Controller, Get } from "@nestjs/common";
 import { CommandBus } from "@nestjs/cqrs";
-import { CheckExpiredSubscriptionsCommand } from "Backoffice/Client/Application/CheckExpiredSubscriptions/CheckExpiredSubscriptionsCommand";
+import { CheckExpiredSubscriptionsCommand } from "Backoffice/../../../../../Cron/Client/Application/CheckExpiredSubscriptions/CheckExpiredSubscriptionsCommand";
 import { NextFunction, Request, Response } from "express";
 
 @Controller()

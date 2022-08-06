@@ -4,6 +4,7 @@ import { Role } from "Backoffice/Role/Domain/Entity/Role";
 import { RoleFilter } from "Backoffice/Role/Domain/Entity/RoleFilter";
 import { IRoleRepository } from "Backoffice/Role/Domain/Repository/IRoleRepository";
 import { TypeOrmRoleFilterAdapter } from "Backoffice/Role/Infrastructure/Persistance/Filter/TypeOrmRoleFilterAdapter";
+import { PgRoleMapper } from "Backoffice/Role/Infrastructure/Persistance/Mapper/PgRoleMapper";
 import { RoleModel } from "Backoffice/Role/Infrastructure/Persistance/Model/RoleModel";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
 import Database from "Shared/Infrastructure/Persistance/Database";
@@ -11,10 +12,11 @@ import { TypeOrmRepository } from "Shared/Infrastructure/Persistance/Repository/
 import { DataSource, EntitySchema } from "typeorm";
 
 @Injectable()
-export class PgRoleRepository extends TypeOrmRepository<Role> implements IRoleRepository {
+export class PgRoleRepository extends TypeOrmRepository<RoleModel> implements IRoleRepository {
   constructor(
     @Inject(Database.DATABASE_CONNECTION)
     protected readonly dataSource: DataSource,
+    private readonly mapper: PgRoleMapper
   ) {
     super();
   }
@@ -31,7 +33,7 @@ export class PgRoleRepository extends TypeOrmRepository<Role> implements IRoleRe
     const adapter = new TypeOrmRoleFilterAdapter(filter);
     const result = await this.repository().findOne(adapter.apply());
 
-    return result ? Result.ok(result) : Result.err(new RecordNotFoundError());
+    return result ? Result.ok(this.mapper.toDomain(result)) : Result.err(new RecordNotFoundError());
   }
 
   save(entity: Role): Promise<void> {
@@ -42,7 +44,7 @@ export class PgRoleRepository extends TypeOrmRepository<Role> implements IRoleRe
     return Promise.resolve(undefined);
   }
 
-  protected entitySchema(): EntitySchema<Role> {
+  protected entitySchema() {
     return RoleModel;
   }
 

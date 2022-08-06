@@ -1,2 +1,2 @@
-import { CheckExpiredSubscriptionsCommand } from "../src/Backoffice/Client/Application/CheckExpiredSubscriptions/CheckExpiredSubscriptionsCommand";
-import { CheckExpiredSubscriptionsCommandHandler } from "../src/Backoffice/Client/Application/CheckExpiredSubscriptions/CheckExpiredSubscriptionsCommandHandler";
+import { CheckExpiredSubscriptionsCommand } from "../src/Cron/Client/Application/CheckExpiredSubscriptions/CheckExpiredSubscriptionsCommand";
+import { CheckExpiredSubscriptionsCommandHandler } from "../src/Cron/Client/Application/CheckExpiredSubscriptions/CheckExpiredSubscriptionsCommandHandler";

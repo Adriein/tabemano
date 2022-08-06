@@ -1,16 +1,17 @@
 import { Role } from "Backoffice/Role/Domain/Entity/Role";
 import { RoleFilter } from "Backoffice/Role/Domain/Entity/RoleFilter";
+import { RoleModel } from "Backoffice/Role/Infrastructure/Persistance/Model/RoleModel";
 import { Pagination } from "Shared/Domain/Entities/Pagination";
 import { RoleType } from "Shared/Domain/Vo/RoleType";
 import { TypeOrmAdapter } from "Shared/Infrastructure/Persistance/Adapter/TypeOrmAdapter";
 import { FindManyOptions } from "typeorm";
 
-export class TypeOrmRoleFilterAdapter extends TypeOrmAdapter<FindManyOptions<Role>> {
+export class TypeOrmRoleFilterAdapter extends TypeOrmAdapter<FindManyOptions<RoleModel>> {
   constructor(private readonly filter: RoleFilter) {
     super();
   }
 
-  public apply(): FindManyOptions<Role> {
+  public apply(): FindManyOptions<RoleModel> {
     const filters = this.filter.apply();
 
     if (filters.has(RoleFilter.ROLE_TYPE_FILTER)) {

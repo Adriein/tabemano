@@ -1,6 +1,6 @@
 import { Result } from "@badrap/result";
-import { BackgroundJob } from "Backoffice/Shared/Domain/BackgroundJob/BackgroundJob";
-import { IBackgroundJobRepository } from "Backoffice/Shared/Domain/BackgroundJob/IBackgroundJobRepository";
+import { BackgroundJob } from "../../../../../Cron/Shared/Domain/Entity/BackGroundJob";
+import { IBackgroundJobRepository } from "../../../../../Cron/Shared/Domain/Repository/IBackgroundJobRepository";
 import { Filter } from "Shared/Domain/Entities/Filter";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
 

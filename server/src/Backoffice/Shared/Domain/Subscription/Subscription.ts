@@ -1,4 +1,4 @@
-import { SubscriptionMarkedAsAboutToExpireDomainEvent } from "Backoffice/Client/Application/CheckAboutToExpireSubscriptions/SubscriptionMarkedAsAboutToExpireDomainEvent";
+import { SubscriptionMarkedAsAboutToExpireDomainEvent } from "Backoffice/../../../../Cron/Client/Application/CheckAboutToExpireSubscriptions/SubscriptionMarkedAsAboutToExpireDomainEvent";
 import { SUBSCRIPTION_STATUS } from "Backoffice/Shared/constants";
 import { SubscriptionEvent } from "Backoffice/Shared/Domain/Subscription/SubscriptionEvent";
 import { SubscriptionEventCollection } from "Backoffice/Shared/Domain/Subscription/SubscriptionEventCollection";
