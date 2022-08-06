@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 import { CreateTenantDomainEventHandler } from "Backoffice/Tenant/Application/CreateTenant/CreateTenantDomainEventHandler";
 import { RegisterClientCommandHandler } from "Backoffice/Tenant/Application/RegisterClient/RegisterClientCommandHandler";
+import { RegisterClientController } from "Backoffice/Tenant/Infrastructure/Controller/RegisterClient/RegisterClientController";
 import { PgTenantMapper } from "Backoffice/Tenant/Infrastructure/Persistance/Mapper/PgTenantMapper";
 import { PgTenantRepository } from "Backoffice/Tenant/Infrastructure/Persistance/Repository/PgTenantRepository";
 import { TypeOrmModule } from "Shared/Infrastructure/Persistance/TypeOrmModule";
@@ -23,7 +24,7 @@ const Mappers = [
 
 @Module({
   imports: [ TypeOrmModule ],
-  controllers: [],
+  controllers: [ RegisterClientController ],
   providers: [
     ...Handlers,
     ...Repository,

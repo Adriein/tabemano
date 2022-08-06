@@ -1,21 +1,22 @@
 import { Module } from "@nestjs/common";
 import { CqrsModule } from "@nestjs/cqrs";
+import { ClientRegisteredDomainEventHandler } from "Backoffice/Client/Application/CreateClient/ClientRegisteredDomainEventHandler";
+import { FindTenantClientsQueryHandler } from "Backoffice/Client/Application/FindTenantClients/FindTenantClientsQueryHandler";
 import { GetClientProfileQueryHandler } from "Backoffice/Client/Application/GetClientProfile/GetClientProfileQueryHandler";
 import { GetClientProfileController } from "Backoffice/Client/Infrastructure/Controller/GetClientProfile/GetClientProfileController";
 import { PgClientRepository } from "Backoffice/Client/Infrastructure/Persistance/Repository/PgClientRepository";
-import { PgSubscriptionRepository } from "Backoffice/Shared/Infrastructure/Persistance/Repository/PgSubscriptionRepository";
 import { TypeOrmModule } from "Shared/Infrastructure/Persistance/TypeOrmModule";
 
-const Handlers = [ GetClientProfileQueryHandler ];
+const Handlers = [
+  GetClientProfileQueryHandler,
+  FindTenantClientsQueryHandler,
+  ClientRegisteredDomainEventHandler
+];
 
 const Repository = [
   {
     provide: 'IClientRepository',
     useClass: PgClientRepository
-  },
-  {
-    provide: 'ISubscriptionRepository',
-    useClass: PgSubscriptionRepository
   }
 ];
 

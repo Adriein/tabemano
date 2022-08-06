@@ -1,7 +1,8 @@
 import { Module } from "@nestjs/common";
 import { CqrsModule } from "@nestjs/cqrs";
 import { ClientModule } from "Backoffice/Client/Infrastructure/Nest/ClientModule";
-import { RoleModule } from "Backoffice/Role/Infrastructure/RoleModule";
+import { PricingModule } from "Backoffice/Pricing/Infrastructure/Nest/PricingModule";
+import { RoleModule } from "Backoffice/Role/Infrastructure/Nest/RoleModule";
 import { PgConfigMapper } from "Backoffice/Shared/Infrastructure/Persistance/Mapper/PgConfigMapper";
 import { PgSubscriptionMapper } from "Backoffice/Shared/Infrastructure/Persistance/Mapper/PgSubscriptionMapper";
 import { PgSubscriptionRepository } from "Backoffice/Shared/Infrastructure/Persistance/Repository/PgSubscriptionRepository";
@@ -17,12 +18,12 @@ const Repositories = [
 ];
 
 @Module({
-  imports: [ CqrsModule, RoleModule, TenantModule, ClientModule ],
+  imports: [ CqrsModule, RoleModule, TenantModule, ClientModule, PricingModule ],
   controllers: [],
   providers: [
     ...Mappers,
     ...Repositories
   ],
-  exports: [ CqrsModule, RoleModule, TenantModule, ClientModule ],
+  exports: [ CqrsModule, RoleModule, TenantModule, ClientModule, PricingModule ],
 })
 export class BackofficeBoundedContext {}
