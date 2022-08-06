@@ -43,14 +43,14 @@ export class PgClientRepository extends TypeOrmRepository<ClientModel> implement
   }
 
   public async save(entity: Client): Promise<void> {
-    throw new Error();
+    const model = this.mapper.toModel(entity);
+
+    await this.repository().save(model);
   }
 
-  update(entity: Client): Promise<void> {
-    return Promise.resolve(undefined);
-  }
+  public async update(entity: Client): Promise<void> {
+    const model = this.mapper.toModel(entity);
 
-  public async count(): Promise<Result<number, Error>> {
     throw new Error();
   }
 

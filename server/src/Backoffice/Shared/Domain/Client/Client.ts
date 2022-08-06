@@ -57,6 +57,10 @@ export class Client extends User {
     );
   }
 
+  public configId(): ID {
+    return this.config().id;
+  }
+
   public canSendWarnings(): boolean {
     return this.config().sendWarnings;
   }

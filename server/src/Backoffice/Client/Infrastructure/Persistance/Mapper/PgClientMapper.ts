@@ -1,6 +1,7 @@
 import { ClientModel } from "Backoffice/Client/Infrastructure/Persistance/Model/ClientModel";
 import { Client } from "Backoffice/Shared/Domain/Client/Client";
 import { Config } from "Backoffice/Shared/Domain/Config/Config";
+import { ConfigModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/ConfigModel";
 import { IMapper } from "Shared/Domain/Interfaces/IMapper";
 
 
@@ -31,6 +32,29 @@ export class PgClientMapper implements IMapper<Client, ClientModel> {
   }
 
   public toModel(entity: Client): ClientModel {
-    throw new Error();
+    const model = new ClientModel();
+    const modelConfig = new ConfigModel();
+
+    model.id = entity.id();
+    model.name = entity.name();
+    model.password = entity.password();
+    model.email = entity.email();
+    model.tenantId = entity.tenantId();
+    model.roleId = entity.roleId();
+    model.isActive = entity.isActive();
+    model.createdAt = entity.createdAt();
+    model.updatedAt = entity.updatedAt();
+
+    modelConfig.id = entity.configId();
+    modelConfig.lang = entity.language();
+    modelConfig.userId = entity.config().userId;
+    modelConfig.sendWarnings = entity.canSendWarnings();
+    modelConfig.sendNotifications = entity.canSendNotifications();
+    modelConfig.createdAt = entity.createdAt();
+    modelConfig.updatedAt = entity.updatedAt();
+    
+    model.config = modelConfig;
+
+    return model;
   }
 }
