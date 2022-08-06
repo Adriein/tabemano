@@ -1,15 +1,17 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, UseGuards, UseInterceptors } from "@nestjs/common";
 import { QueryBus } from "@nestjs/cqrs";
 import { GetClientProfileQuery } from "Backoffice/Client/Application/GetClientProfile/GetClientProfileQuery";
-import { GetClientProfileResponse } from "Backoffice/Client/Application/GetClientProfile/GetClientProfileResponse";
 import { TabemanoResponse } from "Backoffice/Shared/Domain/TabemanoResponse";
 import { NextFunction, Request, Response } from "express";
-import { currentUser, requireAuth } from "Shared/Infrastructure/Middlewares/auth";
+import { AuthGuard } from "Shared/Infrastructure/Guard/AuthGuard";
+import { UserInterceptor } from "Shared/Infrastructure/Interceptor/UserInterceptor";
 
 @Controller()
 export class GetClientProfileController {
   constructor(private readonly queryBus: QueryBus) {}
 
+  @UseInterceptors(UserInterceptor)
+  @UseGuards(AuthGuard)
   @Get('/client/:id/profile')
   public async getClientProfile(
     req: Request,

@@ -30,8 +30,7 @@ export class GetClientProfileQueryHandler implements IQueryHandler {
   }
 
   private async getClient(id: ID): Promise<Client> {
-    const filter = new UserFilter();
-    filter.withId(id);
+    const filter = UserFilter.create().withId(id);
 
     const result = await this.clientRepository.findOne(filter);
 

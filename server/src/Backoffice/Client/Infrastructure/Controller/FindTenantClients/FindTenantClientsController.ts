@@ -1,16 +1,19 @@
-import { Controller, Post } from "@nestjs/common";
+import { Controller, Post, UseGuards, UseInterceptors } from "@nestjs/common";
 import { QueryBus } from "@nestjs/cqrs";
 import { FindTenantClientsQuery } from "Backoffice/Client/Application/FindTenantClients/FindTenantClientsQuery";
 import { FindTenantClientsResponse } from "Backoffice/Client/Application/FindTenantClients/FindTenantClientsResponse";
 import { TabemanoMetadata } from "Backoffice/Shared/Domain/TabemanoMetadata";
 import { TabemanoResponse } from "Backoffice/Shared/Domain/TabemanoResponse";
 import { NextFunction, Request, Response } from "express";
-import { currentUser, requireAuth } from "Shared/Infrastructure/Middlewares/auth";
+import { AuthGuard } from "Shared/Infrastructure/Guard/AuthGuard";
+import { UserInterceptor } from "Shared/Infrastructure/Interceptor/UserInterceptor";
 
 @Controller()
 export class FindTenantClientsController {
   constructor(private readonly queryBus: QueryBus) {}
 
+  @UseInterceptors(UserInterceptor)
+  @UseGuards(AuthGuard)
   @Post('/clients')
   public async findTenantClients(
     req: Request,
