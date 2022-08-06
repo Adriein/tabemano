@@ -1,4 +1,3 @@
-import { SubscriptionMarkedAsAboutToExpireDomainEvent } from "Backoffice/../../../../Cron/Client/Application/CheckAboutToExpireSubscriptions/SubscriptionMarkedAsAboutToExpireDomainEvent";
 import { SUBSCRIPTION_STATUS } from "Backoffice/Shared/constants";
 import { SubscriptionEvent } from "Backoffice/Shared/Domain/Subscription/SubscriptionEvent";
 import { SubscriptionEventCollection } from "Backoffice/Shared/Domain/Subscription/SubscriptionEventCollection";
@@ -117,7 +116,6 @@ export class Subscription extends AggregateRoot {
     const isAboutToExpire = Time.equal(Time.now(), warningDate);
 
     if (isAboutToExpire) {
-      this.publish(new SubscriptionMarkedAsAboutToExpireDomainEvent(this.id(), this._userId));
       this.addEventToHistory(SubscriptionEvent.build(SUBSCRIPTION_STATUS.ABOUT_TO_EXPIRE, this.id()));
     }
   };
