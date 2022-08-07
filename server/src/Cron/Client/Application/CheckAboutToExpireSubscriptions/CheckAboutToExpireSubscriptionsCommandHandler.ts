@@ -1,56 +1,33 @@
-import { CommandHandler, ICommandHandler, QueryBus } from "@nestjs/cqrs";
+import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
+import { Client } from "Cron/Client/Domain/Entity/Client";
+import { ClientFilter } from "Cron/Client/Domain/Filter/ClientFilter";
+import { IClientRepository } from "Cron/Client/Domain/Repository/IClientRepository";
 import { CheckAboutToExpireSubscriptionsCommand } from "./CheckAboutToExpireSubscriptionsCommand";
-import { Client } from "Backoffice/Shared/Domain/Client/Client";
-import { IClientRepository } from "Backoffice/Client/Domain/Repository/IClientRepository";
-import { ISubscriptionRepository } from "Backoffice/Shared/Domain/Subscription/ISubscriptionRepository";
-import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";
-import { SubscriptionFilter } from "Backoffice/Shared/Domain/Subscription/SubscriptionFilter";
-import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
-import { ID } from "Shared/Domain/Vo/Id.vo";
-import { RoleType } from "Shared/Domain/Vo/RoleType";
 
 @CommandHandler(CheckAboutToExpireSubscriptionsCommand)
 export class CheckAboutToExpireSubscriptionsCommandHandler implements ICommandHandler {
   constructor(
-    private readonly clientRepository: IClientRepository,
-    private readonly subscriptionRepository: ISubscriptionRepository,
-    private readonly queryBus: QueryBus,
+    private readonly repository: IClientRepository,
   ) {}
 
   public async execute(command: CheckAboutToExpireSubscriptionsCommand): Promise<void> {
     const clientList = await this.findClients();
 
     for (const client of clientList) {
-      const subscription = await this.getClientCurrentSubscription(client.id());
-      const warningDelay = await this.getTenantWarningDelayDays(client.tenantId());
+      const subscription = client.activeSubscription()
 
-      subscription.checkIsAboutToExpire(warningDelay);
+      subscription.checkIsAboutToExpire(client.tenantWarningDays());
     }
   }
 
   private async findClients(): Promise<Client[]> {
-    const filter = UserFilter.create()
+    const filter = ClientFilter.create()
       .withSubscriptionActive(true)
       .isActive(true)
       .withAllowSendWarnings(true)
-      .withRole(RoleType.client());
 
-    const result = await this.clientRepository.find(filter);
-
-    return result.unwrap();
-  }
-
-  private async getClientCurrentSubscription(clientId: ID): Promise<Subscription> {
-    const filter = SubscriptionFilter.create()
-      .withClientId(clientId)
-      .isActive(true);
-
-    const result = await this.subscriptionRepository.findOne(filter);
+    const result = await this.repository.find(filter);
 
     return result.unwrap();
-  }
-
-  private async getTenantWarningDelayDays(tenantId: ID): Promise<number> {
-    return Promise.resolve(5);
   }
 }
