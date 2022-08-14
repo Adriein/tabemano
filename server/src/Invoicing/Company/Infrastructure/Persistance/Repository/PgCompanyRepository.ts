@@ -2,9 +2,11 @@ import { Result } from "@badrap/result";
 import { Inject } from "@nestjs/common";
 import { ClassConstructor } from "class-transformer";
 import { Company } from "Invoicing/Company/Domain/Entity/Company";
+import { CompanyFilter } from "Invoicing/Company/Domain/Filter/CompanyFilter";
 import { ICompanyRepository } from "Invoicing/Company/Domain/Repository/ICompanyRepository";
+import { TypeOrmCompanyFilterAdapter } from "Invoicing/Company/Infrastructure/Persistance/Filter/TypeOrmCompanyFilterAdapter";
+import { PgCompanyMapper } from "Invoicing/Company/Infrastructure/Persistance/Mapper/PgCompanyMapper";
 import { CompanyModel } from "Invoicing/Company/Infrastructure/Persistance/Model/CompanyModel";
-import { Filter } from "Shared/Domain/Entities/Filter";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
 import Database from "Shared/Infrastructure/Persistance/Database";
 import { TypeOrmRepository } from "Shared/Infrastructure/Persistance/Repository/TypeOrmRepository";
@@ -14,6 +16,7 @@ export class PgCompanyRepository extends TypeOrmRepository<CompanyModel> impleme
   constructor(
     @Inject(Database.DATABASE_CONNECTION)
     protected readonly dataSource: DataSource,
+    private readonly mapper: PgCompanyMapper
   ) {
     super();
   }
@@ -26,16 +29,25 @@ export class PgCompanyRepository extends TypeOrmRepository<CompanyModel> impleme
     return Promise.resolve(undefined);
   }
 
-  find(filter: Filter): Promise<Result<Company[], Error>> {
-    throw new Error();
+  public async find(filter: CompanyFilter): Promise<Result<Company[], Error>> {
+    try {
+      const adapter = new TypeOrmCompanyFilterAdapter(filter);
+
+      const results = await this.repository().find(adapter.apply());
+
+      return Result.ok(results.map((result: CompanyModel) => this.mapper.toDomain(result)));
+    } catch (error) {
+      return Result.err(error as Error);
+    }
   }
 
-  findOne(filter: Filter): Promise<Result<Company, RecordNotFoundError>> {
+  findOne(filter: CompanyFilter): Promise<Result<Company, RecordNotFoundError>> {
     throw new Error();
   }
 
   public async save(entity: Company): Promise<void> {
-    await this.repository().save({});
+    const model = this.mapper.toModel(entity);
+    await this.repository().save(model);
   }
 
   update(entity: Company): Promise<void> {

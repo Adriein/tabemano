@@ -1,3 +1,4 @@
+import { Inject } from "@nestjs/common";
 import { ICommandHandler } from "@nestjs/cqrs";
 import { RegisterCompanyCommand } from "Invoicing/Company/Application/RegisterCompany/RegisterCompanyCommand";
 import { Company } from "Invoicing/Company/Domain/Entity/Company";
@@ -8,10 +9,14 @@ import { CompanyName } from "Invoicing/Company/Domain/Vo/CompanyName";
 import { CompanyType } from "Invoicing/Company/Domain/Vo/CompanyType";
 import { FiscalId } from "Invoicing/Company/Domain/Vo/FiscalId";
 import { Address } from "Shared/Domain/Vo/Address.vo";
+import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Phone } from "Shared/Domain/Vo/Phone.vo";
 
 export class RegisterCompanyCommandHandler implements ICommandHandler {
-  constructor(private readonly repository: ICompanyRepository) {}
+  constructor(
+    @Inject('ICompanyRepository')
+    private readonly repository: ICompanyRepository
+  ) {}
 
   public async execute(command: RegisterCompanyCommand): Promise<void> {
     const name = new CompanyName(command.name);
@@ -20,10 +25,11 @@ export class RegisterCompanyCommandHandler implements ICommandHandler {
     const phone = new Phone(command.phone);
     const type = new CompanyType(command.type);
     const country = new CompanyType(command.country);
+    const tenantId = new ID(command.tenantId);
 
     await this.ensureCompanyIsNotRegistered(fiscalId);
 
-    const company = Company.build(name, fiscalId, address, phone, type, country);
+    const company = Company.build(name, fiscalId, address, phone, type, country, tenantId);
 
     await this.repository.save(company);
   }

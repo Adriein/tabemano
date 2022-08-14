@@ -14,9 +14,10 @@ export class Company extends AggregateRoot {
     address: Address,
     phone: Phone,
     type: CompanyType,
-    country: Country
+    country: Country,
+    tenantId: ID,
   ): Company {
-    return new Company(ID.generate(), name, fiscalId, address, phone, type, country);
+    return new Company(ID.generate(), name, fiscalId, address, phone, type, country, tenantId);
   }
 
   constructor(
@@ -27,6 +28,7 @@ export class Company extends AggregateRoot {
     private _phone: Phone,
     private _type: CompanyType,
     private _country: Country,
+    private _tenantId: ID,
   ) {
     super(_id);
   }
@@ -54,5 +56,9 @@ export class Company extends AggregateRoot {
 
   public country(): Country {
     return this._country;
+  }
+
+  public tenantId(): ID {
+    return this._tenantId;
   }
 }

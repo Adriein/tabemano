@@ -1,18 +1,35 @@
+import { Inject } from "@nestjs/common";
 import { IQueryHandler, QueryHandler } from "@nestjs/cqrs";
 import { FindCompanyQuery } from "Invoicing/Company/Application/FindCompany/FindCompanyQuery";
 import { FindCompanyResponse } from "Invoicing/Company/Application/FindCompany/FindCompanyResponse";
+import { CompanyFilter } from "Invoicing/Company/Domain/Filter/CompanyFilter";
+import { ICompanyRepository } from "Invoicing/Company/Domain/Repository/ICompanyRepository";
+import { ID } from "Shared/Domain/Vo/Id.vo";
 
 @QueryHandler(FindCompanyQuery)
 export class FindCompanyQueryHandler implements IQueryHandler {
+  constructor(
+    @Inject('ICompanyRepository')
+    private readonly repository: ICompanyRepository
+  ) {}
+
   public async execute(query: FindCompanyQuery): Promise<FindCompanyResponse> {
+    const tenantId = new ID(query.tenantId);
+
+    const filter = CompanyFilter.create().withTenantId(tenantId);
+
+    const result = await this.repository.findOne(filter);
+
+    const company = result.unwrap();
+
     return new FindCompanyResponse(
-      '1',
-      'Adri enterprise',
-      '1234',
-      'queen roma 4º 3ª',
-      629394957,
-      'SL',
-      'ES'
+      company.id().value,
+      company.name().value,
+      company.fiscalId().value,
+      company.address().value,
+      company.phone().value,
+      company.type().value,
+      company.country().value
     );
   }
 

@@ -1,5 +1,6 @@
 import { CompanyName } from "Invoicing/Company/Domain/Vo/CompanyName";
 import { CompanyType } from "Invoicing/Company/Domain/Vo/CompanyType";
+import { Country } from "Invoicing/Company/Domain/Vo/Country";
 import { FiscalId } from "Invoicing/Company/Domain/Vo/FiscalId";
 import { Address } from "Shared/Domain/Vo/Address.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
@@ -46,4 +47,18 @@ export class CompanyModel {
     transformer: new ValueObjectTransformer<string, CompanyType>(CompanyType)
   })
   type!: CompanyType;
+
+  @Column({
+    name: 'co_country',
+    type: 'varchar',
+    transformer: new ValueObjectTransformer<string, Country>(Country)
+  })
+  country!: Country;
+
+  @Column({
+    name: 'co_tenant_id',
+    type: 'varchar',
+    transformer: new ValueObjectTransformer<string, ID>(ID)
+  })
+  tenantId!: ID;
 }

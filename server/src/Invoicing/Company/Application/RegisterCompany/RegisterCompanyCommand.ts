@@ -8,6 +8,7 @@ export class RegisterCompanyCommand implements ICommand {
     private _phone: number,
     private _type: string,
     private _country: string,
+    private _tenantId: string,
   ) {}
 
 
@@ -33,5 +34,9 @@ export class RegisterCompanyCommand implements ICommand {
 
   get country(): string {
     return this._country;
+  }
+
+  get tenantId(): string {
+    return this._tenantId;
   }
 }
