@@ -19,14 +19,19 @@ export class CheckExpiredSubscriptionsCommandHandler implements ICommandHandler 
   @Log()
   public async execute(command: CheckExpiredSubscriptionsCommand): Promise<void> {
     const backgroundJob = BackGroundJob.expiredSubscription();
-
     backgroundJob.init();
 
     const clients = await this.getActiveClients();
 
     for (const client of clients) {
-      if (client.isActiveSubscriptionExpired()) {
-        this.makeSubscriptionExpired(client);
+      if (!client.isActiveSubscriptionExpired()) {
+        continue;
+      }
+
+      this.makeSubscriptionExpired(client);
+
+      if (client.canSendNotifications()) {
+        this.sendExpiredSubscriptionNotification(client);
       }
     }
 
@@ -38,6 +43,8 @@ export class CheckExpiredSubscriptionsCommandHandler implements ICommandHandler 
     this.eventBus.publish(new SubscriptionExpired(client.activeSubscriptionId()));
 
   }
+
+  private sendExpiredSubscriptionNotification(client: Client): void {}
 
   private async getActiveClients(): Promise<Client[]> {
     const filter = ClientFilter.create()
