@@ -1,13 +1,12 @@
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { QueryBus } from "@nestjs/cqrs";
 import jwt from "jsonwebtoken";
 import { Observable } from "rxjs";
 import { UserSession } from "Shared/Infrastructure/Types";
 
 @Injectable()
 export class UserInterceptor implements NestInterceptor {
-  constructor(private readonly queryBus: QueryBus, private readonly config: ConfigService) {}
+  constructor(private readonly config: ConfigService) {}
 
   public async intercept(context: ExecutionContext, next: CallHandler<any>): Promise<Observable<any>> {
     const request = context.switchToHttp().getRequest();

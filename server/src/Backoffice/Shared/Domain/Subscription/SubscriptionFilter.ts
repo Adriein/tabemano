@@ -1,11 +1,11 @@
 import { Filter } from "Shared/Domain/Entities/Filter";
-import { Order } from "Shared/Domain/Entities/Order";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 
 export class SubscriptionFilter extends Filter {
   public static CREATION_DATE_FILTER = 'createdAt';
   public static ACTIVE_FILTER = 'isActive';
   public static CLIENT_ID_FILTER = 'clientId';
+  public static ID_FILTER = 'id';
 
   public static create(): SubscriptionFilter {
     return new SubscriptionFilter();
@@ -20,6 +20,11 @@ export class SubscriptionFilter extends Filter {
 
   public withClientId(id: ID): this {
     this.data.set(SubscriptionFilter.CLIENT_ID_FILTER, id);
+    return this;
+  }
+
+  public withId(id: ID): this {
+    this.data.set(SubscriptionFilter.ID_FILTER, id);
     return this;
   }
 
