@@ -14,9 +14,9 @@ export class SignInQueryHandler implements IQueryHandler {
   constructor(@Inject('IAuthRepository') private readonly repository: IAuthRepository,) {}
 
   @Log()
-  public async execute(command: SignInQuery): Promise<SignInResponse> {
-    const email = new Email(command.email);
-    const password = new Password(command.password);
+  public async execute(query: SignInQuery): Promise<SignInResponse> {
+    const email = new Email(query.email);
+    const password = new Password(query.password);
 
     const auth = await this.findUser(email);
 

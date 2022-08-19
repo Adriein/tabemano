@@ -2,8 +2,8 @@ import { Filter } from 'Shared/Domain/Entities/Filter';
 import { ID } from 'Shared/Domain/Vo/Id.vo';
 
 export class PermissionFilter extends Filter {
-  public static TENANT_ID_FILTER = 'tenant_id';
-  public static MODULE_ID_FILTER = 'module_id';
+  public static TENANT_ID_FILTER = 'tenantId';
+  public static MODULE_ID_FILTER = 'moduleId';
 
   public static create(): PermissionFilter {
     return new PermissionFilter();
