@@ -24,8 +24,7 @@ export class CheckExpiredSubscriptionsCommandHandler implements ICommandHandler 
     backgroundJob.init();
 
     const clients = await this.getActiveClients();
-    console.log(clients)
-    throw new Error();
+
     for (const client of clients) {
       if (!client.isActiveSubscriptionExpired()) {
         continue;
