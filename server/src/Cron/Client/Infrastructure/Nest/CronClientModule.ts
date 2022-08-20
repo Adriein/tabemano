@@ -5,17 +5,24 @@ import { CheckExpiredSubscriptionsCommandHandler } from "Cron/Client/Application
 import { CheckExpiredSubscriptionsController } from "Cron/Client/Infrastructure/Controller/CheckExpiredSubscriptions/CheckExpiredSubscriptionsController";
 import { PgClientMapper } from "Cron/Client/Infrastructure/Persistance/Mapper/PgClientMapper";
 import { PgClientRepository } from "Cron/Client/Infrastructure/Persistance/Repository/PgClientRepository";
+import { PgBackGroundJobMapper } from "Cron/Shared/Infrastructure/Persistance/Mapper/PgBackGroundJobMapper";
+import { PgBackGroundJobRepository } from "Cron/Shared/Infrastructure/Persistance/Repository/PgBackGroundJobRepository";
 import { TypeOrmModule } from "Shared/Infrastructure/Persistance/TypeOrmModule";
 
 const Repositories = [
   {
     provide: 'IClientRepository',
     useClass: PgClientRepository,
+  },
+  {
+    provide: 'IBackGroundJobRepository',
+    useClass: PgBackGroundJobRepository,
   }
 ];
 
 const Mappers = [
-  PgClientMapper
+  PgClientMapper,
+  PgBackGroundJobMapper
 ];
 
 const Handlers = [
