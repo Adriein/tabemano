@@ -4,6 +4,7 @@ import { FindCompanyQueryHandler } from "Invoicing/Company/Application/FindCompa
 import { RegisterCompanyCommandHandler } from "Invoicing/Company/Application/RegisterCompany/RegisterCompanyCommandHandler";
 import { PgCompanyMapper } from "Invoicing/Company/Infrastructure/Persistance/Mapper/PgCompanyMapper";
 import { PgCompanyRepository } from "Invoicing/Company/Infrastructure/Persistance/Repository/PgCompanyRepository";
+import { TypeOrmModule } from "Shared/Infrastructure/Persistance/TypeOrmModule";
 
 const Handlers = [
   FindCompanyQueryHandler,
@@ -20,7 +21,7 @@ const Repositories = [
 ]
 
 @Module({
-  imports: [ CqrsModule ],
+  imports: [ CqrsModule, TypeOrmModule ],
   controllers: [],
   providers: [
     ...Handlers,

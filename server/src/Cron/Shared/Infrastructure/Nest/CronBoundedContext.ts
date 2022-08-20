@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { CqrsModule } from "@nestjs/cqrs";
+import { CronClientModule } from "Cron/Client/Infrastructure/Nest/CronClientModule";
 import { PgBackGroundJobMapper } from "Cron/Shared/Infrastructure/Persistance/Mapper/PgBackGroundJobMapper";
 import { PgBackGroundJobRepository } from "Cron/Shared/Infrastructure/Persistance/Repository/PgBackGroundJobRepository";
 import { TypeOrmModule } from "Shared/Infrastructure/Persistance/TypeOrmModule";
@@ -16,12 +17,12 @@ const Mappers = [
 ];
 
 @Module({
-  imports: [ CqrsModule, TypeOrmModule ],
+  imports: [ CqrsModule, TypeOrmModule, CronClientModule ],
   controllers: [],
   providers: [
     ...Repositories,
     ...Mappers
   ],
-  exports: [],
+  exports: [ CronClientModule ],
 })
 export class CronBoundedContext {}

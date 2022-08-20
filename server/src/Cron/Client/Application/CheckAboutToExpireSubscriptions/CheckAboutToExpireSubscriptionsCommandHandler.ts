@@ -1,3 +1,4 @@
+import { Inject } from "@nestjs/common";
 import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { Client } from "Cron/Client/Domain/Entity/Client";
 import { ClientFilter } from "Cron/Client/Domain/Filter/ClientFilter";
@@ -7,6 +8,7 @@ import { CheckAboutToExpireSubscriptionsCommand } from "./CheckAboutToExpireSubs
 @CommandHandler(CheckAboutToExpireSubscriptionsCommand)
 export class CheckAboutToExpireSubscriptionsCommandHandler implements ICommandHandler {
   constructor(
+    @Inject('IClientRepository')
     private readonly repository: IClientRepository,
   ) {}
 

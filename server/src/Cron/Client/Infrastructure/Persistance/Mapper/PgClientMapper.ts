@@ -1,11 +1,11 @@
+import { ClientModel } from "Backoffice/Client/Infrastructure/Persistance/Model/ClientModel";
 import { Client } from "Cron/Client/Domain/Entity/Client";
 import { Config } from "Cron/Client/Domain/Entity/Config";
 import { Subscription } from "Cron/Client/Domain/Entity/Subscription";
-import { CronClientModel } from "Cron/Client/Infrastructure/Persistance/Model/CronClientModel";
 import { IMapper } from "Shared/Domain/Interfaces/IMapper";
 
-export class PgClientMapper implements IMapper<Client, CronClientModel> {
-  public toDomain(dataModel: CronClientModel): Client {
+export class PgClientMapper implements IMapper<Client, ClientModel> {
+  public toDomain(dataModel: ClientModel): Client {
     const config = new Config(
       dataModel.config.id,
       dataModel.config.sendNotifications,
@@ -41,7 +41,7 @@ export class PgClientMapper implements IMapper<Client, CronClientModel> {
     );
   }
 
-  public toModel(entity: Client): CronClientModel {
+  public toModel(entity: Client): ClientModel {
     throw new Error('Not implemented')
   }
 
