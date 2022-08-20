@@ -1,32 +1,32 @@
 import { Table } from "typeorm";
 
-export const CronTableDefinition = new Table({
-  name: 'ta_cron',
+export const BackGroundJobTableDefinition = new Table({
+  name: 'ta_back_ground_job',
   columns: [
     {
-      name: 'cr_id',
+      name: 'bgj_id',
       type: 'varchar',
       isPrimary: true
     },
     {
-      name: 'cr_name',
+      name: 'bgj_name',
       type: 'varchar',
     },
     {
-      name: 'cr_time_ini',
+      name: 'bgj_time_ini',
       type: 'boolean',
     },
     {
-      name: 'cr_time_end',
+      name: 'bgj_time_end',
       type: 'boolean',
     },
     {
-      name: 'co_created_at',
+      name: 'bgj_created_at',
       type: 'timestamp',
       precision: 0
     },
     {
-      name: 'co_updated_at',
+      name: 'bgj_updated_at',
       type: 'timestamp',
       precision: 0
     }

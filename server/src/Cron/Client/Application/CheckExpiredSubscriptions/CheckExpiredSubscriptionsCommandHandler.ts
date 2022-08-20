@@ -14,7 +14,8 @@ export class CheckExpiredSubscriptionsCommandHandler implements ICommandHandler 
   constructor(
     @Inject('IClientRepository')
     private readonly clientRepository: IClientRepository,
-    //private readonly backgroundJobRepository: IBackGroundJobRepository,
+    @Inject('IBackGroundJobRepository')
+    private readonly backgroundJobRepository: IBackGroundJobRepository,
     private readonly eventBus: EventBus,
   ) {}
 
@@ -38,7 +39,7 @@ export class CheckExpiredSubscriptionsCommandHandler implements ICommandHandler 
     }
 
     backgroundJob.end();
-    //await this.backgroundJobRepository.save(backgroundJob);
+    await this.backgroundJobRepository.save(backgroundJob);
   }
 
   private makeSubscriptionExpired(client: Client): void {
