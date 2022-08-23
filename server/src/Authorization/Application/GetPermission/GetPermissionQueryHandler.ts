@@ -1,12 +1,14 @@
 import { Inject } from '@nestjs/common';
-import { IQueryHandler } from '@nestjs/cqrs';
+import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Permission } from 'Authorization/Domain/Entity/Permission';
 import { PermissionFilter } from 'Authorization/Domain/Filter/PermissionFilter';
 import { IPermissionRepository } from 'Authorization/Domain/Repository/IPermissionRepository';
 import { Log } from 'Shared/Domain/Decorators/Log';
 import { ID } from 'Shared/Domain/Vo/Id.vo';
+import { GetPermissionQuery } from './GetPermissionQuery';
 import { GetPermissionResponse } from './GetPermissionResponse';
 
+@QueryHandler(GetPermissionQuery)
 export class GetPermissionQueryHandler implements IQueryHandler {
   constructor(
     @Inject('IPermissionRepository') private readonly repository: IPermissionRepository

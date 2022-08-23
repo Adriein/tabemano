@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Permission } from 'Authorization/Domain/Entity/Permission';
+import { NotAllowedError } from 'Authorization/Domain/Error/NotAllowedError';
 import { PermissionFilter } from 'Authorization/Domain/Filter/PermissionFilter';
 import { IPermissionRepository } from 'Authorization/Domain/Repository/IPermissionRepository';
 import { Log } from 'Shared/Domain/Decorators/Log';
@@ -16,12 +17,16 @@ export class CheckPermissionQueryHandler implements IQueryHandler {
 
   @Log()
   public async execute(query: CheckPermissionQuery): Promise<CheckPermissionResponse> {
-    const tenantId = new ID(query.tenantId);
-    const moduleId = new ID(query.moduleId);
+    try {
+      const tenantId = new ID(query.tenantId);
+      const moduleId = new ID(query.moduleId);
 
-    const permission = await this.findPermission(tenantId, moduleId);
+      const permission = await this.findPermission(tenantId, moduleId);
 
-    return CheckPermissionResponse.fromDomain(permission);
+      return CheckPermissionResponse.fromDomain(permission);
+    } catch (error: any) {
+      throw new NotAllowedError(`Not Allowed in ${query.moduleName}`);
+    }
   }
 
   private async findPermission(tenantId: ID, moduleId: ID): Promise<Permission> {
