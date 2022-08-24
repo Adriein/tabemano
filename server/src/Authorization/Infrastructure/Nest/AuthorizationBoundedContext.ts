@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { CqrsModule } from "@nestjs/cqrs";
 import { CheckPermissionQueryHandler } from "Authorization/Application/CheckPermission/CheckPermissionQueryHandler";
-import { GetPermissionsQueryHandler } from "Authorization/Application/GetPermission/GetPermissionsQueryHandler";
+import { GetPermissionsQueryHandler } from "Authorization/Application/GetPermissions/GetPermissionsQueryHandler";
 import { RegisterTenantCommandHandler } from "Authorization/Application/RegisterTenant/RegisterTenantCommandHandler";
 import { SignInQueryHandler } from "Authorization/Application/SignIn/SignInQueryHandler";
 import { RegisterTenantController } from "Authorization/Infrastructure/Controller/RegisterTenant/RegisterTenantController";
@@ -12,6 +12,7 @@ import { PgAuthRepository } from "Authorization/Infrastructure/Persistance/Repos
 import { PgRoleRepository } from "Authorization/Infrastructure/Persistance/Repository/PgRoleRepository";
 import { CryptoService } from "Shared/Domain/Services/CryptoService";
 import { TypeOrmModule } from "Shared/Infrastructure/Persistance/TypeOrmModule";
+import { GetPermissionsController } from "../Controller/GetPermissions/GetPermissionsController";
 
 const Services = [
   CryptoService
@@ -30,7 +31,8 @@ const Repositories = [
 
 const Controllers = [
   SignInController,
-  RegisterTenantController
+  RegisterTenantController,
+  GetPermissionsController
 ];
 
 const Handlers = [

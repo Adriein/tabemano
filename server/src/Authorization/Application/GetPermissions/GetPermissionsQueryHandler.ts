@@ -15,7 +15,7 @@ export class GetPermissionsQueryHandler implements IQueryHandler {
   ) {}
 
   @Log()
-  public async execute(query: any): Promise<GetPermissionsResponse[]> {
+  public async execute(query: GetPermissionsQuery): Promise<GetPermissionsResponse[]> {
     const tenantId = new ID(query.tenantId);
 
     const permissions = await this.findPermissions(tenantId);
