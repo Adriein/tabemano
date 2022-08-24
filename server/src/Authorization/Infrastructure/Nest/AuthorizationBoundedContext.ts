@@ -1,5 +1,7 @@
 import { Module } from "@nestjs/common";
 import { CqrsModule } from "@nestjs/cqrs";
+import { CheckPermissionQueryHandler } from "Authorization/Application/CheckPermission/CheckPermissionQueryHandler";
+import { GetPermissionsQueryHandler } from "Authorization/Application/GetPermission/GetPermissionsQueryHandler";
 import { RegisterTenantCommandHandler } from "Authorization/Application/RegisterTenant/RegisterTenantCommandHandler";
 import { SignInQueryHandler } from "Authorization/Application/SignIn/SignInQueryHandler";
 import { RegisterTenantController } from "Authorization/Infrastructure/Controller/RegisterTenant/RegisterTenantController";
@@ -33,7 +35,9 @@ const Controllers = [
 
 const Handlers = [
   SignInQueryHandler,
-  RegisterTenantCommandHandler
+  RegisterTenantCommandHandler,
+  GetPermissionsQueryHandler,
+  CheckPermissionQueryHandler
 ];
 
 const Mappers = [
