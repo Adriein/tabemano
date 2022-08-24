@@ -5,23 +5,23 @@ import { PermissionFilter } from 'Authorization/Domain/Filter/PermissionFilter';
 import { IPermissionRepository } from 'Authorization/Domain/Repository/IPermissionRepository';
 import { Log } from 'Shared/Domain/Decorators/Log';
 import { ID } from 'Shared/Domain/Vo/Id.vo';
-import { GetPermissionQuery } from './GetPermissionQuery';
-import { GetPermissionResponse } from './GetPermissionResponse';
+import { GetPermissionsQuery } from './GetPermissionsQuery';
+import { GetPermissionsResponse } from './GetPermissionsResponse';
 
-@QueryHandler(GetPermissionQuery)
-export class GetPermissionQueryHandler implements IQueryHandler {
+@QueryHandler(GetPermissionsQuery)
+export class GetPermissionsQueryHandler implements IQueryHandler {
   constructor(
     @Inject('IPermissionRepository') private readonly repository: IPermissionRepository
   ) {}
 
   @Log()
-  public async execute(query: any): Promise<GetPermissionResponse[]> {
+  public async execute(query: any): Promise<GetPermissionsResponse[]> {
     const tenantId = new ID(query.tenantId);
 
     const permissions = await this.findPermissions(tenantId);
 
     const permissionsResponse = permissions.map(permission => {
-      return GetPermissionResponse.fromDomain(permission);
+      return GetPermissionsResponse.fromDomain(permission);
     });
 
     return permissionsResponse;
