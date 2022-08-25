@@ -1,10 +1,19 @@
-import { Body, ClassSerializerInterceptor, Controller, Post, Session, UseInterceptors } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import { QueryBus } from "@nestjs/cqrs";
-import { SignInQuery } from "Authorization/Application/SignIn/SignInQuery";
-import { SignInResponse } from "Authorization/Application/SignIn/SignInResponse";
-import { SignInApiRequest } from "Authorization/Infrastructure/Controller/SignIn/SignInApiRequest";
-import jwt from "jsonwebtoken";
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  Post,
+  Session,
+  UseInterceptors,
+} from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { QueryBus } from '@nestjs/cqrs';
+import { GetPermissionsQuery } from 'Authorization/Application/GetPermissions/GetPermissionsQuery';
+import { GetPermissionsResponse } from 'Authorization/Application/GetPermissions/GetPermissionsResponse';
+import { SignInQuery } from 'Authorization/Application/SignIn/SignInQuery';
+import { SignInResponse } from 'Authorization/Application/SignIn/SignInResponse';
+import { SignInApiRequest } from 'Authorization/Infrastructure/Controller/SignIn/SignInApiRequest';
+import jwt from 'jsonwebtoken';
 
 @Controller('/signin')
 export class SignInController {
@@ -16,18 +25,29 @@ export class SignInController {
     @Body() body: SignInApiRequest,
     @Session() session: any
   ): Promise<SignInResponse> {
-    const query = SignInQuery.fromJson(body);
+    const signInQuery = SignInQuery.fromJson(body);
+    const permissionQuery = GetPermissionsQuery.fromJson(body);
 
-    const response = await this.queryBus.execute<SignInQuery, SignInResponse>(query);
+    const signInResponse = await this.queryBus.execute<SignInQuery, SignInResponse>(signInQuery);
+
+    const permissionsResponse = await this.queryBus.execute<
+      GetPermissionsQuery,
+      GetPermissionsResponse[]
+    >(permissionQuery);
+
+    const permissions = permissionsResponse.map(permission => {
+      return { id: permission.moduleId, name: permission.moduleName };
+    });
 
     session.user = jwt.sign(
       {
-        name: response.name,
-        email: response.email
+        name: signInResponse.name,
+        email: signInResponse.email,
+        permissions: permissions,
       },
-      this.config.get<string>('JWT_KEY')!,
+      this.config.get<string>('JWT_KEY')!
     );
 
-    return response;
+    return signInResponse;
   }
 }
