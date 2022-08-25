@@ -1,5 +1,5 @@
-import { AuthModel } from "Authorization/Infrastructure/Persistance/Model/AuthModel";
-import { AuthRoleModel } from "Authorization/Infrastructure/Persistance/Model/AuthRoleModel";
+import { AuthModel } from "Authorization/Auth/Infrastructure/Persistance/Model/AuthModel";
+import { AuthRoleModel } from "Authorization/Auth/Infrastructure/Persistance/Model/AuthRoleModel";
 import { ClientModel } from "Backoffice/Client/Infrastructure/Persistance/Model/ClientModel";
 import { PricingModel } from "Backoffice/Pricing/Infrastructure/Persistance/Model/PricingModel";
 import { RoleModel } from "Backoffice/Role/Infrastructure/Persistance/Model/RoleModel";

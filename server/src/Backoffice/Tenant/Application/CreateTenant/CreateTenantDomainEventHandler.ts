@@ -1,6 +1,6 @@
 import { Inject } from "@nestjs/common";
 import { EventBus, EventsHandler, IEventHandler } from "@nestjs/cqrs";
-import { TenantRegisteredDomainEvent } from "Authorization/Application/RegisterTenant/TenantRegisteredDomainEvent";
+import { TenantRegisteredDomainEvent } from "Authorization/Auth/Application/RegisterTenant/TenantRegisteredDomainEvent";
 import { ISubscriptionRepository } from "Backoffice/Shared/Domain/Subscription/ISubscriptionRepository";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
 import { DefaultPricesCreatedDomainEvent } from "Backoffice/Tenant/Application/CreateTenant/DefaultPricesCreatedDomainEvent";
