@@ -1,4 +1,5 @@
 export interface SignInResponse {
   id: string;
-  username: string;
+  name: string;
+  email: string;
 }

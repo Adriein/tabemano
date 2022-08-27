@@ -14,7 +14,10 @@ async function bootstrap() {
   app.use(CookieSession({
     name: 'tabemano-session',
     secret: config.get('JWT_KEY'),
-    maxAge: 24 * 60 * 60 * 1000
+    maxAge: 24 * 60 * 60 * 1000,
+    signed: false,
+    secure: false,
+    httpOnly: false,
   }));
 
   app.useGlobalInterceptors(new ErrorsInterceptor());
