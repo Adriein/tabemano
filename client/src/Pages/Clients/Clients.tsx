@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import useQueryParamModal from "../../Shared/Hooks/useQueryParamModal";
 import Modal from "../../Shared/Components/Modal/Modal";
 import UserTable from "../../Users/Components/Table";
@@ -7,6 +8,7 @@ import Profile from "../../Users/Components/Profile";
 const Clients = () => {
   const { open, isOpen, close } = useQueryParamModal('profile');
   const [ selectedClient, setSelectedClient ] = useState<string>('');
+  const navigate = useNavigate();
 
   return (
     <>

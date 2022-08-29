@@ -6,7 +6,6 @@ export const StyledLoaderContainer = styled.div<any>`
   justify-content: center;
   align-items: center;
   position: relative;
-  height: 100vh;
   width: 100%;
 `;
 

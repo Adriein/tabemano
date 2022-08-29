@@ -43,8 +43,8 @@ const TableHeader = () => {
 
   useEffect(() => {
     (async () => {
-      const filterList = await FilterCall.getClientTableFilters();
-      handlers.setState(filterList);
+      //const filterList = await FilterCall.getClientTableFilters();
+      handlers.setState([]);
     })();
 
   }, [ query ]);

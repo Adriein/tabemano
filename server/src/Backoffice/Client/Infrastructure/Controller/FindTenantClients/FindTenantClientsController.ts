@@ -1,10 +1,9 @@
-import { Controller, Post, UseGuards, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Post, UseGuards, UseInterceptors } from "@nestjs/common";
 import { QueryBus } from "@nestjs/cqrs";
 import { FindTenantClientsQuery } from "Backoffice/Client/Application/FindTenantClients/FindTenantClientsQuery";
 import { FindTenantClientsResponse } from "Backoffice/Client/Application/FindTenantClients/FindTenantClientsResponse";
 import { TabemanoMetadata } from "Backoffice/Shared/Domain/TabemanoMetadata";
 import { TabemanoResponse } from "Backoffice/Shared/Domain/TabemanoResponse";
-import { NextFunction, Request, Response } from "express";
 import { AuthGuard } from "Shared/Infrastructure/Guard/AuthGuard";
 import { UserInterceptor } from "Shared/Infrastructure/Interceptor/UserInterceptor";
 
@@ -16,21 +15,14 @@ export class FindTenantClientsController {
   @UseGuards(AuthGuard)
   @Post('/clients')
   public async findTenantClients(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> {
-    try {
-      const query = FindTenantClientsQuery.fromJson(req);
+    @Body() body: any,
+  ): Promise<any> {
 
-      const clients = await this.queryBus.execute(query);
+    const query = FindTenantClientsQuery.fromJson(body);
 
-      const response = this.buildResponse(query, clients);
+    const clients = await this.queryBus.execute(query);
 
-      res.status(200).send(response.serialize());
-    } catch (error) {
-      next(error);
-    }
+    return this.buildResponse(query, clients).serialize();
   }
 
   private buildResponse(
