@@ -12,6 +12,8 @@ import { PgRoleRepository } from 'Authorization/Auth/Infrastructure/Persistance/
 import { CryptoService } from 'Shared/Domain/Services/CryptoService';
 import { TypeOrmModule } from 'Shared/Infrastructure/Persistance/TypeOrmModule';
 import { GetPermissionsController } from '../../../Permission/Infrastructure/Controller/GetPermissions/GetPermissionsController';
+import { PgPermissionRepository } from 'Authorization/Permission/Infrastructure/Persistance/Repository/PgPermissionRepository';
+import { PgPermissionMapper } from 'Authorization/Permission/Infrastructure/Persistance/Mapper/PgPermissionMapper';
 
 const Services = [CryptoService];
 
@@ -24,13 +26,17 @@ const Repositories = [
     provide: 'IRoleRepository',
     useClass: PgRoleRepository,
   },
+  {
+    provide: 'IPermissionRepository',
+    useClass: PgPermissionRepository,
+  },
 ];
 
 const Controllers = [SignInController, RegisterTenantController, GetPermissionsController];
 
 const Handlers = [SignInQueryHandler, RegisterTenantCommandHandler, GetPermissionsQueryHandler];
 
-const Mappers = [PgAuthMapper, PgRoleMapper];
+const Mappers = [PgAuthMapper, PgRoleMapper, PgPermissionMapper];
 
 @Module({
   imports: [CqrsModule, TypeOrmModule],
