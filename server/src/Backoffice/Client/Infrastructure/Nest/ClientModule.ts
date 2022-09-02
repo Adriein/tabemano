@@ -3,6 +3,7 @@ import { CqrsModule } from "@nestjs/cqrs";
 import { ClientRegisteredDomainEventHandler } from "Backoffice/Client/Application/CreateClient/ClientRegisteredDomainEventHandler";
 import { FindTenantClientsQueryHandler } from "Backoffice/Client/Application/FindTenantClients/FindTenantClientsQueryHandler";
 import { GetClientProfileQueryHandler } from "Backoffice/Client/Application/GetClientProfile/GetClientProfileQueryHandler";
+import { FindTenantClientsController } from "Backoffice/Client/Infrastructure/Controller/FindTenantClients/FindTenantClientsController";
 import { GetClientProfileController } from "Backoffice/Client/Infrastructure/Controller/GetClientProfile/GetClientProfileController";
 import { PgClientMapper } from "Backoffice/Client/Infrastructure/Persistance/Mapper/PgClientMapper";
 import { PgClientRepository } from "Backoffice/Client/Infrastructure/Persistance/Repository/PgClientRepository";
@@ -40,7 +41,7 @@ const Mappers = [
   PgClientMapper
 ];
 
-const Controllers = [ GetClientProfileController ]
+const Controllers = [ GetClientProfileController, FindTenantClientsController ]
 
 @Module({
   imports: [ CqrsModule, TypeOrmModule ],

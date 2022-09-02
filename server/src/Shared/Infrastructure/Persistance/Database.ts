@@ -7,6 +7,8 @@ import { ConfigModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/
 import { SubscriptionEventModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionEventModel";
 import { SubscriptionModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionModel";
 import { TenantModel } from "Backoffice/Tenant/Infrastructure/Persistance/Model/TenantModel";
+import { CronClientModel } from "Cron/Client/Infrastructure/Persistance/Model/CronClientModel";
+import { BackGroundJobModel } from "Cron/Shared/Infrastructure/Persistance/Model/BackGroundJobModel";
 import { DataSource } from 'typeorm';
 
 export default class Database {
@@ -34,7 +36,8 @@ export default class Database {
         SubscriptionEventModel,
         AuthModel,
         AuthRoleModel,
-        ClientModel
+        ClientModel,
+        BackGroundJobModel
       ],
       synchronize: false,
       logging: true,

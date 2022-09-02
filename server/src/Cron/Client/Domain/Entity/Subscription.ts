@@ -16,6 +16,10 @@ export class Subscription {
     _createdAt?: Date,
     _updatedAt?: Date
   ) {}
+  
+  public id(): ID {
+    return this._id;
+  }
 
   public userId(): ID {
     return this._userId;
@@ -45,14 +49,8 @@ export class Subscription {
     return this._duration;
   }
 
-  public static expirationDate = (lastPaymentDate: DateVo, pricingDuration: number): DateVo => {
-    return new DateVo(Time.add(lastPaymentDate.value, pricingDuration));
-  }
-
-
   public checkIsExpired = (): boolean => {
-    const expirationDate = Subscription.expirationDate(this._paymentDate, this._duration);
-    return Time.equal(Time.now(), expirationDate.value);
+    return Time.equal(Time.now(), this._validTo.value);
   }
 
   public checkIsAboutToExpire = (daysToWarn: number | undefined = 5): boolean => {

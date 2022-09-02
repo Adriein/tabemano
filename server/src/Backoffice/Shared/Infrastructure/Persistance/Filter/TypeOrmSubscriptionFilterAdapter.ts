@@ -27,6 +27,12 @@ export class TypeOrmSubscriptionFilterAdapter extends TypeOrmAdapter<FindManyOpt
       this.add({ where: { userId: id } });
     }
 
+    if (filters.has(SubscriptionFilter.ID_FILTER)) {
+      const id = filters.get(SubscriptionFilter.ID_FILTER) as ID;
+
+      this.add({ where: { id } });
+    }
+
     if (filters.has(Pagination.PAGINATION_FILTER)) {
       const pagination = filters.get(Pagination.PAGINATION_FILTER);
 

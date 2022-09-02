@@ -1,5 +1,7 @@
 import { ClientModel } from "Backoffice/Client/Infrastructure/Persistance/Model/ClientModel";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
+import { ClientFilter } from "Cron/Client/Domain/Filter/ClientFilter";
+import { CronClientModel } from "Cron/Client/Infrastructure/Persistance/Model/CronClientModel";
 import { Pagination } from "Shared/Domain/Entities/Pagination";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { Email } from "Shared/Domain/Vo/Email.vo";
@@ -9,7 +11,7 @@ import { TypeOrmAdapter } from "Shared/Infrastructure/Persistance/Adapter/TypeOr
 import { FindManyOptions } from "typeorm";
 
 export class TypeOrmClientFilterAdapter extends TypeOrmAdapter<FindManyOptions<ClientModel>> {
-  constructor(private readonly filter: UserFilter) {
+  constructor(private readonly filter: ClientFilter) {
     super();
   }
 
@@ -37,7 +39,7 @@ export class TypeOrmClientFilterAdapter extends TypeOrmAdapter<FindManyOptions<C
     if (filters.has(UserFilter.ROLE_FILTER)) {
       const roleType = filters.get(UserFilter.ROLE_FILTER) as RoleType;
 
-      this.add({ where: { role: { type: roleType } } });
+      //this.add({ where: { role: { type: roleType } } });
     }
 
     if (filters.has(UserFilter.ACTIVE_FILTER)) {
@@ -106,7 +108,7 @@ export class TypeOrmClientFilterAdapter extends TypeOrmAdapter<FindManyOptions<C
       this.add(this.pagination(pagination))
     }
 
-    this.add({ relations: { config: true } });
+    this.add({ relations: { config: true, subscriptions: true, role: true } });
 
     return this.typeOrmFilter;
   }

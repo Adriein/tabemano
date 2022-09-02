@@ -22,6 +22,10 @@ export class Client {
     return this._activeSubscription;
   }
 
+  public activeSubscriptionId(): ID {
+    return this._activeSubscription.id();
+  }
+
   public canSendWarnings(): boolean {
     return this._config.sendWarnings;
   }
@@ -32,5 +36,9 @@ export class Client {
 
   public tenantWarningDays(): number {
     return this._tenantWarningDays;
+  }
+
+  public isActiveSubscriptionExpired(): boolean {
+    return this._activeSubscription.checkIsExpired();
   }
 }

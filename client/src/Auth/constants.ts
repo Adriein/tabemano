@@ -4,5 +4,6 @@ export const SIGN_UP_ACTION = 'SIGN_UP_ACTION'
 
 export const LOCALSTORAGE_USERNAME = 'username-aclaret.dev';
 export const LOCALSTORAGE_USER_ID = 'user-id-aclaret.dev';
+export const LOCALSTORAGE_USER_EMAIL = 'user-email-aclaret.dev';
 
 export const COOKIE_SESSION_NAME = 'tabemano-session';

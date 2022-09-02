@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-import { LOCALSTORAGE_USER_ID, LOCALSTORAGE_USERNAME, SIGN_IN_ACTION } from "../../constants";
+import { LOCALSTORAGE_USER_EMAIL, LOCALSTORAGE_USER_ID, LOCALSTORAGE_USERNAME, SIGN_IN_ACTION } from "../../constants";
 import { SignInRequest } from "./SignInRequest";
 import { ApiService } from "../../../Shared/Services/ApiService";
 import { SignInResponse } from "./SignInResponse";
@@ -15,7 +15,8 @@ export const signIn = (dispatch: Dispatch<ActionProps>) => {
     });
 
     localStorage.setItem(LOCALSTORAGE_USER_ID, response.id);
-    localStorage.setItem(LOCALSTORAGE_USERNAME, response.username);
+    localStorage.setItem(LOCALSTORAGE_USERNAME, response.name);
+    localStorage.setItem(LOCALSTORAGE_USER_EMAIL, response.email);
 
     dispatch({ type: SIGN_IN_ACTION });
   };

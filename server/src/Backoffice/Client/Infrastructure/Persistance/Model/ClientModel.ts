@@ -44,14 +44,11 @@ export class ClientModel {
   @OneToOne(() => ConfigModel, { cascade: true })
   @JoinColumn({ name: 'us_config_id', referencedColumnName: 'id' })
   config!: ConfigModel;
-
-  @OneToMany(() => PricingModel, (pricing: PricingModel) => pricing.tenant)
-  pricing!: PricingModel[];
-
+  
   @OneToOne(() => RoleModel)
   @JoinColumn({ name: 'us_role_id', referencedColumnName: 'id' })
   role!: RoleModel;
 
-  @OneToMany(() => SubscriptionModel, (subscription: SubscriptionModel) => subscription.userId)
+  @OneToMany(() => SubscriptionModel, (subscription: SubscriptionModel) => subscription.user)
   subscriptions!: SubscriptionModel[];
 }

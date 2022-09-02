@@ -1,23 +1,22 @@
-import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
+import { Inject } from "@nestjs/common";
+import { CommandHandler, EventBus, ICommandHandler } from "@nestjs/cqrs";
+import { SubscriptionExpired } from "Cron/Client/Application/CheckExpiredSubscriptions/SubscriptionExpired";
+import { Client } from "Cron/Client/Domain/Entity/Client";
+import { ClientFilter } from "Cron/Client/Domain/Filter/ClientFilter";
+import { IClientRepository } from "Cron/Client/Domain/Repository/IClientRepository";
 import { CheckExpiredSubscriptionsCommand } from "./CheckExpiredSubscriptionsCommand";
-import { Client } from "Backoffice/Shared/Domain/Client/Client";
-import { IClientRepository } from "Backoffice/Client/Domain/Repository/IClientRepository";
 import { BackGroundJob } from "Cron/Shared/Domain/Entity/BackGroundJob";
 import { IBackGroundJobRepository } from "Cron/Shared/Domain/Repository/IBackGroundJobRepository";
-import { ISubscriptionRepository } from "Backoffice/Shared/Domain/Subscription/ISubscriptionRepository";
-import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";
-import { SubscriptionFilter } from "Backoffice/Shared/Domain/Subscription/SubscriptionFilter";
-import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
-import { CLIENT_ROLE } from "Shared/Domain/constants";
 import { Log } from "Shared/Domain/Decorators/Log";
-import { RoleType } from "Shared/Domain/Vo/RoleType";
 
 @CommandHandler(CheckExpiredSubscriptionsCommand)
 export class CheckExpiredSubscriptionsCommandHandler implements ICommandHandler {
   constructor(
+    @Inject('IClientRepository')
     private readonly clientRepository: IClientRepository,
-    private readonly subscriptionRepository: ISubscriptionRepository,
-    private readonly backgroundJobRepository: IBackGroundJobRepository
+    @Inject('IBackGroundJobRepository')
+    private readonly backgroundJobRepository: IBackGroundJobRepository,
+    private readonly eventBus: EventBus,
   ) {}
 
   @Log()
@@ -28,12 +27,14 @@ export class CheckExpiredSubscriptionsCommandHandler implements ICommandHandler 
     const clients = await this.getActiveClients();
 
     for (const client of clients) {
-      const subscription = await this.getActiveSubscription(client);
+      if (!client.isActiveSubscriptionExpired()) {
+        continue;
+      }
 
-      if (subscription.checkIsExpired()) {
-        subscription.makeExpired();
+      this.makeSubscriptionExpired(client);
 
-        await this.subscriptionRepository.update(subscription);
+      if (client.canSendNotifications()) {
+        this.sendExpiredSubscriptionNotification(client);
       }
     }
 
@@ -41,25 +42,19 @@ export class CheckExpiredSubscriptionsCommandHandler implements ICommandHandler 
     await this.backgroundJobRepository.save(backgroundJob);
   }
 
-  private async getActiveClients(): Promise<Client[]> {
-    const clientRole = new RoleType(CLIENT_ROLE);
+  private makeSubscriptionExpired(client: Client): void {
+    this.eventBus.publish(new SubscriptionExpired(client.activeSubscriptionId()));
 
-    const filter = UserFilter.create()
-      .withRole(clientRole)
+  }
+
+  private sendExpiredSubscriptionNotification(client: Client): void {}
+
+  private async getActiveClients(): Promise<Client[]> {
+    const filter = ClientFilter.create()
       .isActive(true)
       .withSubscriptionActive(true);
 
     const result = await this.clientRepository.find(filter);
-
-    return result.unwrap();
-  }
-
-  private async getActiveSubscription(client: Client): Promise<Subscription> {
-    const subscriptionFilter = SubscriptionFilter.create()
-      .withClientId(client.id())
-      .isActive(true);
-
-    const result = await this.subscriptionRepository.findOne(subscriptionFilter);
 
     return result.unwrap();
   }
