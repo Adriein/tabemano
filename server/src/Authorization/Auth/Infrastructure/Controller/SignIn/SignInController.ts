@@ -4,6 +4,7 @@ import {
   Controller,
   Post,
   Session,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -14,6 +15,7 @@ import { SignInQuery } from 'Authorization/Auth/Application/SignIn/SignInQuery';
 import { SignInResponse } from 'Authorization/Auth/Application/SignIn/SignInResponse';
 import { SignInApiRequest } from 'Authorization/Auth/Infrastructure/Controller/SignIn/SignInApiRequest';
 import jwt from 'jsonwebtoken';
+import { PermissionGuard } from 'Shared/Infrastructure/Guard/PermissionGuard';
 
 @Controller('/signin')
 export class SignInController {
@@ -21,6 +23,7 @@ export class SignInController {
 
   @Post()
   @UseInterceptors(ClassSerializerInterceptor)
+  @UseGuards(PermissionGuard)
   public async signIn(
     @Body() body: SignInApiRequest,
     @Session() session: any
@@ -35,7 +38,7 @@ export class SignInController {
     >(new GetPermissionsQuery(signInResponse.id));
 
     const permissions = permissionsResponse.map(permission => {
-      return { id: permission.moduleId, name: permission.moduleName };
+      return { name: permission.moduleName, path: permission.modulePath };
     });
 
     session.user = jwt.sign(

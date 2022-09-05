@@ -3,4 +3,5 @@ export type GetPermissionsApiResponse = {
   tenantId: string;
   moduleId: string;
   moduleName: string;
+  modulePath: string;
 };

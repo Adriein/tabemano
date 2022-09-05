@@ -8,7 +8,8 @@ export class PgPermissionMapper implements IMapper<Permission, UserModuleModel> 
       dataModel.id,
       dataModel.tenantId,
       dataModel.moduleId,
-      dataModel.module.name
+      dataModel.module.name,
+      dataModel.module.path
     );
   }
 
@@ -19,6 +20,7 @@ export class PgPermissionMapper implements IMapper<Permission, UserModuleModel> 
     model.tenantId = entity.tenantId();
     model.moduleId = entity.moduleId();
     model.module.name = entity.moduleName();
+    model.module.path = entity.modulePath();
 
     return model;
   }

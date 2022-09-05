@@ -1,8 +1,7 @@
-import { ClassConstructor } from "class-transformer";
-import { DataSource, Repository } from "typeorm";
+import { ClassConstructor } from 'class-transformer';
+import { DataSource, ObjectLiteral, Repository } from 'typeorm';
 
-
-export abstract class TypeOrmRepository<T> {
+export abstract class TypeOrmRepository<T extends ObjectLiteral> {
   protected abstract dataSource: DataSource;
 
   protected abstract entitySchema(): ClassConstructor<T>;

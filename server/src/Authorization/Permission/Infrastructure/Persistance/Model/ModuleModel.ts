@@ -19,6 +19,13 @@ export class ModuleModel {
   })
   name!: Name;
 
+  @Column({
+    name: 'mo_path',
+    type: 'varchar',
+    transformer: new ValueObjectTransformer<string, Name>(Name),
+  })
+  path!: Name;
+
   @Column({ name: 'us_created_at', type: 'timestamp', precision: 0 })
   createdAt!: Date;
 

@@ -6,7 +6,8 @@ export class GetPermissionsResponse {
       permission.id().value,
       permission.tenantId().value,
       permission.moduleId().value,
-      permission.moduleName().value
+      permission.moduleName().value,
+      permission.modulePath().value
     );
   }
 
@@ -14,6 +15,7 @@ export class GetPermissionsResponse {
     readonly id: string,
     readonly tenantId: string,
     readonly moduleId: string,
-    readonly moduleName: string
+    readonly moduleName: string,
+    readonly modulePath: string
   ) {}
 }
