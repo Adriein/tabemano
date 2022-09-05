@@ -26,14 +26,13 @@ export class SignInController {
     @Session() session: any
   ): Promise<SignInResponse> {
     const signInQuery = SignInQuery.fromJson(body);
-    const permissionQuery = GetPermissionsQuery.fromJson(body);
 
     const signInResponse = await this.queryBus.execute<SignInQuery, SignInResponse>(signInQuery);
 
     const permissionsResponse = await this.queryBus.execute<
       GetPermissionsQuery,
       GetPermissionsResponse[]
-    >(permissionQuery);
+    >(new GetPermissionsQuery(signInResponse.id));
 
     const permissions = permissionsResponse.map(permission => {
       return { id: permission.moduleId, name: permission.moduleName };
