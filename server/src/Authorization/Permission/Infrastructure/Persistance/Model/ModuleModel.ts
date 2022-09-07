@@ -1,5 +1,6 @@
 import { ID } from 'Shared/Domain/Vo/Id.vo';
 import { Name } from 'Shared/Domain/Vo/Name.vo';
+import { Url } from 'Shared/Domain/Vo/Url.vo';
 import { ValueObjectTransformer } from 'Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer';
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
@@ -22,9 +23,9 @@ export class ModuleModel {
   @Column({
     name: 'mo_url',
     type: 'simple-array',
-    transformer: new ValueObjectTransformer<string, Name>(Name),
+    transformer: new ValueObjectTransformer<string, Url>(Url),
   })
-  url!: Name[];
+  url!: Url[];
 
   @Column({ name: 'us_created_at', type: 'timestamp', precision: 0 })
   createdAt!: Date;
