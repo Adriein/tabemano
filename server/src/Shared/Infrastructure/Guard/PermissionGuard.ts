@@ -4,7 +4,7 @@ export class PermissionGuard implements CanActivate {
   public canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest();
     
-    const path = request.url;
+    const url = request.url;
 
     if (request.session.user.permissions) {
     }

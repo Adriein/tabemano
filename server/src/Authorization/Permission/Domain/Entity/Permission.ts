@@ -3,8 +3,8 @@ import { ID } from 'Shared/Domain/Vo/Id.vo';
 import { Name } from 'Shared/Domain/Vo/Name.vo';
 
 export class Permission extends AggregateRoot {
-  public static build(tenantId: ID, moduleId: ID, moduleName: Name, modulePath: Name): Permission {
-    return new Permission(ID.generate(), tenantId, moduleId, moduleName, modulePath);
+  public static build(tenantId: ID, moduleId: ID, moduleName: Name, moduleUrl: Name[]): Permission {
+    return new Permission(ID.generate(), tenantId, moduleId, moduleName, moduleUrl);
   }
 
   constructor(
@@ -12,7 +12,7 @@ export class Permission extends AggregateRoot {
     private _tenantId: ID,
     private _moduleId: ID,
     private _moduleName: Name,
-    private _modulePath: Name
+    private _moduleUrl: Name[]
   ) {
     super(_id);
   }
@@ -29,7 +29,7 @@ export class Permission extends AggregateRoot {
     return this._moduleName;
   }
 
-  public modulePath(): Name {
-    return this._modulePath;
+  public moduleUrl(): Name[] {
+    return this._moduleUrl;
   }
 }

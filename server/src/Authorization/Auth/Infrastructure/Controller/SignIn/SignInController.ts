@@ -38,7 +38,7 @@ export class SignInController {
     >(new GetPermissionsQuery(signInResponse.id));
 
     const permissions = permissionsResponse.map(permission => {
-      return { name: permission.moduleName, path: permission.modulePath };
+      return { name: permission.moduleName };
     });
 
     session.user = jwt.sign(

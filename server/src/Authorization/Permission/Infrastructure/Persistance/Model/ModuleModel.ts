@@ -20,11 +20,11 @@ export class ModuleModel {
   name!: Name;
 
   @Column({
-    name: 'mo_path',
-    type: 'varchar',
+    name: 'mo_url',
+    type: 'simple-array',
     transformer: new ValueObjectTransformer<string, Name>(Name),
   })
-  path!: Name;
+  url!: Name[];
 
   @Column({ name: 'us_created_at', type: 'timestamp', precision: 0 })
   createdAt!: Date;

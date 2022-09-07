@@ -2,12 +2,16 @@ import { Permission } from 'Authorization/Permission/Domain/Entity/Permission';
 
 export class GetPermissionsResponse {
   public static fromDomain(permission: Permission): GetPermissionsResponse {
+    const urlList = permission.moduleUrl().map(url => {
+      return url.value;
+    });
+    
     return new GetPermissionsResponse(
       permission.id().value,
       permission.tenantId().value,
       permission.moduleId().value,
       permission.moduleName().value,
-      permission.modulePath().value
+      urlList
     );
   }
 
@@ -16,6 +20,6 @@ export class GetPermissionsResponse {
     readonly tenantId: string,
     readonly moduleId: string,
     readonly moduleName: string,
-    readonly modulePath: string
+    readonly moduleUrl: string[]
   ) {}
 }

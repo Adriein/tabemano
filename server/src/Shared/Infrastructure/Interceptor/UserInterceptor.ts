@@ -26,11 +26,11 @@ export class UserInterceptor implements NestInterceptor {
         this.config.get<string>('JWT_KEY')!
       ) as UserSession;
 
-      const query = GetTenantProfileQuery.fromJson({ email: user.email });
+      const query = new GetTenantProfileQuery(user.email);
 
       const id = await this.queryBus.execute(query);
 
-      request.user = { user, id };
+      request.user = { ...user, id };
     } catch (err) {
       throw err;
     }
