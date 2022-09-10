@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common";
 import { CqrsModule } from "@nestjs/cqrs";
 import { CheckAboutToExpireSubscriptionsCommandHandler } from "Cron/Client/Application/CheckAboutToExpireSubscriptions/CheckAboutToExpireSubscriptionsCommandHandler";
 import { CheckExpiredSubscriptionsCommandHandler } from "Cron/Client/Application/CheckExpiredSubscriptions/CheckExpiredSubscriptionsCommandHandler";
+import { CheckAboutToExpireSubscriptionsController } from "Cron/Client/Infrastructure/Controller/CheckAboutToExpireSubscriptions/CheckAboutToExpireSubscriptionsController";
 import { CheckExpiredSubscriptionsController } from "Cron/Client/Infrastructure/Controller/CheckExpiredSubscriptions/CheckExpiredSubscriptionsController";
 import { PgClientMapper } from "Cron/Client/Infrastructure/Persistance/Mapper/PgClientMapper";
 import { PgClientRepository } from "Cron/Client/Infrastructure/Persistance/Repository/PgClientRepository";
@@ -33,7 +34,8 @@ const Handlers = [
 @Module({
   imports: [ CqrsModule, TypeOrmModule ],
   controllers: [
-    CheckExpiredSubscriptionsController
+    CheckExpiredSubscriptionsController,
+    CheckAboutToExpireSubscriptionsController
   ],
   providers: [
     ...Handlers,

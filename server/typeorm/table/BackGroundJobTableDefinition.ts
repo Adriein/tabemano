@@ -14,11 +14,13 @@ export const BackGroundJobTableDefinition = new Table({
     },
     {
       name: 'bgj_time_ini',
-      type: 'boolean',
+      type: 'timestamp',
+      precision: 0
     },
     {
       name: 'bgj_time_end',
-      type: 'boolean',
+      type: 'timestamp',
+      precision: 0
     },
     {
       name: 'bgj_created_at',
