@@ -7,7 +7,7 @@ export class CheckExpiredSubscriptionsController {
   constructor(private readonly commandBus: CommandBus) {}
 
   @Get()
-  public async signIn(): Promise<void> {
+  public async checkExpiredSubscriptions(): Promise<void> {
     await this.commandBus.execute(new CheckExpiredSubscriptionsCommand());
   }
 }
