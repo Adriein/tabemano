@@ -78,6 +78,10 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
     "collectCoverage": true,
-    "verbose": true
+    "verbose": true,
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ]
   }
 }
