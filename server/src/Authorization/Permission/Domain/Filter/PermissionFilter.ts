@@ -1,9 +1,11 @@
 import { Filter } from 'Shared/Domain/Entities/Filter';
 import { ID } from 'Shared/Domain/Vo/Id.vo';
+import { Name } from 'Shared/Domain/Vo/Name.vo';
 
 export class PermissionFilter extends Filter {
   public static TENANT_ID_FILTER = 'tenantId';
   public static MODULE_ID_FILTER = 'moduleId';
+  public static MODULE_NAME = 'moduleName';
 
   public static create(): PermissionFilter {
     return new PermissionFilter();
@@ -18,6 +20,11 @@ export class PermissionFilter extends Filter {
 
   public withModuleId(id: ID): this {
     this.data.set(PermissionFilter.MODULE_ID_FILTER, id);
+    return this;
+  }
+
+  public withModuleName(name: Name): this {
+    this.data.set(PermissionFilter.MODULE_NAME, name);
     return this;
   }
 

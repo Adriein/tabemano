@@ -15,7 +15,6 @@ import { SignInQuery } from 'Authorization/Auth/Application/SignIn/SignInQuery';
 import { SignInResponse } from 'Authorization/Auth/Application/SignIn/SignInResponse';
 import { SignInApiRequest } from 'Authorization/Auth/Infrastructure/Controller/SignIn/SignInApiRequest';
 import jwt from 'jsonwebtoken';
-import { PermissionGuard } from 'Shared/Infrastructure/Guard/PermissionGuard';
 
 @Controller('/signin')
 export class SignInController {
@@ -23,7 +22,6 @@ export class SignInController {
 
   @Post()
   @UseInterceptors(ClassSerializerInterceptor)
-  @UseGuards(PermissionGuard)
   public async signIn(
     @Body() body: SignInApiRequest,
     @Session() session: any

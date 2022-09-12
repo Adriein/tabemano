@@ -1,24 +1,24 @@
 import { Table } from 'typeorm';
 
-export const ModuleTableDefinition = new Table({
-  name: 'ta_module',
+export const UrlTableDefinition = new Table({
+  name: 'ta_url',
   columns: [
     {
-      name: 'mo_id',
+      name: 'ur_id',
       type: 'varchar',
       isPrimary: true,
     },
     {
-      name: 'mo_name',
+      name: 'ur_url',
       type: 'varchar',
     },
     {
-      name: 'mo_created_at',
+      name: 'ur_created_at',
       type: 'timestamp',
       precision: 0,
     },
     {
-      name: 'mo_updated_at',
+      name: 'ur_updated_at',
       type: 'timestamp',
       precision: 0,
     },

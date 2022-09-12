@@ -5,7 +5,7 @@ export class GetPermissionsResponse {
     const urlList = permission.moduleUrl().map(url => {
       return url.value;
     });
-    
+
     return new GetPermissionsResponse(
       permission.id().value,
       permission.tenantId().value,
