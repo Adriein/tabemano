@@ -3,6 +3,7 @@ import { EventBus } from "@nestjs/cqrs";
 import { Test } from '@nestjs/testing';
 import { CheckExpiredSubscriptionsCommand } from "../../../../../src/Cron/Client/Application/CheckExpiredSubscriptions/CheckExpiredSubscriptionsCommand";
 import { CheckExpiredSubscriptionsCommandHandler } from "../../../../../src/Cron/Client/Application/CheckExpiredSubscriptions/CheckExpiredSubscriptionsCommandHandler";
+import { SubscriptionExpired } from "../../../../../src/Cron/Client/Application/CheckExpiredSubscriptions/SubscriptionExpired";
 import { Client } from "../../../../../src/Cron/Client/Domain/Entity/Client";
 import { PgClientRepository } from "../../../../../src/Cron/Client/Infrastructure/Persistance/Repository/PgClientRepository";
 import { BackGroundJob } from "../../../../../src/Cron/Shared/Domain/Entity/BackGroundJob";
@@ -50,7 +51,6 @@ describe('CheckExpiredSubscriptionsCommandHandler', () => {
     backgroundJobRepository = cronModule.get<PgBackGroundJobRepository>('IBackGroundJobRepository');
     eventBus = cronModule.get<EventBus>(EventBus);
 
-    jest.spyOn(client, 'isActiveSubscriptionExpired');
   });
 
   it('should register a backgroundJob', async () => {
@@ -63,20 +63,19 @@ describe('CheckExpiredSubscriptionsCommandHandler', () => {
   });
 
   it('should check if subscription is already expired', async () => {
+    jest.spyOn(client, 'isActiveSubscriptionExpired');
+
     await handler.execute(new CheckExpiredSubscriptionsCommand());
 
     expect(client.isActiveSubscriptionExpired).toHaveBeenCalledTimes(1);
   });
 
-  it('should mark a subscription as expired', async () => {
+  it('should publish an event of expired subscription', async () => {
+    jest.spyOn(eventBus, 'publish');
 
-  });
+    await handler.execute(new CheckExpiredSubscriptionsCommand());
 
-  it('should send a notification', async () => {
-
-  });
-
-  it('should not send a notification if the client has notifications disabled', async () => {
-
+    expect(eventBus.publish).toHaveBeenCalledTimes(1);
+    expect(eventBus.publish).toBeCalledWith(expect.any(SubscriptionExpired));
   });
 });
