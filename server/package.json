@@ -76,7 +76,7 @@
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "testEnvironment": "node",
-    "verbose": false,
+    "verbose": true,
     "moduleDirectories": [
       "node_modules",
       "src"

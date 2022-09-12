@@ -19,7 +19,26 @@ export class ClientObjectMother {
     return new ClientObjectMother();
   }
 
-  public withSubscription(config: SubscriptionConfigParams): this {
+  public withAboutToExpireSubscription(): this {
+    const paymentDate = Time.subtract(DateVo.now().value, 25);
+    this._subscription = new Subscription(
+      ID.generate(),
+      this._clientId,
+      ID.generate(),
+      new DateVo(paymentDate),
+      new DateVo(Time.add(paymentDate, 30)),
+      true,
+      false,
+      'Mock pricing',
+      30,
+      paymentDate,
+      paymentDate
+    );
+
+    return this;
+  }
+
+  public withExpiredSubscription(config: SubscriptionConfigParams): this {
     const paymentDate = Time.subtract(DateVo.now().value, 40);
     this._subscription = new Subscription(
       ID.generate(),
