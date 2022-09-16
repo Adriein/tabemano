@@ -20,9 +20,9 @@ export class UrlModel {
   })
   url!: Url;
 
-  @Column({ name: 'us_created_at', type: 'timestamp', precision: 0 })
+  @Column({ name: 'ur_created_at', type: 'timestamp', precision: 0 })
   createdAt!: Date;
 
-  @Column({ name: 'us_updated_at', type: 'timestamp', precision: 0 })
+  @Column({ name: 'ur_updated_at', type: 'timestamp', precision: 0 })
   updatedAt!: Date;
 }

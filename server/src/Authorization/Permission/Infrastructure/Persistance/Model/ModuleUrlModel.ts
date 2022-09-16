@@ -5,7 +5,7 @@ import { ModuleModel } from './ModuleModel';
 import { UrlModel } from './UrlModule';
 
 @Entity('ta_module_url')
-export class UserModuleModel {
+export class ModuleUrlModel {
   @PrimaryColumn({
     name: 'mu_id',
     type: 'varchar',
