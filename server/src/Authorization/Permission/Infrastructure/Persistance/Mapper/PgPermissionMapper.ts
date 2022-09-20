@@ -4,10 +4,10 @@ import { UserModuleModel } from '../Model/UserModuleModel';
 
 export class PgPermissionMapper implements IMapper<Permission, UserModuleModel> {
   public toDomain(dataModel: UserModuleModel): Permission {
-    const urlList = dataModel.module.url.map(url => {
+    const urlList = dataModel.module.urlList.map(url => {
       return url;
     });
-    
+
     return new Permission(
       dataModel.id,
       dataModel.tenantId,
@@ -24,7 +24,7 @@ export class PgPermissionMapper implements IMapper<Permission, UserModuleModel> 
     model.tenantId = entity.tenantId();
     model.moduleId = entity.moduleId();
     model.module.name = entity.moduleName();
-    model.module.url = entity.moduleUrl();
+    model.module.urlList = entity.moduleUrl();
 
     return model;
   }

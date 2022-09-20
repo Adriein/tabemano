@@ -15,6 +15,7 @@ export class UserInterceptor implements NestInterceptor {
     context: ExecutionContext,
     next: CallHandler<any>
   ): Promise<Observable<any>> {
+    console.log('USER INTERCEPTOR');
     const request = context.switchToHttp().getRequest();
 
     if (!request.session || !request.session.user) {
@@ -22,6 +23,7 @@ export class UserInterceptor implements NestInterceptor {
     }
 
     try {
+      console.log(`USER INTERCEPTOR -- BEFORE VERIFYING COOKIE`);
       const user = jwt.verify(
         request.session.user,
         this.config.get<string>('JWT_KEY')!
@@ -33,6 +35,8 @@ export class UserInterceptor implements NestInterceptor {
         this.findUserId(user.email),
         this.findUrlList(permissionList),
       ]);
+
+      console.log(`ID -- ${id} //// urlList -- ${urlList}`);
 
       request.user = { ...user, id, urlList };
     } catch (err) {

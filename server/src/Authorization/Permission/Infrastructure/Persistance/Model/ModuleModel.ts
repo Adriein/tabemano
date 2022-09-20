@@ -1,9 +1,9 @@
-import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { ID } from 'Shared/Domain/Vo/Id.vo';
 import { Name } from 'Shared/Domain/Vo/Name.vo';
 import { ValueObjectTransformer } from 'Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer';
-import { ModuleUrlModel } from './ModuleUrlModel';
 import { Url } from 'Shared/Domain/Vo/Url.vo';
+import { UrlModel } from './UrlModule';
 
 @Entity('ta_module')
 export class ModuleModel {
@@ -27,6 +27,6 @@ export class ModuleModel {
   @Column({ name: 'mo_updated_at', type: 'timestamp', precision: 0 })
   updatedAt!: Date;
 
-  @OneToOne(() => ModuleUrlModel, moduleUrl => moduleUrl.url)
-  url!: Url;
+  @OneToMany(() => UrlModel, url => url.module)
+  urlList!: Url[];
 }

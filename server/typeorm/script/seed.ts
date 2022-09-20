@@ -136,42 +136,16 @@ const createAdminSubscription = async (database: DataSource) => {
   });
 };
 
-const createModule = async (database: DataSource) => {
-  const moduleRepository = database.getRepository(ModuleModel);
-
-  await moduleRepository.save({
-    id: ID.generate(),
-    name: new Name('invoices'),
-    createdAt: DateVo.now().value,
-    updatedAt: DateVo.now().value,
-  });
-};
-
-const createUrl = async (database: DataSource) => {
-  const urlRepository = database.getRepository(UrlModel);
-
-  await urlRepository.save({
-    id: ID.generate(),
-    url: new Url('/create/invoice'),
-    createdAt: DateVo.now().value,
-    updatedAt: DateVo.now().value,
-  });
-};
-
 async function seed() {
   const database = await Database.instance().initialize();
 
-  // await createBasicRoles(database);
+  await createBasicRoles(database);
 
-  // await createAdminUser(database);
+  await createAdminUser(database);
 
-  // await createBasicPricing(database);
+  await createBasicPricing(database);
 
-  // await createAdminSubscription(database);
-
-  await createModule(database);
-
-  await createUrl(database);
+  await createAdminSubscription(database);
 }
 
 seed()

@@ -39,6 +39,8 @@ export class SignInController {
       return { name: permission.moduleName };
     });
 
+    console.log(`PERMISSIONS --- ${permissions}`);
+
     session.user = jwt.sign(
       {
         name: signInResponse.name,

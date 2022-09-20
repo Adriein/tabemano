@@ -13,6 +13,10 @@ export const UrlTableDefinition = new Table({
       type: 'varchar',
     },
     {
+      name: 'ur_module_id',
+      type: 'varchar',
+    },
+    {
       name: 'ur_created_at',
       type: 'timestamp',
       precision: 0,

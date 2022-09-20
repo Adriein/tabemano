@@ -29,6 +29,7 @@ export class PgPermissionRepository
 
   public async find(filter: PermissionFilter): Promise<Result<Permission[], Error>> {
     const adapter = new TypeOrmPermissionFilterAdapter(filter);
+
     const results = await this.repository().find(adapter.apply());
 
     return results

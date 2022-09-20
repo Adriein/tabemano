@@ -14,7 +14,7 @@ export class TypeOrmPermissionFilterAdapter extends TypeOrmAdapter<
   public apply(): FindManyOptions<UserModuleModel> {
     const filters = this.filter.apply();
 
-    this.add({ relations: { module: { url: true } } });
+    this.add({ relations: { module: { urlList: true } } });
 
     if (filters.has(PermissionFilter.MODULE_ID_FILTER)) {
       const moduleId = filters.get(PermissionFilter.MODULE_ID_FILTER) as ID;

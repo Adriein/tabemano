@@ -6,7 +6,6 @@ export class ID extends ValueObject {
     super();
 
     if (this.validate(this._value)) {
-      console.log(_value);
       throw new Error('Incorrect ID format');
     }
   }

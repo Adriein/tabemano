@@ -1,6 +1,6 @@
 import { ID } from 'Shared/Domain/Vo/Id.vo';
 import { ValueObjectTransformer } from 'Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer';
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { AuthModel } from '../../../../Auth/Infrastructure/Persistance/Model/AuthModel';
 import { ModuleModel } from './ModuleModel';
 
@@ -20,7 +20,7 @@ export class UserModuleModel {
   })
   tenantId!: ID;
 
-  @OneToOne(() => AuthModel)
+  @ManyToOne(() => AuthModel)
   @JoinColumn({ name: 'um_tenant_id', referencedColumnName: 'id' })
   tenant!: AuthModel;
 
@@ -31,7 +31,7 @@ export class UserModuleModel {
   })
   moduleId!: ID;
 
-  @OneToOne(() => ModuleModel)
-  @JoinColumn({ name: 'um_module_model', referencedColumnName: 'id' })
+  @ManyToOne(() => ModuleModel)
+  @JoinColumn({ name: 'um_module_id', referencedColumnName: 'id' })
   module!: ModuleModel;
 }

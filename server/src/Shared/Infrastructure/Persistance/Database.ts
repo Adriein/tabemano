@@ -1,7 +1,6 @@
 import { AuthModel } from 'Authorization/Auth/Infrastructure/Persistance/Model/AuthModel';
 import { AuthRoleModel } from 'Authorization/Auth/Infrastructure/Persistance/Model/AuthRoleModel';
 import { ModuleModel } from 'Authorization/Permission/Infrastructure/Persistance/Model/ModuleModel';
-import { ModuleUrlModel } from 'Authorization/Permission/Infrastructure/Persistance/Model/ModuleUrlModel';
 import { UrlModel } from 'Authorization/Permission/Infrastructure/Persistance/Model/UrlModule';
 import { UserModuleModel } from 'Authorization/Permission/Infrastructure/Persistance/Model/UserModuleModel';
 import { ClientModel } from 'Backoffice/Client/Infrastructure/Persistance/Model/ClientModel';
@@ -45,7 +44,6 @@ export default class Database {
         ModuleModel,
         UserModuleModel,
         UrlModel,
-        ModuleUrlModel,
       ],
       synchronize: false,
       logging: true,
