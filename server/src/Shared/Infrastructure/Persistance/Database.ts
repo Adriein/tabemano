@@ -2,7 +2,7 @@ import { AuthModel } from 'Authorization/Auth/Infrastructure/Persistance/Model/A
 import { AuthRoleModel } from 'Authorization/Auth/Infrastructure/Persistance/Model/AuthRoleModel';
 import { ModuleModel } from 'Authorization/Permission/Infrastructure/Persistance/Model/ModuleModel';
 import { UrlModel } from 'Authorization/Permission/Infrastructure/Persistance/Model/UrlModule';
-import { UserModuleModel } from 'Authorization/Permission/Infrastructure/Persistance/Model/UserModuleModel';
+import { PermissionModel } from 'Authorization/Permission/Infrastructure/Persistance/Model/PermissionModel';
 import { ClientModel } from 'Backoffice/Client/Infrastructure/Persistance/Model/ClientModel';
 import { PricingModel } from 'Backoffice/Pricing/Infrastructure/Persistance/Model/PricingModel';
 import { RoleModel } from 'Backoffice/Role/Infrastructure/Persistance/Model/RoleModel';
@@ -42,7 +42,7 @@ export default class Database {
         ClientModel,
         BackGroundJobModel,
         ModuleModel,
-        UserModuleModel,
+        PermissionModel,
         UrlModel,
       ],
       synchronize: false,

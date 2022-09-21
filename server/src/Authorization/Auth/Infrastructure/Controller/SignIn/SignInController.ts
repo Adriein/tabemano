@@ -4,7 +4,6 @@ import {
   Controller,
   Post,
   Session,
-  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -39,8 +38,6 @@ export class SignInController {
       return { name: permission.moduleName };
     });
 
-    console.log(`PERMISSIONS --- ${permissions}`);
-
     session.user = jwt.sign(
       {
         name: signInResponse.name,
@@ -49,6 +46,8 @@ export class SignInController {
       },
       this.config.get<string>('JWT_KEY')!
     );
+
+    console.log('REQUEST SESSION', session.user);
 
     return signInResponse;
   }

@@ -1,11 +1,12 @@
 import { Permission } from 'Authorization/Permission/Domain/Entity/Permission';
 import { IMapper } from 'Shared/Domain/Interfaces/IMapper';
-import { UserModuleModel } from '../Model/UserModuleModel';
+import { Url } from 'Shared/Domain/Vo/Url.vo';
+import { PermissionModel } from '../Model/PermissionModel';
 
-export class PgPermissionMapper implements IMapper<Permission, UserModuleModel> {
-  public toDomain(dataModel: UserModuleModel): Permission {
+export class PgPermissionMapper implements IMapper<Permission, PermissionModel> {
+  public toDomain(dataModel: PermissionModel): Permission {
     const urlList = dataModel.module.urlList.map(url => {
-      return url;
+      return url.url;
     });
 
     return new Permission(
@@ -17,14 +18,14 @@ export class PgPermissionMapper implements IMapper<Permission, UserModuleModel> 
     );
   }
 
-  public toModel(entity: Permission): UserModuleModel {
-    const model = new UserModuleModel();
+  public toModel(entity: Permission): PermissionModel {
+    const model = new PermissionModel();
 
     model.id = entity.id();
     model.tenantId = entity.tenantId();
     model.moduleId = entity.moduleId();
     model.module.name = entity.moduleName();
-    model.module.urlList = entity.moduleUrl();
+    // model.module.urlList = entity.moduleUrl();
 
     return model;
   }

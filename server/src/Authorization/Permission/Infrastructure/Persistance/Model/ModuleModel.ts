@@ -2,7 +2,6 @@ import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { ID } from 'Shared/Domain/Vo/Id.vo';
 import { Name } from 'Shared/Domain/Vo/Name.vo';
 import { ValueObjectTransformer } from 'Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer';
-import { Url } from 'Shared/Domain/Vo/Url.vo';
 import { UrlModel } from './UrlModule';
 
 @Entity('ta_module')
@@ -28,5 +27,5 @@ export class ModuleModel {
   updatedAt!: Date;
 
   @OneToMany(() => UrlModel, url => url.module)
-  urlList!: Url[];
+  urlList!: UrlModel[];
 }

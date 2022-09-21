@@ -5,13 +5,11 @@ import { FindTenantClientsResponse } from "Backoffice/Client/Application/FindTen
 import { TabemanoMetadata } from "Backoffice/Shared/Domain/TabemanoMetadata";
 import { TabemanoResponse } from "Backoffice/Shared/Domain/TabemanoResponse";
 import { AuthGuard } from "Shared/Infrastructure/Guard/AuthGuard";
-import { UserInterceptor } from "Shared/Infrastructure/Interceptor/UserInterceptor";
 
 @Controller()
 export class FindTenantClientsController {
   constructor(private readonly queryBus: QueryBus) {}
 
-  @UseInterceptors(UserInterceptor)
   @UseGuards(AuthGuard)
   @Post('/clients')
   public async findTenantClients(

@@ -4,13 +4,11 @@ import { GetClientProfileQuery } from "Backoffice/Client/Application/GetClientPr
 import { TabemanoResponse } from "Backoffice/Shared/Domain/TabemanoResponse";
 import { NextFunction, Request, Response } from "express";
 import { AuthGuard } from "Shared/Infrastructure/Guard/AuthGuard";
-import { UserInterceptor } from "Shared/Infrastructure/Interceptor/UserInterceptor";
 
 @Controller()
 export class GetClientProfileController {
   constructor(private readonly queryBus: QueryBus) {}
 
-  @UseInterceptors(UserInterceptor)
   @UseGuards(AuthGuard)
   @Get('/client/:id/profile')
   public async getClientProfile(

@@ -9,11 +9,11 @@ import { TypeOrmRepository } from 'Shared/Infrastructure/Persistance/Repository/
 import { DataSource } from 'typeorm';
 import { TypeOrmPermissionFilterAdapter } from '../Filter/TypeOrmPermissionFilterAdapter';
 import { PgPermissionMapper } from '../Mapper/PgPermissionMapper';
-import { UserModuleModel } from '../Model/UserModuleModel';
+import { PermissionModel } from '../Model/PermissionModel';
 
 @Injectable()
 export class PgPermissionRepository
-  extends TypeOrmRepository<UserModuleModel>
+  extends TypeOrmRepository<PermissionModel>
   implements IPermissionRepository
 {
   constructor(
@@ -33,7 +33,7 @@ export class PgPermissionRepository
     const results = await this.repository().find(adapter.apply());
 
     return results
-      ? Result.ok(results.map((result: UserModuleModel) => this.mapper.toDomain(result)))
+      ? Result.ok(results.map((result: PermissionModel) => this.mapper.toDomain(result)))
       : Result.err(new RecordNotFoundError());
   }
 
@@ -53,6 +53,6 @@ export class PgPermissionRepository
   }
 
   protected entitySchema() {
-    return UserModuleModel;
+    return PermissionModel;
   }
 }

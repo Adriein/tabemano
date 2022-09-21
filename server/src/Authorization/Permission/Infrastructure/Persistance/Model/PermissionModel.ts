@@ -4,8 +4,8 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { AuthModel } from '../../../../Auth/Infrastructure/Persistance/Model/AuthModel';
 import { ModuleModel } from './ModuleModel';
 
-@Entity('ta_user_module')
-export class UserModuleModel {
+@Entity('ta_permission')
+export class PermissionModel {
   @PrimaryColumn({
     name: 'um_id',
     type: 'varchar',

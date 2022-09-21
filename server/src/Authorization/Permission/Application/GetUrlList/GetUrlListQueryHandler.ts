@@ -15,20 +15,18 @@ export class GetUrlListQueryHandler implements IQueryHandler {
   ) {}
 
   @Log()
-  public async execute(query: GetUrlListQuery): Promise<GetUrlListResponse[]> {
+  public async execute(query: GetUrlListQuery): Promise<GetUrlListResponse> {
     const moduleName = new Name(query.name);
 
-    const permissions = await this.findPermissions(moduleName);
+    const permission = await this.findPermission(moduleName);
 
-    return permissions.map(permission => {
-      return GetUrlListResponse.fromDomain(permission);
-    });
+    return GetUrlListResponse.fromDomain(permission);
   }
 
-  private async findPermissions(name: Name): Promise<Permission[]> {
+  private async findPermission(name: Name): Promise<Permission> {
     const filter = PermissionFilter.create().withModuleName(name);
 
-    const result = await this.repository.find(filter);
+    const result = await this.repository.findOne(filter);
 
     return result.unwrap();
   }
