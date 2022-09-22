@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { RegisterClientCommand } from 'Backoffice/Tenant/Application/RegisterClient/RegisterClientCommand';
 import { RegisterClientApiRequest } from 'Backoffice/Tenant/Infrastructure/Controller/RegisterClient/RegisterClientApiRequest';

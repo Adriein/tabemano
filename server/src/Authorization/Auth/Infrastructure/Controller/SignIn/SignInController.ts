@@ -47,8 +47,6 @@ export class SignInController {
       this.config.get<string>('JWT_KEY')!
     );
 
-    console.log('REQUEST SESSION', session.user);
-
     return signInResponse;
   }
 }

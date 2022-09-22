@@ -21,8 +21,6 @@ export class UserMiddleware implements NestMiddleware {
   constructor(private readonly config: ConfigService, private readonly queryBus: QueryBus) {}
 
   public async use(req: Request, res: Response, next: NextFunction) {
-    console.log('USER MIDDLEWARE');
-
     if (!req.session || !req.session.user) {
       return next();
     }
@@ -30,10 +28,7 @@ export class UserMiddleware implements NestMiddleware {
     try {
       const user = jwt.verify(req.session.user, this.config.get<string>('JWT_KEY')!) as UserSession;
 
-      console.log('USER', user);
-
       const permissionList = user.permissions;
-      console.log('PERMISSION LIST', user.permissions);
 
       const [id, urlList] = await Promise.all([
         this.findUserId(user.email),
@@ -41,8 +36,6 @@ export class UserMiddleware implements NestMiddleware {
       ]);
 
       req.user = { ...user, id, urlList };
-
-      console.log('REQ USER', req.user);
     } catch (err) {
       throw err;
     }
