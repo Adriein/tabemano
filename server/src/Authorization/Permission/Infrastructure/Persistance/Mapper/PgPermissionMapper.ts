@@ -1,6 +1,5 @@
 import { Permission } from 'Authorization/Permission/Domain/Entity/Permission';
 import { IMapper } from 'Shared/Domain/Interfaces/IMapper';
-import { Url } from 'Shared/Domain/Vo/Url.vo';
 import { PermissionModel } from '../Model/PermissionModel';
 
 export class PgPermissionMapper implements IMapper<Permission, PermissionModel> {

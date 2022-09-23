@@ -23,6 +23,6 @@ const Repository = [
 })
 export class InvoiceModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(UserMiddleware).forRoutes('/create/invoice');
+    consumer.apply(UserMiddleware).forRoutes(...Controllers);
   }
 }
