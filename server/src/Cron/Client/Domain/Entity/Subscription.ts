@@ -16,7 +16,7 @@ export class Subscription {
     _createdAt?: Date,
     _updatedAt?: Date
   ) {}
-  
+
   public id(): ID {
     return this._id;
   }
@@ -50,7 +50,7 @@ export class Subscription {
   }
 
   public checkIsExpired = (): boolean => {
-    return Time.equal(Time.now(), this._validTo.value);
+    return Time.before(this._validTo.value, Time.now());
   }
 
   public checkIsAboutToExpire = (daysToWarn: number | undefined = 5): boolean => {

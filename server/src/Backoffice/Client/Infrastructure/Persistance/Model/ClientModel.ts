@@ -1,4 +1,3 @@
-import { PricingModel } from "Backoffice/Pricing/Infrastructure/Persistance/Model/PricingModel";
 import { RoleModel } from "Backoffice/Role/Infrastructure/Persistance/Model/RoleModel";
 import { ConfigModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/ConfigModel";
 import { SubscriptionModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionModel";
@@ -44,7 +43,7 @@ export class ClientModel {
   @OneToOne(() => ConfigModel, { cascade: true })
   @JoinColumn({ name: 'us_config_id', referencedColumnName: 'id' })
   config!: ConfigModel;
-  
+
   @OneToOne(() => RoleModel)
   @JoinColumn({ name: 'us_role_id', referencedColumnName: 'id' })
   role!: RoleModel;

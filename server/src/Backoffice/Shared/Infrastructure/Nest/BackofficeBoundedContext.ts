@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 import { CqrsModule } from "@nestjs/cqrs";
 import { ClientModule } from "Backoffice/Client/Infrastructure/Nest/ClientModule";
+import { NotificationModule } from "Backoffice/Notification/Infrastructure/Nest/NotificationModule";
 import { PricingModule } from "Backoffice/Pricing/Infrastructure/Nest/PricingModule";
 import { RoleModule } from "Backoffice/Role/Infrastructure/Nest/RoleModule";
 import { PgConfigMapper } from "Backoffice/Shared/Infrastructure/Persistance/Mapper/PgConfigMapper";
@@ -15,6 +16,6 @@ const Mappers = [ PgConfigMapper, PgSubscriptionMapper ];
   providers: [
     ...Mappers,
   ],
-  exports: [ CqrsModule, RoleModule, TenantModule, ClientModule, PricingModule ],
+  exports: [ CqrsModule, RoleModule, TenantModule, ClientModule, PricingModule, NotificationModule ],
 })
 export class BackofficeBoundedContext {}
