@@ -3,7 +3,7 @@ import { FilterDto } from "Shared/Application/FilterDto";
 
 export class FindTenantClientsQuery implements IQuery {
   public static fromJson(json: any): FindTenantClientsQuery {
-    return new FindTenantClientsQuery(json.currentUser.id, json.body.page, json.body.quantity, json.body.filters);
+    return new FindTenantClientsQuery(json.user.id, json.body.page, json.body.quantity, json.body.filters);
   }
 
   constructor(

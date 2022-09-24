@@ -1,19 +1,26 @@
-import { DataSource } from "typeorm";
-import { PricingModel } from "../../src/Backoffice/Pricing/Infrastructure/Persistance/Model/PricingModel";
-import { RoleModel } from "../../src/Backoffice/Role/Infrastructure/Persistance/Model/RoleModel";
-import { MONTHLY_PRICING, QUARTERLY_PRICING, YEARLY_PRICING } from "../../src/Backoffice/Shared/constants";
-import { SubscriptionModel } from "../../src/Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionModel";
-import { TenantModel } from "../../src/Backoffice/Tenant/Infrastructure/Persistance/Model/TenantModel";
-import { ADMIN_ROLE, CLIENT_ROLE, TENANT_ROLE } from "../../src/Shared/Domain/constants";
-import { CryptoService } from "../../src/Shared/Domain/Services/CryptoService";
-import { DateVo } from "../../src/Shared/Domain/Vo/Date.vo";
-import { Email } from "../../src/Shared/Domain/Vo/Email.vo";
-import { ID } from "../../src/Shared/Domain/Vo/Id.vo";
-import { Name } from "../../src/Shared/Domain/Vo/Name.vo";
-import { Password } from "../../src/Shared/Domain/Vo/Password.vo";
-import { RoleType } from "../../src/Shared/Domain/Vo/RoleType";
-import { Time } from "../../src/Shared/Infrastructure/Helper/Time";
-import Database from "../../src/Shared/Infrastructure/Persistance/Database";
+import { DataSource } from 'typeorm';
+import { PricingModel } from '../../src/Backoffice/Pricing/Infrastructure/Persistance/Model/PricingModel';
+import { RoleModel } from '../../src/Backoffice/Role/Infrastructure/Persistance/Model/RoleModel';
+import {
+  MONTHLY_PRICING,
+  QUARTERLY_PRICING,
+  YEARLY_PRICING,
+} from '../../src/Backoffice/Shared/constants';
+import { SubscriptionModel } from '../../src/Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionModel';
+import { TenantModel } from '../../src/Backoffice/Tenant/Infrastructure/Persistance/Model/TenantModel';
+import { ADMIN_ROLE, CLIENT_ROLE, TENANT_ROLE } from '../../src/Shared/Domain/constants';
+import { CryptoService } from '../../src/Shared/Domain/Services/CryptoService';
+import { DateVo } from '../../src/Shared/Domain/Vo/Date.vo';
+import { Email } from '../../src/Shared/Domain/Vo/Email.vo';
+import { ID } from '../../src/Shared/Domain/Vo/Id.vo';
+import { Name } from '../../src/Shared/Domain/Vo/Name.vo';
+import { Password } from '../../src/Shared/Domain/Vo/Password.vo';
+import { RoleType } from '../../src/Shared/Domain/Vo/RoleType';
+import { Time } from '../../src/Shared/Infrastructure/Helper/Time';
+import Database from '../../src/Shared/Infrastructure/Persistance/Database';
+import { ModuleModel } from '../../src/Authorization/Permission/Infrastructure/Persistance/Model/ModuleModel';
+import { UrlModel } from '../../src/Authorization/Permission/Infrastructure/Persistance/Model/UrlModule';
+import { Url } from '../../src/Shared/Domain/Vo/Url.vo';
 
 require('dotenv').config();
 
@@ -30,26 +37,27 @@ const createBasicRoles = async (database: DataSource) => {
       id: ID.generate(),
       type: new RoleType(CLIENT_ROLE),
       createdAt: DateVo.now().value,
-      updatedAt: DateVo.now().value
+      updatedAt: DateVo.now().value,
     },
     {
       id: ID.generate(),
       type: new RoleType(TENANT_ROLE),
       createdAt: DateVo.now().value,
-      updatedAt: DateVo.now().value
+      updatedAt: DateVo.now().value,
     },
     {
       id: adminRoleId,
       type: new RoleType(ADMIN_ROLE),
       createdAt: DateVo.now().value,
-      updatedAt: DateVo.now().value
+      updatedAt: DateVo.now().value,
     },
   ]);
-}
+};
 
 const createAdminUser = async (database: DataSource) => {
   const userRepository = database.getRepository(TenantModel);
   const password = await crypto.hash(process.env.ADMIN_PASSWORD!);
+  const configId = ID.generate();
 
   await userRepository.save({
     id: id,
@@ -58,21 +66,21 @@ const createAdminUser = async (database: DataSource) => {
     password: new Password(password),
     tenantId: id,
     roleId: adminRoleId,
+    configId: configId,
     isActive: true,
     config: {
-      id: ID.generate(),
+      id: configId,
       userId: id,
       sendNotifications: true,
       sendWarnings: true,
       lang: 'ES',
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: DateVo.now().value,
+      updatedAt: DateVo.now().value,
     },
     createdAt: DateVo.now().value,
-    updatedAt: DateVo.now().value
+    updatedAt: DateVo.now().value,
   });
-
-}
+};
 
 const createBasicPricing = async (database: DataSource) => {
   const pricingRepository = database.getRepository(PricingModel);
@@ -85,7 +93,7 @@ const createBasicPricing = async (database: DataSource) => {
       price: 1000,
       duration: 365,
       createdAt: DateVo.now().value,
-      updatedAt: DateVo.now().value
+      updatedAt: DateVo.now().value,
     },
     {
       id: ID.generate(),
@@ -94,7 +102,7 @@ const createBasicPricing = async (database: DataSource) => {
       price: 50,
       duration: 30,
       createdAt: DateVo.now().value,
-      updatedAt: DateVo.now().value
+      updatedAt: DateVo.now().value,
     },
     {
       id: ID.generate(),
@@ -103,10 +111,10 @@ const createBasicPricing = async (database: DataSource) => {
       price: 150,
       duration: 90,
       createdAt: DateVo.now().value,
-      updatedAt: DateVo.now().value
-    }
+      updatedAt: DateVo.now().value,
+    },
   ]);
-}
+};
 
 const createAdminSubscription = async (database: DataSource) => {
   const subscriptionRepository = database.getRepository(SubscriptionModel);
@@ -126,10 +134,9 @@ const createAdminSubscription = async (database: DataSource) => {
     createdAt: DateVo.now().value,
     updatedAt: DateVo.now().value,
   });
-}
+};
 
 async function seed() {
-
   const database = await Database.instance().initialize();
 
   await createBasicRoles(database);
@@ -139,14 +146,13 @@ async function seed() {
   await createBasicPricing(database);
 
   await createAdminSubscription(database);
-
 }
 
 seed()
-  .catch((error) => {
-    console.error(error)
-    process.exit(1)
+  .catch(error => {
+    console.error(error);
+    process.exit(1);
   })
   .finally(async () => {
     console.error('FINISH SEEDING DB');
-  })
+  });

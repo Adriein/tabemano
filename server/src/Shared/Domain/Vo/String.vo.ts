@@ -1,20 +1,20 @@
-import { StringFormatError } from "Shared/Domain/Error/StringFormatError";
-import { ValueObject } from "Shared/Domain/Vo/ValueObject";
-import { z } from "zod";
+import { StringFormatError } from 'Shared/Domain/Error/StringFormatError';
+import { ValueObject } from 'Shared/Domain/Vo/ValueObject';
+import { z } from 'zod';
 
 export class StringVo extends ValueObject {
   constructor(private readonly _value: string) {
     super();
-    this.validate(_value);
+    this.validate();
   }
 
-  protected validate(primitive: any): boolean {
+  protected validate(): boolean {
     const string = z.string();
     try {
       string.parse(this._value);
 
       return true;
-    }catch(error) {
+    } catch (error) {
       throw new StringFormatError();
     }
   }
@@ -22,5 +22,4 @@ export class StringVo extends ValueObject {
   get value(): string {
     return this._value;
   }
-
 }
