@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { MiddlewareConsumer, Module } from "@nestjs/common";
 import { CqrsModule } from "@nestjs/cqrs";
 import { ClientRegisteredDomainEventHandler } from "Backoffice/Client/Application/CreateClient/ClientRegisteredDomainEventHandler";
 import { FindTenantClientsQueryHandler } from "Backoffice/Client/Application/FindTenantClients/FindTenantClientsQueryHandler";
@@ -10,6 +10,7 @@ import { PgClientRepository } from "Backoffice/Client/Infrastructure/Persistance
 import { PgSubscriptionMapper } from "Backoffice/Shared/Infrastructure/Persistance/Mapper/PgSubscriptionMapper";
 import { PgSubscriptionRepository } from "Backoffice/Shared/Infrastructure/Persistance/Repository/PgSubscriptionRepository";
 import { UserFilterFactory } from "Backoffice/Tenant/Infrastructure/UserFilterFactory";
+import { UserMiddleware } from "Shared/Infrastructure/Middlewares/user";
 import { TypeOrmModule } from "Shared/Infrastructure/Persistance/TypeOrmModule";
 
 const Handlers = [
@@ -54,4 +55,8 @@ const Controllers = [ GetClientProfileController, FindTenantClientsController ]
   ],
   exports: [],
 })
-export class ClientModule {}
+export class ClientModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(UserMiddleware).forRoutes(...Controllers)
+  }
+}

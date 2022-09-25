@@ -3,7 +3,7 @@ import { EventBus, EventsHandler, IEventHandler } from "@nestjs/cqrs";
 import { TenantRegisteredDomainEvent } from "Authorization/Auth/Application/RegisterTenant/TenantRegisteredDomainEvent";
 import { ISubscriptionRepository } from "Backoffice/Shared/Domain/Subscription/ISubscriptionRepository";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
-import { DefaultPricesCreatedDomainEvent } from "Backoffice/Tenant/Application/CreateTenant/DefaultPricesCreatedDomainEvent";
+import { TenantCreatedDomainEvent } from "Backoffice/Tenant/Application/CreateTenant/TenantCreatedDomainEvent";
 import { ITenantRepository } from "Backoffice/Tenant/Domain/Repository/ITenantRepository";
 import { Tenant } from "Backoffice/Tenant/Domain/Entity/Tenant";
 import { Roles } from "Shared/Domain/constants";
@@ -36,7 +36,7 @@ export class CreateTenantDomainEventHandler implements IEventHandler {
 
     await this.subscriptionRepository.save(subscription);
 
-    this.eventBus.publish(new DefaultPricesCreatedDomainEvent(tenant.id()));
+    this.eventBus.publish(new TenantCreatedDomainEvent(tenant.id()));
   }
 
   private async findAdmin(): Promise<Tenant> {

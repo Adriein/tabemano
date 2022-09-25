@@ -10,5 +10,4 @@ export class SendGridSmtpService implements ISmtpService {
   public async send(email: Email): Promise<void> {
     return Promise.resolve(undefined);
   }
-
 }
