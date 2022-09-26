@@ -1,7 +1,7 @@
-import { ClientModel } from "Backoffice/Client/Infrastructure/Persistance/Model/ClientModel";
 import { SubscriptionEventModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionEventModel";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
+import { UserModel } from "Shared/Infrastructure/Persistance/Model/UserModel";
 import { ValueObjectTransformer } from "Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn } from "typeorm";
 
@@ -64,10 +64,10 @@ export class SubscriptionModel {
   )
   events!: SubscriptionEventModel[];
 
-  @ManyToOne(() => ClientModel, (user: ClientModel) => user.subscriptions)
+  @ManyToOne(() => UserModel, (user: UserModel) => user.subscriptions)
   @JoinColumn({
     name: 'su_user_id',
     referencedColumnName: 'id'
   })
-  user!: ClientModel;
+  user!: UserModel;
 }

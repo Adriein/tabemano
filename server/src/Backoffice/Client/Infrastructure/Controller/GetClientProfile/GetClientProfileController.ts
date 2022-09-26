@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards, UseInterceptors } from "@nestjs/common";
+import { Controller, Get, UseGuards } from "@nestjs/common";
 import { QueryBus } from "@nestjs/cqrs";
 import { GetClientProfileQuery } from "Backoffice/Client/Application/GetClientProfile/GetClientProfileQuery";
 import { TabemanoResponse } from "Backoffice/Shared/Domain/TabemanoResponse";

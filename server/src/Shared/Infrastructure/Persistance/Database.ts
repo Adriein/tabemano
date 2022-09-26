@@ -1,17 +1,13 @@
-import { AuthModel } from 'Authorization/Auth/Infrastructure/Persistance/Model/AuthModel';
-import { AuthRoleModel } from 'Authorization/Auth/Infrastructure/Persistance/Model/AuthRoleModel';
 import { ModuleModel } from 'Authorization/Permission/Infrastructure/Persistance/Model/ModuleModel';
 import { UrlModel } from 'Authorization/Permission/Infrastructure/Persistance/Model/UrlModule';
 import { PermissionModel } from 'Authorization/Permission/Infrastructure/Persistance/Model/PermissionModel';
-import { ClientModel } from 'Backoffice/Client/Infrastructure/Persistance/Model/ClientModel';
 import { PricingModel } from 'Backoffice/Pricing/Infrastructure/Persistance/Model/PricingModel';
-import { RoleModel } from 'Backoffice/Role/Infrastructure/Persistance/Model/RoleModel';
+import { RoleModel } from 'Shared/Infrastructure/Persistance/Model/RoleModel';
 import { ConfigModel } from 'Backoffice/Shared/Infrastructure/Persistance/Model/ConfigModel';
 import { SubscriptionEventModel } from 'Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionEventModel';
 import { SubscriptionModel } from 'Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionModel';
-import { TenantModel } from 'Backoffice/Tenant/Infrastructure/Persistance/Model/TenantModel';
-import { CronClientModel } from 'Cron/Client/Infrastructure/Persistance/Model/CronClientModel';
 import { BackGroundJobModel } from 'Cron/Shared/Infrastructure/Persistance/Model/BackGroundJobModel';
+import { UserModel } from "Shared/Infrastructure/Persistance/Model/UserModel";
 import { DataSource } from 'typeorm';
 
 export default class Database {
@@ -32,14 +28,11 @@ export default class Database {
       database: process.env.DATABASE_NAME,
       entities: [
         RoleModel,
-        TenantModel,
+        UserModel,
         ConfigModel,
         PricingModel,
         SubscriptionModel,
         SubscriptionEventModel,
-        AuthModel,
-        AuthRoleModel,
-        ClientModel,
         BackGroundJobModel,
         ModuleModel,
         PermissionModel,

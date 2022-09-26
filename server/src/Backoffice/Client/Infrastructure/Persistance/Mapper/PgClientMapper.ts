@@ -1,12 +1,12 @@
-import { ClientModel } from "Backoffice/Client/Infrastructure/Persistance/Model/ClientModel";
 import { Client } from "Backoffice/Shared/Domain/Client/Client";
 import { Config } from "Backoffice/Shared/Domain/Config/Config";
 import { ConfigModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/ConfigModel";
 import { IMapper } from "Shared/Domain/Interfaces/IMapper";
+import { UserModel } from "Shared/Infrastructure/Persistance/Model/UserModel";
 
 
-export class PgClientMapper implements IMapper<Client, ClientModel> {
-  public toDomain(dataModel: ClientModel): Client {
+export class PgClientMapper implements IMapper<Client, UserModel> {
+  public toDomain(dataModel: UserModel): Client {
     const config = new Config(
       dataModel.config.id,
       dataModel.config.userId,
@@ -31,8 +31,8 @@ export class PgClientMapper implements IMapper<Client, ClientModel> {
     );
   }
 
-  public toModel(entity: Client): ClientModel {
-    const model = new ClientModel();
+  public toModel(entity: Client): UserModel {
+    const model = new UserModel();
     const modelConfig = new ConfigModel();
 
     model.id = entity.id();
@@ -52,7 +52,7 @@ export class PgClientMapper implements IMapper<Client, ClientModel> {
     modelConfig.sendNotifications = entity.canSendNotifications();
     modelConfig.createdAt = entity.createdAt();
     modelConfig.updatedAt = entity.updatedAt();
-    
+
     model.config = modelConfig;
 
     return model;

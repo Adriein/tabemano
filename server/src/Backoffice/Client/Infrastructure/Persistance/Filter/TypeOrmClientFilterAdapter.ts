@@ -1,4 +1,3 @@
-import { ClientModel } from "Backoffice/Client/Infrastructure/Persistance/Model/ClientModel";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
 import { Pagination } from "Shared/Domain/Entities/Pagination";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
@@ -6,14 +5,15 @@ import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { RoleType } from "Shared/Domain/Vo/RoleType";
 import { TypeOrmAdapter } from "Shared/Infrastructure/Persistance/Adapter/TypeOrmAdapter";
+import { UserModel } from "Shared/Infrastructure/Persistance/Model/UserModel";
 import { FindManyOptions } from "typeorm";
 
-export class TypeOrmClientFilterAdapter extends TypeOrmAdapter<FindManyOptions<ClientModel>> {
+export class TypeOrmClientFilterAdapter extends TypeOrmAdapter<FindManyOptions<UserModel>> {
   constructor(private readonly filter: UserFilter) {
     super();
   }
 
-  public apply(): FindManyOptions<ClientModel> {
+  public apply(): FindManyOptions<UserModel> {
     const filters = this.filter.apply();
 
     if (filters.has(UserFilter.ID_FILTER)) {

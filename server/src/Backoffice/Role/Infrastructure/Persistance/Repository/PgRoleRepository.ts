@@ -5,7 +5,7 @@ import { RoleFilter } from "Backoffice/Role/Domain/Entity/RoleFilter";
 import { IRoleRepository } from "Backoffice/Role/Domain/Repository/IRoleRepository";
 import { TypeOrmRoleFilterAdapter } from "Backoffice/Role/Infrastructure/Persistance/Filter/TypeOrmRoleFilterAdapter";
 import { PgRoleMapper } from "Backoffice/Role/Infrastructure/Persistance/Mapper/PgRoleMapper";
-import { RoleModel } from "Backoffice/Role/Infrastructure/Persistance/Model/RoleModel";
+import { RoleModel } from "Shared/Infrastructure/Persistance/Model/RoleModel";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
 import Database from "Shared/Infrastructure/Persistance/Database";
 import { TypeOrmRepository } from "Shared/Infrastructure/Persistance/Repository/TypeOrmRepository";
