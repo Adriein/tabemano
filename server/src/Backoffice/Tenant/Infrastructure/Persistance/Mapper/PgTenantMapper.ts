@@ -2,11 +2,11 @@ import { Config } from "Backoffice/Shared/Domain/Config/Config";
 import { PricingCollection } from "Backoffice/Shared/Domain/Pricing/PricingCollection";
 import { AppConfig } from "Backoffice/Tenant/Domain/Entity/AppConfig";
 import { Tenant } from "Backoffice/Tenant/Domain/Entity/Tenant";
-import { TenantModel } from "Backoffice/Tenant/Infrastructure/Persistance/Model/TenantModel";
 import { IMapper } from "Shared/Domain/Interfaces/IMapper";
+import { UserModel } from "Shared/Infrastructure/Persistance/Model/UserModel";
 
-export class PgTenantMapper implements IMapper<Tenant, TenantModel> {
-  public toDomain(dataModel: TenantModel): Tenant {
+export class PgTenantMapper implements IMapper<Tenant, UserModel> {
+  public toDomain(dataModel: UserModel): Tenant {
     const config = new Config(
       dataModel.config.id,
       dataModel.config.userId,
@@ -33,8 +33,8 @@ export class PgTenantMapper implements IMapper<Tenant, TenantModel> {
     );
   }
 
-  public toModel(entity: Tenant): TenantModel {
-    const model = new TenantModel();
+  public toModel(entity: Tenant): UserModel {
+    const model = new UserModel();
 
     model.id = entity.id();
     model.tenantId = entity.tenantId();

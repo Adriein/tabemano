@@ -5,14 +5,14 @@ import { RoleFilter } from "Authorization/Auth/Domain/Filter/RoleFilter";
 import { IRoleRepository } from "Authorization/Auth/Domain/Repository/IRoleRepository";
 import { TypeOrmRoleFilterAdapter } from "Authorization/Auth/Infrastructure/Persistance/Filter/TypeOrmRoleFilterAdapter";
 import { PgRoleMapper } from "Authorization/Auth/Infrastructure/Persistance/Mapper/PgRoleMapper";
-import { AuthRoleModel } from "Authorization/Auth/Infrastructure/Persistance/Model/AuthRoleModel";
+import { RoleModel } from "Shared/Infrastructure/Persistance/Model/RoleModel";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
 import Database from "Shared/Infrastructure/Persistance/Database";
 import { TypeOrmRepository } from "Shared/Infrastructure/Persistance/Repository/TypeOrmRepository";
 import { DataSource } from "typeorm";
 
 @Injectable()
-export class PgRoleRepository extends TypeOrmRepository<AuthRoleModel> implements IRoleRepository {
+export class PgRoleRepository extends TypeOrmRepository<RoleModel> implements IRoleRepository {
   constructor(
     @Inject(Database.DATABASE_CONNECTION)
     protected readonly dataSource: DataSource,
@@ -45,6 +45,6 @@ export class PgRoleRepository extends TypeOrmRepository<AuthRoleModel> implement
   }
 
   protected entitySchema() {
-    return AuthRoleModel;
+    return RoleModel;
   }
 }

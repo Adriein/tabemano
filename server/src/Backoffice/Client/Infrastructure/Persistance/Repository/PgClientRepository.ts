@@ -4,14 +4,14 @@ import { PgClientMapper } from "Backoffice/Client/Infrastructure/Persistance/Map
 import { Client } from "Backoffice/Shared/Domain/Client/Client";
 import { IClientRepository } from "Backoffice/Client/Domain/Repository/IClientRepository";
 import { TypeOrmClientFilterAdapter } from "Backoffice/Client/Infrastructure/Persistance/Filter/TypeOrmClientFilterAdapter";
-import { ClientModel } from "Backoffice/Client/Infrastructure/Persistance/Model/ClientModel";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
 import Database from "Shared/Infrastructure/Persistance/Database";
+import { UserModel } from "Shared/Infrastructure/Persistance/Model/UserModel";
 import { TypeOrmRepository } from "Shared/Infrastructure/Persistance/Repository/TypeOrmRepository";
 import { DataSource } from "typeorm";
 
-export class PgClientRepository extends TypeOrmRepository<ClientModel> implements IClientRepository {
+export class PgClientRepository extends TypeOrmRepository<UserModel> implements IClientRepository {
   constructor(
     @Inject(Database.DATABASE_CONNECTION)
     protected readonly dataSource: DataSource,
@@ -29,7 +29,7 @@ export class PgClientRepository extends TypeOrmRepository<ClientModel> implement
       const adapter = new TypeOrmClientFilterAdapter(filter);
       const results = await this.repository().find(adapter.apply());
 
-      return Result.ok(results.map((result: ClientModel) => this.mapper.toDomain(result)));
+      return Result.ok(results.map((result: UserModel) => this.mapper.toDomain(result)));
     } catch (error) {
       return Result.err(error as Error)
     }
@@ -55,7 +55,7 @@ export class PgClientRepository extends TypeOrmRepository<ClientModel> implement
   }
 
   protected entitySchema() {
-    return ClientModel;
+    return UserModel;
   }
 
 }

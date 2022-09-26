@@ -1,16 +1,16 @@
 import { AuthFilter } from "Authorization/Auth/Domain/Filter/AuthFilter";
-import { AuthModel } from "Authorization/Auth/Infrastructure/Persistance/Model/AuthModel";
 import { Pagination } from "Shared/Domain/Entities/Pagination";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { TypeOrmAdapter } from "Shared/Infrastructure/Persistance/Adapter/TypeOrmAdapter";
+import { UserModel } from "Shared/Infrastructure/Persistance/Model/UserModel";
 import { FindManyOptions } from "typeorm";
 
-export class TypeOrmAuthFilterAdapter extends TypeOrmAdapter<FindManyOptions<AuthModel>> {
+export class TypeOrmAuthFilterAdapter extends TypeOrmAdapter<FindManyOptions<UserModel>> {
   constructor(private readonly filter: AuthFilter) {
     super();
   }
 
-  public apply(): FindManyOptions<AuthModel> {
+  public apply(): FindManyOptions<UserModel> {
     const filters = this.filter.apply();
 
     if (filters.has(AuthFilter.EMAIL_FILTER)) {

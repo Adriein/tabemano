@@ -1,9 +1,9 @@
 import { Role } from "Authorization/Auth/Domain/Entity/Role";
-import { AuthRoleModel } from "Authorization/Auth/Infrastructure/Persistance/Model/AuthRoleModel";
+import { RoleModel } from "Shared/Infrastructure/Persistance/Model/RoleModel";
 import { IMapper } from "Shared/Domain/Interfaces/IMapper";
 
-export class PgRoleMapper implements IMapper<Role, AuthRoleModel> {
-  public toDomain(dataModel: AuthRoleModel): Role {
+export class PgRoleMapper implements IMapper<Role, RoleModel> {
+  public toDomain(dataModel: RoleModel): Role {
     return new Role(
       dataModel.id,
       dataModel.type,
@@ -12,7 +12,7 @@ export class PgRoleMapper implements IMapper<Role, AuthRoleModel> {
     );
   }
 
-  public toModel(entity: Role): AuthRoleModel {
+  public toModel(entity: Role): RoleModel {
     throw new Error();
   }
 }

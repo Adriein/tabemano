@@ -1,8 +1,7 @@
 import { PricingModel } from "../../src/Backoffice/Pricing/Infrastructure/Persistance/Model/PricingModel";
-import { RoleModel } from "../../src/Backoffice/Role/Infrastructure/Persistance/Model/RoleModel";
+import { RoleModel } from "../../src/Shared/Infrastructure/Persistance/Model/RoleModel";
 import { SUBSCRIPTION_STATUS } from "../../src/Backoffice/Shared/constants";
 import { SubscriptionModel } from "../../src/Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionModel";
-import { TenantModel } from "../../src/Backoffice/Tenant/Infrastructure/Persistance/Model/TenantModel";
 import { CLIENT_ROLE } from "../../src/Shared/Domain/constants";
 import { CryptoService } from "../../src/Shared/Domain/Services/CryptoService";
 import { DateVo } from "../../src/Shared/Domain/Vo/Date.vo";
@@ -13,6 +12,7 @@ import { Password } from "../../src/Shared/Domain/Vo/Password.vo";
 import { RoleType } from "../../src/Shared/Domain/Vo/RoleType";
 import { Time } from "../../src/Shared/Infrastructure/Helper/Time";
 import Database from "../../src/Shared/Infrastructure/Persistance/Database";
+import { UserModel } from "../../src/Shared/Infrastructure/Persistance/Model/UserModel";
 import { fakeData } from './dev-data';
 
 require('dotenv').config();
@@ -25,7 +25,7 @@ async function main() {
 
   const database = await Database.instance().initialize();
 
-  const userRepository = database.getRepository(TenantModel);
+  const userRepository = database.getRepository(UserModel);
   const roleRepository = database.getRepository(RoleModel);
   const pricingRepository = database.getRepository(PricingModel);
   const subscriptionRepository = database.getRepository(SubscriptionModel);

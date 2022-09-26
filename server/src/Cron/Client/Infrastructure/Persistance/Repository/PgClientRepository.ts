@@ -1,19 +1,18 @@
 import { Result } from "@badrap/result";
 import { Inject } from "@nestjs/common";
-import { ClientModel } from "Backoffice/Client/Infrastructure/Persistance/Model/ClientModel";
 import { ClassConstructor } from "class-transformer";
 import { Client } from "Cron/Client/Domain/Entity/Client";
 import { ClientFilter } from "Cron/Client/Domain/Filter/ClientFilter";
 import { IClientRepository } from "Cron/Client/Domain/Repository/IClientRepository";
 import { TypeOrmClientFilterAdapter } from "Cron/Client/Infrastructure/Persistance/Filter/TypeOrmClientFilterAdapter";
 import { PgClientMapper } from "Cron/Client/Infrastructure/Persistance/Mapper/PgClientMapper";
-import { CronClientModel } from "Cron/Client/Infrastructure/Persistance/Model/CronClientModel";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
 import Database from "Shared/Infrastructure/Persistance/Database";
+import { UserModel } from "Shared/Infrastructure/Persistance/Model/UserModel";
 import { TypeOrmRepository } from "Shared/Infrastructure/Persistance/Repository/TypeOrmRepository";
 import { DataSource } from "typeorm";
 
-export class PgClientRepository extends TypeOrmRepository<ClientModel> implements IClientRepository {
+export class PgClientRepository extends TypeOrmRepository<UserModel> implements IClientRepository {
   constructor(
     @Inject(Database.DATABASE_CONNECTION)
     protected readonly dataSource: DataSource,
@@ -32,7 +31,7 @@ export class PgClientRepository extends TypeOrmRepository<ClientModel> implement
 
       const results = await this.repository().find(adapter.apply());
 
-      return Result.ok(results.map((model: ClientModel) => this.mapper.toDomain(model)))
+      return Result.ok(results.map((model: UserModel) => this.mapper.toDomain(model)))
     } catch (error) {
       return Result.err(error as Error);
     }
@@ -50,8 +49,8 @@ export class PgClientRepository extends TypeOrmRepository<ClientModel> implement
     throw new Error()
   }
 
-  protected entitySchema(): ClassConstructor<ClientModel> {
-    return ClientModel;
+  protected entitySchema(): ClassConstructor<UserModel> {
+    return UserModel;
   }
 
 }

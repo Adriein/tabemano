@@ -1,17 +1,17 @@
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
-import { TenantModel } from "Backoffice/Tenant/Infrastructure/Persistance/Model/TenantModel";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { RoleType } from "Shared/Domain/Vo/RoleType";
 import { TypeOrmAdapter } from "Shared/Infrastructure/Persistance/Adapter/TypeOrmAdapter";
+import { UserModel } from "Shared/Infrastructure/Persistance/Model/UserModel";
 import { FindManyOptions } from "typeorm";
 
-export class TypeOrmTenantFilterAdapter extends TypeOrmAdapter<FindManyOptions<TenantModel>> {
+export class TypeOrmTenantFilterAdapter extends TypeOrmAdapter<FindManyOptions<UserModel>> {
   constructor(private readonly filter: UserFilter) {
     super();
   }
 
-  public apply(): FindManyOptions<TenantModel> {
+  public apply(): FindManyOptions<UserModel> {
     const filters = this.filter.apply();
 
     if (filters.has(UserFilter.ID_FILTER)) {

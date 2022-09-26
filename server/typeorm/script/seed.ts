@@ -1,13 +1,12 @@
 import { DataSource } from 'typeorm';
 import { PricingModel } from '../../src/Backoffice/Pricing/Infrastructure/Persistance/Model/PricingModel';
-import { RoleModel } from '../../src/Backoffice/Role/Infrastructure/Persistance/Model/RoleModel';
+import { RoleModel } from '../../src/Shared/Infrastructure/Persistance/Model/RoleModel';
 import {
   MONTHLY_PRICING,
   QUARTERLY_PRICING,
   YEARLY_PRICING,
 } from '../../src/Backoffice/Shared/constants';
 import { SubscriptionModel } from '../../src/Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionModel';
-import { TenantModel } from '../../src/Backoffice/Tenant/Infrastructure/Persistance/Model/TenantModel';
 import { ADMIN_ROLE, CLIENT_ROLE, TENANT_ROLE } from '../../src/Shared/Domain/constants';
 import { CryptoService } from '../../src/Shared/Domain/Services/CryptoService';
 import { DateVo } from '../../src/Shared/Domain/Vo/Date.vo';
@@ -18,9 +17,7 @@ import { Password } from '../../src/Shared/Domain/Vo/Password.vo';
 import { RoleType } from '../../src/Shared/Domain/Vo/RoleType';
 import { Time } from '../../src/Shared/Infrastructure/Helper/Time';
 import Database from '../../src/Shared/Infrastructure/Persistance/Database';
-import { ModuleModel } from '../../src/Authorization/Permission/Infrastructure/Persistance/Model/ModuleModel';
-import { UrlModel } from '../../src/Authorization/Permission/Infrastructure/Persistance/Model/UrlModule';
-import { Url } from '../../src/Shared/Domain/Vo/Url.vo';
+import { UserModel } from "../../src/Shared/Infrastructure/Persistance/Model/UserModel";
 
 require('dotenv').config();
 
@@ -55,7 +52,7 @@ const createBasicRoles = async (database: DataSource) => {
 };
 
 const createAdminUser = async (database: DataSource) => {
-  const userRepository = database.getRepository(TenantModel);
+  const userRepository = database.getRepository(UserModel);
   const password = await crypto.hash(process.env.ADMIN_PASSWORD!);
   const configId = ID.generate();
 

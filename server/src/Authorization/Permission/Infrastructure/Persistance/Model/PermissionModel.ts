@@ -1,7 +1,7 @@
 import { ID } from 'Shared/Domain/Vo/Id.vo';
+import { UserModel } from "Shared/Infrastructure/Persistance/Model/UserModel";
 import { ValueObjectTransformer } from 'Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
-import { AuthModel } from '../../../../Auth/Infrastructure/Persistance/Model/AuthModel';
 import { ModuleModel } from './ModuleModel';
 
 @Entity('ta_permission')
@@ -20,9 +20,9 @@ export class PermissionModel {
   })
   tenantId!: ID;
 
-  @ManyToOne(() => AuthModel)
+  @ManyToOne(() => UserModel)
   @JoinColumn({ name: 'um_tenant_id', referencedColumnName: 'id' })
-  tenant!: AuthModel;
+  tenant!: UserModel;
 
   @Column({
     name: 'um_module_id',

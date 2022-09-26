@@ -5,14 +5,14 @@ import { ITenantRepository } from "Backoffice/Tenant/Domain/Repository/ITenantRe
 import { Tenant } from "Backoffice/Tenant/Domain/Entity/Tenant";
 import { TypeOrmTenantFilterAdapter } from "Backoffice/Tenant/Infrastructure/Persistance/Filter/TypeOrmTenantFilterAdapter";
 import { PgTenantMapper } from "Backoffice/Tenant/Infrastructure/Persistance/Mapper/PgTenantMapper";
-import { TenantModel } from "Backoffice/Tenant/Infrastructure/Persistance/Model/TenantModel";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
 import Database from "Shared/Infrastructure/Persistance/Database";
+import { UserModel } from "Shared/Infrastructure/Persistance/Model/UserModel";
 import { TypeOrmRepository } from "Shared/Infrastructure/Persistance/Repository/TypeOrmRepository";
 import { DataSource } from "typeorm";
 
 @Injectable()
-export class PgTenantRepository extends TypeOrmRepository<TenantModel> implements ITenantRepository {
+export class PgTenantRepository extends TypeOrmRepository<UserModel> implements ITenantRepository {
   constructor(
     @Inject(Database.DATABASE_CONNECTION)
     protected readonly dataSource: DataSource,
@@ -48,7 +48,7 @@ export class PgTenantRepository extends TypeOrmRepository<TenantModel> implement
   }
 
   protected entitySchema() {
-    return TenantModel;
+    return UserModel;
   }
 
 }
