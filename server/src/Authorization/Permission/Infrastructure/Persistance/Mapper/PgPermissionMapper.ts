@@ -23,7 +23,7 @@ export class PgPermissionMapper implements IMapper<Permission, PermissionModel> 
     model.id = entity.id();
     model.tenantId = entity.tenantId();
     model.moduleId = entity.moduleId();
-    model.module.name = entity.moduleName();
+    // model.module.name = entity.moduleName();
     // model.module.urlList = entity.moduleUrl();
 
     return model;
