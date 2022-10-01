@@ -1,4 +1,3 @@
-import { PricingModel } from "Backoffice/Pricing/Infrastructure/Persistance/Model/PricingModel";
 import { RoleModel } from "Shared/Infrastructure/Persistance/Model/RoleModel";
 import { ConfigModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/ConfigModel";
 import { SubscriptionModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionModel";
@@ -51,7 +50,4 @@ export class UserModel {
 
   @OneToMany(() => SubscriptionModel, (subscription: SubscriptionModel) => subscription.user)
   subscriptions!: SubscriptionModel[];
-
-  @OneToMany(() => PricingModel, (pricing: PricingModel) => pricing.tenant)
-  pricing!: PricingModel[];
 }

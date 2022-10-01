@@ -1,5 +1,5 @@
 import { ID } from "Shared/Domain/Vo/Id.vo";
-import { UserModel } from "Shared/Infrastructure/Persistance/Model/UserModel";
+import { TenantModel } from "Shared/Infrastructure/Persistance/Model/TenantModel";
 import { ValueObjectTransformer } from "Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 
@@ -26,11 +26,11 @@ export class PricingModel {
   @Column({ name: 'pr_updated_at', type: 'timestamp', precision: 0 })
   updatedAt!: Date;
 
-  @ManyToOne(() => UserModel, (tenant: UserModel) => tenant.pricing)
+  @ManyToOne(() => TenantModel, (tenant: TenantModel) => tenant.pricing)
   @JoinColumn({
     name: 'pr_tenant_id',
     referencedColumnName: 'id'
   })
-  tenant!: UserModel;
+  tenant!: TenantModel;
 }
 

@@ -8,6 +8,7 @@ import { ConfigModel } from 'Backoffice/Shared/Infrastructure/Persistance/Model/
 import { SubscriptionEventModel } from 'Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionEventModel';
 import { SubscriptionModel } from 'Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionModel';
 import { BackGroundJobModel } from 'Cron/Shared/Infrastructure/Persistance/Model/BackGroundJobModel';
+import { TenantModel } from "Shared/Infrastructure/Persistance/Model/TenantModel";
 import { UserModel } from "Shared/Infrastructure/Persistance/Model/UserModel";
 import { DataSource } from 'typeorm';
 
@@ -38,7 +39,8 @@ export default class Database {
         ModuleModel,
         PermissionModel,
         UrlModel,
-        CompanyModel
+        CompanyModel,
+        TenantModel
       ],
       synchronize: false,
       logging: true,

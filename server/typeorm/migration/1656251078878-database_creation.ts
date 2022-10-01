@@ -17,7 +17,7 @@ export class databaseCreation1656251078878 implements MigrationInterface {
     await queryRunner.createTable(ConfigTableDefinition, true);
 
     await queryRunner.createTable(UserTableDefinition, true, true);
-
+    
     await queryRunner.createTable(PricingTableDefinition, true, true);
 
     await queryRunner.createTable(SubscriptionTableDefinition, true, true);

@@ -41,10 +41,6 @@ export const CompanyTableDefinition = new Table({
       type: 'varchar',
     },
     {
-      name: 'co_tenant_id',
-      type: 'varchar',
-    },
-    {
       name: 'co_created_at',
       type: 'timestamp',
       precision: 0
@@ -53,14 +49,6 @@ export const CompanyTableDefinition = new Table({
       name: 'co_updated_at',
       type: 'timestamp',
       precision: 0
-    }
-  ],
-  foreignKeys: [
-    {
-      name: 'ta_company_ta_user',
-      columnNames: [ 'co_tenant_id' ],
-      referencedColumnNames: [ 'us_id' ],
-      referencedTableName: 'ta_user'
     }
   ]
 });

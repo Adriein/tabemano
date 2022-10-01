@@ -16,8 +16,8 @@ export class VerifyTenantEmailDomainEventHandler implements IDomainEventHandler 
 
   public async handle(event: TenantCreatedDomainEvent): Promise<void> {
     const tenant = await this.findTenant(event.aggregateId);
-    
-    await this.verifyTenantEmail(tenant);
+
+    await tenant.verifyEmailOnSmtpProvider(this.restService);
   }
 
   private async findTenant(id: ID): Promise<Tenant> {
@@ -26,9 +26,5 @@ export class VerifyTenantEmailDomainEventHandler implements IDomainEventHandler 
     const result = await this.repository.findOne(filter);
 
     return result.unwrap();
-  }
-
-  private async verifyTenantEmail(tenant: Tenant): Promise<void> {
-    await this.restService.post<Tenant>(tenant);
   }
 }
