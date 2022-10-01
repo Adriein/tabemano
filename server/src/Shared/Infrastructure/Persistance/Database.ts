@@ -2,6 +2,7 @@ import { ModuleModel } from 'Authorization/Permission/Infrastructure/Persistance
 import { UrlModel } from 'Authorization/Permission/Infrastructure/Persistance/Model/UrlModule';
 import { PermissionModel } from 'Authorization/Permission/Infrastructure/Persistance/Model/PermissionModel';
 import { PricingModel } from 'Backoffice/Pricing/Infrastructure/Persistance/Model/PricingModel';
+import { CompanyModel } from "Shared/Infrastructure/Persistance/Model/CompanyModel";
 import { RoleModel } from 'Shared/Infrastructure/Persistance/Model/RoleModel';
 import { ConfigModel } from 'Backoffice/Shared/Infrastructure/Persistance/Model/ConfigModel';
 import { SubscriptionEventModel } from 'Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionEventModel';
@@ -37,6 +38,7 @@ export default class Database {
         ModuleModel,
         PermissionModel,
         UrlModel,
+        CompanyModel
       ],
       synchronize: false,
       logging: true,

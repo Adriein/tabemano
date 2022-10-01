@@ -29,6 +29,7 @@ const Service = [
   providers: [
     ...Handlers,
     ...Service,
+    ...Repository
   ],
   exports: [],
 })

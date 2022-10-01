@@ -1,5 +1,5 @@
 import { Company } from "Invoicing/Company/Domain/Entity/Company";
-import { CompanyModel } from "Invoicing/Company/Infrastructure/Persistance/Model/CompanyModel";
+import { CompanyModel } from "Shared/Infrastructure/Persistance/Model/CompanyModel";
 import { IMapper } from "Shared/Domain/Interfaces/IMapper";
 
 export class PgCompanyMapper implements IMapper<Company, CompanyModel> {
@@ -27,7 +27,7 @@ export class PgCompanyMapper implements IMapper<Company, CompanyModel> {
     model.type = entity.type();
     model.country = entity.country();
     model.tenantId = entity.tenantId();
-    
+
     return model;
   }
 

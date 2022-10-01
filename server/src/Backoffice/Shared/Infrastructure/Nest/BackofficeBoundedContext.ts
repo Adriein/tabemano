@@ -11,7 +11,7 @@ import { TenantModule } from "Backoffice/Tenant/Infrastructure/Nest/TenantModule
 const Mappers = [ PgConfigMapper, PgSubscriptionMapper ];
 
 @Module({
-  imports: [ CqrsModule, RoleModule, TenantModule, ClientModule, PricingModule ],
+  imports: [ CqrsModule, RoleModule, TenantModule, ClientModule, PricingModule, NotificationModule ],
   controllers: [],
   providers: [
     ...Mappers,

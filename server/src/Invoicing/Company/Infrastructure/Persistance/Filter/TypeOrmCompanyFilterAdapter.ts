@@ -1,6 +1,6 @@
 import { CompanyFilter } from "Invoicing/Company/Domain/Filter/CompanyFilter";
 import { FiscalId } from "Invoicing/Company/Domain/Vo/FiscalId";
-import { CompanyModel } from "Invoicing/Company/Infrastructure/Persistance/Model/CompanyModel";
+import { CompanyModel } from "Shared/Infrastructure/Persistance/Model/CompanyModel";
 import { Pagination } from "Shared/Domain/Entities/Pagination";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { TypeOrmAdapter } from "Shared/Infrastructure/Persistance/Adapter/TypeOrmAdapter";
