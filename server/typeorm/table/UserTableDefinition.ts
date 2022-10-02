@@ -52,13 +52,15 @@ export const UserTableDefinition = new Table({
       name: 'ta_user_ta_role',
       columnNames: [ 'us_role_id' ],
       referencedColumnNames: [ 'ro_id' ],
-      referencedTableName: 'ta_role'
+      referencedTableName: 'ta_role',
+      onDelete: "CASCADE"
     },
     {
       name: 'ta_user_ta_config',
       columnNames: [ 'us_config_id' ],
       referencedColumnNames: [ 'co_id' ],
-      referencedTableName: 'ta_config'
+      referencedTableName: 'ta_config',
+      onDelete: "CASCADE"
     }
   ]
 });

@@ -20,15 +20,17 @@ export const PermissionTableDefinition = new Table({
   foreignKeys: [
     {
       name: 'ta_permission_ta_user',
-      columnNames: ['um_tenant_id'],
-      referencedColumnNames: ['us_id'],
+      columnNames: [ 'um_tenant_id' ],
+      referencedColumnNames: [ 'us_id' ],
       referencedTableName: 'ta_user',
+      onDelete: "CASCADE"
     },
     {
       name: 'ta_permission_ta_module',
-      columnNames: ['um_module_id'],
-      referencedColumnNames: ['mo_id'],
+      columnNames: [ 'um_module_id' ],
+      referencedColumnNames: [ 'mo_id' ],
       referencedTableName: 'ta_module',
+      onDelete: "CASCADE"
     },
   ],
 });

@@ -52,20 +52,22 @@ export const TenantTableDefinition = new Table({
       name: 'ta_tenant_ta_role',
       columnNames: [ 'te_role_id' ],
       referencedColumnNames: [ 'ro_id' ],
-      referencedTableName: 'ta_role'
+      referencedTableName: 'ta_role',
+      onDelete: "CASCADE"
     },
     {
       name: 'ta_tenant_ta_config',
       columnNames: [ 'te_config_id' ],
       referencedColumnNames: [ 'co_id' ],
-      referencedTableName: 'ta_config'
+      referencedTableName: 'ta_config',
+      onDelete: "CASCADE"
     },
-    ,
     {
       name: 'ta_tenant_ta_company',
       columnNames: [ 'te_company_id' ],
       referencedColumnNames: [ 'co_id' ],
-      referencedTableName: 'ta_company'
+      referencedTableName: 'ta_company',
+      onDelete: "CASCADE"
     }
   ]
 });

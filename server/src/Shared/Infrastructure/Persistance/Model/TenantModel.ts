@@ -1,3 +1,4 @@
+import { SubscriptionModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionModel";
 import { CompanyModel } from "Shared/Infrastructure/Persistance/Model/CompanyModel";
 import { PricingModel } from "Backoffice/Pricing/Infrastructure/Persistance/Model/PricingModel";
 import { RoleModel } from "Shared/Infrastructure/Persistance/Model/RoleModel";
@@ -23,9 +24,6 @@ export class TenantModel {
   @Column({ name: 'te_password', type: 'varchar', transformer: new ValueObjectTransformer<string, Password>(Password) })
   password!: Password;
 
-  @Column({ name: 'te_tenant_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID) })
-  tenantId!: ID;
-
   @Column({ name: 'te_role_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID) })
   roleId!: ID;
 
@@ -49,7 +47,7 @@ export class TenantModel {
   config!: ConfigModel;
 
   @OneToOne(() => CompanyModel)
-  @JoinColumn({ name: 'co_company_id', referencedColumnName: 'id' })
+  @JoinColumn({ name: 'te_company_id', referencedColumnName: 'id' })
   company!: CompanyModel;
 
   @OneToOne(() => RoleModel)
@@ -58,4 +56,7 @@ export class TenantModel {
 
   @OneToMany(() => PricingModel, (pricing: PricingModel) => pricing.tenant)
   pricing!: PricingModel[];
+
+  @OneToMany(() => SubscriptionModel, (subscription: SubscriptionModel) => subscription.tenant)
+  subscriptions!: SubscriptionModel[];
 }
