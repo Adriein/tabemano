@@ -12,6 +12,7 @@ import { Password } from "../../src/Shared/Domain/Vo/Password.vo";
 import { RoleType } from "../../src/Shared/Domain/Vo/RoleType";
 import { Time } from "../../src/Shared/Infrastructure/Helper/Time";
 import Database from "../../src/Shared/Infrastructure/Persistance/Database";
+import { TenantModel } from "../../src/Shared/Infrastructure/Persistance/Model/TenantModel";
 import { UserModel } from "../../src/Shared/Infrastructure/Persistance/Model/UserModel";
 import { fakeData } from './dev-data';
 
@@ -25,12 +26,13 @@ async function main() {
 
   const database = await Database.instance().initialize();
 
+  const tenantRepository = database.getRepository(TenantModel);
   const userRepository = database.getRepository(UserModel);
   const roleRepository = database.getRepository(RoleModel);
   const pricingRepository = database.getRepository(PricingModel);
   const subscriptionRepository = database.getRepository(SubscriptionModel);
 
-  const admin = await userRepository.findOne({ where: { email: new Email(process.env.ADMIN_EMAIL!) } });
+  const admin = await tenantRepository.findOne({ where: { email: new Email(process.env.ADMIN_EMAIL!) } });
   const clientRole = await roleRepository.findOne({ where: { type: new RoleType(CLIENT_ROLE) } });
 
   for (const data of fakeData) {
@@ -67,6 +69,12 @@ async function main() {
           createdAt: DateVo.now().value,
           updatedAt: DateVo.now().value
         },
+        role: {
+          id: clientRole!.id
+        },
+        tenant: {
+          id: admin!.id
+        },
         createdAt: DateVo.now().value,
         updatedAt: DateVo.now().value
       }
@@ -83,6 +91,7 @@ async function main() {
       duration: pricing!.duration,
       pricingName: pricing!.name,
       price: pricing!.price,
+      tenantId: null,
       events: [
         {
           id: ID.generate(),
@@ -109,6 +118,9 @@ async function main() {
           updatedAt: Time.add(new Date(userCreationDate), pricing!.duration),
         }
       ],
+      user: {
+        id
+      },
       createdAt: new Date(userCreationDate),
       updatedAt: new Date(userCreationDate)
     });
@@ -134,6 +146,10 @@ async function main() {
           duration: pricing!.duration,
           pricingName: pricing!.name,
           price: pricing!.price,
+          tenantId: null,
+          user: {
+            id
+          },
           events: [
             {
               id: ID.generate(),
@@ -161,6 +177,10 @@ async function main() {
         duration: pricing!.duration,
         pricingName: pricing!.name,
         price: pricing!.price,
+        tenantId: null,
+        user: {
+          id
+        },
         events: [
           {
             id: ID.generate(),
