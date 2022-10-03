@@ -1,4 +1,4 @@
-import { Module } from 'Authorization/Module/Domain/Entity/Module';
+import { Module } from 'Authorization/Permission/Domain/Entity/Module';
 
 export class GetModuleResponse {
   public fromDomain(module: Module): GetModuleResponse {
