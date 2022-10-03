@@ -1,18 +1,15 @@
 import { Inject } from '@nestjs/common';
-import { EventsHandler, IEventHandler, QueryBus } from '@nestjs/cqrs';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+import { Log } from 'Shared/Domain/Decorators/Log';
 import { Module } from 'Authorization/Permission/Domain/Entity/Module';
 import { Permission } from 'Authorization/Permission/Domain/Entity/Permission';
 import { ModuleFilter } from 'Authorization/Permission/Domain/Filter/ModuleFilter';
 import { PermissionFilter } from 'Authorization/Permission/Domain/Filter/PermissionFilter';
 import { IPermissionRepository } from 'Authorization/Permission/Domain/Repository/IPermissionRepository';
-import { GetModuleQuery } from 'Backoffice/Module/Application/GetModule/GetModuleQuery';
-import { GetModuleResponse } from 'Backoffice/Module/Application/GetModule/GetModuleResponse';
 import { IModuleRepository } from 'Backoffice/Module/Domain/Repository/IModuleRepository';
-import { Log } from 'Shared/Domain/Decorators/Log';
 import { ModuleNotFoundError } from 'Shared/Domain/Error/ModuleNotfoundError';
 import { RecordNotFoundError } from 'Shared/Domain/Error/RecordNotFoundError';
 import { ID } from 'Shared/Domain/Vo/Id.vo';
-import { Name } from 'Shared/Domain/Vo/Name.vo';
 import { ModuleBookedDomainEvent } from '../../../../Backoffice/Module/Application/BookModule/ModuleBookedDomainEvent';
 
 @EventsHandler(ModuleBookedDomainEvent)
