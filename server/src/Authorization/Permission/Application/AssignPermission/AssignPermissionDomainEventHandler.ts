@@ -16,7 +16,7 @@ import { ModuleBookedDomainEvent } from '../../../../Backoffice/Module/Applicati
 export class AssignPermissionDomainEventHandler implements IEventHandler {
   constructor(
     @Inject('IPermissionRepository') private permissionRepository: IPermissionRepository,
-    @Inject('IModuleRepository') private moduleRepository: IModuleRepository // private readonly queryBus: QueryBus
+    @Inject('IModuleRepository') private moduleRepository: IModuleRepository
   ) {}
 
   @Log()

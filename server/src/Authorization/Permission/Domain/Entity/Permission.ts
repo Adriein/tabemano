@@ -5,7 +5,15 @@ import { Url } from 'Shared/Domain/Vo/Url.vo';
 
 export class Permission extends AggregateRoot {
   public static build(tenantId: ID, moduleId: ID, moduleName: Name, moduleUrl: Url[]): Permission {
-    return new Permission(ID.generate(), tenantId, moduleId, moduleName, moduleUrl);
+    return new Permission(
+      ID.generate(),
+      tenantId,
+      moduleId,
+      moduleName,
+      moduleUrl,
+      new Date(),
+      new Date()
+    );
   }
 
   constructor(
@@ -13,7 +21,9 @@ export class Permission extends AggregateRoot {
     private _tenantId: ID,
     private _moduleId: ID,
     private _moduleName: Name,
-    private _moduleUrl: Url[]
+    private _moduleUrl: Url[],
+    _createdAt: Date,
+    _updatedAt: Date
   ) {
     super(_id);
   }

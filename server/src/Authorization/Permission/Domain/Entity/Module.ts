@@ -5,10 +5,16 @@ import { Url } from 'Shared/Domain/Vo/Url.vo';
 
 export class Module extends AggregateRoot {
   public static build(name: Name, urlList: Url[]): Module {
-    return new Module(ID.generate(), name, urlList);
+    return new Module(ID.generate(), name, urlList, new Date(), new Date());
   }
 
-  constructor(_id: ID, private _name: Name, private _urlList: Url[]) {
+  constructor(
+    _id: ID,
+    private _name: Name,
+    private _urlList: Url[],
+    _createdAt: Date,
+    _updatedAt: Date
+  ) {
     super(_id);
   }
 
