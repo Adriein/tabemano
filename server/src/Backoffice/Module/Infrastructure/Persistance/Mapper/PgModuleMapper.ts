@@ -34,8 +34,6 @@ export class PgModuleMapper implements IMapper<Module, ModuleModel> {
       return urlModel;
     });
 
-    // Put dates with entity
-
     model.id = entity.id();
     model.name = entity.name();
     model.createdAt = entity.createdAt();
