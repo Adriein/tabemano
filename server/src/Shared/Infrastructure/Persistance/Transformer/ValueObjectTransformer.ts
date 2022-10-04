@@ -10,6 +10,7 @@ export class ValueObjectTransformer<DatabaseType extends Primitives, VO extends 
   }
 
   public to(value: VO): DatabaseType {
-    return value.value as DatabaseType;
+    console.log(JSON.stringify(value));
+    return value?.value as DatabaseType;
   }
 }

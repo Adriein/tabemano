@@ -32,7 +32,8 @@ export const SubscriptionEventTableDefinition = new Table({
       name: 'ta_subscription_event_ta_subscription',
       columnNames: [ 'se_subscription_id' ],
       referencedColumnNames: [ 'su_id' ],
-      referencedTableName: 'ta_subscription'
+      referencedTableName: 'ta_subscription',
+      onDelete: "CASCADE"
     }
   ]
 });

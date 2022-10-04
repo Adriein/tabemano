@@ -40,7 +40,8 @@ export const PricingTableDefinition = new Table({
       name: 'ta_pricing_ta_user',
       columnNames: [ 'pr_tenant_id' ],
       referencedColumnNames: [ 'us_id' ],
-      referencedTableName: 'ta_user'
+      referencedTableName: 'ta_user',
+      onDelete: "CASCADE"
     }
   ]
 });

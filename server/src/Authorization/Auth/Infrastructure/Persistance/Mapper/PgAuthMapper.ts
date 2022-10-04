@@ -1,9 +1,9 @@
 import { Auth } from "Authorization/Auth/Domain/Entity/Auth";
 import { IMapper } from "Shared/Domain/Interfaces/IMapper";
-import { UserModel } from "Shared/Infrastructure/Persistance/Model/UserModel";
+import { TenantModel } from "Shared/Infrastructure/Persistance/Model/TenantModel";
 
-export class PgAuthMapper implements IMapper<Auth, UserModel> {
-  public toDomain(dataModel: UserModel): Auth {
+export class PgAuthMapper implements IMapper<Auth, TenantModel> {
+  public toDomain(dataModel: TenantModel): Auth {
     return new Auth(
       dataModel.id,
       dataModel.name,
@@ -13,7 +13,7 @@ export class PgAuthMapper implements IMapper<Auth, UserModel> {
     );
   }
 
-  public toModel(entity: Auth): UserModel {
+  public toModel(entity: Auth): TenantModel {
     throw new Error();
   }
 }

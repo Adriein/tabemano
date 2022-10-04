@@ -2,11 +2,13 @@ import { ModuleModel } from 'Authorization/Permission/Infrastructure/Persistance
 import { UrlModel } from 'Authorization/Permission/Infrastructure/Persistance/Model/UrlModule';
 import { PermissionModel } from 'Authorization/Permission/Infrastructure/Persistance/Model/PermissionModel';
 import { PricingModel } from 'Backoffice/Pricing/Infrastructure/Persistance/Model/PricingModel';
+import { CompanyModel } from "Shared/Infrastructure/Persistance/Model/CompanyModel";
 import { RoleModel } from 'Shared/Infrastructure/Persistance/Model/RoleModel';
 import { ConfigModel } from 'Backoffice/Shared/Infrastructure/Persistance/Model/ConfigModel';
 import { SubscriptionEventModel } from 'Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionEventModel';
 import { SubscriptionModel } from 'Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionModel';
 import { BackGroundJobModel } from 'Cron/Shared/Infrastructure/Persistance/Model/BackGroundJobModel';
+import { TenantModel } from "Shared/Infrastructure/Persistance/Model/TenantModel";
 import { UserModel } from "Shared/Infrastructure/Persistance/Model/UserModel";
 import { DataSource } from 'typeorm';
 
@@ -37,6 +39,8 @@ export default class Database {
         ModuleModel,
         PermissionModel,
         UrlModel,
+        CompanyModel,
+        TenantModel
       ],
       synchronize: false,
       logging: true,

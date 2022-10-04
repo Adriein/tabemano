@@ -7,12 +7,12 @@ import { TypeOrmAuthFilterAdapter } from "Authorization/Auth/Infrastructure/Pers
 import { PgAuthMapper } from "Authorization/Auth/Infrastructure/Persistance/Mapper/PgAuthMapper";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
 import Database from "Shared/Infrastructure/Persistance/Database";
-import { UserModel } from "Shared/Infrastructure/Persistance/Model/UserModel";
+import { TenantModel } from "Shared/Infrastructure/Persistance/Model/TenantModel";
 import { TypeOrmRepository } from "Shared/Infrastructure/Persistance/Repository/TypeOrmRepository";
 import { DataSource } from "typeorm";
 
 @Injectable()
-export class PgAuthRepository extends TypeOrmRepository<UserModel> implements IAuthRepository {
+export class PgAuthRepository extends TypeOrmRepository<TenantModel> implements IAuthRepository {
   constructor(
     @Inject(Database.DATABASE_CONNECTION)
     protected readonly dataSource: DataSource,
@@ -45,6 +45,6 @@ export class PgAuthRepository extends TypeOrmRepository<UserModel> implements IA
   }
 
   protected entitySchema() {
-    return UserModel;
+    return TenantModel;
   }
 }

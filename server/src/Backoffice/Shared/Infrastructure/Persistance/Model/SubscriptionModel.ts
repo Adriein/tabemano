@@ -1,6 +1,7 @@
 import { SubscriptionEventModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionEventModel";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
+import { TenantModel } from "Shared/Infrastructure/Persistance/Model/TenantModel";
 import { UserModel } from "Shared/Infrastructure/Persistance/Model/UserModel";
 import { ValueObjectTransformer } from "Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn } from "typeorm";
@@ -48,8 +49,21 @@ export class SubscriptionModel {
   @Column({ name: 'su_pricing_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID) })
   pricingId!: ID;
 
-  @Column({ name: 'su_user_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID) })
-  userId!: ID;
+  @Column({
+    name: 'su_user_id',
+    type: 'varchar',
+    nullable: true,
+    transformer: new ValueObjectTransformer<string, ID>(ID)
+  })
+  userId!: ID | null;
+
+  @Column({
+    name: 'su_tenant_id',
+    type: 'varchar',
+    nullable: true,
+    transformer: new ValueObjectTransformer<string, ID>(ID)
+  })
+  tenantId!: ID | null;
 
   @Column({ name: 'su_created_at', type: 'timestamp', precision: 0 })
   createdAt!: Date;
@@ -70,4 +84,11 @@ export class SubscriptionModel {
     referencedColumnName: 'id'
   })
   user!: UserModel;
+
+  @ManyToOne(() => TenantModel, (tenant: TenantModel) => tenant.subscriptions)
+  @JoinColumn({
+    name: 'su_tenant_id',
+    referencedColumnName: 'id'
+  })
+  tenant!: TenantModel;
 }

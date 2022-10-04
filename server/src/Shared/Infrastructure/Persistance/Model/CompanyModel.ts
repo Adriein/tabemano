@@ -1,10 +1,12 @@
-import { CompanyName } from "Invoicing/Company/Domain/Vo/CompanyName";
 import { CompanyType } from "Invoicing/Company/Domain/Vo/CompanyType";
 import { Country } from "Invoicing/Company/Domain/Vo/Country";
 import { FiscalId } from "Invoicing/Company/Domain/Vo/FiscalId";
 import { Address } from "Shared/Domain/Vo/Address.vo";
+import { City } from "Shared/Domain/Vo/City.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
+import { Name } from "Shared/Domain/Vo/Name.vo";
 import { Phone } from "Shared/Domain/Vo/Phone.vo";
+import { State } from "Shared/Domain/Vo/State.vo";
 import { ValueObjectTransformer } from "Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer";
 import { Column, Entity, PrimaryColumn } from "typeorm";
 
@@ -13,12 +15,8 @@ export class CompanyModel {
   @PrimaryColumn({ name: 'co_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID) })
   id!: ID;
 
-  @Column({
-    name: 'co_name',
-    type: 'varchar',
-    transformer: new ValueObjectTransformer<string, CompanyName>(CompanyName)
-  })
-  name!: CompanyName;
+  @Column({ name: 'co_name', type: 'varchar', transformer: new ValueObjectTransformer<string, Name>(Name) })
+  name!: Name;
 
   @Column({
     name: 'co_fiscal_id',
@@ -36,7 +34,7 @@ export class CompanyModel {
 
   @Column({
     name: 'co_phone',
-    type: 'int',
+    type: 'varchar',
     transformer: new ValueObjectTransformer<string, Phone>(Phone)
   })
   phone!: Phone;
@@ -56,9 +54,22 @@ export class CompanyModel {
   country!: Country;
 
   @Column({
-    name: 'co_tenant_id',
+    name: 'co_state',
     type: 'varchar',
-    transformer: new ValueObjectTransformer<string, ID>(ID)
+    transformer: new ValueObjectTransformer<string, State>(State)
   })
-  tenantId!: ID;
+  state!: State;
+
+  @Column({
+    name: 'co_city',
+    type: 'varchar',
+    transformer: new ValueObjectTransformer<string, City>(City)
+  })
+  city!: City;
+
+  @Column({ name: 'co_created_at', type: 'timestamp', precision: 0 })
+  createdAt!: Date;
+
+  @Column({ name: 'co_updated_at', type: 'timestamp', precision: 0 })
+  updatedAt!: Date;
 }

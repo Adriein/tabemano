@@ -1,65 +1,72 @@
 import { Table } from "typeorm";
 
-export const UserTableDefinition = new Table({
-  name: 'ta_user',
+export const TenantTableDefinition = new Table({
+  name: 'ta_tenant',
   columns: [
     {
-      name: 'us_id',
+      name: 'te_id',
       type: 'varchar',
       isPrimary: true
     },
     {
-      name: 'us_name',
+      name: 'te_name',
       type: 'varchar',
     },
     {
-      name: 'us_email',
+      name: 'te_email',
       type: 'varchar',
     },
     {
-      name: 'us_password',
+      name: 'te_password',
       type: 'varchar',
     },
     {
-      name: 'us_tenant_id',
+      name: 'te_role_id',
       type: 'varchar',
     },
     {
-      name: 'us_role_id',
+      name: 'te_config_id',
       type: 'varchar',
     },
     {
-      name: 'us_config_id',
+      name: 'te_company_id',
       type: 'varchar',
     },
     {
-      name: 'us_is_active',
+      name: 'te_is_active',
       type: 'boolean',
     },
     {
-      name: 'us_created_at',
+      name: 'te_created_at',
       type: 'timestamp',
       precision: 0
     },
     {
-      name: 'us_updated_at',
+      name: 'te_updated_at',
       type: 'timestamp',
       precision: 0
     }
   ],
   foreignKeys: [
     {
-      name: 'ta_user_ta_role',
-      columnNames: [ 'us_role_id' ],
+      name: 'ta_tenant_ta_role',
+      columnNames: [ 'te_role_id' ],
       referencedColumnNames: [ 'ro_id' ],
       referencedTableName: 'ta_role',
       onDelete: "CASCADE"
     },
     {
-      name: 'ta_user_ta_config',
-      columnNames: [ 'us_config_id' ],
+      name: 'ta_tenant_ta_config',
+      columnNames: [ 'te_config_id' ],
       referencedColumnNames: [ 'co_id' ],
       referencedTableName: 'ta_config',
+      onDelete: "CASCADE"
+    },
+    {
+      name: 'ta_tenant_ta_company',
+      columnNames: [ 'te_company_id' ],
+      referencedColumnNames: [ 'co_id' ],
+      referencedTableName: 'ta_company',
       onDelete: "CASCADE"
     }
   ]

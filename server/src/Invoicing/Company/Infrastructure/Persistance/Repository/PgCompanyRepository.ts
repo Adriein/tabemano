@@ -6,7 +6,7 @@ import { CompanyFilter } from "Invoicing/Company/Domain/Filter/CompanyFilter";
 import { ICompanyRepository } from "Invoicing/Company/Domain/Repository/ICompanyRepository";
 import { TypeOrmCompanyFilterAdapter } from "Invoicing/Company/Infrastructure/Persistance/Filter/TypeOrmCompanyFilterAdapter";
 import { PgCompanyMapper } from "Invoicing/Company/Infrastructure/Persistance/Mapper/PgCompanyMapper";
-import { CompanyModel } from "Invoicing/Company/Infrastructure/Persistance/Model/CompanyModel";
+import { CompanyModel } from "Shared/Infrastructure/Persistance/Model/CompanyModel";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
 import Database from "Shared/Infrastructure/Persistance/Database";
 import { TypeOrmRepository } from "Shared/Infrastructure/Persistance/Repository/TypeOrmRepository";
