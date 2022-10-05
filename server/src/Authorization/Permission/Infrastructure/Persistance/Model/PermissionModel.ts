@@ -1,4 +1,5 @@
 import { ID } from 'Shared/Domain/Vo/Id.vo';
+import { TenantModel } from 'Shared/Infrastructure/Persistance/Model/TenantModel';
 import { UserModel } from 'Shared/Infrastructure/Persistance/Model/UserModel';
 import { ValueObjectTransformer } from 'Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
@@ -20,7 +21,7 @@ export class PermissionModel {
   })
   tenantId!: ID;
 
-  @ManyToOne(() => UserModel)
+  @ManyToOne(() => TenantModel)
   @JoinColumn({ name: 'pe_tenant_id', referencedColumnName: 'id' })
   tenant!: UserModel;
 
