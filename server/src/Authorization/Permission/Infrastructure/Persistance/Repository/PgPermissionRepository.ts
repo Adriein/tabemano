@@ -45,7 +45,10 @@ export class PgPermissionRepository
   }
 
   public async save(entity: Permission): Promise<void> {
-    throw new Error();
+    const model = this.mapper.toModel(entity);
+
+    await this.repository().save(model);
+    // throw new Error();
   }
 
   public async update(entity: Permission): Promise<void> {

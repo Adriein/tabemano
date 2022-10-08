@@ -1,15 +1,15 @@
-import { Result } from "@badrap/result";
-import { EventBus } from "@nestjs/cqrs";
+import { Result } from '@badrap/result';
+import { EventBus } from '@nestjs/cqrs';
 import { Test } from '@nestjs/testing';
-import { Subscription } from "../../../../../src/Cron/Client/Domain/Entity/Subscription";
-import { CheckAboutToExpireSubscriptionsCommand } from "../../../../../src/Cron/Client/Application/CheckAboutToExpireSubscriptions/CheckAboutToExpireSubscriptionsCommand";
-import { CheckAboutToExpireSubscriptionsCommandHandler } from "../../../../../src/Cron/Client/Application/CheckAboutToExpireSubscriptions/CheckAboutToExpireSubscriptionsCommandHandler";
-import { SubscriptionAboutToExpireDomainEvent } from "../../../../../src/Cron/Client/Application/CheckAboutToExpireSubscriptions/SubscriptionAboutToExpireDomainEvent";
-import { Client } from "../../../../../src/Cron/Client/Domain/Entity/Client";
-import { PgClientRepository } from "../../../../../src/Cron/Client/Infrastructure/Persistance/Repository/PgClientRepository";
-import { BackGroundJob } from "../../../../../src/Cron/Shared/Domain/Entity/BackGroundJob";
-import { PgBackGroundJobRepository } from "../../../../../src/Cron/Shared/Infrastructure/Persistance/Repository/PgBackGroundJobRepository";
-import { ClientObjectMother } from "../../../Shared/ClientObjectMother";
+import { Subscription } from '../../../../../src/Cron/Client/Domain/Entity/Subscription';
+import { CheckAboutToExpireSubscriptionsCommand } from '../../../../../src/Cron/Client/Application/CheckAboutToExpireSubscriptions/CheckAboutToExpireSubscriptionsCommand';
+import { CheckAboutToExpireSubscriptionsCommandHandler } from '../../../../../src/Cron/Client/Application/CheckAboutToExpireSubscriptions/CheckAboutToExpireSubscriptionsCommandHandler';
+import { SubscriptionAboutToExpireDomainEvent } from '../../../../../src/Cron/Client/Application/CheckAboutToExpireSubscriptions/SubscriptionAboutToExpireDomainEvent';
+import { Client } from '../../../../../src/Cron/Client/Domain/Entity/Client';
+import { PgClientRepository } from '../../../../../src/Cron/Client/Infrastructure/Persistance/Repository/PgClientRepository';
+import { BackGroundJob } from '../../../../../src/Cron/Shared/Domain/Entity/BackGroundJob';
+import { PgBackGroundJobRepository } from '../../../../../src/Cron/Shared/Infrastructure/Persistance/Repository/PgBackGroundJobRepository';
+import { ClientObjectMother } from '../../../Shared/ClientObjectMother';
 
 describe('CheckAboutToExpireSubscriptionsCommandHandler', () => {
   let handler: CheckAboutToExpireSubscriptionsCommandHandler;
@@ -26,15 +26,13 @@ describe('CheckAboutToExpireSubscriptionsCommandHandler', () => {
     subscription = client.activeSubscription();
 
     const cronModule = await Test.createTestingModule({
-      providers: [
-        CheckAboutToExpireSubscriptionsCommandHandler
-      ],
+      providers: [CheckAboutToExpireSubscriptionsCommandHandler],
     })
-      .useMocker((token) => {
+      .useMocker(token => {
         if (typeof token === 'function') {
           switch (token.name) {
             case 'EventBus':
-              return { publish: jest.fn() }
+              return { publish: jest.fn() };
           }
 
           return;
@@ -42,7 +40,7 @@ describe('CheckAboutToExpireSubscriptionsCommandHandler', () => {
 
         switch (token) {
           case 'IClientRepository':
-            return { find: jest.fn().mockReturnValue(Promise.resolve(Result.ok([ client ]))) };
+            return { find: jest.fn().mockReturnValue(Promise.resolve(Result.ok([client]))) };
           case 'IBackGroundJobRepository':
             return { save: jest.fn() };
         }
@@ -53,7 +51,6 @@ describe('CheckAboutToExpireSubscriptionsCommandHandler', () => {
     clientRepository = cronModule.get<PgClientRepository>('IClientRepository');
     backgroundJobRepository = cronModule.get<PgBackGroundJobRepository>('IBackGroundJobRepository');
     eventBus = cronModule.get<EventBus>(EventBus);
-
   });
 
   it('should register a backgroundJob', async () => {
