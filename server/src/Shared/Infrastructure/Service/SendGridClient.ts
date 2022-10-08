@@ -14,6 +14,7 @@ export class SendGridClient {
         console.log(response.body);
       })
       .catch(error => {
+
         console.error(error);
       });
   }
