@@ -15,11 +15,7 @@ export class GetPermissionsController {
     @Body() body: GetPermissionsApiRequest
   ): Promise<GetPermissionsApiResponse> {
     const query = GetPermissionsQuery.fromJson(body);
-    
-    const response = await this.queryBus.execute<GetPermissionsQuery, GetPermissionsResponse>(
-      query
-    );
 
-    return response;
+    return await this.queryBus.execute<GetPermissionsQuery, GetPermissionsResponse>(query);
   }
 }

@@ -1,10 +1,11 @@
 import { Permission } from 'Authorization/Permission/Domain/Entity/Permission';
 import { IMapper } from 'Shared/Domain/Interfaces/IMapper';
 import { PermissionModel } from '../Model/PermissionModel';
+import { UrlModel } from '../Model/UrlModule';
 
 export class PgPermissionMapper implements IMapper<Permission, PermissionModel> {
   public toDomain(dataModel: PermissionModel): Permission {
-    const urlList = dataModel.module.urlList.map(url => {
+    const urlList = dataModel.module.urlList.map((url: UrlModel) => {
       return url.url;
     });
 
@@ -13,7 +14,9 @@ export class PgPermissionMapper implements IMapper<Permission, PermissionModel> 
       dataModel.tenantId,
       dataModel.moduleId,
       dataModel.module.name,
-      urlList
+      urlList,
+      dataModel.createdAt,
+      dataModel.updatedAt
     );
   }
 
@@ -23,8 +26,8 @@ export class PgPermissionMapper implements IMapper<Permission, PermissionModel> 
     model.id = entity.id();
     model.tenantId = entity.tenantId();
     model.moduleId = entity.moduleId();
-    model.module.name = entity.moduleName();
-    // model.module.urlList = entity.moduleUrl();
+    model.createdAt = entity.createdAt();
+    model.updatedAt = entity.updatedAt();
 
     return model;
   }
