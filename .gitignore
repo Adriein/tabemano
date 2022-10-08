@@ -6,3 +6,4 @@ db.json
 .eslintcache
 .idea
 coverage
+node_modules
