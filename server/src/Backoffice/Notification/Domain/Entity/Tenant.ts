@@ -1,5 +1,5 @@
 import { Company } from "Backoffice/Notification/Domain/Entity/Company";
-import { IRestService } from "Shared/Domain/Services/IRestService";
+import { IVerifyTenantEmailService } from "Backoffice/Notification/Domain/Service/IVerifyTenantEmailService";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Name } from "Shared/Domain/Vo/Name.vo";
@@ -28,7 +28,7 @@ export class Tenant {
     return this._company;
   }
 
-  public async verifyEmailOnSmtpProvider(restService: IRestService): Promise<void> {
-    await restService.post<Tenant>(this);
+  public async verifyEmail(service: IVerifyTenantEmailService): Promise<void> {
+    await service.verify(this);
   }
 }
