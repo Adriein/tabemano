@@ -1,6 +1,7 @@
 import { AggregateRoot } from 'Shared/Domain/Entities/AggregateRoot';
 import { ID } from 'Shared/Domain/Vo/Id.vo';
 import { Name } from 'Shared/Domain/Vo/Name.vo';
+import { IThirdPartyServiceRetriever } from '../Repository/IThirdPartyServiceRetriever';
 
 export class ThirdPartyService extends AggregateRoot {
   constructor(
@@ -31,7 +32,7 @@ export class ThirdPartyService extends AggregateRoot {
     return this._notify;
   }
 
-  //   public async updateRemainingCredits(service: IThirdPartyServiceRetriever): void {
-  //     await service.update(this)
-  //   }
+  public async updateRemainingCredits(service: IThirdPartyServiceRetriever): Promise<void> {
+    await service.update(this);
+  }
 }
