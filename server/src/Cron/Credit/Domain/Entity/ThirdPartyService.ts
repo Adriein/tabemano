@@ -1,13 +1,13 @@
 import { AggregateRoot } from 'Shared/Domain/Entities/AggregateRoot';
+import { IRemainingCreditService } from 'Shared/Domain/Factory/IRemainingCreditService';
 import { ID } from 'Shared/Domain/Vo/Id.vo';
 import { Name } from 'Shared/Domain/Vo/Name.vo';
-import { IThirdPartyServiceRetriever } from '../Repository/IThirdPartyServiceRetriever';
 
 export class ThirdPartyService extends AggregateRoot {
   constructor(
     _id: ID,
     private readonly _name: Name,
-    private readonly _remainingCredit: number,
+    private _remainingCredit: number,
     private readonly _minRemainingCreditBeforeNotifying: number,
     private readonly _notify: boolean,
     _createdAt?: Date,
@@ -32,7 +32,7 @@ export class ThirdPartyService extends AggregateRoot {
     return this._notify;
   }
 
-  public async updateRemainingCredits(service: IThirdPartyServiceRetriever): Promise<void> {
-    await service.update(this);
+  public async updateRemainingCredit(service: IRemainingCreditService): Promise<void> {
+    this._remainingCredit = await service.execute();
   }
 }

@@ -1,3 +1,3 @@
 export interface IRemainingCreditService {
-  execute(): Promise<void>;
+  execute(): Promise<number>;
 }
