@@ -3,15 +3,15 @@ import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { RoleType } from "Shared/Domain/Vo/RoleType";
 import { TypeOrmAdapter } from "Shared/Infrastructure/Persistance/Adapter/TypeOrmAdapter";
-import { UserModel } from "Shared/Infrastructure/Persistance/Model/UserModel";
+import { TenantModel } from "Shared/Infrastructure/Persistance/Model/TenantModel";
 import { FindManyOptions } from "typeorm";
 
-export class TypeOrmTenantFilterAdapter extends TypeOrmAdapter<FindManyOptions<UserModel>> {
+export class TypeOrmTenantFilterAdapter extends TypeOrmAdapter<FindManyOptions<TenantModel>> {
   constructor(private readonly filter: UserFilter) {
     super();
   }
 
-  public apply(): FindManyOptions<UserModel> {
+  public apply(): FindManyOptions<TenantModel> {
     const filters = this.filter.apply();
 
     if (filters.has(UserFilter.ID_FILTER)) {
@@ -23,7 +23,7 @@ export class TypeOrmTenantFilterAdapter extends TypeOrmAdapter<FindManyOptions<U
     if (filters.has(UserFilter.TENANT_ID_FILTER)) {
       const tenantId = filters.get(UserFilter.TENANT_ID_FILTER) as ID;
 
-      this.add({ where: { tenantId } });
+      this.add({ where: { id: tenantId } });
     }
 
     if (filters.has(UserFilter.EMAIL_FILTER)) {
@@ -43,6 +43,8 @@ export class TypeOrmTenantFilterAdapter extends TypeOrmAdapter<FindManyOptions<U
 
       this.add({ where: { isActive } });
     }
+
+    this.add({ relations: { config: true, pricing: true } })
 
     return this.typeOrmFilter;
   }

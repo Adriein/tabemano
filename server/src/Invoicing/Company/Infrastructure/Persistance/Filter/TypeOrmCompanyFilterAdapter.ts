@@ -23,7 +23,7 @@ export class TypeOrmCompanyFilterAdapter extends TypeOrmAdapter<FindManyOptions<
     if (filters.has(CompanyFilter.TENANT_ID_FILTER)) {
       const tenantId = filters.get(CompanyFilter.TENANT_ID_FILTER) as ID;
 
-      this.add({ where: { tenantId } });
+      this.add({ where: {} });
     }
 
     if (filters.has(Pagination.PAGINATION_FILTER)) {

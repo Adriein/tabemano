@@ -12,7 +12,6 @@ export class PgCompanyMapper implements IMapper<Company, CompanyModel> {
       dataModel.phone,
       dataModel.type,
       dataModel.country,
-      dataModel.tenantId,
     );
   }
 
@@ -26,8 +25,7 @@ export class PgCompanyMapper implements IMapper<Company, CompanyModel> {
     model.phone = entity.phone();
     model.type = entity.type();
     model.country = entity.country();
-    model.tenantId = entity.tenantId();
-
+    
     return model;
   }
 

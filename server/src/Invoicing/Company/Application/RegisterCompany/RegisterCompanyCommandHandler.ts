@@ -9,7 +9,6 @@ import { CompanyName } from "Invoicing/Company/Domain/Vo/CompanyName";
 import { CompanyType } from "Invoicing/Company/Domain/Vo/CompanyType";
 import { FiscalId } from "Invoicing/Company/Domain/Vo/FiscalId";
 import { Address } from "Shared/Domain/Vo/Address.vo";
-import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Phone } from "Shared/Domain/Vo/Phone.vo";
 
 export class RegisterCompanyCommandHandler implements ICommandHandler {
@@ -25,11 +24,10 @@ export class RegisterCompanyCommandHandler implements ICommandHandler {
     const phone = new Phone(command.phone);
     const type = new CompanyType(command.type);
     const country = new CompanyType(command.country);
-    const tenantId = new ID(command.tenantId);
 
     await this.ensureCompanyIsNotRegistered(fiscalId);
 
-    const company = Company.build(name, fiscalId, address, phone, type, country, tenantId);
+    const company = Company.build(name, fiscalId, address, phone, type, country);
 
     await this.repository.save(company);
   }

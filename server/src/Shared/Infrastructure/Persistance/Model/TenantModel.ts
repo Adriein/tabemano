@@ -1,4 +1,5 @@
 import { SubscriptionModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionModel";
+import { NullableVo } from "Shared/Domain/Vo/Nullable.vo";
 import { CompanyModel } from "Shared/Infrastructure/Persistance/Model/CompanyModel";
 import { PricingModel } from "Backoffice/Pricing/Infrastructure/Persistance/Model/PricingModel";
 import { RoleModel } from "Shared/Infrastructure/Persistance/Model/RoleModel";
@@ -30,8 +31,8 @@ export class TenantModel {
   @Column({ name: 'te_config_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID) })
   configId!: ID;
 
-  @Column({ name: 'te_company_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID) })
-  companyId!: ID;
+  @Column({ name: 'te_company_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID, true) })
+  companyId!: ID | null;
 
   @Column({ name: 'te_is_active' })
   isActive!: boolean;

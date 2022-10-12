@@ -4,6 +4,7 @@ import { IPricingRepository } from "Backoffice/Pricing/Domain/Entity/IPricingRep
 import { Pricing } from "Backoffice/Pricing/Domain/Entity/Pricing";
 import { TenantCreatedDomainEvent } from "Backoffice/Tenant/Application/CreateTenant/TenantCreatedDomainEvent";
 import { Log } from "Shared/Domain/Decorators/Log";
+import { UnexpectedError } from "Shared/Domain/Error/UnexpectedError";
 
 @EventsHandler(TenantCreatedDomainEvent)
 export class CreateDefaultTenantPricesDomainEventHandler implements IEventHandler {
@@ -11,11 +12,14 @@ export class CreateDefaultTenantPricesDomainEventHandler implements IEventHandle
 
   @Log()
   public async handle(event: TenantCreatedDomainEvent): Promise<void> {
-    const monthlyPricing = Pricing.monthly(event.aggregateId);
-    const quarterlyPricing = Pricing.quarterly(event.aggregateId);
+    try {
+      const monthlyPricing = Pricing.monthly(event.aggregateId);
+      const quarterlyPricing = Pricing.quarterly(event.aggregateId);
 
-    await this.repository.save(monthlyPricing);
-    await this.repository.save(quarterlyPricing);
+      await this.repository.save(monthlyPricing);
+      await this.repository.save(quarterlyPricing);
+    } catch (error: any) {
+      throw new UnexpectedError(error.message);
+    }
   }
-
 }
