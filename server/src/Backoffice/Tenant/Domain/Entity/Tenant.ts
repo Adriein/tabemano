@@ -35,7 +35,7 @@ export class Tenant extends AggregateRoot {
     _id: ID,
     private readonly _name: Name,
     private readonly _password: Password,
-    private readonly _email: Email,
+    private _email: Email,
     private readonly _config: Config,
     private readonly _roleId: ID,
     private readonly _isActive: boolean,
@@ -106,5 +106,9 @@ export class Tenant extends AggregateRoot {
 
   public getAvailablePricing(): PricingCollection {
     return this._pricing;
+  }
+
+  public configureNotificationEmail(email: Email): void {
+    this._email = email;
   }
 }

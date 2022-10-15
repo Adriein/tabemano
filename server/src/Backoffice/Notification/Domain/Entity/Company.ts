@@ -1,6 +1,6 @@
-import { Country } from "Invoicing/Company/Domain/Vo/Country";
 import { Address } from "Shared/Domain/Vo/Address.vo";
 import { City } from "Shared/Domain/Vo/City.vo";
+import { Country } from "Shared/Domain/Vo/Country.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Zip } from "Shared/Domain/Vo/Zip.vo";
 
@@ -12,7 +12,7 @@ export class Company {
     private readonly _city: City,
     private readonly _zip: Zip
   ) {}
-  
+
   public id(): ID {
     return this._id;
   }

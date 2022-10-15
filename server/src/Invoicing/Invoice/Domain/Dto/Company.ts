@@ -1,8 +1,8 @@
-import { CompanyName } from "Invoicing/Company/Domain/Vo/CompanyName";
-import { CompanyType } from "Invoicing/Company/Domain/Vo/CompanyType";
-import { Country } from "Invoicing/Company/Domain/Vo/Country";
-import { FiscalId } from "Invoicing/Company/Domain/Vo/FiscalId";
 import { Address } from "Shared/Domain/Vo/Address.vo";
+import { CompanyName } from "Shared/Domain/Vo/CompanyName.vo";
+import { CompanyType } from "Shared/Domain/Vo/CompanyType.vo";
+import { Country } from "Shared/Domain/Vo/Country.vo";
+import { FiscalId } from "Shared/Domain/Vo/FiscalId.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Phone } from "Shared/Domain/Vo/Phone.vo";
 

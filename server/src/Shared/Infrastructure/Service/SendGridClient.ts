@@ -1,7 +1,6 @@
 import { ConfigService } from "@nestjs/config";
 import client from '@sendgrid/client';
 
-
 export class SendGridClient {
   constructor(private readonly config: ConfigService) {
     client.setApiKey(this.config.get<string>('SEND_GRID_API_KEY')!);

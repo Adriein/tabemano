@@ -1,11 +1,11 @@
 import { Result } from "@badrap/result";
 import { Inject } from "@nestjs/common";
+import { Company } from "Backoffice/Company/Domain/Entity/Company";
+import { CompanyFilter } from "Backoffice/Company/Domain/Filter/CompanyFilter";
+import { ICompanyRepository } from "Backoffice/Company/Domain/Repository/ICompanyRepository";
 import { ClassConstructor } from "class-transformer";
-import { Company } from "Invoicing/Company/Domain/Entity/Company";
-import { CompanyFilter } from "Invoicing/Company/Domain/Filter/CompanyFilter";
-import { ICompanyRepository } from "Invoicing/Company/Domain/Repository/ICompanyRepository";
-import { TypeOrmCompanyFilterAdapter } from "Invoicing/Company/Infrastructure/Persistance/Filter/TypeOrmCompanyFilterAdapter";
-import { PgCompanyMapper } from "Invoicing/Company/Infrastructure/Persistance/Mapper/PgCompanyMapper";
+import { TypeOrmCompanyFilterAdapter } from "Backoffice/Company/Infrastructure/Persistance/Filter/TypeOrmCompanyFilterAdapter";
+import { PgCompanyMapper } from "Backoffice/Company/Infrastructure/Persistance/Mapper/PgCompanyMapper";
 import { CompanyModel } from "Shared/Infrastructure/Persistance/Model/CompanyModel";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
 import Database from "Shared/Infrastructure/Persistance/Database";

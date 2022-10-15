@@ -10,7 +10,7 @@ import { PgClientRepository } from "Backoffice/Client/Infrastructure/Persistance
 import { PgSubscriptionMapper } from "Backoffice/Shared/Infrastructure/Persistance/Mapper/PgSubscriptionMapper";
 import { PgSubscriptionRepository } from "Backoffice/Shared/Infrastructure/Persistance/Repository/PgSubscriptionRepository";
 import { UserFilterFactory } from "Backoffice/Tenant/Infrastructure/UserFilterFactory";
-import { UserMiddleware } from "Shared/Infrastructure/Middlewares/user";
+import { UserMiddleware } from "Shared/Infrastructure/Middlewares/UserMiddleware";
 import { TypeOrmModule } from "Shared/Infrastructure/Persistance/TypeOrmModule";
 
 const Handlers = [

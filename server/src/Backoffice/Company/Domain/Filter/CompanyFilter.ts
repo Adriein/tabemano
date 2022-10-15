@@ -1,5 +1,5 @@
-import { FiscalId } from "Invoicing/Company/Domain/Vo/FiscalId";
 import { Filter } from "Shared/Domain/Entities/Filter";
+import { FiscalId } from "Shared/Domain/Vo/FiscalId.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 
 export class CompanyFilter extends Filter {

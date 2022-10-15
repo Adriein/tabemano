@@ -27,3 +27,12 @@ export enum Roles {
 export enum MARKET {
   ES = 'ES'
 }
+
+export type TabemanoSession = {
+  name: string,
+  email: string,
+  permissions: [],
+  iat: number,
+  id: string,
+  urlList: string[]
+}

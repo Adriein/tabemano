@@ -1,5 +1,5 @@
-import { FiscalId } from "Invoicing/Company/Domain/Vo/FiscalId";
 import { DomainError } from "Shared/Domain/Error/DomainError";
+import { FiscalId } from "Shared/Domain/Vo/FiscalId.vo";
 
 export class CompanyAlreadyRegisteredError extends DomainError {
   public statusCode = 400;
