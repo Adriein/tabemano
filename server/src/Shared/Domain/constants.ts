@@ -9,7 +9,7 @@ export enum OPERATORS {
   or = 'OR',
   like = 'contains',
   order = 'orderBy',
-  in = 'in'
+  in = 'in',
 }
 
 export const CLIENT_ROLE = 'client';
@@ -21,9 +21,14 @@ export const TENANT_ROLE = 'tenant';
 export enum Roles {
   CLIENT = 'client',
   ADMIN = 'admin',
-  TENANT = 'tenant'
+  TENANT = 'tenant',
 }
 
 export enum MARKET {
-  ES = 'ES'
+  ES = 'ES',
+}
+
+export interface HttpMethod {
+  POST: 'POST';
+  GET: 'GET';
 }
