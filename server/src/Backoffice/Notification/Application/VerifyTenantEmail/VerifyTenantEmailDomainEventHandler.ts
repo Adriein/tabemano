@@ -1,3 +1,4 @@
+import { Inject } from "@nestjs/common";
 import { EventsHandler } from "@nestjs/cqrs";
 import { Tenant } from "Backoffice/Notification/Domain/Entity/Tenant";
 import { IThirdPartySmtpServiceAbstractFactory } from "Backoffice/Notification/Domain/Factory/IThirdPartySmtpServiceAbstractFactory";
@@ -11,7 +12,9 @@ import { ID } from "Shared/Domain/Vo/Id.vo";
 @EventsHandler(TenantConfiguredDomainEvent)
 export class VerifyTenantEmailDomainEventHandler implements IDomainEventHandler {
   constructor(
+    @Inject('ITenantRepository')
     private readonly repository: ITenantRepository,
+    @Inject('IThirdPartySmtpServiceAbstractFactory')
     private readonly factory: IThirdPartySmtpServiceAbstractFactory
   ) {}
 

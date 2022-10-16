@@ -5,9 +5,9 @@ import { CronCreditModule } from 'Cron/Credit/Infrastructure/Nest/CronCreditModu
 import { TypeOrmModule } from 'Shared/Infrastructure/Persistance/TypeOrmModule';
 
 @Module({
-  imports: [CqrsModule, TypeOrmModule, CronClientModule],
+  imports: [ CqrsModule, TypeOrmModule, CronClientModule, CronCreditModule ],
   controllers: [],
   providers: [],
-  exports: [CronClientModule, CronCreditModule],
+  exports: [ CronClientModule, CronCreditModule ],
 })
 export class CronBoundedContext {}

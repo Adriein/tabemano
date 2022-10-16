@@ -1,3 +1,4 @@
+import { Injectable } from "@nestjs/common";
 import { ConfigService } from '@nestjs/config';
 import client from '@sendgrid/client';
 import { SendGridRequest } from './SendGridRequest';
@@ -5,6 +6,7 @@ import { promisify } from 'util';
 import { ClientRequest } from '@sendgrid/client/src/request';
 import { ClientResponse } from '@sendgrid/mail';
 
+@Injectable()
 export class SendGridClient {
   private readonly _promisifiedRequest: (request: ClientRequest) => Promise<[ ClientResponse, any ]>;
 

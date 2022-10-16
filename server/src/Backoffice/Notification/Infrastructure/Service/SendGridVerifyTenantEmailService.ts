@@ -1,3 +1,4 @@
+import { Injectable } from "@nestjs/common";
 import { Tenant } from 'Backoffice/Notification/Domain/Entity/Tenant';
 import { IVerifyTenantEmailService } from 'Backoffice/Notification/Domain/Service/IVerifyTenantEmailService';
 import {
@@ -7,6 +8,7 @@ import {
 import { SendGridClient } from 'Shared/Infrastructure/Service/SendGrid/SendGridClient';
 import { SendGridRequest } from "Shared/Infrastructure/Service/SendGrid/SendGridRequest";
 
+@Injectable()
 export class SendGridVerifyTenantEmailService implements IVerifyTenantEmailService {
   constructor(private readonly sendGrid: SendGridClient) {}
 

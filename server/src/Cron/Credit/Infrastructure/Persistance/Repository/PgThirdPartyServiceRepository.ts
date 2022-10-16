@@ -1,5 +1,5 @@
 import { Result } from '@badrap/result';
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { ClassConstructor } from 'class-transformer';
 import { ThirdPartyService } from 'Cron/Credit/Domain/Entity/ThirdPartyService';
@@ -11,10 +11,10 @@ import { PgThirdPartyServiceMapper } from '../Mapper/PgThirdPartyServiceMapper';
 import { ThirdPartyServiceModel } from '../Model/ThirdPartyServiceModel';
 import { ThirdPartyServiceFilter } from 'Cron/Credit/Domain/Filter/ThirdPartyServiceFilter';
 
+@Injectable()
 export class PgThirdPartyServiceRepository
   extends TypeOrmRepository<ThirdPartyServiceModel>
-  implements IThirdPartyServiceRepository
-{
+  implements IThirdPartyServiceRepository {
   constructor(
     @Inject(Database.DATABASE_CONNECTION)
     protected readonly dataSource: DataSource,

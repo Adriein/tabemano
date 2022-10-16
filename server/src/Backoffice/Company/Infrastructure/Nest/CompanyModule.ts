@@ -2,6 +2,7 @@ import { MiddlewareConsumer, Module } from "@nestjs/common";
 import { CqrsModule } from "@nestjs/cqrs";
 import { FindCompanyQueryHandler } from "Backoffice/Company/Application/FindCompany/FindCompanyQueryHandler";
 import { RegisterCompanyCommandHandler } from "Backoffice/Company/Application/RegisterCompany/RegisterCompanyCommandHandler";
+import { RegisterCompanyController } from "Backoffice/Company/Infrastructure/Controller/RegisterCompany/RegisterCompanyController";
 import { PgCompanyMapper } from "Backoffice/Company/Infrastructure/Persistance/Mapper/PgCompanyMapper";
 import { PgCompanyRepository } from "Backoffice/Company/Infrastructure/Persistance/Repository/PgCompanyRepository";
 import { UserMiddleware } from "Shared/Infrastructure/Middlewares/UserMiddleware";
@@ -19,6 +20,8 @@ const Repository = [
   },
 ];
 
+const Controllers = [ RegisterCompanyController ];
+
 const Mappers = [
   PgCompanyMapper
 ];
@@ -26,7 +29,7 @@ const Mappers = [
 
 @Module({
   imports: [ CqrsModule, TypeOrmModule ],
-  controllers: [],
+  controllers: [ ...Controllers ],
   providers: [
     ...Handlers,
     ...Repository,
@@ -35,7 +38,7 @@ const Mappers = [
   exports: [],
 })
 export class CompanyModule {
-  /*configure(consumer: MiddlewareConsumer) {
-   consumer.apply(UserMiddleware).forRoutes([])
-   }*/
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(UserMiddleware).forRoutes(...Controllers)
+  }
 }
