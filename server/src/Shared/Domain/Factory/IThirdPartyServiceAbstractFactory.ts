@@ -1,5 +1,6 @@
-import { IRemainingCreditService } from "Shared/Domain/Factory/IRemainingCreditService";
+import { IRemainingCreditService } from 'Shared/Domain/Factory/IRemainingCreditService';
+import { Name } from '../Vo/Name.vo';
 
 export interface IThirdPartyServiceAbstractFactory {
-  createRemainingCreditServiceRetriever(): IRemainingCreditService;
+  createRemainingCreditServiceRetriever(serviceName: Name): IRemainingCreditService;
 }
