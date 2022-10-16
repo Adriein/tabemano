@@ -1,11 +1,25 @@
 import { Tenant } from "Backoffice/Notification/Domain/Entity/Tenant";
 
+export type SendGridVerifyEmailDto = {
+  nickname: string,
+  from_email: string,
+  from_name: string,
+  reply_to: string,
+  reply_to_name: string,
+  address: string,
+  address2: string,
+  state: string,
+  city: string,
+  country: string,
+  zip: string
+}
+
 export class VerifyTenantEmailRequest {
   constructor(
     private readonly tenant: Tenant
   ) {}
 
-  public serialize(): any {
+  public serialize(): SendGridVerifyEmailDto {
     return {
       "nickname": this.tenant.name().value,
       "from_email": this.tenant.email().value,

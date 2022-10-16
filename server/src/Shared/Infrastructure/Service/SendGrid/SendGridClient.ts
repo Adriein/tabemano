@@ -6,7 +6,7 @@ import { ClientRequest } from '@sendgrid/client/src/request';
 import { ClientResponse } from '@sendgrid/mail';
 
 export class SendGridClient {
-  private _promisifiedRequest: (request: ClientRequest) => Promise<[ClientResponse, any]>;
+  private readonly _promisifiedRequest: (request: ClientRequest) => Promise<[ ClientResponse, any ]>;
 
   constructor(private readonly config: ConfigService) {
     client.setApiKey(this.config.get<string>('SEND_GRID_API_KEY')!);
@@ -15,7 +15,7 @@ export class SendGridClient {
 
   public async makeRequest<Req extends SendGridRequest, Res = void>(request: Req): Promise<any> {
     if (request.method === 'POST') {
-      await this._promisifiedRequest(request);
+      return await this._promisifiedRequest(request);
     }
 
     await this._promisifiedRequest(request);
