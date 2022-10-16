@@ -43,6 +43,7 @@ export class PgTenantMapper implements IMapper<Tenant, TenantModel> {
       PricingCollection.build(pricingList),
       AppConfig.build(),
       dataModel.companyId,
+      dataModel.notificationEmail,
       dataModel.createdAt,
       dataModel.updatedAt
     );
@@ -71,6 +72,10 @@ export class PgTenantMapper implements IMapper<Tenant, TenantModel> {
       companyModel.id = entity.companyId()!;
       model.companyId = entity.companyId()!;
       model.company = companyModel;
+    }
+
+    if (entity.notificationEmail()) {
+      model.notificationEmail = entity.notificationEmail();
     }
 
     return model;

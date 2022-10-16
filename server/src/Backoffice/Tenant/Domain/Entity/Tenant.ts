@@ -35,13 +35,14 @@ export class Tenant extends AggregateRoot {
     _id: ID,
     private readonly _name: Name,
     private readonly _password: Password,
-    private _email: Email,
+    private readonly _email: Email,
     private readonly _config: Config,
     private readonly _roleId: ID,
     private readonly _isActive: boolean,
     private _pricing: PricingCollection,
     private _appConfig: AppConfig,
     private _companyId: ID | null = null,
+    private _notificationEmail: Email | null = null,
     _createdAt?: Date,
     _updatedAt?: Date
   ) {
@@ -85,6 +86,10 @@ export class Tenant extends AggregateRoot {
     return this._companyId;
   }
 
+  public notificationEmail(): Email | null {
+    return this._notificationEmail;
+  }
+
   public createSubscription(pricing: Pricing): Subscription {
     return Subscription.build(
       this.id(),
@@ -109,6 +114,6 @@ export class Tenant extends AggregateRoot {
   }
 
   public configureNotificationEmail(email: Email): void {
-    this._email = email;
+    this._notificationEmail = email;
   }
 }

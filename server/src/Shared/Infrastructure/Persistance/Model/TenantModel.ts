@@ -37,6 +37,13 @@ export class TenantModel {
   @Column({ name: 'te_is_active' })
   isActive!: boolean;
 
+  @Column({
+    name: 'te_notification_email',
+    type: 'varchar',
+    transformer: new ValueObjectTransformer<string, Email>(Email, true)
+  })
+  notificationEmail!: Email | null;
+
   @Column({ name: 'te_created_at', type: 'timestamp', precision: 0 })
   createdAt!: Date;
 
