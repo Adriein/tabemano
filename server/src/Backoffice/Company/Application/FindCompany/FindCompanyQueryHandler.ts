@@ -1,9 +1,9 @@
 import { Inject } from "@nestjs/common";
 import { IQueryHandler, QueryHandler } from "@nestjs/cqrs";
-import { FindCompanyQuery } from "Invoicing/Company/Application/FindCompany/FindCompanyQuery";
-import { FindCompanyResponse } from "Invoicing/Company/Application/FindCompany/FindCompanyResponse";
-import { CompanyFilter } from "Invoicing/Company/Domain/Filter/CompanyFilter";
-import { ICompanyRepository } from "Invoicing/Company/Domain/Repository/ICompanyRepository";
+import { FindCompanyQuery } from "Backoffice/Company/Application/FindCompany/FindCompanyQuery";
+import { FindCompanyResponse } from "Backoffice/Company/Application/FindCompany/FindCompanyResponse";
+import { CompanyFilter } from "Backoffice/Company/Domain/Filter/CompanyFilter";
+import { ICompanyRepository } from "Backoffice/Company/Domain/Repository/ICompanyRepository";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 
 @QueryHandler(FindCompanyQuery)

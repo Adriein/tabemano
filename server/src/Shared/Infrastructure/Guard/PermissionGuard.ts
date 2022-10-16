@@ -11,11 +11,9 @@ export class PermissionGuard implements CanActivate {
     const editedUrl = currentUrl.replace(regex, '');
 
     if (request.user.urlList) {
-      const found = request.user.urlList.find((url: string) => {
+      return request.user.urlList.find((url: string) => {
         return editedUrl === url;
       });
-
-      return found;
     }
 
     return false;

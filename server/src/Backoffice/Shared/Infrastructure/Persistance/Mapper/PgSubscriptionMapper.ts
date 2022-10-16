@@ -10,9 +10,12 @@ import { IMapper } from "Shared/Domain/Interfaces/IMapper";
 export class PgSubscriptionMapper implements IMapper<Subscription, SubscriptionModel> {
   public toDomain(dataModel: SubscriptionModel): Subscription {
     const eventCollection = this.buildEventCollection(dataModel);
+
+    const userId = dataModel.userId ? dataModel.userId : dataModel.tenantId;
+
     return new Subscription(
       dataModel.id,
-      dataModel.userId,
+      userId!,
       dataModel.pricingId,
       dataModel.paymentDate,
       dataModel.validTo,

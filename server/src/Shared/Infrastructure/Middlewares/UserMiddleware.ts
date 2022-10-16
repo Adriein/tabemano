@@ -2,6 +2,7 @@ import { Injectable, NestMiddleware } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { QueryBus } from '@nestjs/cqrs';
 import { GetTenantProfileQuery } from 'Authorization/Auth/Application/GetTenantProfile/GetTenantProfileQuery';
+import { GetTenantProfileResponse } from "Authorization/Auth/Application/GetTenantProfile/GetTenantProfileResponse";
 import { GetUrlListQuery } from 'Authorization/Permission/Application/GetUrlList/GetUrlListQuery';
 import { GetUrlListResponse } from 'Authorization/Permission/Application/GetUrlList/GetUrlListResponse';
 import { NextFunction, Request, Response } from 'express';
@@ -30,8 +31,8 @@ export class UserMiddleware implements NestMiddleware {
 
       const permissionList = user.permissions;
 
-      const [id, urlList] = await Promise.all([
-        this.findUserId(user.email),
+      const [ id, urlList ] = await Promise.all([
+        this.findTenantId(user.email),
         this.findUrlList(permissionList),
       ]);
 
@@ -43,14 +44,16 @@ export class UserMiddleware implements NestMiddleware {
     return next();
   }
 
-  private async findUserId(email: string): Promise<string> {
+  private async findTenantId(email: string): Promise<string> {
     const getTenantProfileQuery = new GetTenantProfileQuery(email);
 
-    return await this.queryBus.execute(getTenantProfileQuery);
+    const response = await this.queryBus.execute<GetTenantProfileQuery, GetTenantProfileResponse>(getTenantProfileQuery);
+
+    return response.id;
   }
 
   private async findUrlList(permissionsList: { name: string }[]): Promise<string[]> {
-    const moduleNameList: string[] = permissionsList.map((permission: any) => {
+    const moduleNameList: string[] = permissionsList.map((permission: { name: string }) => {
       return permission.name;
     });
 

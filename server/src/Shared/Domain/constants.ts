@@ -32,3 +32,12 @@ export interface HttpMethod {
   POST: 'POST';
   GET: 'GET';
 }
+
+export type TabemanoSession = {
+  name: string,
+  email: string,
+  permissions: [],
+  iat: number,
+  id: string,
+  urlList: string[]
+}

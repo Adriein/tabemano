@@ -1,7 +1,7 @@
 import { DomainError } from "Shared/Domain/Error/DomainError";
 
 export class TenantAlreadyExistsError extends DomainError {
-  statusCode = 400;
+  statusCode = 500;
 
   constructor() {
     super('This tenant already exists');

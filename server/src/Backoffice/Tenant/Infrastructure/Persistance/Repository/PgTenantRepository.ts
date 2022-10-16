@@ -7,12 +7,12 @@ import { TypeOrmTenantFilterAdapter } from "Backoffice/Tenant/Infrastructure/Per
 import { PgTenantMapper } from "Backoffice/Tenant/Infrastructure/Persistance/Mapper/PgTenantMapper";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
 import Database from "Shared/Infrastructure/Persistance/Database";
-import { UserModel } from "Shared/Infrastructure/Persistance/Model/UserModel";
+import { TenantModel } from "Shared/Infrastructure/Persistance/Model/TenantModel";
 import { TypeOrmRepository } from "Shared/Infrastructure/Persistance/Repository/TypeOrmRepository";
 import { DataSource } from "typeorm";
 
 @Injectable()
-export class PgTenantRepository extends TypeOrmRepository<UserModel> implements ITenantRepository {
+export class PgTenantRepository extends TypeOrmRepository<TenantModel> implements ITenantRepository {
   constructor(
     @Inject(Database.DATABASE_CONNECTION)
     protected readonly dataSource: DataSource,
@@ -43,12 +43,14 @@ export class PgTenantRepository extends TypeOrmRepository<UserModel> implements 
     await this.repository().save(model);
   }
 
-  update(entity: Tenant): Promise<void> {
-    return Promise.resolve(undefined);
+  public async update(entity: Tenant): Promise<void> {
+    const model = this.mapper.toModel(entity);
+
+    await this.repository().update({ id: entity.id() }, model);
   }
 
   protected entitySchema() {
-    return UserModel;
+    return TenantModel;
   }
 
 }

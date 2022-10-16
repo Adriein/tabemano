@@ -14,9 +14,11 @@ export class PgClientMapper implements IMapper<Client, UserModel> {
 
     const subscription = dataModel!.subscriptions[0];
 
+    const userId = subscription.userId ? subscription.userId : subscription.tenantId;
+
     const activeSubscription = new Subscription(
       subscription.id,
-      subscription.userId,
+      userId!,
       subscription.pricingId,
       subscription.paymentDate,
       subscription.validTo,

@@ -4,10 +4,10 @@ import { CreateInvoiceCommandHandler } from 'Invoicing/Invoice/Application/Creat
 import { CreateInvoiceController } from 'Invoicing/Invoice/Infrastructure/Controller/CreateInvoice/CreateInvoiceController';
 import { PgInvoiceRepository } from 'Invoicing/Invoice/Infrastructure/Persistance/Repository/PgInvoiceRepository';
 import { TypeOrmModule } from 'Shared/Infrastructure/Persistance/TypeOrmModule';
-import { UserMiddleware } from 'Shared/Infrastructure/Middlewares/user';
+import { UserMiddleware } from 'Shared/Infrastructure/Middlewares/UserMiddleware';
 
-const Handlers = [CreateInvoiceCommandHandler];
-const Controllers = [CreateInvoiceController];
+const Handlers = [ CreateInvoiceCommandHandler ];
+const Controllers = [ CreateInvoiceController ];
 const Repository = [
   {
     provide: 'InvoiceRepository',
@@ -16,9 +16,9 @@ const Repository = [
 ];
 
 @Module({
-  imports: [CqrsModule, TypeOrmModule],
-  controllers: [...Controllers],
-  providers: [...Handlers, ...Repository],
+  imports: [ CqrsModule, TypeOrmModule ],
+  controllers: [ ...Controllers ],
+  providers: [ ...Handlers, ...Repository ],
   exports: [],
 })
 export class InvoiceModule {

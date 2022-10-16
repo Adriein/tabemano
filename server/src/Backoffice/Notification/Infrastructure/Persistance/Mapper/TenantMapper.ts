@@ -16,7 +16,7 @@ export class TenantMapper implements IMapper<Tenant, TenantModel> {
 
     return new Tenant(
       dataModel.id,
-      dataModel.email,
+      dataModel.notificationEmail!,
       dataModel.name,
       company
     );
