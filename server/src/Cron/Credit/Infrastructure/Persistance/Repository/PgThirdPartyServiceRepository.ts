@@ -14,7 +14,8 @@ import { ThirdPartyServiceFilter } from 'Cron/Credit/Domain/Filter/ThirdPartySer
 @Injectable()
 export class PgThirdPartyServiceRepository
   extends TypeOrmRepository<ThirdPartyServiceModel>
-  implements IThirdPartyServiceRepository {
+  implements IThirdPartyServiceRepository
+{
   constructor(
     @Inject(Database.DATABASE_CONNECTION)
     protected readonly dataSource: DataSource,
@@ -23,25 +24,27 @@ export class PgThirdPartyServiceRepository
     super();
   }
 
-  findOne(
+  public async findOne(
     filter: ThirdPartyServiceFilter
   ): Promise<Result<ThirdPartyService, Error | RecordNotFoundError>> {
     throw new Error('Method not implemented.');
   }
 
-  find(filter: ThirdPartyServiceFilter): Promise<Result<ThirdPartyService[], Error>> {
+  public async find(filter: ThirdPartyServiceFilter): Promise<Result<ThirdPartyService[], Error>> {
     throw new Error('Method not implemented.');
   }
 
-  save(entity: ThirdPartyService): Promise<void> {
+  public async save(entity: ThirdPartyService): Promise<void> {
     throw new Error('Method not implemented.');
   }
 
-  update(entity: ThirdPartyService): Promise<void> {
-    throw new Error('Method not implemented.');
+  public async update(entity: ThirdPartyService): Promise<void> {
+    const model = this.mapper.toModel(entity);
+
+    await this.repository().update({ id: entity.id() }, model);
   }
 
-  delete(entity: ThirdPartyService): Promise<void> {
+  public async delete(entity: ThirdPartyService): Promise<void> {
     throw new Error('Method not implemented.');
   }
 

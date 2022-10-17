@@ -23,13 +23,19 @@ export class ThirdPartyServiceModel {
     name: 'tps_remaining_credit',
     type: 'integer',
   })
-  remainingCredit!: Number;
+  remainingCredit!: number;
 
   @Column({
     name: 'tps_min_remaining_credit_before_notifying',
     type: 'integer',
   })
-  minRemainingCreditBeforeNotifying!: Number;
+  minRemainingCreditBeforeNotifying!: number;
+
+  @Column({
+    name: 'tps_notify',
+    type: 'boolean',
+  })
+  notify!: boolean;
 
   @Column({ name: 'tps_created_at', type: 'timestamp', precision: 0 })
   createdAt!: Date;

@@ -1,3 +1,4 @@
+import { SENDGRID } from 'Shared/Domain/constants';
 import { IRemainingCreditService } from 'Shared/Domain/Factory/IRemainingCreditService';
 import { IThirdPartyServiceAbstractFactory } from 'Shared/Domain/Factory/IThirdPartyServiceAbstractFactory';
 import { Name } from 'Shared/Domain/Vo/Name.vo';
@@ -7,7 +8,7 @@ export class ThirdPartyServiceAbstractFactory implements IThirdPartyServiceAbstr
   constructor(private readonly sendGridRemainingCreditService: SendGridRemainingCreditService) {}
 
   public createRemainingCreditServiceRetriever(serviceName: Name): IRemainingCreditService {
-    if (serviceName.value === 'SendGrid') {
+    if (serviceName.value === SENDGRID) {
       return this.sendGridRemainingCreditService;
     }
 

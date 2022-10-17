@@ -34,10 +34,12 @@ export interface HttpMethod {
 }
 
 export type TabemanoSession = {
-  name: string,
-  email: string,
-  permissions: [],
-  iat: number,
-  id: string,
-  urlList: string[]
-}
+  name: string;
+  email: string;
+  permissions: [];
+  iat: number;
+  id: string;
+  urlList: string[];
+};
+
+export const SENDGRID = 'SendGrid';
