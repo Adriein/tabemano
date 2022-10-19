@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { ThirdPartyService } from 'Cron/Credit/Domain/Entity/ThirdPartyService';
 import { ThirdPartyServiceFilter } from 'Cron/Credit/Domain/Filter/ThirdPartyServiceFilter';
 import { IThirdPartyServiceRepository } from 'Cron/Credit/Domain/Repository/IThirdPartyServiceRepository';
@@ -7,6 +7,7 @@ import { Log } from 'Shared/Domain/Decorators/Log';
 import { IThirdPartyServiceAbstractFactory } from 'Shared/Domain/Factory/IThirdPartyServiceAbstractFactory';
 import { UpdateRemainingCreditCommand } from './UpdateRemainingCreditCommand';
 
+@CommandHandler(UpdateRemainingCreditCommand)
 export class UpdateRemainingCreditCommandHandler implements ICommandHandler {
   constructor(
     @Inject('IThirdPartyServiceRepository')

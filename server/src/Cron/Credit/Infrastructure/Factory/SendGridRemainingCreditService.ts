@@ -10,6 +10,8 @@ export class SendGridRemainingCreditService implements IRemainingCreditService {
 
     const remainingCredit = await this.sendGrid.makeRequest(request);
 
+    console.log('REMAINING CREDIT', remainingCredit);
+
     // if (remainingCredit) {
     //   remainingCredit;
     // }

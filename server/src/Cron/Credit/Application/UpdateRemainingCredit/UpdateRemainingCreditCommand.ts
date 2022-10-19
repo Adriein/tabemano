@@ -1,5 +1,3 @@
 import { ICommand } from '@nestjs/cqrs';
 
-export class UpdateRemainingCreditCommand implements ICommand {
-  constructor() {}
-}
+export class UpdateRemainingCreditCommand implements ICommand {}

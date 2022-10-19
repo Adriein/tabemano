@@ -3,14 +3,14 @@ import { TypeOrmAdapter } from 'Shared/Infrastructure/Persistance/Adapter/TypeOr
 import { FindManyOptions } from 'typeorm';
 import { ThirdPartyServiceModel } from '../Model/ThirdPartyServiceModel';
 
-export class TypeOrmPermissionFilterAdapter extends TypeOrmAdapter<
+export class TypeOrmThirdPartyServiceFilterAdapter extends TypeOrmAdapter<
   FindManyOptions<ThirdPartyServiceModel>
 > {
   constructor(private readonly filter: ThirdPartyServiceFilter) {
     super();
   }
 
-  public apply(): FindManyOptions<ThirdPartyServiceFilter> {
+  public apply(): FindManyOptions<ThirdPartyServiceModel> {
     const filters = this.filter.apply();
 
     return this.typeOrmFilter;

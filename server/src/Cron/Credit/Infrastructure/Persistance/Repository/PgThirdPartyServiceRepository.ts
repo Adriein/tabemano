@@ -10,6 +10,7 @@ import { TypeOrmRepository } from 'Shared/Infrastructure/Persistance/Repository/
 import { PgThirdPartyServiceMapper } from '../Mapper/PgThirdPartyServiceMapper';
 import { ThirdPartyServiceModel } from '../Model/ThirdPartyServiceModel';
 import { ThirdPartyServiceFilter } from 'Cron/Credit/Domain/Filter/ThirdPartyServiceFilter';
+import { TypeOrmThirdPartyServiceFilterAdapter } from '../Filter/TypeOrmThirdPartyServiceFilterAdapter';
 
 @Injectable()
 export class PgThirdPartyServiceRepository
@@ -31,7 +32,13 @@ export class PgThirdPartyServiceRepository
   }
 
   public async find(filter: ThirdPartyServiceFilter): Promise<Result<ThirdPartyService[], Error>> {
-    throw new Error('Method not implemented.');
+    const adapter = new TypeOrmThirdPartyServiceFilterAdapter(filter);
+
+    const results = await this.repository().find(adapter.apply());
+
+    return results
+      ? Result.ok(results.map((result: ThirdPartyServiceModel) => this.mapper.toDomain(result)))
+      : Result.err(new RecordNotFoundError());
   }
 
   public async save(entity: ThirdPartyService): Promise<void> {
