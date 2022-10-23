@@ -29,10 +29,6 @@ export const TenantTableDefinition = new Table({
       type: 'varchar',
     },
     {
-      name: 'te_company_id',
-      type: 'varchar',
-    },
-    {
       name: 'te_is_active',
       type: 'boolean',
     },
@@ -60,13 +56,6 @@ export const TenantTableDefinition = new Table({
       columnNames: [ 'te_config_id' ],
       referencedColumnNames: [ 'co_id' ],
       referencedTableName: 'ta_config',
-      onDelete: "CASCADE"
-    },
-    {
-      name: 'ta_tenant_ta_company',
-      columnNames: [ 'te_company_id' ],
-      referencedColumnNames: [ 'co_id' ],
-      referencedTableName: 'ta_company',
       onDelete: "CASCADE"
     }
   ]

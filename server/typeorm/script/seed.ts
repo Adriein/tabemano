@@ -1,10 +1,10 @@
 import { DataSource } from 'typeorm';
 import { PricingModel } from '../../src/Backoffice/Pricing/Infrastructure/Persistance/Model/PricingModel';
-import { CompanyType } from "../../src/Invoicing/Company/Domain/Vo/CompanyType";
-import { Country } from "../../src/Invoicing/Company/Domain/Vo/Country";
-import { FiscalId } from "../../src/Invoicing/Company/Domain/Vo/FiscalId";
 import { Address } from "../../src/Shared/Domain/Vo/Address.vo";
 import { City } from "../../src/Shared/Domain/Vo/City.vo";
+import { CompanyType } from "../../src/Shared/Domain/Vo/CompanyType.vo";
+import { Country } from "../../src/Shared/Domain/Vo/Country.vo";
+import { FiscalId } from "../../src/Shared/Domain/Vo/FiscalId.vo";
 import { Phone } from "../../src/Shared/Domain/Vo/Phone.vo";
 import { State } from "../../src/Shared/Domain/Vo/State.vo";
 import { CompanyModel } from "../../src/Shared/Infrastructure/Persistance/Model/CompanyModel";
@@ -70,7 +70,7 @@ const createCompany = async (database: DataSource) => {
     address: new Address('1111'),
     type: new CompanyType('SL'),
     country: new Country('Spain'),
-    phone: new Phone(1111),
+    phone: new Phone('11111'),
     city: new City('Barcelona'),
     state: new State('Catalonia'),
     createdAt: DateVo.now().value,

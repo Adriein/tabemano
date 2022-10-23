@@ -4,7 +4,7 @@ export class FindCompanyResponse {
     readonly name: string,
     readonly fiscalId: string,
     readonly address: string,
-    readonly phone: number,
+    readonly phone: string,
     readonly type: string,
     readonly country: string,
   ) {}

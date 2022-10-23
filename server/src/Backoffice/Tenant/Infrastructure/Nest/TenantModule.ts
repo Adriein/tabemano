@@ -2,6 +2,7 @@ import { MiddlewareConsumer, Module } from "@nestjs/common";
 import { CqrsModule } from "@nestjs/cqrs";
 import { PgSubscriptionMapper } from "Backoffice/Shared/Infrastructure/Persistance/Mapper/PgSubscriptionMapper";
 import { PgSubscriptionRepository } from "Backoffice/Shared/Infrastructure/Persistance/Repository/PgSubscriptionRepository";
+import { AssociateCompanyDomainEventHandler } from "Backoffice/Tenant/Application/AsociateCompany/AssociateCompanyDomainEventHandler";
 import { ConfigureTenantCommandHandler } from "Backoffice/Tenant/Application/ConfigureTenant/ConfigureTenantCommandHandler";
 import { CreateTenantDomainEventHandler } from "Backoffice/Tenant/Application/CreateTenant/CreateTenantDomainEventHandler";
 import { RegisterClientCommandHandler } from "Backoffice/Tenant/Application/RegisterClient/RegisterClientCommandHandler";
@@ -15,7 +16,8 @@ import { TypeOrmModule } from "Shared/Infrastructure/Persistance/TypeOrmModule";
 const Handlers = [
   CreateTenantDomainEventHandler,
   RegisterClientCommandHandler,
-  ConfigureTenantCommandHandler
+  ConfigureTenantCommandHandler,
+  AssociateCompanyDomainEventHandler
 ];
 
 const Repository = [

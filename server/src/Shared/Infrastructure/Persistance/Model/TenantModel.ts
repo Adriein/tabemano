@@ -1,5 +1,4 @@
 import { SubscriptionModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionModel";
-import { NullableVo } from "Shared/Domain/Vo/Nullable.vo";
 import { CompanyModel } from "Shared/Infrastructure/Persistance/Model/CompanyModel";
 import { PricingModel } from "Backoffice/Pricing/Infrastructure/Persistance/Model/PricingModel";
 import { RoleModel } from "Shared/Infrastructure/Persistance/Model/RoleModel";

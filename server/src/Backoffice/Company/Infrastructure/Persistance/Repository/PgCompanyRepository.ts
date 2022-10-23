@@ -41,8 +41,12 @@ export class PgCompanyRepository extends TypeOrmRepository<CompanyModel> impleme
     }
   }
 
-  findOne(filter: CompanyFilter): Promise<Result<Company, RecordNotFoundError>> {
-    throw new Error();
+  public async findOne(filter: CompanyFilter): Promise<Result<Company, RecordNotFoundError>> {
+    const adapter = new TypeOrmCompanyFilterAdapter(filter);
+
+    const result = await this.repository().findOne(adapter.apply());
+
+    return result ? Result.ok(this.mapper.toDomain(result)) : Result.err(new RecordNotFoundError());
   }
 
   public async save(entity: Company): Promise<void> {

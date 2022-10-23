@@ -1,11 +1,13 @@
 import { AggregateRoot } from "Shared/Domain/Entities/AggregateRoot";
 import { Address } from "Shared/Domain/Vo/Address.vo";
+import { City } from "Shared/Domain/Vo/City.vo";
 import { CompanyName } from "Shared/Domain/Vo/CompanyName.vo";
 import { CompanyType } from "Shared/Domain/Vo/CompanyType.vo";
 import { Country } from "Shared/Domain/Vo/Country.vo";
 import { FiscalId } from "Shared/Domain/Vo/FiscalId.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Phone } from "Shared/Domain/Vo/Phone.vo";
+import { State } from "Shared/Domain/Vo/State.vo";
 
 export class Company extends AggregateRoot {
   public static build(
@@ -15,8 +17,10 @@ export class Company extends AggregateRoot {
     phone: Phone,
     type: CompanyType,
     country: Country,
+    state: State,
+    city: City
   ): Company {
-    return new Company(ID.generate(), name, fiscalId, address, phone, type, country);
+    return new Company(ID.generate(), name, fiscalId, address, phone, type, country, state, city);
   }
 
   constructor(
@@ -27,6 +31,8 @@ export class Company extends AggregateRoot {
     private _phone: Phone,
     private _type: CompanyType,
     private _country: Country,
+    private _state: State,
+    private _city: City
   ) {
     super(_id);
   }
@@ -54,5 +60,13 @@ export class Company extends AggregateRoot {
 
   public country(): Country {
     return this._country;
+  }
+
+  public state(): State {
+    return this._state;
+  }
+
+  public city(): City {
+    return this._city;
   }
 }

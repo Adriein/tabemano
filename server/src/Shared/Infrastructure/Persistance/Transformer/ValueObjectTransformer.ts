@@ -6,7 +6,7 @@ export class ValueObjectTransformer<DatabaseType extends Primitives, VO extends 
   constructor(private readonly valueObject: ValueObjectConstructor<VO>, private readonly nullable = false) {}
 
   public from(value: DatabaseType): VO | null {
-    if (this.nullable) {
+    if (this.nullable && !value) {
       return null;
     }
 
