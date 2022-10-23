@@ -23,6 +23,7 @@ import { ID } from '../../src/Shared/Domain/Vo/Id.vo';
 import { Name } from '../../src/Shared/Domain/Vo/Name.vo';
 import { Password } from '../../src/Shared/Domain/Vo/Password.vo';
 import { RoleType } from '../../src/Shared/Domain/Vo/RoleType';
+import { TenantCompanyModel } from "../../src/Shared/Infrastructure/Persistance/Model/TenantCompanyModel";
 import { TenantModel } from "../../src/Shared/Infrastructure/Persistance/Model/TenantModel";
 import { Time } from '../../src/Shared/Infrastructure/Helper/Time';
 import Database from '../../src/Shared/Infrastructure/Persistance/Database';
@@ -80,6 +81,7 @@ const createCompany = async (database: DataSource) => {
 
 const createTenant = async (database: DataSource) => {
   const tenantRepository = database.getRepository(TenantModel);
+  const tenantCompanyRepository = database.getRepository(TenantCompanyModel);
   const password = await crypto.hash(process.env.ADMIN_PASSWORD!);
   const configId = ID.generate();
 
@@ -103,10 +105,20 @@ const createTenant = async (database: DataSource) => {
     role: {
       id: adminRoleId,
     },
+    createdAt: DateVo.now().value,
+    updatedAt: DateVo.now().value,
+  });
+
+  await tenantCompanyRepository.save({
+    id: ID.generate(),
+    companyId: companyId,
+    tenantId: id,
     company: {
       id: companyId
     },
-    companyId: companyId,
+    tenant: {
+      id: id,
+    },
     createdAt: DateVo.now().value,
     updatedAt: DateVo.now().value,
   });

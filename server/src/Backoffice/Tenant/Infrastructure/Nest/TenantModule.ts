@@ -8,7 +8,9 @@ import { CreateTenantDomainEventHandler } from "Backoffice/Tenant/Application/Cr
 import { RegisterClientCommandHandler } from "Backoffice/Tenant/Application/RegisterClient/RegisterClientCommandHandler";
 import { ConfigureTenantController } from "Backoffice/Tenant/Infrastructure/Controller/ConfigureTenant/ConfigureTenantController";
 import { RegisterClientController } from "Backoffice/Tenant/Infrastructure/Controller/RegisterClient/RegisterClientController";
+import { PgTenantCompanyMapper } from "Backoffice/Tenant/Infrastructure/Persistance/Mapper/PgTenantCompanyMapper";
 import { PgTenantMapper } from "Backoffice/Tenant/Infrastructure/Persistance/Mapper/PgTenantMapper";
+import { PgTenantCompanyRepository } from "Backoffice/Tenant/Infrastructure/Persistance/Repository/PgTenantCompanyRepository";
 import { PgTenantRepository } from "Backoffice/Tenant/Infrastructure/Persistance/Repository/PgTenantRepository";
 import { UserMiddleware } from "Shared/Infrastructure/Middlewares/UserMiddleware";
 import { TypeOrmModule } from "Shared/Infrastructure/Persistance/TypeOrmModule";
@@ -28,12 +30,17 @@ const Repository = [
   {
     provide: 'ISubscriptionRepository',
     useClass: PgSubscriptionRepository
+  },
+  {
+    provide: 'ITenantCompanyRepository',
+    useClass: PgTenantCompanyRepository
   }
 ];
 
 const Mappers = [
   PgTenantMapper,
-  PgSubscriptionMapper
+  PgSubscriptionMapper,
+  PgTenantCompanyMapper
 ];
 
 const Controllers = [ ConfigureTenantController, RegisterClientController ];

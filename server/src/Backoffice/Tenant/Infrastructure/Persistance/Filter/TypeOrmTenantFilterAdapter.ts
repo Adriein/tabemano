@@ -44,7 +44,7 @@ export class TypeOrmTenantFilterAdapter extends TypeOrmAdapter<FindManyOptions<T
       this.add({ where: { isActive } });
     }
 
-    this.add({ relations: { config: true, pricing: true } })
+    this.add({ relations: { config: true, pricing: true, companies: true } })
 
     return this.typeOrmFilter;
   }

@@ -17,12 +17,12 @@ export const TenantCompanyTableDefinition = new Table({
       type: 'varchar',
     },
     {
-      name: 'co_created_at',
+      name: 'teco_created_at',
       type: 'timestamp',
       precision: 0
     },
     {
-      name: 'co_updated_at',
+      name: 'teco_updated_at',
       type: 'timestamp',
       precision: 0
     },

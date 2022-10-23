@@ -7,10 +7,10 @@ import { TenantModel } from "Shared/Infrastructure/Persistance/Model/TenantModel
 export class TenantMapper implements IMapper<Tenant, TenantModel> {
   public toDomain(dataModel: TenantModel): Tenant {
     const company = new Company(
-      dataModel.company.id,
-      dataModel.company.address,
-      dataModel.company.country,
-      dataModel.company.city,
+      dataModel.companies[0].company.id,
+      dataModel.companies[0].company.address,
+      dataModel.companies[0].company.country,
+      dataModel.companies[0].company.city,
       new Zip('aaaa'),
     );
 
