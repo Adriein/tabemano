@@ -1,6 +1,6 @@
 import { ThirdPartyService } from 'Cron/Credit/Domain/Entity/ThirdPartyService';
 import { IMapper } from 'Shared/Domain/Interfaces/IMapper';
-import { ThirdPartyServiceModel } from '../Model/ThirdPartyServiceModel';
+import { ThirdPartyServiceModel } from '../../../../../Shared/Infrastructure/Persistance/Model/ThirdPartyServiceModel';
 
 export class PgThirdPartyServiceMapper
   implements IMapper<ThirdPartyService, ThirdPartyServiceModel>

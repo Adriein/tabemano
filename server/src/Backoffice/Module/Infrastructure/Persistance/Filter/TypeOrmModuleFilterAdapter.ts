@@ -2,7 +2,7 @@ import { ModuleFilter } from 'Authorization/Permission/Domain/Filter/ModuleFilte
 import { ID } from 'Shared/Domain/Vo/Id.vo';
 import { TypeOrmAdapter } from 'Shared/Infrastructure/Persistance/Adapter/TypeOrmAdapter';
 import { FindManyOptions } from 'typeorm';
-import { ModuleModel } from '../../../../../Authorization/Permission/Infrastructure/Persistance/Model/ModuleModel';
+import { ModuleModel } from '../../../../../Shared/Infrastructure/Persistance/Model/ModuleModel';
 
 export class TypeOrmModuleFilterAdapter extends TypeOrmAdapter<FindManyOptions<ModuleModel>> {
   constructor(private readonly filter: ModuleFilter) {

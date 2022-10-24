@@ -1,5 +1,5 @@
 import { Module } from 'Authorization/Permission/Domain/Entity/Module';
-import { ModuleModel } from 'Authorization/Permission/Infrastructure/Persistance/Model/ModuleModel';
+import { ModuleModel } from 'Shared/Infrastructure/Persistance/Model/ModuleModel';
 import { UrlModel } from 'Authorization/Permission/Infrastructure/Persistance/Model/UrlModule';
 import { IMapper } from 'Shared/Domain/Interfaces/IMapper';
 import { DateVo } from 'Shared/Domain/Vo/Date.vo';

@@ -1,7 +1,7 @@
 import { ThirdPartyServiceFilter } from 'Cron/Credit/Domain/Filter/ThirdPartyServiceFilter';
 import { TypeOrmAdapter } from 'Shared/Infrastructure/Persistance/Adapter/TypeOrmAdapter';
 import { FindManyOptions } from 'typeorm';
-import { ThirdPartyServiceModel } from '../Model/ThirdPartyServiceModel';
+import { ThirdPartyServiceModel } from '../../../../../Shared/Infrastructure/Persistance/Model/ThirdPartyServiceModel';
 
 export class TypeOrmThirdPartyServiceFilterAdapter extends TypeOrmAdapter<
   FindManyOptions<ThirdPartyServiceModel>

@@ -8,7 +8,7 @@ import { RecordNotFoundError } from 'Shared/Domain/Error/RecordNotFoundError';
 import Database from 'Shared/Infrastructure/Persistance/Database';
 import { TypeOrmRepository } from 'Shared/Infrastructure/Persistance/Repository/TypeOrmRepository';
 import { PgThirdPartyServiceMapper } from '../Mapper/PgThirdPartyServiceMapper';
-import { ThirdPartyServiceModel } from '../Model/ThirdPartyServiceModel';
+import { ThirdPartyServiceModel } from '../../../../../Shared/Infrastructure/Persistance/Model/ThirdPartyServiceModel';
 import { ThirdPartyServiceFilter } from 'Cron/Credit/Domain/Filter/ThirdPartyServiceFilter';
 import { TypeOrmThirdPartyServiceFilterAdapter } from '../Filter/TypeOrmThirdPartyServiceFilterAdapter';
 
