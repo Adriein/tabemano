@@ -33,6 +33,8 @@ export class ThirdPartyService extends AggregateRoot {
   }
 
   public async updateRemainingCredit(service: IRemainingCreditService): Promise<void> {
-    this._remainingCredit = await service.execute();
+    const response = await service.execute();
+
+    this._remainingCredit = response.remainingCredit();
   }
 }

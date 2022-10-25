@@ -1,10 +1,10 @@
 import { Module } from 'Authorization/Permission/Domain/Entity/Module';
 import { ModuleModel } from 'Shared/Infrastructure/Persistance/Model/ModuleModel';
-import { UrlModel } from 'Authorization/Permission/Infrastructure/Persistance/Model/UrlModule';
 import { IMapper } from 'Shared/Domain/Interfaces/IMapper';
 import { DateVo } from 'Shared/Domain/Vo/Date.vo';
 import { ID } from 'Shared/Domain/Vo/Id.vo';
 import { Url } from 'Shared/Domain/Vo/Url.vo';
+import { UrlModel } from 'Shared/Infrastructure/Persistance/Model/UrlModule';
 
 export class PgModuleMapper implements IMapper<Module, ModuleModel> {
   public toDomain(dataModel: ModuleModel): Module {

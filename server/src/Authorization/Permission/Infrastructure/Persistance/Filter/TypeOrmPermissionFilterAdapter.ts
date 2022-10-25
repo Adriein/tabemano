@@ -1,8 +1,8 @@
 import { PermissionFilter } from 'Authorization/Permission/Domain/Filter/PermissionFilter';
 import { ID } from 'Shared/Domain/Vo/Id.vo';
 import { TypeOrmAdapter } from 'Shared/Infrastructure/Persistance/Adapter/TypeOrmAdapter';
+import { PermissionModel } from 'Shared/Infrastructure/Persistance/Model/PermissionModel';
 import { FindManyOptions } from 'typeorm';
-import { PermissionModel } from '../Model/PermissionModel';
 
 export class TypeOrmPermissionFilterAdapter extends TypeOrmAdapter<
   FindManyOptions<PermissionModel>

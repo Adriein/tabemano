@@ -5,7 +5,10 @@ import { ThirdPartyServiceFilter } from 'Cron/Credit/Domain/Filter/ThirdPartySer
 import { IThirdPartyServiceRepository } from 'Cron/Credit/Domain/Repository/IThirdPartyServiceRepository';
 import { Log } from 'Shared/Domain/Decorators/Log';
 import { IThirdPartyServiceAbstractFactory } from 'Shared/Domain/Factory/IThirdPartyServiceAbstractFactory';
+import { Name } from 'Shared/Domain/Vo/Name.vo';
 import { UpdateRemainingCreditCommand } from './UpdateRemainingCreditCommand';
+import { SENDGRID } from 'Shared/Domain/constants';
+import { ID } from 'Shared/Domain/Vo/Id.vo';
 
 @CommandHandler(UpdateRemainingCreditCommand)
 export class UpdateRemainingCreditCommandHandler implements ICommandHandler {
@@ -18,13 +21,28 @@ export class UpdateRemainingCreditCommandHandler implements ICommandHandler {
 
   @Log()
   public async execute(command: UpdateRemainingCreditCommand): Promise<void> {
+    // STARTS TESTS!!!!!
+    // console.log('UPDATE REMAINING CREDIT COMMAND HANDLER EXECUTE');
+
+    // const thirdPartyService = new ThirdPartyService(
+    //   ID.generate(),
+    //   new Name(SENDGRID),
+    //   13,
+    //   5,
+    //   false
+    // );
+
+    // const service = this.factory.createRemainingCreditServiceRetriever(thirdPartyService.name());
+
+    // await thirdPartyService.updateRemainingCredit(service);
+
+    // END TESTS!!!!
+
     const serviceList = await this.getServiceList();
 
     serviceList.forEach(async (thirdPartyService: ThirdPartyService) => {
       const service = this.factory.createRemainingCreditServiceRetriever(thirdPartyService.name());
-
       await thirdPartyService.updateRemainingCredit(service);
-
       await this.thirdPartyServiceRepository.update(thirdPartyService);
     });
   }
