@@ -28,7 +28,11 @@ export class PgThirdPartyServiceRepository
   public async findOne(
     filter: ThirdPartyServiceFilter
   ): Promise<Result<ThirdPartyService, Error | RecordNotFoundError>> {
-    throw new Error('Method not implemented.');
+    const adapter = new TypeOrmThirdPartyServiceFilterAdapter(filter);
+
+    const result = await this.repository().findOne(adapter.apply());
+
+    return result ? Result.ok(this.mapper.toDomain(result)) : Result.err(new RecordNotFoundError());
   }
 
   public async find(filter: ThirdPartyServiceFilter): Promise<Result<ThirdPartyService[], Error>> {
@@ -42,7 +46,9 @@ export class PgThirdPartyServiceRepository
   }
 
   public async save(entity: ThirdPartyService): Promise<void> {
-    throw new Error('Method not implemented.');
+    const model = this.mapper.toModel(entity);
+
+    await this.repository().save(model);
   }
 
   public async update(entity: ThirdPartyService): Promise<void> {
@@ -55,7 +61,7 @@ export class PgThirdPartyServiceRepository
     throw new Error('Method not implemented.');
   }
 
-  protected entitySchema(): ClassConstructor<ThirdPartyServiceModel> {
+  protected entitySchema() {
     return ThirdPartyServiceModel;
   }
 }

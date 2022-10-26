@@ -1,8 +1,8 @@
 import { Filter } from 'Shared/Domain/Entities/Filter';
-import { ID } from 'Shared/Domain/Vo/Id.vo';
+import { Name } from 'Shared/Domain/Vo/Name.vo';
 
 export class ThirdPartyServiceFilter extends Filter {
-  public static THIRD_PARTY_SERVICE_ID = 'thirdPartyServiceId';
+  public static THIRD_PARTY_SERVICE_NAME = 'thirdPartyServiceName';
 
   public static create(): ThirdPartyServiceFilter {
     return new ThirdPartyServiceFilter();
@@ -10,8 +10,8 @@ export class ThirdPartyServiceFilter extends Filter {
 
   protected data: Map<string, any> = new Map();
 
-  public withThirdPartyServiceId(id: ID): this {
-    this.data.set(ThirdPartyServiceFilter.THIRD_PARTY_SERVICE_ID, id);
+  public withThirdPartyServiceName(name: Name): this {
+    this.data.set(ThirdPartyServiceFilter.THIRD_PARTY_SERVICE_NAME, name);
     return this;
   }
 

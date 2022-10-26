@@ -8,6 +8,8 @@ import { UpdateRemainingCreditController } from '../Controller/UpdateRemainingCr
 import { SendGridRemainingCreditService } from '../SendGrid/SendGridRemainingCreditService';
 import { PgThirdPartyServiceMapper } from '../Persistance/Mapper/PgThirdPartyServiceMapper';
 import { PgThirdPartyServiceRepository } from '../Persistance/Repository/PgThirdPartyServiceRepository';
+import { CreateThirdPartyServiceController } from '../Controller/CreateThirdPartyServiceController/CreateThirdPartyServiceController';
+import { CreateThirdPartyServiceCommandHandler } from 'Cron/Credit/Application/CreateThirdPartyService/CreateThirdPartyServiceCommandHandler';
 
 const Services = [
   { provide: 'SendGridRemainingCreditService', useClass: SendGridRemainingCreditService },
@@ -36,9 +38,9 @@ const Repositories = [
 
 const Mappers = [PgThirdPartyServiceMapper];
 
-const Handlers = [UpdateRemainingCreditCommandHandler];
+const Handlers = [CreateThirdPartyServiceCommandHandler, UpdateRemainingCreditCommandHandler];
 
-const Controllers = [UpdateRemainingCreditController];
+const Controllers = [CreateThirdPartyServiceController, UpdateRemainingCreditController];
 
 @Module({
   imports: [CqrsModule, TypeOrmModule],

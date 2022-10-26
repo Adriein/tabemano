@@ -11,6 +11,7 @@ import { UserModel } from 'Shared/Infrastructure/Persistance/Model/UserModel';
 import { DataSource } from 'typeorm';
 import { PermissionModel } from './Model/PermissionModel';
 import { UrlModel } from './Model/UrlModule';
+import { ThirdPartyServiceModel } from './Model/ThirdPartyServiceModel';
 
 export default class Database {
   public static readonly DATABASE_CONNECTION = 'DATABASE_CONNECTION';
@@ -41,6 +42,7 @@ export default class Database {
         UrlModel,
         CompanyModel,
         TenantModel,
+        ThirdPartyServiceModel,
       ],
       synchronize: false,
       logging: true,

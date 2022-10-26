@@ -11,11 +11,11 @@ import { CommandBus } from '@nestjs/cqrs';
 import { CreateInvoiceCommand } from 'Invoicing/Invoice/Application/CreateInvoice/CreateInvoiceCommand';
 import { PermissionGuard } from 'Shared/Infrastructure/Guard/PermissionGuard';
 
-@Controller('/create/invoice')
+@Controller()
 export class CreateInvoiceController {
   constructor(private readonly commandBus: CommandBus) {}
 
-  @Post()
+  @Post('/create/invoice')
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(PermissionGuard)
   public async createInvoice(@Body() body: any, @Session() session: any): Promise<any> {

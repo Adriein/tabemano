@@ -1,5 +1,6 @@
 import { ID } from 'Shared/Domain/Vo/Id.vo';
 import { Name } from 'Shared/Domain/Vo/Name.vo';
+import { NumberVo } from 'Shared/Domain/Vo/Number.vo';
 import { ValueObjectTransformer } from 'Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer';
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
@@ -22,14 +23,16 @@ export class ThirdPartyServiceModel {
   @Column({
     name: 'tps_remaining_credit',
     type: 'integer',
+    transformer: new ValueObjectTransformer<number, NumberVo>(NumberVo),
   })
-  remainingCredit!: number;
+  remainingCredit!: NumberVo;
 
   @Column({
     name: 'tps_min_remaining_credit_before_notifying',
     type: 'integer',
+    transformer: new ValueObjectTransformer<number, NumberVo>(NumberVo),
   })
-  minRemainingCreditBeforeNotifying!: number;
+  minRemainingCreditBeforeNotifying!: NumberVo;
 
   @Column({
     name: 'tps_notify',
