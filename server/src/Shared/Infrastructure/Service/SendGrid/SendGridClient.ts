@@ -38,7 +38,6 @@ export class SendGridClient {
 
       const response = await this.promisifiedRequest(request);
 
-
       const meta = new SendGridMetadata(true);
 
       return new SendGridResponse<Res>(meta, response[1] as Res);

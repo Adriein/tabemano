@@ -4,7 +4,7 @@ import { UpdateRemainingCreditCommandHandler } from 'Cron/Credit/Application/Upd
 import { ThirdPartyServiceAbstractFactory } from 'Cron/Credit/Infrastructure/Factory/ThirdPartyServiceAbstractFactory';
 import { TypeOrmModule } from 'Shared/Infrastructure/Persistance/TypeOrmModule';
 import { SendGridClient } from 'Shared/Infrastructure/Service/SendGrid/SendGridClient';
-import { UpdateRemainingCreditController } from '../Controller/UpdateRemainingCreditController';
+import { UpdateRemainingCreditController } from '../Controller/UpdateRemainingCreditController/UpdateRemainingCreditController';
 import { SendGridRemainingCreditService } from '../SendGrid/SendGridRemainingCreditService';
 import { PgThirdPartyServiceMapper } from '../Persistance/Mapper/PgThirdPartyServiceMapper';
 import { PgThirdPartyServiceRepository } from '../Persistance/Repository/PgThirdPartyServiceRepository';

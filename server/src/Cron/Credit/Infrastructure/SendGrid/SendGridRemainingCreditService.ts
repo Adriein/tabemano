@@ -17,6 +17,6 @@ export class SendGridRemainingCreditService implements IRemainingCreditService {
       SendGridRemainingCreditResponse
     >(request);
 
-    return new RemainingCreditResponse(response.body()!.remain());
+    return new RemainingCreditResponse(response.body()!.remain);
   }
 }
