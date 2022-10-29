@@ -13,7 +13,8 @@ export class PgCompanyMapper implements IMapper<Company, CompanyModel> {
       dataModel.type,
       dataModel.country,
       dataModel.state,
-      dataModel.city
+      dataModel.city,
+      dataModel.tenants[0].tenantId,
     );
   }
 

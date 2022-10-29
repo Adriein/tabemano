@@ -1,6 +1,5 @@
 import { Inject } from "@nestjs/common";
-import { CommandHandler, EventBus, ICommandHandler } from "@nestjs/cqrs";
-import { CompanyRegisteredDomainEvent } from "Backoffice/Company/Application/RegisterCompany/CompanyRegisteredDomainEvent";
+import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { RegisterCompanyCommand } from "Backoffice/Company/Application/RegisterCompany/RegisterCompanyCommand";
 import { Company } from "Backoffice/Company/Domain/Entity/Company";
 import { CompanyAlreadyRegisteredError } from "Backoffice/Company/Domain/Error/CompanyAlreadyRegisteredError";
@@ -20,8 +19,7 @@ import { State } from "Shared/Domain/Vo/State.vo";
 export class RegisterCompanyCommandHandler implements ICommandHandler {
   constructor(
     @Inject('ICompanyRepository')
-    private readonly repository: ICompanyRepository,
-    private readonly eventBus: EventBus,
+    private readonly companyRepository: ICompanyRepository,
   ) {}
 
   @Log()
@@ -38,17 +36,15 @@ export class RegisterCompanyCommandHandler implements ICommandHandler {
 
     await this.ensureCompanyIsNotRegistered(fiscalId);
 
-    const company = Company.build(name, fiscalId, address, phone, type, country, state, city);
+    const company = Company.build(name, fiscalId, address, phone, type, country, state, city, tenantId);
 
-    await this.repository.save(company);
-
-    this.eventBus.publish(new CompanyRegisteredDomainEvent(company.id(), tenantId))
+    await this.companyRepository.save(company);
   }
 
   private async ensureCompanyIsNotRegistered(fiscalId: FiscalId): Promise<void> {
     const filter = CompanyFilter.create().withFiscalId(fiscalId);
 
-    const result = await this.repository.findOne(filter);
+    const result = await this.companyRepository.findOne(filter);
 
     if (result.isOk) {
       throw new CompanyAlreadyRegisteredError(fiscalId);
