@@ -36,7 +36,7 @@ export class TenantModel {
   @Column({
     name: 'te_notification_email',
     type: 'varchar',
-    transformer: new ValueObjectTransformer<string, Email>(Email, true)
+    transformer: new ValueObjectTransformer<string, Email>(Email)
   })
   notificationEmail!: Email | null;
 

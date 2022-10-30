@@ -12,9 +12,9 @@ export class SendGridClient {
     client.setApiKey(this.config.get<string>('SEND_GRID_API_KEY')!);
   }
 
-  private promisifiedRequest(request: SendGridRequest): Promise<[ClientResponse, any]> {
-    return new Promise<[ClientResponse, any]>((resolve, reject) => {
-      client.request(request, (error: ResponseError, response: [ClientResponse, any]) => {
+  private promisifiedRequest(request: SendGridRequest): Promise<[ ClientResponse, any ]> {
+    return new Promise<[ ClientResponse, any ]>((resolve, reject) => {
+      client.request(request, (error: ResponseError, response: [ ClientResponse, any ]) => {
         if (error) {
           return reject(error);
         }
@@ -42,8 +42,10 @@ export class SendGridClient {
 
       return new SendGridResponse<Res>(meta, response[1] as Res);
     } catch (error: any) {
-      console.log('SENDGRID ERROR', error);
-      throw new Error();
+      console.log(error.response.body.errors);
+      const meta = new SendGridMetadata(true, error as Error);
+
+      return new SendGridResponse<Res>(meta);
     }
   }
 }

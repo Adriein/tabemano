@@ -27,7 +27,7 @@ export class VerifyTenantEmailDomainEventHandler implements IDomainEventHandler 
   }
 
   private async findTenant(id: ID): Promise<Tenant> {
-    const filter = TenantFilter.create().withTenantId(id);
+    const filter = TenantFilter.create().withId(id);
 
     const result = await this.repository.findOne(filter);
 

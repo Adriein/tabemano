@@ -3,10 +3,10 @@ import { Primitives, ValueObjectConstructor } from "Shared/Infrastructure/Types"
 import { ValueTransformer } from "typeorm";
 
 export class ValueObjectTransformer<DatabaseType extends Primitives, VO extends ValueObject> implements ValueTransformer {
-  constructor(private readonly valueObject: ValueObjectConstructor<VO>, private readonly nullable = false) {}
+  constructor(private readonly valueObject: ValueObjectConstructor<VO>) {}
 
   public from(value: DatabaseType): VO | null {
-    if (this.nullable || !value) {
+    if (!value) {
       return null;
     }
 

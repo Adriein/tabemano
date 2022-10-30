@@ -1,3 +1,4 @@
+import { Inject } from "@nestjs/common";
 import { IThirdPartySmtpServiceAbstractFactory } from "Backoffice/Notification/Domain/Factory/IThirdPartySmtpServiceAbstractFactory";
 import { ISmtpService } from "Backoffice/Notification/Domain/Service/ISmtpService";
 import { IVerifyTenantEmailService } from "Backoffice/Notification/Domain/Service/IVerifyTenantEmailService";
@@ -6,7 +7,9 @@ import { SendGridVerifyTenantEmailService } from "Backoffice/Notification/Infras
 
 export class SendGridSmtpServiceAbstractFactory implements IThirdPartySmtpServiceAbstractFactory {
   constructor(
+    @Inject('ISmtpService')
     private readonly smtpService: SendGridSmtpService,
+    @Inject('IVerifyTenantEmailService')
     private readonly verifyEmailService: SendGridVerifyTenantEmailService,
   ) {}
 
