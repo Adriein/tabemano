@@ -1,8 +1,6 @@
-import { ModuleModel } from 'Authorization/Permission/Infrastructure/Persistance/Model/ModuleModel';
-import { UrlModel } from 'Authorization/Permission/Infrastructure/Persistance/Model/UrlModule';
-import { PermissionModel } from 'Authorization/Permission/Infrastructure/Persistance/Model/PermissionModel';
+import { ModuleModel } from 'Shared/Infrastructure/Persistance/Model/ModuleModel';
 import { PricingModel } from 'Backoffice/Pricing/Infrastructure/Persistance/Model/PricingModel';
-import { CompanyModel } from "Shared/Infrastructure/Persistance/Model/CompanyModel";
+import { CompanyModel } from 'Shared/Infrastructure/Persistance/Model/CompanyModel';
 import { RoleModel } from 'Shared/Infrastructure/Persistance/Model/RoleModel';
 import { ConfigModel } from 'Backoffice/Shared/Infrastructure/Persistance/Model/ConfigModel';
 import { SubscriptionEventModel } from 'Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionEventModel';
@@ -12,6 +10,9 @@ import { TenantCompanyModel } from "Shared/Infrastructure/Persistance/Model/Tena
 import { TenantModel } from "Shared/Infrastructure/Persistance/Model/TenantModel";
 import { UserModel } from "Shared/Infrastructure/Persistance/Model/UserModel";
 import { DataSource } from 'typeorm';
+import { PermissionModel } from './Model/PermissionModel';
+import { UrlModel } from './Model/UrlModule';
+import { ThirdPartyServiceModel } from './Model/ThirdPartyServiceModel';
 
 export default class Database {
   public static readonly DATABASE_CONNECTION = 'DATABASE_CONNECTION';
@@ -42,6 +43,7 @@ export default class Database {
         UrlModel,
         CompanyModel,
         TenantModel,
+        ThirdPartyServiceModel,
         TenantCompanyModel
       ],
       synchronize: false,

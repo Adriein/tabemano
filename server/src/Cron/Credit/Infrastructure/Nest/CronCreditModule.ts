@@ -1,19 +1,32 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { UpdateRemainingCreditCommandHandler } from 'Cron/Credit/Application/UpdateRemainingCredit/UpdateRemainingCreditCommandHandler';
-import { ThirdPartyServiceAbstractFactory } from "Cron/Credit/Infrastructure/Factory/ThirdPartyServiceAbstractFactory";
+import { ThirdPartyServiceAbstractFactory } from 'Cron/Credit/Infrastructure/Factory/ThirdPartyServiceAbstractFactory';
 import { TypeOrmModule } from 'Shared/Infrastructure/Persistance/TypeOrmModule';
-import { SendGridRemainingCreditService } from '../Factory/SendGridRemainingCreditService';
+import { SendGridClient } from 'Shared/Infrastructure/Service/SendGrid/SendGridClient';
+import { UpdateRemainingCreditController } from '../Controller/UpdateRemainingCreditController/UpdateRemainingCreditController';
+import { SendGridRemainingCreditService } from '../SendGrid/SendGridRemainingCreditService';
 import { PgThirdPartyServiceMapper } from '../Persistance/Mapper/PgThirdPartyServiceMapper';
 import { PgThirdPartyServiceRepository } from '../Persistance/Repository/PgThirdPartyServiceRepository';
+import { CreateThirdPartyServiceController } from '../Controller/CreateThirdPartyServiceController/CreateThirdPartyServiceController';
+import { CreateThirdPartyServiceCommandHandler } from 'Cron/Credit/Application/CreateThirdPartyService/CreateThirdPartyServiceCommandHandler';
 
-const Services = [ SendGridRemainingCreditService ];
+const Services = [
+  { provide: 'SendGridRemainingCreditService', useClass: SendGridRemainingCreditService },
+];
+
+const Clients = [
+  {
+    provide: 'SendGrid',
+    useClass: SendGridClient,
+  },
+];
 
 const Factory = [
   {
     provide: 'IThirdPartyServiceAbstractFactory',
-    useClass: ThirdPartyServiceAbstractFactory
-  }
+    useClass: ThirdPartyServiceAbstractFactory,
+  },
 ];
 
 const Repositories = [
@@ -23,20 +36,16 @@ const Repositories = [
   },
 ];
 
-const Mappers = [ PgThirdPartyServiceMapper ];
+const Mappers = [PgThirdPartyServiceMapper];
 
-const Handlers = [ UpdateRemainingCreditCommandHandler ];
+const Handlers = [CreateThirdPartyServiceCommandHandler, UpdateRemainingCreditCommandHandler];
+
+const Controllers = [CreateThirdPartyServiceController, UpdateRemainingCreditController];
 
 @Module({
-  imports: [ CqrsModule, TypeOrmModule ],
-  controllers: [],
-  providers: [
-    ...Repositories,
-    ...Handlers,
-    ...Mappers,
-    ...Services,
-    ...Factory
-  ],
+  imports: [CqrsModule, TypeOrmModule],
+  controllers: [...Controllers],
+  providers: [...Repositories, ...Handlers, ...Mappers, ...Services, ...Factory, ...Clients],
   exports: [],
 })
 export class CronCreditModule {}

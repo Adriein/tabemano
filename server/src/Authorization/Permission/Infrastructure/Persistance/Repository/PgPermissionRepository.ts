@@ -5,11 +5,11 @@ import { PermissionFilter } from 'Authorization/Permission/Domain/Filter/Permiss
 import { IPermissionRepository } from 'Authorization/Permission/Domain/Repository/IPermissionRepository';
 import { RecordNotFoundError } from 'Shared/Domain/Error/RecordNotFoundError';
 import Database from 'Shared/Infrastructure/Persistance/Database';
+import { PermissionModel } from 'Shared/Infrastructure/Persistance/Model/PermissionModel';
 import { TypeOrmRepository } from 'Shared/Infrastructure/Persistance/Repository/TypeOrmRepository';
 import { DataSource } from 'typeorm';
 import { TypeOrmPermissionFilterAdapter } from '../Filter/TypeOrmPermissionFilterAdapter';
 import { PgPermissionMapper } from '../Mapper/PgPermissionMapper';
-import { PermissionModel } from '../Model/PermissionModel';
 
 @Injectable()
 export class PgPermissionRepository
