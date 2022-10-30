@@ -44,7 +44,9 @@ export class PgTenantRepository extends TypeOrmRepository<TenantModel> implement
   }
 
   public async update(entity: Tenant): Promise<void> {
-    throw new Error();
+    const model = this.mapper.toModel(entity);
+
+    await this.repository().update({ id: entity.id() }, model);
   }
 
   protected entitySchema() {
