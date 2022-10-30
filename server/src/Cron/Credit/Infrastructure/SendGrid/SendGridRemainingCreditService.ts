@@ -12,11 +12,9 @@ export class SendGridRemainingCreditService implements IRemainingCreditService {
   public async execute(): Promise<RemainingCreditResponse> {
     const request = new SendGridRequest(`/v3/user/credits`, 'GET');
 
-    const response = await this.sendGrid.makeRequest<
-      SendGridRequest,
-      SendGridRemainingCreditResponse
-    >(request);
+    const response = await this.sendGrid.makeRequest<SendGridRequest,
+      SendGridRemainingCreditResponse>(request);
 
-    return new RemainingCreditResponse(response.body()!.remain);
+    return new RemainingCreditResponse(response.body!.remain);
   }
 }

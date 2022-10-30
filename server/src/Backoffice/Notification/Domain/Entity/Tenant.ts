@@ -29,6 +29,8 @@ export class Tenant {
   }
 
   public async verifyEmail(service: IVerifyTenantEmailService): Promise<void> {
-    await service.verify(this);
+    const result = await service.verify(this);
+
+    result.unwrap()
   }
 }
