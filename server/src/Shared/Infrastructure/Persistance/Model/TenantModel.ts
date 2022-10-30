@@ -1,6 +1,4 @@
 import { SubscriptionModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionModel";
-import { NullableVo } from "Shared/Domain/Vo/Nullable.vo";
-import { CompanyModel } from "Shared/Infrastructure/Persistance/Model/CompanyModel";
 import { PricingModel } from "Backoffice/Pricing/Infrastructure/Persistance/Model/PricingModel";
 import { RoleModel } from "Shared/Infrastructure/Persistance/Model/RoleModel";
 import { ConfigModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/ConfigModel";
@@ -8,6 +6,7 @@ import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Name } from "Shared/Domain/Vo/Name.vo";
 import { Password } from "Shared/Domain/Vo/Password.vo";
+import { TenantCompanyModel } from "Shared/Infrastructure/Persistance/Model/TenantCompanyModel";
 import { ValueObjectTransformer } from "Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer";
 import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn } from "typeorm";
 
@@ -31,9 +30,6 @@ export class TenantModel {
   @Column({ name: 'te_config_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID) })
   configId!: ID;
 
-  @Column({ name: 'te_company_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID, true) })
-  companyId!: ID | null;
-
   @Column({ name: 'te_is_active' })
   isActive!: boolean;
 
@@ -54,9 +50,8 @@ export class TenantModel {
   @JoinColumn({ name: 'te_config_id', referencedColumnName: 'id' })
   config!: ConfigModel;
 
-  @OneToOne(() => CompanyModel)
-  @JoinColumn({ name: 'te_company_id', referencedColumnName: 'id' })
-  company!: CompanyModel;
+  @OneToMany(() => TenantCompanyModel, (company: TenantCompanyModel) => company.tenant)
+  companies!: TenantCompanyModel[];
 
   @OneToOne(() => RoleModel)
   @JoinColumn({ name: 'te_role_id', referencedColumnName: 'id' })

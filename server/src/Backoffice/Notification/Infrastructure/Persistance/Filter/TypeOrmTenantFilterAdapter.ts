@@ -18,7 +18,7 @@ export class TypeOrmTenantFilterAdapter extends TypeOrmAdapter<FindManyOptions<T
       this.add({ where: { id } });
     }
 
-    this.add({ relations: { company: true } })
+    this.add({ relations: { companies: true } })
 
     return this.typeOrmFilter;
   }

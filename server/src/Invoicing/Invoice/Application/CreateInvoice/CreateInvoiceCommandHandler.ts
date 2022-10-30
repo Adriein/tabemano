@@ -46,7 +46,7 @@ export class CreateInvoiceCommandHandler implements ICommandHandler {
     const id = new ID(client.id);
     const name = new Name(client.username);
     const address = new Address('avenida princesa');
-    const phone = new Phone(3994848);
+    const phone = new Phone('3994848');
 
     const subscriptions = client.subscription.map((subscription: any) => {
       return new Subscription(

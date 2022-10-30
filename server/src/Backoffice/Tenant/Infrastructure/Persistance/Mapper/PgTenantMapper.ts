@@ -2,10 +2,10 @@ import { PricingModel } from "Backoffice/Pricing/Infrastructure/Persistance/Mode
 import { Config } from "Backoffice/Shared/Domain/Config/Config";
 import { Pricing } from "Backoffice/Shared/Domain/Pricing/Pricing";
 import { PricingCollection } from "Backoffice/Shared/Domain/Pricing/PricingCollection";
+import { ConfigModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/ConfigModel";
 import { AppConfig } from "Backoffice/Tenant/Domain/Entity/AppConfig";
 import { Tenant } from "Backoffice/Tenant/Domain/Entity/Tenant";
 import { IMapper } from "Shared/Domain/Interfaces/IMapper";
-import { CompanyModel } from "Shared/Infrastructure/Persistance/Model/CompanyModel";
 import { RoleModel } from "Shared/Infrastructure/Persistance/Model/RoleModel";
 import { TenantModel } from "Shared/Infrastructure/Persistance/Model/TenantModel";
 
@@ -42,7 +42,7 @@ export class PgTenantMapper implements IMapper<Tenant, TenantModel> {
       dataModel.isActive,
       PricingCollection.build(pricingList),
       AppConfig.build(),
-      dataModel.companyId,
+      dataModel.companies[0]?.companyId ? dataModel.companies[0].companyId : null,
       dataModel.notificationEmail,
       dataModel.createdAt,
       dataModel.updatedAt
@@ -52,27 +52,28 @@ export class PgTenantMapper implements IMapper<Tenant, TenantModel> {
   public toModel(entity: Tenant): TenantModel {
     const model = new TenantModel();
     const roleModel = new RoleModel();
+    const configModel = new ConfigModel();
 
     roleModel.id = entity.roleId();
+    configModel.id = entity.config().id;
+    configModel.lang = entity.config().lang;
+    configModel.sendWarnings = entity.config().sendWarnings;
+    configModel.sendNotifications = entity.config().sendNotifications;
+    configModel.userId = entity.config().userId;
+    configModel.createdAt = entity.config().createdAt;
+    configModel.updatedAt = entity.config().updatedAt;
 
     model.id = entity.id();
     model.name = entity.name();
     model.email = entity.email();
     model.password = entity.password();
     model.configId = entity.config().id;
-    model.config = entity.config();
+    model.config = configModel;
     model.roleId = entity.roleId();
     model.role = roleModel;
     model.isActive = entity.isActive();
     model.createdAt = entity.createdAt();
     model.updatedAt = entity.updatedAt();
-
-    if (entity.companyId()) {
-      const companyModel = new CompanyModel();
-      companyModel.id = entity.companyId()!;
-      model.companyId = entity.companyId()!;
-      model.company = companyModel;
-    }
 
     if (entity.notificationEmail()) {
       model.notificationEmail = entity.notificationEmail();

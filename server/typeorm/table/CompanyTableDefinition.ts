@@ -49,6 +49,6 @@ export const CompanyTableDefinition = new Table({
       name: 'co_updated_at',
       type: 'timestamp',
       precision: 0
-    }
+    },
   ]
 });

@@ -116,4 +116,8 @@ export class Tenant extends AggregateRoot {
   public configureNotificationEmail(email: Email): void {
     this._notificationEmail = email;
   }
+
+  public associateCompany(id: ID): void {
+    this._companyId = id;
+  }
 }

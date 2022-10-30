@@ -7,8 +7,9 @@ import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Name } from "Shared/Domain/Vo/Name.vo";
 import { Phone } from "Shared/Domain/Vo/Phone.vo";
 import { State } from "Shared/Domain/Vo/State.vo";
+import { TenantCompanyModel } from "Shared/Infrastructure/Persistance/Model/TenantCompanyModel";
 import { ValueObjectTransformer } from "Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer";
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 
 @Entity({ name: 'ta_company' })
 export class CompanyModel {
@@ -66,6 +67,9 @@ export class CompanyModel {
     transformer: new ValueObjectTransformer<string, City>(City)
   })
   city!: City;
+
+  @OneToMany(() => TenantCompanyModel, (tenant: TenantCompanyModel) => tenant.company)
+  tenants!: TenantCompanyModel[];
 
   @Column({ name: 'co_created_at', type: 'timestamp', precision: 0 })
   createdAt!: Date;

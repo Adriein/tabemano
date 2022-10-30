@@ -15,7 +15,7 @@ import { TypeOrmModule } from "Shared/Infrastructure/Persistance/TypeOrmModule";
 const Handlers = [
   CreateTenantDomainEventHandler,
   RegisterClientCommandHandler,
-  ConfigureTenantCommandHandler
+  ConfigureTenantCommandHandler,
 ];
 
 const Repository = [
@@ -26,12 +26,12 @@ const Repository = [
   {
     provide: 'ISubscriptionRepository',
     useClass: PgSubscriptionRepository
-  }
+  },
 ];
 
 const Mappers = [
   PgTenantMapper,
-  PgSubscriptionMapper
+  PgSubscriptionMapper,
 ];
 
 const Controllers = [ ConfigureTenantController, RegisterClientController ];

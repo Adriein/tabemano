@@ -1,10 +1,10 @@
 import { DataSource } from 'typeorm';
 import { PricingModel } from '../../src/Backoffice/Pricing/Infrastructure/Persistance/Model/PricingModel';
-import { CompanyType } from "../../src/Invoicing/Company/Domain/Vo/CompanyType";
-import { Country } from "../../src/Invoicing/Company/Domain/Vo/Country";
-import { FiscalId } from "../../src/Invoicing/Company/Domain/Vo/FiscalId";
 import { Address } from "../../src/Shared/Domain/Vo/Address.vo";
 import { City } from "../../src/Shared/Domain/Vo/City.vo";
+import { CompanyType } from "../../src/Shared/Domain/Vo/CompanyType.vo";
+import { Country } from "../../src/Shared/Domain/Vo/Country.vo";
+import { FiscalId } from "../../src/Shared/Domain/Vo/FiscalId.vo";
 import { Phone } from "../../src/Shared/Domain/Vo/Phone.vo";
 import { State } from "../../src/Shared/Domain/Vo/State.vo";
 import { CompanyModel } from "../../src/Shared/Infrastructure/Persistance/Model/CompanyModel";
@@ -23,6 +23,7 @@ import { ID } from '../../src/Shared/Domain/Vo/Id.vo';
 import { Name } from '../../src/Shared/Domain/Vo/Name.vo';
 import { Password } from '../../src/Shared/Domain/Vo/Password.vo';
 import { RoleType } from '../../src/Shared/Domain/Vo/RoleType';
+import { TenantCompanyModel } from "../../src/Shared/Infrastructure/Persistance/Model/TenantCompanyModel";
 import { TenantModel } from "../../src/Shared/Infrastructure/Persistance/Model/TenantModel";
 import { Time } from '../../src/Shared/Infrastructure/Helper/Time';
 import Database from '../../src/Shared/Infrastructure/Persistance/Database';
@@ -70,7 +71,7 @@ const createCompany = async (database: DataSource) => {
     address: new Address('1111'),
     type: new CompanyType('SL'),
     country: new Country('Spain'),
-    phone: new Phone(1111),
+    phone: new Phone('11111'),
     city: new City('Barcelona'),
     state: new State('Catalonia'),
     createdAt: DateVo.now().value,
@@ -80,6 +81,7 @@ const createCompany = async (database: DataSource) => {
 
 const createTenant = async (database: DataSource) => {
   const tenantRepository = database.getRepository(TenantModel);
+  const tenantCompanyRepository = database.getRepository(TenantCompanyModel);
   const password = await crypto.hash(process.env.ADMIN_PASSWORD!);
   const configId = ID.generate();
 
@@ -103,10 +105,20 @@ const createTenant = async (database: DataSource) => {
     role: {
       id: adminRoleId,
     },
+    createdAt: DateVo.now().value,
+    updatedAt: DateVo.now().value,
+  });
+
+  await tenantCompanyRepository.save({
+    id: ID.generate(),
+    companyId: companyId,
+    tenantId: id,
     company: {
       id: companyId
     },
-    companyId: companyId,
+    tenant: {
+      id: id,
+    },
     createdAt: DateVo.now().value,
     updatedAt: DateVo.now().value,
   });
