@@ -19,11 +19,15 @@ export class VerifyTenantEmailDomainEventHandler implements IDomainEventHandler 
   ) {}
 
   public async handle(event: TenantConfiguredDomainEvent): Promise<void> {
-    const tenant = await this.findTenant(event.aggregateId);
+    try {
+      const tenant = await this.findTenant(event.aggregateId);
 
-    const service = this.getVerifyEmailService();
+      const service = this.getVerifyEmailService();
 
-    await tenant.verifyEmail(service);
+      await tenant.verifyEmail(service);
+    } catch (error: any) {
+      console.log(error.serialize())
+    }
   }
 
   private async findTenant(id: ID): Promise<Tenant> {

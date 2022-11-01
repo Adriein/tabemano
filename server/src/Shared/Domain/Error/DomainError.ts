@@ -18,7 +18,7 @@ export abstract class DomainError extends Error {
         errorCode: this.errorCode,
         occurredOn: this.occurredOn,
         message: this.message,
-        stack: super.stack?.split('\n').map((trace: string) => trace.trim())
+        stack: this.stack?.split('\n').map((trace: string) => trace.trim())
       }
     ]
   };
