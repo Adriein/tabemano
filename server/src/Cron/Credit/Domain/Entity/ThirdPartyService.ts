@@ -9,14 +9,14 @@ export class ThirdPartyService extends AggregateRoot {
     name: Name,
     remainingCredit: NumberVo,
     minRemainingCreditBeforeNotifying: NumberVo,
-    notify: boolean
+    hasToBeNotified: boolean
   ): ThirdPartyService {
     return new ThirdPartyService(
       ID.generate(),
       name,
       remainingCredit,
       minRemainingCreditBeforeNotifying,
-      notify
+      hasToBeNotified
     );
   }
 
@@ -25,7 +25,7 @@ export class ThirdPartyService extends AggregateRoot {
     private readonly _name: Name,
     private _remainingCredit: NumberVo,
     private readonly _minRemainingCreditBeforeNotifying: NumberVo,
-    private readonly _notify: boolean,
+    private readonly _hasToBeNotified: boolean,
     _createdAt?: Date,
     _updatedAt?: Date
   ) {
@@ -44,8 +44,8 @@ export class ThirdPartyService extends AggregateRoot {
     return this._minRemainingCreditBeforeNotifying;
   }
 
-  public notify(): boolean {
-    return this._notify;
+  public hasToBeNotified(): boolean {
+    return this._hasToBeNotified;
   }
 
   public async updateRemainingCredit(service: IRemainingCreditService): Promise<void> {
@@ -54,5 +54,15 @@ export class ThirdPartyService extends AggregateRoot {
     const remainingCredit = new NumberVo(response.remainingCredit());
 
     this._remainingCredit = remainingCredit;
+  }
+
+  public checkIfRemainingCreditIsCloseToRunningOut(): boolean {
+    return (
+      this.calculateDifferenceBetweenRemainingCreditAndMinRemainingCreditBeforeNotifying() <= 0
+    );
+  }
+
+  public calculateDifferenceBetweenRemainingCreditAndMinRemainingCreditBeforeNotifying(): number {
+    return this.remainingCredit().value - this.minRemainingCreditBeforeNotifying().value;
   }
 }
