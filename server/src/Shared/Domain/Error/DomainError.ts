@@ -1,5 +1,9 @@
+import { ErrorCode, ErrorSerialization } from "Shared/Domain/constants";
+
 export abstract class DomainError extends Error {
-  abstract statusCode: number;
+  public abstract errorCode: ErrorCode;
+
+  public readonly occurredOn: Date = new Date();
 
   protected constructor(public message: string) {
     super(message);
@@ -7,5 +11,15 @@ export abstract class DomainError extends Error {
     Object.setPrototypeOf(this, DomainError.prototype);
   }
 
-  abstract serialize(): { message: string; key: string; }[];
+  public serialize(): ErrorSerialization[] {
+    return [
+      {
+        errorType: this.constructor.name,
+        errorCode: this.errorCode,
+        occurredOn: this.occurredOn,
+        message: this.message,
+        stack: super.stack?.split('\n').map((trace: string) => trace.trim())
+      }
+    ]
+  };
 }

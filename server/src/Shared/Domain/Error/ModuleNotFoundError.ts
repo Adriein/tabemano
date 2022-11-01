@@ -1,15 +1,12 @@
+import { ErrorCode } from "Shared/Domain/constants";
 import { DomainError } from './DomainError';
 
 export class ModuleNotFoundError extends DomainError {
-  statusCode = 400;
+  public errorCode = ErrorCode.NOT_FOUND;
 
   constructor() {
     super('No module found with this criteria');
 
     Object.setPrototypeOf(this, ModuleNotFoundError.prototype);
-  }
-
-  serialize() {
-    return [{ message: this.message, key: 'module_format_error' }];
   }
 }
