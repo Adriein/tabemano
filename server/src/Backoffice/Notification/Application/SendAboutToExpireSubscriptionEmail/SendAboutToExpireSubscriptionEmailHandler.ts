@@ -22,7 +22,7 @@ export class SendAboutToExpireSubscriptionEmailHandler implements IEventHandler 
 
     const client = await this.findClient(clientId);
 
-    await this.smtpService.send(new Email());
+    //await this.smtpService.send(new Email());
   }
 
   private async findClient(id: ID): Promise<Client> {

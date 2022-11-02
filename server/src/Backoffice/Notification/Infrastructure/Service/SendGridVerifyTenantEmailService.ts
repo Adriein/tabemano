@@ -3,11 +3,11 @@ import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Tenant } from 'Backoffice/Notification/Domain/Entity/Tenant';
 import { IVerifyTenantEmailService } from 'Backoffice/Notification/Domain/Service/IVerifyTenantEmailService';
-import { VerifyTenantEmailErrorResponse } from "Backoffice/Notification/Infrastructure/Dto/VerifyTenantEmailErrorResponse";
+import { VerifyTenantEmailErrorResponse } from "Backoffice/Notification/Infrastructure/Dto/VerifyTenantEmail/VerifyTenantEmailErrorResponse";
 import {
   SendGridVerifyEmailDto,
   VerifyTenantEmailRequest
-} from 'Backoffice/Notification/Infrastructure/Dto/VerifyTenantEmailRequest';
+} from 'Backoffice/Notification/Infrastructure/Dto/VerifyTenantEmail/VerifyTenantEmailRequest';
 import { ExternalServiceError } from "Shared/Domain/Error/ExternalServiceError";
 import { SendGridClient } from 'Shared/Infrastructure/Service/SendGrid/SendGridClient';
 import { SendGridRequest } from "Shared/Infrastructure/Service/SendGrid/SendGridRequest";
