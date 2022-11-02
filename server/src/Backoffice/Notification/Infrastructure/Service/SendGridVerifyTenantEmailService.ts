@@ -1,6 +1,5 @@
 import { Result } from "@badrap/result";
 import { Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import { Tenant } from 'Backoffice/Notification/Domain/Entity/Tenant';
 import { IVerifyTenantEmailService } from 'Backoffice/Notification/Domain/Service/IVerifyTenantEmailService';
 import { VerifyTenantEmailErrorResponse } from "Backoffice/Notification/Infrastructure/Dto/VerifyTenantEmail/VerifyTenantEmailErrorResponse";
@@ -14,11 +13,10 @@ import { SendGridRequest } from "Shared/Infrastructure/Service/SendGrid/SendGrid
 
 @Injectable()
 export class SendGridVerifyTenantEmailService implements IVerifyTenantEmailService {
-  constructor(private readonly sendGrid: SendGridClient, private readonly config: ConfigService) {}
+  constructor(private readonly sendGrid: SendGridClient) {}
 
   public async verify(tenant: Tenant): Promise<Result<null, ExternalServiceError>> {
-    const adminEmail = this.config.get<string>('ADMIN_EMAIL')!
-    const data = new VerifyTenantEmailRequest(tenant, adminEmail);
+    const data = new VerifyTenantEmailRequest(tenant);
 
     const request = new SendGridRequest<SendGridVerifyEmailDto>(
       '/v3/verified_senders',

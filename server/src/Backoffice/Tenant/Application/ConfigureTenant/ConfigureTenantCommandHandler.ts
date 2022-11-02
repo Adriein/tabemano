@@ -1,8 +1,7 @@
 import { Inject } from "@nestjs/common";
-import { CommandHandler, EventBus, ICommandHandler } from "@nestjs/cqrs";
+import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { TenantFilter } from "Backoffice/Shared/Domain/Tenant/TenantFilter";
 import { ConfigureTenantCommand } from "Backoffice/Tenant/Application/ConfigureTenant/ConfigureTenantCommand";
-import { TenantConfiguredDomainEvent } from "Backoffice/Tenant/Application/ConfigureTenant/TenantConfiguredDomainEvent";
 import { Tenant } from "Backoffice/Tenant/Domain/Entity/Tenant";
 import { ITenantRepository } from "Backoffice/Tenant/Domain/Repository/ITenantRepository";
 import { Email } from "Shared/Domain/Vo/Email.vo";
@@ -13,7 +12,6 @@ export class ConfigureTenantCommandHandler implements ICommandHandler {
   constructor(
     @Inject('ITenantRepository')
     private readonly repository: ITenantRepository,
-    private readonly eventBus: EventBus,
   ) {}
 
   public async execute(command: ConfigureTenantCommand): Promise<void> {
@@ -38,7 +36,5 @@ export class ConfigureTenantCommandHandler implements ICommandHandler {
     tenant.configureNotificationEmail(email);
 
     await this.repository.update(tenant);
-
-    this.eventBus.publish(new TenantConfiguredDomainEvent(tenant.id()));
   }
 }
