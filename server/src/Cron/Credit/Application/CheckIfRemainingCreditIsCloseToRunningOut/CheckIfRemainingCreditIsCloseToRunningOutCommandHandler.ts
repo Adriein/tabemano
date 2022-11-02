@@ -1,9 +1,11 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
+import { CommandHandler } from '@nestjs/cqrs';
 import { ThirdPartyServiceFilter } from 'Cron/Credit/Domain/Filter/ThirdPartyServiceFilter';
 import { Log } from 'Shared/Domain/Decorators/Log';
 import { GetThirdPartyServiceListService } from '../Services/GetThirdPartyServiceListService';
+import { CheckIfRemainingCreditIsCloseToRunningOutCommand } from './CheckIfRemainingCreditIsCloseToRunningOut';
 
-@Injectable()
+@CommandHandler(CheckIfRemainingCreditIsCloseToRunningOutCommand)
 export class CheckIfRemainingCreditIsCloseToRunningOutCommandHandler {
   constructor(
     @Inject('GetThirdPartyServiceList')
