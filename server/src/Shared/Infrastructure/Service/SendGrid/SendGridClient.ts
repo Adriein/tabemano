@@ -42,9 +42,7 @@ export class SendGridClient {
 
       return new SendGridResponse<Res>(meta, response[1] as Res);
     } catch (error: any) {
-      console.log(error.response.body.errors);
-      console.log(error);
-      const meta = new SendGridMetadata(true, error as Error);
+      const meta = new SendGridMetadata(false, error);
 
       return new SendGridResponse<Res>(meta);
     }

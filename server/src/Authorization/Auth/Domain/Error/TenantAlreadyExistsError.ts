@@ -1,15 +1,12 @@
+import { ErrorCode } from "Shared/Domain/constants";
 import { DomainError } from "Shared/Domain/Error/DomainError";
 
 export class TenantAlreadyExistsError extends DomainError {
-  statusCode = 500;
+  public errorCode = ErrorCode.APPLICATION_ERROR;
 
   constructor() {
     super('This tenant already exists');
 
     Object.setPrototypeOf(this, TenantAlreadyExistsError.prototype);
-  }
-
-  serialize() {
-    return [ { message: this.message, key: 'user_already_exists_error' } ];
   }
 }

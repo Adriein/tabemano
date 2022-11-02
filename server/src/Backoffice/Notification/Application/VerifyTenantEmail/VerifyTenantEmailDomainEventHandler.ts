@@ -5,11 +5,10 @@ import { IThirdPartySmtpServiceAbstractFactory } from "Backoffice/Notification/D
 import { ITenantRepository } from "Backoffice/Notification/Domain/Repository/ITenantRepository";
 import { IVerifyTenantEmailService } from "Backoffice/Notification/Domain/Service/IVerifyTenantEmailService";
 import { TenantFilter } from "Backoffice/Shared/Domain/Tenant/TenantFilter";
-import { TenantConfiguredDomainEvent } from "Backoffice/Tenant/Application/ConfigureTenant/TenantConfiguredDomainEvent";
+import { TenantCreatedDomainEvent } from "Backoffice/Tenant/Application/CreateTenant/TenantCreatedDomainEvent";
 import { IDomainEventHandler } from "Shared/Domain/Interfaces/IDomainEventHandler";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 
-@EventsHandler(TenantConfiguredDomainEvent)
 export class VerifyTenantEmailDomainEventHandler implements IDomainEventHandler {
   constructor(
     @Inject('ITenantRepository')
@@ -18,12 +17,16 @@ export class VerifyTenantEmailDomainEventHandler implements IDomainEventHandler 
     private readonly factory: IThirdPartySmtpServiceAbstractFactory
   ) {}
 
-  public async handle(event: TenantConfiguredDomainEvent): Promise<void> {
-    const tenant = await this.findTenant(event.aggregateId);
+  public async handle(event: TenantCreatedDomainEvent): Promise<void> {
+    try {
+      const tenant = await this.findTenant(event.aggregateId);
 
-    const service = this.getVerifyEmailService();
+      const service = this.getVerifyEmailService();
 
-    await tenant.verifyEmail(service);
+      await tenant.verifyEmail(service);
+    } catch (error: any) {
+      console.log(error.serialize())
+    }
   }
 
   private async findTenant(id: ID): Promise<Tenant> {

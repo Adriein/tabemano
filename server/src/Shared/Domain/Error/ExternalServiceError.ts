@@ -1,15 +1,12 @@
+import { ErrorCode } from "Shared/Domain/constants";
 import { DomainError } from "Shared/Domain/Error/DomainError";
 
 export class ExternalServiceError extends DomainError {
-  statusCode = 400;
+  public errorCode = ErrorCode.EXTERNAL_PROVIDER_ERROR;
 
   constructor(message: string) {
     super(message);
 
     Object.setPrototypeOf(this, ExternalServiceError.prototype);
-  }
-
-  serialize() {
-    return [ { message: this.message, key: '' } ];
   }
 }

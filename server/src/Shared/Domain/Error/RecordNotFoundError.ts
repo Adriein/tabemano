@@ -1,15 +1,12 @@
+import { ErrorCode } from "Shared/Domain/constants";
 import { DomainError } from "Shared/Domain/Error/DomainError";
 
 export class RecordNotFoundError extends DomainError {
-  statusCode = 400;
+  public errorCode = ErrorCode.NOT_FOUND;
 
   constructor() {
     super('No record found with this criteria');
 
     Object.setPrototypeOf(this, RecordNotFoundError.prototype);
-  }
-
-  serialize() {
-    return [ { message: this.message, key: 'email_format_error' } ];
   }
 }

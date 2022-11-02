@@ -16,7 +16,7 @@ export type SendGridVerifyEmailDto = {
 
 export class VerifyTenantEmailRequest {
   constructor(
-    private readonly tenant: Tenant
+    private readonly tenant: Tenant,
   ) {}
 
   public serialize(): SendGridVerifyEmailDto {
@@ -28,7 +28,7 @@ export class VerifyTenantEmailRequest {
       "reply_to_name": this.tenant.name().value,
       "address": this.tenant.company().address().value,
       "address2": this.tenant.company().address().value,
-      "state": this.tenant.company().country().value,
+      "state": this.tenant.company().country().value.slice(0, 2),
       "city": this.tenant.company().city().value,
       "country": this.tenant.company().country().value,
       "zip": this.tenant.company().zip().value
