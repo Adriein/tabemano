@@ -56,13 +56,11 @@ export class ThirdPartyService extends AggregateRoot {
     this._remainingCredit = remainingCredit;
   }
 
-  public checkIfRemainingCreditIsCloseToRunningOut(): boolean {
-    return (
-      this.calculateDifferenceBetweenRemainingCreditAndMinRemainingCreditBeforeNotifying() <= 0
-    );
+  public isRemainingCreditCloseToRunningOut(): boolean {
+    return this.differenceBetweenRemainingCreditAndMinRemainingCreditBeforeNotifying() <= 0;
   }
 
-  public calculateDifferenceBetweenRemainingCreditAndMinRemainingCreditBeforeNotifying(): number {
+  public differenceBetweenRemainingCreditAndMinRemainingCreditBeforeNotifying(): number {
     return this.remainingCredit().value - this.minRemainingCreditBeforeNotifying().value;
   }
 }
