@@ -16,14 +16,14 @@ export class SendRemainingCreditIsCloseToRunningOutEmailHandler implements IDoma
   ) {}
 
   public async handle(event: RemainingCreditRunOutDomainEvent): Promise<void> {
-    const from = new EmailVo('test@gmail.com');
-    const to = new EmailVo('to@gmail.com');
-    const subject = `${event.thirdPartyServiceName} credits are running out`;
+    const from = new EmailVo('adria.claret@gmail.com');
+    const to = new EmailVo('lbernalrodrguez@gmail.com');
+    const subject = `${event.thirdPartyServiceName.value} credits are running out`;
 
-    const heading = new Heading(from, to, subject);
+    const heading = new Heading(from, [to], subject);
 
     const content = new Content(
-      `Hey! You have ${event.creditsLeftBeforeNotifying} credits left from ${event.thirdPartyServiceName}!`
+      `<h1>Hey!</h1><p>You have ${event.creditsLeftBeforeNotifying} credits left from ${event.thirdPartyServiceName.value}!</p>`
     );
 
     const email = new Email(heading, content);

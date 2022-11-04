@@ -12,9 +12,9 @@ export class SendGridClient {
     client.setApiKey(this.config.get<string>('SEND_GRID_API_KEY')!);
   }
 
-  private promisifiedRequest(request: SendGridRequest): Promise<[ ClientResponse, any ]> {
-    return new Promise<[ ClientResponse, any ]>((resolve, reject) => {
-      client.request(request, (error: ResponseError, response: [ ClientResponse, any ]) => {
+  private promisifiedRequest(request: SendGridRequest): Promise<[ClientResponse, any]> {
+    return new Promise<[ClientResponse, any]>((resolve, reject) => {
+      client.request(request, (error: ResponseError, response: [ClientResponse, any]) => {
         if (error) {
           return reject(error);
         }

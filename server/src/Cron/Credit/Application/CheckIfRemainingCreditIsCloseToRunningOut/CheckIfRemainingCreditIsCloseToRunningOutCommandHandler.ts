@@ -9,7 +9,7 @@ import { RemainingCreditRunOutDomainEvent } from './RemainingCreditRunOutDomainE
 @CommandHandler(CheckIfRemainingCreditIsCloseToRunningOutCommand)
 export class CheckIfRemainingCreditIsCloseToRunningOutCommandHandler {
   constructor(
-    @Inject('GetThirdPartyServiceList')
+    @Inject('GetThirdPartyServiceListService')
     private readonly getThirdPartyServiceList: GetThirdPartyServiceListService,
     private readonly eventBus: EventBus
   ) {}
@@ -29,7 +29,7 @@ export class CheckIfRemainingCreditIsCloseToRunningOutCommandHandler {
           new RemainingCreditRunOutDomainEvent(
             thirdPartyService.id(),
             thirdPartyService.name(),
-            thirdPartyService.differenceBetweenRemainingCreditAndMinRemainingCreditBeforeNotifying()
+            thirdPartyService.remainingCredit().value
           )
         );
       }

@@ -6,7 +6,7 @@ import { Inject, Injectable } from '@nestjs/common';
 @Injectable()
 export class GetThirdPartyServiceListService {
   constructor(
-    @Inject('ThirdPartyServiceRepository')
+    @Inject('IThirdPartyServiceRepository')
     private readonly thirdPartyServiceRepository: IThirdPartyServiceRepository
   ) {}
 

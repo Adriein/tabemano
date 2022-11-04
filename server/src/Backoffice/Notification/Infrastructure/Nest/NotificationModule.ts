@@ -47,12 +47,19 @@ const Service = [
   },
 ];
 
+const Clients = [
+  {
+    provide: 'SendGrid',
+    useClass: SendGridClient,
+  },
+];
+
 const Mapper = [TenantMapper];
 
 @Module({
   imports: [CqrsModule, TypeOrmModule],
   controllers: [],
-  providers: [...Handlers, ...Service, ...Repository, ...Mapper, ...Factories, SendGridClient],
+  providers: [...Handlers, ...Service, ...Repository, ...Mapper, ...Factories, ...Clients],
   exports: [],
 })
 export class NotificationModule {}

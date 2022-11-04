@@ -1,18 +1,15 @@
-import { Content } from "Backoffice/Notification/Domain/Entity/Content";
-import { Heading } from "Backoffice/Notification/Domain/Entity/Heading";
+import { Content } from 'Backoffice/Notification/Domain/Entity/Content';
+import { Heading } from 'Backoffice/Notification/Domain/Entity/Heading';
 import { Email as EmailVo } from 'Shared/Domain/Vo/Email.vo';
 
 export class Email {
-  constructor(
-    private readonly _heading: Heading,
-    private readonly _content: Content,
-  ) {}
+  constructor(private readonly _heading: Heading, private readonly _content: Content) {}
 
   public from(): EmailVo {
     return this._heading.from();
   }
 
-  public to(): EmailVo {
+  public to(): EmailVo[] {
     return this._heading.to();
   }
 

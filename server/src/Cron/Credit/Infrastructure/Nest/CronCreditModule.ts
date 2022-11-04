@@ -12,6 +12,7 @@ import { CreateThirdPartyServiceController } from '../Controller/CreateThirdPart
 import { CreateThirdPartyServiceCommandHandler } from 'Cron/Credit/Application/CreateThirdPartyService/CreateThirdPartyServiceCommandHandler';
 import { CheckIfRemainingCreditIsCloseToRunningOutCommandHandler } from 'Cron/Credit/Application/CheckIfRemainingCreditIsCloseToRunningOut/CheckIfRemainingCreditIsCloseToRunningOutCommandHandler';
 import { GetThirdPartyServiceListService } from 'Cron/Credit/Application/Services/GetThirdPartyServiceListService';
+import { CheckIfRemainingCreditIsCloseToRunningOutController } from '../Controller/CheckIfRemainingCreditIsCloseToRunningOut/CheckIfRemainingCreditIsCloseToRunningOutController';
 
 const Services = [
   { provide: 'SendGridRemainingCreditService', useClass: SendGridRemainingCreditService },
@@ -47,7 +48,11 @@ const Handlers = [
   CheckIfRemainingCreditIsCloseToRunningOutCommandHandler,
 ];
 
-const Controllers = [CreateThirdPartyServiceController, UpdateRemainingCreditController];
+const Controllers = [
+  CreateThirdPartyServiceController,
+  UpdateRemainingCreditController,
+  CheckIfRemainingCreditIsCloseToRunningOutController,
+];
 
 @Module({
   imports: [CqrsModule, TypeOrmModule],

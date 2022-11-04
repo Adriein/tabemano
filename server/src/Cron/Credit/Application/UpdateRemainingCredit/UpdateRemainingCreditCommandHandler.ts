@@ -15,7 +15,7 @@ export class UpdateRemainingCreditCommandHandler implements ICommandHandler {
     private readonly thirdPartyServiceRepository: IThirdPartyServiceRepository,
     @Inject('IThirdPartyServiceAbstractFactory')
     private readonly factory: IThirdPartyServiceAbstractFactory,
-    @Inject('GetThirdPartyServiceList')
+    @Inject('GetThirdPartyServiceListService')
     private readonly getThirdPartyServiceList: GetThirdPartyServiceListService
   ) {}
 
