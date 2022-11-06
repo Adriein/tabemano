@@ -5,6 +5,8 @@ import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Name } from "Shared/Domain/Vo/Name.vo";
 
 export class ClientRegisteredDomainEvent extends DomainEvent {
+  protected _type = 'tabemano.backoffice.1.event.tenant.registered';
+
   constructor(
     protected readonly _aggregateId: ID,
     private readonly _name: Name,
@@ -38,5 +40,9 @@ export class ClientRegisteredDomainEvent extends DomainEvent {
 
   public get roleId(): ID {
     return this._roleId;
+  }
+
+  public get type(): string {
+    return this._type;
   }
 }
