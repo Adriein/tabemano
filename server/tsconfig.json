@@ -3,12 +3,15 @@
   "compilerOptions": {
     "sourceMap": true,
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": "./",
     "strict": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "baseUrl": ".",
     "paths": {
+      "Test/*": [
+        "./test/*"
+      ],
       "Shared/*": [
         "./src/Shared/*"
       ],
@@ -28,12 +31,13 @@
         "./src/Cron/*",
         "./src/Cron"
       ]
-    }
+    },
+    "types": ["jest", "@types/jest"]
   },
   "include": [
-    "src"
-  ],
+    "src", "test" 
+   ],
   "exclude": [
-    "node_modules"
+    "node_modules", "typeorm", "prisma", "dist", "bin"
   ]
 }

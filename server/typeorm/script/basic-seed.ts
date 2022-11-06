@@ -201,7 +201,7 @@ const createTenantSubscription = async (database: DataSource) => {
   });
 };
 
-async function seed() {
+async function basicSeed() {
   const database = await Database.instance().initialize();
 
   await createBasicRoles(database);
@@ -215,7 +215,7 @@ async function seed() {
   await createTenantSubscription(database);
 }
 
-seed()
+basicSeed()
   .catch(error => {
     console.error(error);
     process.exit(1);

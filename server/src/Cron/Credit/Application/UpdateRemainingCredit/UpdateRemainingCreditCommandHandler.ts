@@ -5,6 +5,7 @@ import { ThirdPartyServiceFilter } from 'Cron/Credit/Domain/Filter/ThirdPartySer
 import { IThirdPartyServiceRepository } from 'Cron/Credit/Domain/Repository/IThirdPartyServiceRepository';
 import { Log } from 'Shared/Domain/Decorators/Log';
 import { IThirdPartyServiceAbstractFactory } from 'Shared/Domain/Factory/IThirdPartyServiceAbstractFactory';
+import { GetThirdPartyServiceListService } from '../Services/GetThirdPartyServiceListService';
 import { UpdateRemainingCreditCommand } from './UpdateRemainingCreditCommand';
 
 @CommandHandler(UpdateRemainingCreditCommand)
@@ -13,25 +14,20 @@ export class UpdateRemainingCreditCommandHandler implements ICommandHandler {
     @Inject('IThirdPartyServiceRepository')
     private readonly thirdPartyServiceRepository: IThirdPartyServiceRepository,
     @Inject('IThirdPartyServiceAbstractFactory')
-    private readonly factory: IThirdPartyServiceAbstractFactory
+    private readonly factory: IThirdPartyServiceAbstractFactory,
+    @Inject('GetThirdPartyServiceListService')
+    private readonly getThirdPartyServiceList: GetThirdPartyServiceListService
   ) {}
 
   @Log()
   public async execute(command: UpdateRemainingCreditCommand): Promise<void> {
-    const serviceList = await this.getServiceList();
+    const filter = ThirdPartyServiceFilter.create();
+    const thirdPartyServiceList = await this.getThirdPartyServiceList.execute(filter);
 
-    serviceList.forEach(async (thirdPartyService: ThirdPartyService) => {
+    thirdPartyServiceList.forEach(async (thirdPartyService: ThirdPartyService) => {
       const service = this.factory.createRemainingCreditServiceRetriever(thirdPartyService.name());
       await thirdPartyService.updateRemainingCredit(service);
       await this.thirdPartyServiceRepository.update(thirdPartyService);
     });
-  }
-
-  private async getServiceList(): Promise<ThirdPartyService[]> {
-    const filter = ThirdPartyServiceFilter.create();
-
-    const result = await this.thirdPartyServiceRepository.find(filter);
-
-    return result.unwrap();
   }
 }

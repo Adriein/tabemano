@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { RemainingCreditResponse } from 'Cron/Credit/Domain/Entity/RemainingCreditResponse';
+import { SENDGRID } from 'Shared/Domain/constants';
 import { IRemainingCreditService } from 'Shared/Domain/Factory/IRemainingCreditService';
 import { SendGridClient } from 'Shared/Infrastructure/Service/SendGrid/SendGridClient';
 import { SendGridRequest } from 'Shared/Infrastructure/Service/SendGrid/SendGridRequest';
@@ -7,7 +8,7 @@ import { SendGridRemainingCreditResponse } from './SendGridRemainingCreditRespon
 
 @Injectable()
 export class SendGridRemainingCreditService implements IRemainingCreditService {
-  constructor(@Inject('SendGrid') private readonly sendGrid: SendGridClient) {}
+  constructor(@Inject(SENDGRID) private readonly sendGrid: SendGridClient) {}
 
   public async execute(): Promise<RemainingCreditResponse> {
     const request = new SendGridRequest(`/v3/user/credits`, 'GET');

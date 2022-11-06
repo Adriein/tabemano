@@ -10,9 +10,13 @@ import { PgThirdPartyServiceMapper } from '../Persistance/Mapper/PgThirdPartySer
 import { PgThirdPartyServiceRepository } from '../Persistance/Repository/PgThirdPartyServiceRepository';
 import { CreateThirdPartyServiceController } from '../Controller/CreateThirdPartyServiceController/CreateThirdPartyServiceController';
 import { CreateThirdPartyServiceCommandHandler } from 'Cron/Credit/Application/CreateThirdPartyService/CreateThirdPartyServiceCommandHandler';
+import { CheckIfRemainingCreditIsCloseToRunningOutCommandHandler } from 'Cron/Credit/Application/CheckIfRemainingCreditIsCloseToRunningOut/CheckIfRemainingCreditIsCloseToRunningOutCommandHandler';
+import { GetThirdPartyServiceListService } from 'Cron/Credit/Application/Services/GetThirdPartyServiceListService';
+import { CheckIfRemainingCreditIsCloseToRunningOutController } from '../Controller/CheckIfRemainingCreditIsCloseToRunningOut/CheckIfRemainingCreditIsCloseToRunningOutController';
 
 const Services = [
   { provide: 'SendGridRemainingCreditService', useClass: SendGridRemainingCreditService },
+  { provide: 'GetThirdPartyServiceListService', useClass: GetThirdPartyServiceListService },
 ];
 
 const Clients = [
@@ -38,9 +42,17 @@ const Repositories = [
 
 const Mappers = [PgThirdPartyServiceMapper];
 
-const Handlers = [CreateThirdPartyServiceCommandHandler, UpdateRemainingCreditCommandHandler];
+const Handlers = [
+  CreateThirdPartyServiceCommandHandler,
+  UpdateRemainingCreditCommandHandler,
+  CheckIfRemainingCreditIsCloseToRunningOutCommandHandler,
+];
 
-const Controllers = [CreateThirdPartyServiceController, UpdateRemainingCreditController];
+const Controllers = [
+  CreateThirdPartyServiceController,
+  UpdateRemainingCreditController,
+  CheckIfRemainingCreditIsCloseToRunningOutController,
+];
 
 @Module({
   imports: [CqrsModule, TypeOrmModule],

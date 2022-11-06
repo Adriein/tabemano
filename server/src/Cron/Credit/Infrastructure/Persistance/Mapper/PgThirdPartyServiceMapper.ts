@@ -24,7 +24,7 @@ export class PgThirdPartyServiceMapper
     model.name = entity.name();
     model.remainingCredit = entity.remainingCredit();
     model.minRemainingCreditBeforeNotifying = entity.minRemainingCreditBeforeNotifying();
-    model.notify = entity.notify();
+    model.notify = entity.hasToBeNotified();
     model.createdAt = entity.createdAt();
     model.updatedAt = entity.updatedAt();
 
