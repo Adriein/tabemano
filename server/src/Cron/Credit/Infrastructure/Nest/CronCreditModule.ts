@@ -11,12 +11,12 @@ import { PgThirdPartyServiceRepository } from '../Persistance/Repository/PgThird
 import { CreateThirdPartyServiceController } from '../Controller/CreateThirdPartyServiceController/CreateThirdPartyServiceController';
 import { CreateThirdPartyServiceCommandHandler } from 'Cron/Credit/Application/CreateThirdPartyService/CreateThirdPartyServiceCommandHandler';
 import { CheckIfRemainingCreditIsCloseToRunningOutCommandHandler } from 'Cron/Credit/Application/CheckIfRemainingCreditIsCloseToRunningOut/CheckIfRemainingCreditIsCloseToRunningOutCommandHandler';
-import { GetThirdPartyServiceListService } from 'Cron/Credit/Application/Services/GetThirdPartyServiceListService';
+import { ThirdPartyServiceFinder } from 'Cron/Credit/Application/Services/ThirdPartyServiceFinder';
 import { CheckIfRemainingCreditIsCloseToRunningOutController } from '../Controller/CheckIfRemainingCreditIsCloseToRunningOut/CheckIfRemainingCreditIsCloseToRunningOutController';
 
 const Services = [
   { provide: 'SendGridRemainingCreditService', useClass: SendGridRemainingCreditService },
-  { provide: 'GetThirdPartyServiceListService', useClass: GetThirdPartyServiceListService },
+  { provide: 'ThirdPartyServiceFinder', useClass: ThirdPartyServiceFinder },
 ];
 
 const Clients = [
@@ -40,7 +40,7 @@ const Repositories = [
   },
 ];
 
-const Mappers = [PgThirdPartyServiceMapper];
+const Mappers = [ PgThirdPartyServiceMapper ];
 
 const Handlers = [
   CreateThirdPartyServiceCommandHandler,
@@ -55,9 +55,9 @@ const Controllers = [
 ];
 
 @Module({
-  imports: [CqrsModule, TypeOrmModule],
-  controllers: [...Controllers],
-  providers: [...Repositories, ...Handlers, ...Mappers, ...Services, ...Factory, ...Clients],
+  imports: [ CqrsModule, TypeOrmModule ],
+  controllers: [ ...Controllers ],
+  providers: [ ...Repositories, ...Handlers, ...Mappers, ...Services, ...Factory, ...Clients ],
   exports: [],
 })
 export class CronCreditModule {}

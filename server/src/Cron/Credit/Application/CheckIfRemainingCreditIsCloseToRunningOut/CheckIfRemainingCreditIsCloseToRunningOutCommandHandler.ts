@@ -2,15 +2,15 @@ import { Inject } from '@nestjs/common';
 import { CommandHandler, EventBus } from '@nestjs/cqrs';
 import { ThirdPartyServiceFilter } from 'Cron/Credit/Domain/Filter/ThirdPartyServiceFilter';
 import { Log } from 'Shared/Domain/Decorators/Log';
-import { GetThirdPartyServiceListService } from '../Services/GetThirdPartyServiceListService';
+import { ThirdPartyServiceFinder } from '../Services/ThirdPartyServiceFinder';
 import { CheckIfRemainingCreditIsCloseToRunningOutCommand } from './CheckIfRemainingCreditIsCloseToRunningOut';
 import { RemainingCreditRunOutDomainEvent } from './RemainingCreditRunOutDomainEvent';
 
 @CommandHandler(CheckIfRemainingCreditIsCloseToRunningOutCommand)
 export class CheckIfRemainingCreditIsCloseToRunningOutCommandHandler {
   constructor(
-    @Inject('GetThirdPartyServiceListService')
-    private readonly getThirdPartyServiceList: GetThirdPartyServiceListService,
+    @Inject('ThirdPartyServiceFinder')
+    private readonly getThirdPartyServiceList: ThirdPartyServiceFinder,
     private readonly eventBus: EventBus
   ) {}
 

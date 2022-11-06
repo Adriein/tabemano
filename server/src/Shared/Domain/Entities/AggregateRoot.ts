@@ -1,4 +1,5 @@
-import { AggregateRoot as NestAggregate } from "@nestjs/cqrs";
+import { AggregateRoot as NestAggregate, IEvent } from "@nestjs/cqrs";
+import { TabemanoEventBus } from "Shared/Domain/Entities/TabemanoEventBus";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 
 export abstract class AggregateRoot extends NestAggregate {
@@ -10,7 +11,6 @@ export abstract class AggregateRoot extends NestAggregate {
     super();
   }
 
-
   public id(): ID {
     return this._id;
   }
@@ -21,5 +21,19 @@ export abstract class AggregateRoot extends NestAggregate {
 
   public updatedAt(): Date {
     return this._updatedAt;
+  }
+
+  public publish<T extends IEvent = IEvent>(event: T) {
+    super.publish(event);
+  }
+
+  public commit() {
+    const unCommittedEvents = super.getUncommittedEvents();
+
+    for (const event of unCommittedEvents) {
+      const eventBus = TabemanoEventBus.instance()!;
+
+      eventBus.publish(event);
+    }
   }
 }

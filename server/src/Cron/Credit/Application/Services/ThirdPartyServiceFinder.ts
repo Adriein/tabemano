@@ -4,7 +4,7 @@ import { IThirdPartyServiceRepository } from 'Cron/Credit/Domain/Repository/IThi
 import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()
-export class GetThirdPartyServiceListService {
+export class ThirdPartyServiceFinder {
   constructor(
     @Inject('IThirdPartyServiceRepository')
     private readonly thirdPartyServiceRepository: IThirdPartyServiceRepository

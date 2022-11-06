@@ -1,10 +1,12 @@
+import { SubscriptionAboutToExpireDomainEvent } from "Cron/Client/Application/CheckAboutToExpireSubscriptions/SubscriptionAboutToExpireDomainEvent";
+import { AggregateRoot } from "Shared/Domain/Entities/AggregateRoot";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Time } from "Shared/Infrastructure/Helper/Time";
 
-export class Subscription {
+export class Subscription extends AggregateRoot {
   constructor(
-    private _id: ID,
+    _id: ID,
     private _userId: ID,
     private _pricingId: ID,
     private _paymentDate: DateVo,
@@ -15,10 +17,8 @@ export class Subscription {
     private _duration: number,
     _createdAt?: Date,
     _updatedAt?: Date
-  ) {}
-
-  public id(): ID {
-    return this._id;
+  ) {
+    super(_id);
   }
 
   public userId(): ID {
@@ -53,10 +53,12 @@ export class Subscription {
     return Time.before(this._validTo.value, Time.now());
   }
 
-  public checkIsAboutToExpire = (daysToWarn: number | undefined = 5): boolean => {
+  public checkIsAboutToExpire = (daysToWarn: number | undefined = 5): void => {
     const warningDate = Time.subtract(this._validTo.value, daysToWarn)
 
-    return Time.equal(Time.now(), warningDate);
+    if (Time.equal(Time.now(), warningDate)) {
+      this.publish(new SubscriptionAboutToExpireDomainEvent(this._userId))
+    }
   };
 
 

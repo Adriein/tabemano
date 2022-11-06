@@ -27,8 +27,10 @@ export class CheckAboutToExpireSubscriptionsCommandHandler implements ICommandHa
     for (const client of clientList) {
       const subscription = client.activeSubscription()
 
-      if (subscription.checkIsAboutToExpire(client.tenantWarningDays()) && client.canSendWarnings()) {
-        this.eventBus.publish(new SubscriptionAboutToExpireDomainEvent(client.id()))
+      subscription.checkIsAboutToExpire(client.tenantWarningDays());
+
+      if (client.canSendWarnings()) {
+        subscription.commit();
       }
     }
 

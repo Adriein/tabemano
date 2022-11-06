@@ -1,6 +1,8 @@
 import { VersioningType } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from '@nestjs/core';
+import { EventBus } from "@nestjs/cqrs";
+import { TabemanoEventBus } from "Shared/Domain/Entities/TabemanoEventBus";
 import { ErrorsInterceptor } from "Shared/Infrastructure/Interceptor/ErrorInterceptor";
 import App from "./App";
 import CookieSession from 'cookie-session';
@@ -10,6 +12,9 @@ async function bootstrap() {
   const app = await NestFactory.create(App);
 
   const config = app.get(ConfigService);
+  const eventBus = app.get(EventBus);
+
+  TabemanoEventBus.instance(eventBus);
 
   app.use(CookieSession({
     name: 'tabemano-session',
