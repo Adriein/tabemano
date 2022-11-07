@@ -72,6 +72,8 @@ export class ThirdPartyService extends AggregateRoot {
         )
       );
     }
+
+    return;
   }
 
   public differenceBetweenRemainingCreditAndMinRemainingCreditBeforeNotifying(): number {
