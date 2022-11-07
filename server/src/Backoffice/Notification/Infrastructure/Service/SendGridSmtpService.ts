@@ -26,6 +26,6 @@ export class SendGridSmtpService implements ISmtpService {
     const response = await this.sendGrid.makeRequest<SendGridRequest, void>(request);
 
     // Handle error
-    console.log('RESPONSE', response);
+    // console.log('RESPONSE', response);
   }
 }

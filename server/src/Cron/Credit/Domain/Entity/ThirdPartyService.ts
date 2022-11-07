@@ -1,4 +1,6 @@
+import { RemainingCreditRunOutDomainEvent } from 'Cron/Credit/Application/CheckIfRemainingCreditIsCloseToRunningOut/RemainingCreditRunOutDomainEvent';
 import { AggregateRoot } from 'Shared/Domain/Entities/AggregateRoot';
+import { TabemanoEventBus } from 'Shared/Domain/Entities/TabemanoEventBus';
 import { IRemainingCreditService } from 'Shared/Domain/Factory/IRemainingCreditService';
 import { ID } from 'Shared/Domain/Vo/Id.vo';
 import { Name } from 'Shared/Domain/Vo/Name.vo';
@@ -56,8 +58,20 @@ export class ThirdPartyService extends AggregateRoot {
     this._remainingCredit = remainingCredit;
   }
 
-  public isRemainingCreditCloseToRunningOut(): boolean {
-    return this.differenceBetweenRemainingCreditAndMinRemainingCreditBeforeNotifying() <= 0;
+  public isRemainingCreditCloseToRunningOut(thirdPartyService: ThirdPartyService): void {
+    if (!thirdPartyService.hasToBeNotified()) {
+      return;
+    }
+
+    if (this.differenceBetweenRemainingCreditAndMinRemainingCreditBeforeNotifying() <= 0) {
+      TabemanoEventBus.instance()!.publish(
+        new RemainingCreditRunOutDomainEvent(
+          thirdPartyService.id(),
+          thirdPartyService.name(),
+          thirdPartyService.remainingCredit().value
+        )
+      );
+    }
   }
 
   public differenceBetweenRemainingCreditAndMinRemainingCreditBeforeNotifying(): number {

@@ -20,19 +20,22 @@ export class CheckIfRemainingCreditIsCloseToRunningOutCommandHandler {
     const thirdPartyServiceList = await this.getThirdPartyServiceList.execute(filter);
 
     thirdPartyServiceList.forEach(thirdPartyService => {
-      if (!thirdPartyService.hasToBeNotified()) {
-        return;
-      }
+      // if (!thirdPartyService.hasToBeNotified()) {
+      //   return;
+      // }
 
-      if (thirdPartyService.isRemainingCreditCloseToRunningOut()) {
-        this.eventBus.publish(
-          new RemainingCreditRunOutDomainEvent(
-            thirdPartyService.id(),
-            thirdPartyService.name(),
-            thirdPartyService.remainingCredit().value
-          )
-        );
-      }
+      thirdPartyService.isRemainingCreditCloseToRunningOut(thirdPartyService);
+
+      thirdPartyService.commit();
+      // if (thirdPartyService.isRemainingCreditCloseToRunningOut(thirdPartyService)) {
+      //   this.eventBus.publish(
+      //     new RemainingCreditRunOutDomainEvent(
+      //       thirdPartyService.id(),
+      //       thirdPartyService.name(),
+      //       thirdPartyService.remainingCredit().value
+      //     )
+      //   );
+      // }
 
       return;
     });
