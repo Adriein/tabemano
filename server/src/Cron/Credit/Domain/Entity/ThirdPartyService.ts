@@ -24,10 +24,10 @@ export class ThirdPartyService extends AggregateRoot {
 
   constructor(
     _id: ID,
-    private readonly _name: Name,
+    private _name: Name,
     private _remainingCredit: NumberVo,
-    private readonly _minRemainingCreditBeforeNotifying: NumberVo,
-    private readonly _hasToBeNotified: boolean,
+    private _minRemainingCreditBeforeNotifying: NumberVo,
+    private _hasToBeNotified: boolean,
     _createdAt?: Date,
     _updatedAt?: Date
   ) {
@@ -63,7 +63,7 @@ export class ThirdPartyService extends AggregateRoot {
       return;
     }
 
-    if (this.differenceBetweenRemainingCreditAndMinRemainingCreditBeforeNotifying() <= 0) {
+    if (this.numberOfCreditsBeforeNotifying() <= 0) {
       TabemanoEventBus.instance()!.publish(
         new RemainingCreditRunOutDomainEvent(
           thirdPartyService.id(),
@@ -76,7 +76,7 @@ export class ThirdPartyService extends AggregateRoot {
     return;
   }
 
-  public differenceBetweenRemainingCreditAndMinRemainingCreditBeforeNotifying(): number {
+  private numberOfCreditsBeforeNotifying(): number {
     return this.remainingCredit().value - this.minRemainingCreditBeforeNotifying().value;
   }
 }

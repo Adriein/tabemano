@@ -9,13 +9,13 @@ import { CheckIfRemainingCreditIsCloseToRunningOutCommand } from './CheckIfRemai
 export class CheckIfRemainingCreditIsCloseToRunningOutCommandHandler {
   constructor(
     @Inject('ThirdPartyServiceFinder')
-    private readonly getThirdPartyServiceList: ThirdPartyServiceFinder
+    private readonly thirdPartyServiceFinder: ThirdPartyServiceFinder
   ) {}
 
   @Log()
   public async execute(): Promise<void> {
     const filter = ThirdPartyServiceFilter.create();
-    const thirdPartyServiceList = await this.getThirdPartyServiceList.execute(filter);
+    const thirdPartyServiceList = await this.thirdPartyServiceFinder.execute(filter);
 
     thirdPartyServiceList.forEach(thirdPartyService => {
       thirdPartyService.isRemainingCreditCloseToRunningOut(thirdPartyService);
