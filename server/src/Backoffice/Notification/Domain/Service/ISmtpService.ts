@@ -1,5 +1,7 @@
+import { Result } from "@badrap/result";
 import { Email } from "Backoffice/Notification/Domain/Entity/Email";
+import { ExternalServiceError } from "Shared/Domain/Error/ExternalServiceError";
 
 export interface ISmtpService {
-  send(email: Email): Promise<void>;
+  send(email: Email): Promise<Result<null, ExternalServiceError>>;
 }
