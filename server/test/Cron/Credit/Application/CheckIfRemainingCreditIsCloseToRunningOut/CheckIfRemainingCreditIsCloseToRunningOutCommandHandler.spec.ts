@@ -1,4 +1,3 @@
-// import { EventBus } from '@nestjs/cqrs';
 import { Test } from '@nestjs/testing';
 import { CheckIfRemainingCreditIsCloseToRunningOutCommandHandler } from 'Cron/Credit/Application/CheckIfRemainingCreditIsCloseToRunningOut/CheckIfRemainingCreditIsCloseToRunningOutCommandHandler';
 import { ThirdPartyServiceFinder } from 'Cron/Credit/Application/Services/ThirdPartyServiceFinder';
@@ -9,7 +8,6 @@ import { ThirdPartyServiceObjectMother } from '../../../Shared/ThirdPartyService
 describe('CheckIfRemainingCreditIsCloseToRunningOutCommandHandler', () => {
   let thirdPartyServiceFinder: ThirdPartyServiceFinder;
   let handler: CheckIfRemainingCreditIsCloseToRunningOutCommandHandler;
-  // let eventBus: EventBus;
   const mockThirdPartyService = ThirdPartyServiceObjectMother.create().build();
 
   beforeEach(async () => {
@@ -30,7 +28,6 @@ describe('CheckIfRemainingCreditIsCloseToRunningOutCommandHandler', () => {
 
     handler = cronModule.get(CheckIfRemainingCreditIsCloseToRunningOutCommandHandler);
     thirdPartyServiceFinder = cronModule.get<ThirdPartyServiceFinder>('ThirdPartyServiceFinder');
-    // eventBus = cronModule.get<EventBus>(EventBus);
   });
 
   afterEach(() => {
@@ -51,14 +48,19 @@ describe('CheckIfRemainingCreditIsCloseToRunningOutCommandHandler', () => {
     ).toBeTruthy();
   });
 
-  // it('should return early when notifications are deactivated', async () => {
-  //   jest.spyOn(mockThirdPartyService, 'hasToBeNotified').mockReturnValue(false);
-  //   jest.spyOn(eventBus, 'publish');
+  it('should call isRemainingCreditCloseToRunningOut', async () => {
+    jest.spyOn(mockThirdPartyService, 'isRemainingCreditCloseToRunningOut');
 
-  //   await handler.execute();
+    await handler.execute();
 
-  //   expect(mockThirdPartyService.hasToBeNotified).toHaveBeenCalled();
-  //   expect(mockThirdPartyService.hasToBeNotified()).toBe(false);
-  //   expect(eventBus.publish).toBeCalledTimes(0);
-  // });
+    expect(mockThirdPartyService.isRemainingCreditCloseToRunningOut).toHaveBeenCalled();
+  });
+
+  it('should call commit', async () => {
+    jest.spyOn(mockThirdPartyService, 'commit');
+
+    await handler.execute();
+
+    expect(mockThirdPartyService.commit).toHaveBeenCalled();
+  });
 });
