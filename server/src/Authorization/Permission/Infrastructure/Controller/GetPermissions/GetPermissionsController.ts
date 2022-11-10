@@ -5,11 +5,11 @@ import { GetPermissionsResponse } from 'Authorization/Permission/Application/Get
 import { GetPermissionsApiRequest } from './GetPermissionsApiRequest';
 import { GetPermissionsApiResponse } from './GetPermissionsApiResponse';
 
-@Controller('/permissions')
+@Controller()
 export class GetPermissionsController {
   constructor(private readonly queryBus: QueryBus) {}
 
-  @Get()
+  @Get('/permissions')
   @UseInterceptors(ClassSerializerInterceptor)
   public async getPermissions(
     @Body() body: GetPermissionsApiRequest

@@ -15,11 +15,11 @@ import { SignInResponse } from 'Authorization/Auth/Application/SignIn/SignInResp
 import { SignInApiRequest } from 'Authorization/Auth/Infrastructure/Controller/SignIn/SignInApiRequest';
 import jwt from 'jsonwebtoken';
 
-@Controller('/signin')
+@Controller()
 export class SignInController {
   constructor(private readonly queryBus: QueryBus, private readonly config: ConfigService) {}
 
-  @Post()
+  @Post('/signin')
   @UseInterceptors(ClassSerializerInterceptor)
   public async signIn(
     @Body() body: SignInApiRequest,
