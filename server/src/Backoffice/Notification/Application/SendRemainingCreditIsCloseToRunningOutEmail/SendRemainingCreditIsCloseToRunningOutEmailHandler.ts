@@ -23,7 +23,8 @@ export class SendRemainingCreditIsCloseToRunningOutEmailHandler implements IDoma
     const heading = new Heading(from, [to], subject);
 
     const content = new Content(
-      `<h1>Hey!</h1><p>You have ${event.creditsLeftBeforeNotifying} credits left from ${event.thirdPartyServiceName.value}!</p>`
+      `<h1>Hey!</h1>
+      <p>You have ${event.creditsLeftBeforeNotifying} credits left from ${event.thirdPartyServiceName.value}!</p>`
     );
 
     const email = new Email(heading, content);
