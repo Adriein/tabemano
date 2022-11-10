@@ -45,7 +45,7 @@ export class SendGridSmtpService implements ISmtpService {
     const message: string[] = [];
 
     error.response.body.errors.forEach((error: { field: string; message: string }) => {
-      message.push(`${error.field} ${error.message}`);
+      message.push(`${error.field} -> ${error.message}`);
     }, []);
 
     return message.join(' ');
