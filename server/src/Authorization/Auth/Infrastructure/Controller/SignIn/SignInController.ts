@@ -14,6 +14,8 @@ import { SignInQuery } from 'Authorization/Auth/Application/SignIn/SignInQuery';
 import { SignInResponse } from 'Authorization/Auth/Application/SignIn/SignInResponse';
 import { SignInApiRequest } from 'Authorization/Auth/Infrastructure/Controller/SignIn/SignInApiRequest';
 import jwt from 'jsonwebtoken';
+import { GetRoleQuery } from 'Authorization/Auth/Application/GetRole/GetRoleQuery';
+import { GetRoleResponse } from 'Authorization/Auth/Application/GetRole/GetRoleResponse';
 
 @Controller()
 export class SignInController {
@@ -38,11 +40,16 @@ export class SignInController {
       return { name: permission.moduleName };
     });
 
+    const role = await this.queryBus.execute<GetRoleQuery, GetRoleResponse>(
+      new GetRoleQuery(signInResponse.roleId)
+    );
+
     session.user = jwt.sign(
       {
         name: signInResponse.name,
         email: signInResponse.email,
-        permissions: permissions,
+        permissions,
+        role: role.type,
       },
       this.config.get<string>('JWT_KEY')!
     );
