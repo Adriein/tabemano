@@ -3,6 +3,7 @@ import { EventsHandler } from "@nestjs/cqrs";
 import { Tenant } from "Backoffice/Notification/Domain/Entity/Tenant";
 import { IThirdPartySmtpServiceAbstractFactory } from "Backoffice/Notification/Domain/Factory/IThirdPartySmtpServiceAbstractFactory";
 import { ITenantRepository } from "Backoffice/Notification/Domain/Repository/ITenantRepository";
+import { ISmtpService } from "Backoffice/Notification/Domain/Service/ISmtpService";
 import { IVerifyTenantEmailService } from "Backoffice/Notification/Domain/Service/IVerifyTenantEmailService";
 import { TenantFilter } from "Backoffice/Shared/Domain/Tenant/TenantFilter";
 import { TenantCreatedDomainEvent } from "Backoffice/Tenant/Application/CreateTenant/TenantCreatedDomainEvent";
@@ -21,7 +22,7 @@ export class VerifyTenantEmailDomainEventHandler implements IDomainEventHandler 
     try {
       const tenant = await this.findTenant(event.aggregateId);
 
-      const service = this.getVerifyEmailService();
+      const service = this.getSmtpService();
 
       await tenant.verifyEmail(service);
     } catch (error: any) {
@@ -37,7 +38,7 @@ export class VerifyTenantEmailDomainEventHandler implements IDomainEventHandler 
     return result.unwrap();
   }
 
-  private getVerifyEmailService(): IVerifyTenantEmailService {
-    return this.factory.createVerifyTenantEmailService();
+  private getSmtpService(): ISmtpService {
+    return this.factory.createSmtpService();
   }
 }

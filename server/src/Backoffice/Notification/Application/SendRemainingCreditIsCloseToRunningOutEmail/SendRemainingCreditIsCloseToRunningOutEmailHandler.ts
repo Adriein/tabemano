@@ -1,9 +1,9 @@
 import { Inject } from '@nestjs/common';
-import { Email } from 'Backoffice/Notification/Domain/Entity/Email';
+import { Email } from 'Backoffice/Shared/Domain/Email/Email';
 import { ISmtpService } from 'Backoffice/Notification/Domain/Service/ISmtpService';
 import { RemainingCreditRunOutDomainEvent } from 'Cron/Credit/Application/CheckIfRemainingCreditIsCloseToRunningOut/RemainingCreditRunOutDomainEvent';
-import { Heading } from 'Backoffice/Notification/Domain/Entity/Heading';
-import { Content } from 'Backoffice/Notification/Domain/Entity/Content';
+import { Heading } from 'Backoffice/Shared/Domain/Email/Heading';
+import { Content } from 'Backoffice/Shared/Domain/Email/Content';
 import { Email as EmailVo } from 'Shared/Domain/Vo/Email.vo';
 import { EventsHandler } from '@nestjs/cqrs';
 import { IDomainEventHandler } from 'Shared/Domain/Interfaces/IDomainEventHandler';
@@ -20,7 +20,7 @@ export class SendRemainingCreditIsCloseToRunningOutEmailHandler implements IDoma
     const to = new EmailVo('lbernalrodrguez@gmail.com');
     const subject = `${event.thirdPartyServiceName.value} credits are running out`;
 
-    const heading = new Heading(from, [to], subject);
+    const heading = new Heading(from, to, subject);
 
     const content = new Content(
       `<h1>Hey!</h1>

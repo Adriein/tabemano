@@ -1,6 +1,5 @@
 import { Inject } from "@nestjs/common";
-import { CommandHandler, EventBus, ICommandHandler } from "@nestjs/cqrs";
-import { SubscriptionAboutToExpireDomainEvent } from "Cron/Client/Application/CheckAboutToExpireSubscriptions/SubscriptionAboutToExpireDomainEvent";
+import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { Client } from "Cron/Client/Domain/Entity/Client";
 import { ClientFilter } from "Cron/Client/Domain/Filter/ClientFilter";
 import { IClientRepository } from "Cron/Client/Domain/Repository/IClientRepository";
@@ -15,7 +14,6 @@ export class CheckAboutToExpireSubscriptionsCommandHandler implements ICommandHa
     private readonly repository: IClientRepository,
     @Inject('IBackGroundJobRepository')
     private readonly backgroundJobRepository: IBackGroundJobRepository,
-    private readonly eventBus: EventBus
   ) {}
 
   public async execute(command: CheckAboutToExpireSubscriptionsCommand): Promise<void> {

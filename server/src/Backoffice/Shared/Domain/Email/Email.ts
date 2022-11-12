@@ -1,5 +1,5 @@
-import { Content } from 'Backoffice/Notification/Domain/Entity/Content';
-import { Heading } from 'Backoffice/Notification/Domain/Entity/Heading';
+import { Content } from 'Backoffice/Shared/Domain/Email/Content';
+import { Heading } from 'Backoffice/Shared/Domain/Email/Heading';
 import { Email as EmailVo } from 'Shared/Domain/Vo/Email.vo';
 
 export class Email {
@@ -9,7 +9,7 @@ export class Email {
     return this._heading.from();
   }
 
-  public to(): EmailVo[] {
+  public to(): EmailVo {
     return this._heading.to();
   }
 

@@ -6,6 +6,7 @@ import { ConfigureTenantCommandHandler } from "Backoffice/Tenant/Application/Con
 import { CreateTenantDomainEventHandler } from "Backoffice/Tenant/Application/CreateTenant/CreateTenantDomainEventHandler";
 import { RegisterClientCommandHandler } from "Backoffice/Tenant/Application/RegisterClient/RegisterClientCommandHandler";
 import { ConfigureTenantController } from "Backoffice/Tenant/Infrastructure/Controller/ConfigureTenant/ConfigureTenantController";
+import { EmailConfirmationController } from "Backoffice/Tenant/Infrastructure/Controller/EmailConfirmation/EmailConfirmationController";
 import { RegisterClientController } from "Backoffice/Tenant/Infrastructure/Controller/RegisterClient/RegisterClientController";
 import { PgTenantMapper } from "Backoffice/Tenant/Infrastructure/Persistance/Mapper/PgTenantMapper";
 import { PgTenantRepository } from "Backoffice/Tenant/Infrastructure/Persistance/Repository/PgTenantRepository";
@@ -34,7 +35,7 @@ const Mappers = [
   PgSubscriptionMapper,
 ];
 
-const Controllers = [ ConfigureTenantController, RegisterClientController ];
+const Controllers = [ ConfigureTenantController, RegisterClientController, EmailConfirmationController ];
 
 @Module({
   imports: [ CqrsModule, TypeOrmModule ],

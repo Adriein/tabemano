@@ -35,5 +35,8 @@ export abstract class AggregateRoot extends NestAggregate {
 
       eventBus.publish(event);
     }
+    
+    //with this line we flush domain event array on parent
+    super.uncommit();
   }
 }

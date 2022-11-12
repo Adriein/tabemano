@@ -1,4 +1,4 @@
-import { Email } from 'Backoffice/Notification/Domain/Entity/Email';
+import { Email } from 'Backoffice/Shared/Domain/Email/Email';
 import { ISmtpService } from 'Backoffice/Notification/Domain/Service/ISmtpService';
 import sgMail, { MailDataRequired } from '@sendgrid/mail';
 import {
