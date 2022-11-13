@@ -4,12 +4,13 @@ import { Tenant } from "Backoffice/Notification/Domain/Entity/Tenant";
 import { IThirdPartySmtpServiceAbstractFactory } from "Backoffice/Notification/Domain/Factory/IThirdPartySmtpServiceAbstractFactory";
 import { ITenantRepository } from "Backoffice/Notification/Domain/Repository/ITenantRepository";
 import { ISmtpService } from "Backoffice/Notification/Domain/Service/ISmtpService";
-import { IVerifyTenantEmailService } from "Backoffice/Notification/Domain/Service/IVerifyTenantEmailService";
 import { TenantFilter } from "Backoffice/Shared/Domain/Tenant/TenantFilter";
 import { TenantCreatedDomainEvent } from "Backoffice/Tenant/Application/CreateTenant/TenantCreatedDomainEvent";
+import { Log } from "Shared/Domain/Decorators/Log";
 import { IDomainEventHandler } from "Shared/Domain/Interfaces/IDomainEventHandler";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 
+@EventsHandler(TenantCreatedDomainEvent)
 export class VerifyTenantEmailDomainEventHandler implements IDomainEventHandler {
   constructor(
     @Inject('ITenantRepository')
@@ -18,6 +19,7 @@ export class VerifyTenantEmailDomainEventHandler implements IDomainEventHandler 
     private readonly factory: IThirdPartySmtpServiceAbstractFactory
   ) {}
 
+  @Log()
   public async handle(event: TenantCreatedDomainEvent): Promise<void> {
     try {
       const tenant = await this.findTenant(event.aggregateId);

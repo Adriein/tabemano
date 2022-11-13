@@ -57,7 +57,7 @@ export class Subscription extends AggregateRoot {
     const warningDate = Time.subtract(this._validTo.value, daysToWarn)
 
     if (Time.equal(Time.now(), warningDate)) {
-      this.publish(new SubscriptionAboutToExpireDomainEvent(this._userId))
+      this.apply(new SubscriptionAboutToExpireDomainEvent(this._userId))
     }
   };
 
