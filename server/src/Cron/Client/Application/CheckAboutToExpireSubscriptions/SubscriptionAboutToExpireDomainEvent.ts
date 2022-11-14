@@ -1,11 +1,10 @@
-import { DomainEvent } from "Shared/Domain/Entities/DomainEvent";
-import { ID } from "Shared/Domain/Vo/Id.vo";
-
+import { DomainEvent } from 'Shared/Domain/Entities/DomainEvent';
+import { ID } from 'Shared/Domain/Vo/Id.vo';
 
 export class SubscriptionAboutToExpireDomainEvent extends DomainEvent {
-  constructor(
-    protected readonly _aggregateId: ID,
-  ) {
+  protected _type = 'tabemano.cron.1.event.subscription.expired';
+
+  constructor(protected readonly _aggregateId: ID) {
     super();
   }
 

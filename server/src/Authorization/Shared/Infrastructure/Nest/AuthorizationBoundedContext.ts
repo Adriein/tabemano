@@ -16,6 +16,7 @@ import { PgPermissionRepository } from 'Authorization/Permission/Infrastructure/
 import { PgPermissionMapper } from 'Authorization/Permission/Infrastructure/Persistance/Mapper/PgPermissionMapper';
 import { GetUrlListQueryHandler } from 'Authorization/Permission/Application/GetUrlList/GetUrlListQueryHandler';
 import { GetTenantProfileQueryHandler } from 'Authorization/Auth/Application/GetTenantProfile/GetTenantProfileQueryHandler';
+import { GetRoleQueryHandler } from 'Authorization/Auth/Application/GetRole/GetRoleQueryHandler';
 
 const Services = [CryptoService];
 
@@ -42,6 +43,7 @@ const Handlers = [
   GetTenantProfileQueryHandler,
   GetPermissionsQueryHandler,
   GetUrlListQueryHandler,
+  GetRoleQueryHandler,
 ];
 
 const Mappers = [PgAuthMapper, PgRoleMapper, PgPermissionMapper];

@@ -1,22 +1,22 @@
-import { Result } from "@badrap/result";
-import { Inject, Injectable } from "@nestjs/common";
-import { Role } from "Authorization/Auth/Domain/Entity/Role";
-import { RoleFilter } from "Authorization/Auth/Domain/Filter/RoleFilter";
-import { IRoleRepository } from "Authorization/Auth/Domain/Repository/IRoleRepository";
-import { TypeOrmRoleFilterAdapter } from "Authorization/Auth/Infrastructure/Persistance/Filter/TypeOrmRoleFilterAdapter";
-import { PgRoleMapper } from "Authorization/Auth/Infrastructure/Persistance/Mapper/PgRoleMapper";
-import { RoleModel } from "Shared/Infrastructure/Persistance/Model/RoleModel";
-import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
-import Database from "Shared/Infrastructure/Persistance/Database";
-import { TypeOrmRepository } from "Shared/Infrastructure/Persistance/Repository/TypeOrmRepository";
-import { DataSource } from "typeorm";
+import { Result } from '@badrap/result';
+import { Inject, Injectable } from '@nestjs/common';
+import { Role } from 'Authorization/Auth/Domain/Entity/Role';
+import { RoleFilter } from 'Authorization/Auth/Domain/Filter/RoleFilter';
+import { IRoleRepository } from 'Authorization/Auth/Domain/Repository/IRoleRepository';
+import { TypeOrmRoleFilterAdapter } from 'Authorization/Auth/Infrastructure/Persistance/Filter/TypeOrmRoleFilterAdapter';
+import { PgRoleMapper } from 'Authorization/Auth/Infrastructure/Persistance/Mapper/PgRoleMapper';
+import { RoleModel } from 'Shared/Infrastructure/Persistance/Model/RoleModel';
+import { RecordNotFoundError } from 'Shared/Domain/Error/RecordNotFoundError';
+import Database from 'Shared/Infrastructure/Persistance/Database';
+import { TypeOrmRepository } from 'Shared/Infrastructure/Persistance/Repository/TypeOrmRepository';
+import { DataSource } from 'typeorm';
 
 @Injectable()
 export class PgRoleRepository extends TypeOrmRepository<RoleModel> implements IRoleRepository {
   constructor(
     @Inject(Database.DATABASE_CONNECTION)
     protected readonly dataSource: DataSource,
-    private readonly mapper: PgRoleMapper,
+    private readonly mapper: PgRoleMapper
   ) {
     super();
   }
@@ -31,6 +31,7 @@ export class PgRoleRepository extends TypeOrmRepository<RoleModel> implements IR
 
   public async findOne(filter: RoleFilter): Promise<Result<Role, RecordNotFoundError>> {
     const adapter = new TypeOrmRoleFilterAdapter(filter);
+
     const result = await this.repository().findOne(adapter.apply());
 
     return result ? Result.ok(this.mapper.toDomain(result)) : Result.err(new RecordNotFoundError());

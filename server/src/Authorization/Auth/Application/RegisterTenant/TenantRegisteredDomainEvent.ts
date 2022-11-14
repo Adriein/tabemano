@@ -6,6 +6,8 @@ import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Password } from "Shared/Domain/Vo/Password.vo";
 
 export class TenantRegisteredDomainEvent extends DomainEvent {
+  protected _type =  'tabemano.authorization.1.event.tenant.registered';
+
   public static fromEntity(auth: Auth): TenantRegisteredDomainEvent {
     return new TenantRegisteredDomainEvent(auth.id(), auth.name(), auth.email(), auth.password(), auth.roleId());
   }
