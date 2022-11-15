@@ -2,8 +2,6 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
-import jwt from 'jsonwebtoken';
-import { UserSession } from '../Types';
 
 @Injectable()
 export class RoleGuard implements CanActivate {
@@ -18,10 +16,7 @@ export class RoleGuard implements CanActivate {
 
     const request = context.switchToHttp().getRequest();
 
-    const user = jwt.verify(
-      request.session.user,
-      this.config.get<string>('JWT_KEY')!
-    ) as UserSession;
+    const user = request.user;
 
     return this.matchRoles(roles, user.role);
   }

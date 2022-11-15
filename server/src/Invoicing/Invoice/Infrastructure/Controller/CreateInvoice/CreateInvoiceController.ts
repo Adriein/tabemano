@@ -24,9 +24,6 @@ export class CreateInvoiceController {
   @UseGuards(AuthGuard, PermissionGuard, RoleGuard)
   @Roles(ADMIN_ROLE)
   public async createInvoice(@Body() body: any, @Session() session: any): Promise<any> {
-    console.log('CREATE INVOICE');
-
-    return;
     return await this.commandBus.execute(
       new CreateInvoiceCommand(
         '10fd679e-0fc1-45ed-98b1-f9988fb76e3f',

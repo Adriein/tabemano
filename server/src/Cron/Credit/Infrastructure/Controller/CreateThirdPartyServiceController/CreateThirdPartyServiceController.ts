@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, ClassSerializerInterceptor, Controller, Post, UseGuards, UseInterceptors } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreateThirdPartyServiceCommand } from 'Cron/Credit/Application/CreateThirdPartyService/CreateThirdPartyServiceCommand';
 import { ADMIN_ROLE } from 'Shared/Domain/constants';
@@ -12,6 +12,7 @@ export class CreateThirdPartyServiceController {
   constructor(private readonly commandBus: CommandBus) {}
 
   @Post('/create/third-party-service')
+  @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard, RoleGuard)
   @Roles(ADMIN_ROLE)
   public async create(@Body() body: CreateThirdPartyServiceApiRequest): Promise<void> {
