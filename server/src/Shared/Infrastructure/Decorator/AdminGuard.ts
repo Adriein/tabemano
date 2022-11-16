@@ -4,6 +4,6 @@ import { AuthGuard } from '../Guard/AuthGuard';
 import { RoleGuard } from '../Guard/RoleGuard';
 import { Roles } from './Roles';
 
-export function LimitedAccessToAdmin(): any {
+export function AdminGuard(): any {
   return applyDecorators(Roles(ADMIN_ROLE), UseGuards(AuthGuard, RoleGuard));
 }

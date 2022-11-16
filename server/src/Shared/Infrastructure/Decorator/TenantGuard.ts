@@ -5,7 +5,7 @@ import { PermissionGuard } from '../Guard/PermissionGuard';
 import { RoleGuard } from '../Guard/RoleGuard';
 import { Roles } from './Roles';
 
-export function LimitedAccessToTenant(): any {
+export function TenantGuard(): any {
   return applyDecorators(
     Roles(TENANT_ROLE, ADMIN_ROLE),
     UseGuards(AuthGuard, RoleGuard, PermissionGuard)
