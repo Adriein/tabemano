@@ -4,16 +4,11 @@ import {
   Controller,
   Post,
   Session,
-  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreateInvoiceCommand } from 'Invoicing/Invoice/Application/CreateInvoice/CreateInvoiceCommand';
-import { ADMIN_ROLE } from 'Shared/Domain/constants';
-import { Roles } from 'Shared/Infrastructure/Decorator/Roles';
-import { AuthGuard } from 'Shared/Infrastructure/Guard/AuthGuard';
-import { PermissionGuard } from 'Shared/Infrastructure/Guard/PermissionGuard';
-import { RoleGuard } from 'Shared/Infrastructure/Guard/RoleGuard';
+import { LimitedAccessToTenant } from 'Shared/Infrastructure/Decorator/LimitedAccessToTenant';
 
 @Controller()
 export class CreateInvoiceController {
@@ -21,8 +16,7 @@ export class CreateInvoiceController {
 
   @Post('/create/invoice')
   @UseInterceptors(ClassSerializerInterceptor)
-  @UseGuards(AuthGuard, PermissionGuard, RoleGuard)
-  @Roles(ADMIN_ROLE)
+  @LimitedAccessToTenant()
   public async createInvoice(@Body() body: any, @Session() session: any): Promise<any> {
     return await this.commandBus.execute(
       new CreateInvoiceCommand(

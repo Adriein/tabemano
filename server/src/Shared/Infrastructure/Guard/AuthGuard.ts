@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext } from "@nestjs/common";
+import { CanActivate, ExecutionContext } from '@nestjs/common';
 
 export class AuthGuard implements CanActivate {
   public canActivate(context: ExecutionContext): boolean {
@@ -10,5 +10,4 @@ export class AuthGuard implements CanActivate {
 
     return true;
   }
-
 }
