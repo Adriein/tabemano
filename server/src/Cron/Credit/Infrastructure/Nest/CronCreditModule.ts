@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { UpdateRemainingCreditCommandHandler } from 'Cron/Credit/Application/UpdateRemainingCredit/UpdateRemainingCreditCommandHandler';
 import { ThirdPartyServiceAbstractFactory } from 'Cron/Credit/Infrastructure/Factory/ThirdPartyServiceAbstractFactory';
@@ -13,6 +13,7 @@ import { CreateThirdPartyServiceCommandHandler } from 'Cron/Credit/Application/C
 import { CheckIfRemainingCreditIsCloseToRunningOutCommandHandler } from 'Cron/Credit/Application/CheckIfRemainingCreditIsCloseToRunningOut/CheckIfRemainingCreditIsCloseToRunningOutCommandHandler';
 import { ThirdPartyServiceFinder } from 'Cron/Credit/Application/Services/ThirdPartyServiceFinder';
 import { CheckIfRemainingCreditIsCloseToRunningOutController } from '../Controller/CheckIfRemainingCreditIsCloseToRunningOut/CheckIfRemainingCreditIsCloseToRunningOutController';
+import { UserMiddleware } from 'Shared/Infrastructure/Middlewares/UserMiddleware';
 
 const Services = [
   { provide: 'SendGridRemainingCreditService', useClass: SendGridRemainingCreditService },
@@ -40,7 +41,7 @@ const Repositories = [
   },
 ];
 
-const Mappers = [ PgThirdPartyServiceMapper ];
+const Mappers = [PgThirdPartyServiceMapper];
 
 const Handlers = [
   CreateThirdPartyServiceCommandHandler,
@@ -55,9 +56,13 @@ const Controllers = [
 ];
 
 @Module({
-  imports: [ CqrsModule, TypeOrmModule ],
-  controllers: [ ...Controllers ],
-  providers: [ ...Repositories, ...Handlers, ...Mappers, ...Services, ...Factory, ...Clients ],
+  imports: [CqrsModule, TypeOrmModule],
+  controllers: [...Controllers],
+  providers: [...Repositories, ...Handlers, ...Mappers, ...Services, ...Factory, ...Clients],
   exports: [],
 })
-export class CronCreditModule {}
+export class CronCreditModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(UserMiddleware).forRoutes(...Controllers);
+  }
+}

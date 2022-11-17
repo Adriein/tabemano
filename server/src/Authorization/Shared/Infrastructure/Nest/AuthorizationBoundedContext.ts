@@ -14,8 +14,9 @@ import { TypeOrmModule } from 'Shared/Infrastructure/Persistance/TypeOrmModule';
 import { GetPermissionsController } from '../../../Permission/Infrastructure/Controller/GetPermissions/GetPermissionsController';
 import { PgPermissionRepository } from 'Authorization/Permission/Infrastructure/Persistance/Repository/PgPermissionRepository';
 import { PgPermissionMapper } from 'Authorization/Permission/Infrastructure/Persistance/Mapper/PgPermissionMapper';
-import { GetUrlListQueryHandler } from 'Authorization/Permission/Application/GetUrlList/GetUrlListQueryHandler';
+import { ModuleUrlFinderQueryHandler } from 'Authorization/Permission/Application/ModuleUrlFinder/ModuleUrlFinderQueryHandler';
 import { GetTenantProfileQueryHandler } from 'Authorization/Auth/Application/GetTenantProfile/GetTenantProfileQueryHandler';
+import { GetRoleQueryHandler } from 'Authorization/Auth/Application/GetRole/GetRoleQueryHandler';
 
 const Services = [CryptoService];
 
@@ -41,7 +42,8 @@ const Handlers = [
   RegisterTenantCommandHandler,
   GetTenantProfileQueryHandler,
   GetPermissionsQueryHandler,
-  GetUrlListQueryHandler,
+  ModuleUrlFinderQueryHandler,
+  GetRoleQueryHandler,
 ];
 
 const Mappers = [PgAuthMapper, PgRoleMapper, PgPermissionMapper];

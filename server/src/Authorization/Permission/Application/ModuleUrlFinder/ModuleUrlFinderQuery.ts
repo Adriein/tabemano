@@ -1,6 +1,6 @@
 import { IQuery } from '@nestjs/cqrs';
 
-export class GetUrlListQuery implements IQuery {
+export class ModuleUrlFinderQuery implements IQuery {
   constructor(private readonly _name: string) {}
 
   get name(): string {

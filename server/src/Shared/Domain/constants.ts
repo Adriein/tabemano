@@ -40,6 +40,7 @@ export type TabemanoSession = {
   iat: number;
   id: string;
   urlList: string[];
+  role: string;
 };
 
 export const SENDGRID = 'SendGrid';
@@ -49,7 +50,7 @@ export enum ErrorCode {
   NOT_FOUND = 1,
   EXTERNAL_PROVIDER_ERROR = 2,
   APPLICATION_ERROR = 3,
-  AUTHORIZATION_ERROR = 4
+  AUTHORIZATION_ERROR = 4,
 }
 
 export type ErrorSerialization = {
@@ -58,4 +59,4 @@ export type ErrorSerialization = {
   occurredOn: Date;
   message: string;
   stack?: string[];
-}
+};

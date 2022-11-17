@@ -4,18 +4,20 @@ export class PermissionGuard implements CanActivate {
   public canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest();
 
+    if (!request.user.moduleUrlList) {
+      return false;
+    }
+
     const currentUrl = request.url;
 
     const regex = new RegExp('/api/v[0-9]');
 
     const editedUrl = currentUrl.replace(regex, '');
 
-    if (request.user.urlList) {
-      return request.user.urlList.find((url: string) => {
-        return editedUrl === url;
-      });
-    }
+    return this.matchUrlAddresses(request.user.moduleUrlList, editedUrl);
+  }
 
-    return false;
+  private matchUrlAddresses(moduleUrlList: string[], url: string): boolean {
+    return moduleUrlList.includes(url);
   }
 }

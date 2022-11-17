@@ -24,7 +24,7 @@ export class PgPermissionRepository
   }
 
   public async delete(entity: Permission): Promise<void> {
-    throw new Error();
+    throw new Error('Method not implemented');
   }
 
   public async find(filter: PermissionFilter): Promise<Result<Permission[], Error>> {
@@ -48,11 +48,10 @@ export class PgPermissionRepository
     const model = this.mapper.toModel(entity);
 
     await this.repository().save(model);
-    // throw new Error();
   }
 
   public async update(entity: Permission): Promise<void> {
-    throw new Error();
+    throw new Error('Method not implemented');
   }
 
   protected entitySchema() {

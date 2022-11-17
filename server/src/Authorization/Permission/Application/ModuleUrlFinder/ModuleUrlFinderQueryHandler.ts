@@ -5,22 +5,22 @@ import { PermissionFilter } from 'Authorization/Permission/Domain/Filter/Permiss
 import { IPermissionRepository } from 'Authorization/Permission/Domain/Repository/IPermissionRepository';
 import { Log } from 'Shared/Domain/Decorators/Log';
 import { Name } from 'Shared/Domain/Vo/Name.vo';
-import { GetUrlListQuery } from './GetUrlListQuery';
-import { GetUrlListResponse } from './GetUrlListResponse';
+import { ModuleUrlFinderQuery } from './ModuleUrlFinderQuery';
+import { ModuleUrlFinderResponse } from './ModuleUrlFinderResponse';
 
-@QueryHandler(GetUrlListQuery)
-export class GetUrlListQueryHandler implements IQueryHandler {
+@QueryHandler(ModuleUrlFinderQuery)
+export class ModuleUrlFinderQueryHandler implements IQueryHandler {
   constructor(
     @Inject('IPermissionRepository') private readonly repository: IPermissionRepository
   ) {}
 
   @Log()
-  public async execute(query: GetUrlListQuery): Promise<GetUrlListResponse> {
+  public async execute(query: ModuleUrlFinderQuery): Promise<ModuleUrlFinderResponse> {
     const moduleName = new Name(query.name);
 
     const permission = await this.findPermission(moduleName);
 
-    return GetUrlListResponse.fromDomain(permission);
+    return ModuleUrlFinderResponse.fromDomain(permission);
   }
 
   private async findPermission(name: Name): Promise<Permission> {
