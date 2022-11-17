@@ -1,4 +1,6 @@
+import { RemainingCreditRunOutDomainEvent } from 'Cron/Credit/Application/CheckIfRemainingCreditIsCloseToRunningOut/RemainingCreditRunOutDomainEvent';
 import { AggregateRoot } from 'Shared/Domain/Entities/AggregateRoot';
+import { TabemanoEventBus } from 'Shared/Domain/Entities/TabemanoEventBus';
 import { IRemainingCreditService } from 'Shared/Domain/Factory/IRemainingCreditService';
 import { ID } from 'Shared/Domain/Vo/Id.vo';
 import { Name } from 'Shared/Domain/Vo/Name.vo';
@@ -22,10 +24,10 @@ export class ThirdPartyService extends AggregateRoot {
 
   constructor(
     _id: ID,
-    private readonly _name: Name,
+    private _name: Name,
     private _remainingCredit: NumberVo,
-    private readonly _minRemainingCreditBeforeNotifying: NumberVo,
-    private readonly _hasToBeNotified: boolean,
+    private _minRemainingCreditBeforeNotifying: NumberVo,
+    private _hasToBeNotified: boolean,
     _createdAt?: Date,
     _updatedAt?: Date
   ) {
@@ -51,16 +53,28 @@ export class ThirdPartyService extends AggregateRoot {
   public async updateRemainingCredit(service: IRemainingCreditService): Promise<void> {
     const response = await service.execute();
 
-    const remainingCredit = new NumberVo(response.remainingCredit());
-
-    this._remainingCredit = remainingCredit;
+    this._remainingCredit = new NumberVo(response.remainingCredit());
   }
 
-  public isRemainingCreditCloseToRunningOut(): boolean {
-    return this.differenceBetweenRemainingCreditAndMinRemainingCreditBeforeNotifying() <= 0;
+  public isRemainingCreditCloseToRunningOut(thirdPartyService: ThirdPartyService): void {
+    if (!thirdPartyService.hasToBeNotified()) {
+      return;
+    }
+
+    if (this.numberOfCreditsBeforeNotifying() <= 0) {
+      TabemanoEventBus.instance()!.publish(
+        new RemainingCreditRunOutDomainEvent(
+          thirdPartyService.id(),
+          thirdPartyService.name(),
+          thirdPartyService.remainingCredit().value
+        )
+      );
+    }
+
+    return;
   }
 
-  public differenceBetweenRemainingCreditAndMinRemainingCreditBeforeNotifying(): number {
+  private numberOfCreditsBeforeNotifying(): number {
     return this.remainingCredit().value - this.minRemainingCreditBeforeNotifying().value;
   }
 }

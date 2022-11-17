@@ -13,3 +13,10 @@ export enum SUBSCRIPTION_STATUS {
 
 export const CHECK_FOR_EXPIRED_CLIENT_SUBSCRIPTION_JOB = 'CHECK_FOR_EXPIRED_CLIENT_SUBSCRIPTION_JOB';
 export const CHECK_ABOUT_TO_EXPIRE_SUBSCRIPTION_JOB = 'CHECK_ABOUT_TO_EXPIRE_SUBSCRIPTION_JOB';
+
+export const TRACKING_TYPE = {
+  click: 'click',
+  open: 'open',
+} as const;
+
+export type TrackingType = typeof TRACKING_TYPE[keyof typeof TRACKING_TYPE]

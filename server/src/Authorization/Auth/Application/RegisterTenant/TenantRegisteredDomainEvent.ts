@@ -1,15 +1,21 @@
-import { Auth } from "Authorization/Auth/Domain/Entity/Auth";
-import { Name } from "Shared/Domain/Vo/Name.vo";
-import { DomainEvent } from "Shared/Domain/Entities/DomainEvent";
-import { Email } from "Shared/Domain/Vo/Email.vo";
-import { ID } from "Shared/Domain/Vo/Id.vo";
-import { Password } from "Shared/Domain/Vo/Password.vo";
+import { Auth } from 'Authorization/Auth/Domain/Entity/Auth';
+import { Name } from 'Shared/Domain/Vo/Name.vo';
+import { DomainEvent } from 'Shared/Domain/Entities/DomainEvent';
+import { Email } from 'Shared/Domain/Vo/Email.vo';
+import { ID } from 'Shared/Domain/Vo/Id.vo';
+import { Password } from 'Shared/Domain/Vo/Password.vo';
 
 export class TenantRegisteredDomainEvent extends DomainEvent {
-  protected _type =  'tabemano.authorization.1.event.tenant.registered';
+  protected _type = 'tabemano.authorization.1.event.auth.registered';
 
   public static fromEntity(auth: Auth): TenantRegisteredDomainEvent {
-    return new TenantRegisteredDomainEvent(auth.id(), auth.name(), auth.email(), auth.password(), auth.roleId());
+    return new TenantRegisteredDomainEvent(
+      auth.id(),
+      auth.name(),
+      auth.email(),
+      auth.password(),
+      auth.roleId()
+    );
   }
 
   constructor(

@@ -23,8 +23,8 @@ export abstract class AggregateRoot extends NestAggregate {
     return this._updatedAt;
   }
 
-  public publish<T extends IEvent = IEvent>(event: T) {
-    super.publish(event);
+  public apply<T extends IEvent = IEvent>(event: T) {
+    super.apply(event);
   }
 
   public commit() {
@@ -35,5 +35,8 @@ export abstract class AggregateRoot extends NestAggregate {
 
       eventBus.publish(event);
     }
+
+    //with this line we flush domain event array on parent
+    super.uncommit();
   }
 }

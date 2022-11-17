@@ -3,6 +3,7 @@ import { Client } from "Backoffice/Shared/Domain/Client/Client";
 import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";
 import { Pricing } from "Backoffice/Shared/Domain/Pricing/Pricing";
 import { PricingCollection } from "Backoffice/Shared/Domain/Pricing/PricingCollection";
+import { TenantCreatedDomainEvent } from "Backoffice/Tenant/Application/CreateTenant/TenantCreatedDomainEvent";
 import { AppConfig } from "Backoffice/Tenant/Domain/Entity/AppConfig";
 import { AggregateRoot } from "Shared/Domain/Entities/AggregateRoot";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
@@ -18,7 +19,7 @@ export class Tenant extends AggregateRoot {
     const id = ID.generate();
     const config = Config.build(id, true, true);
 
-    return new Tenant(
+    const tenant = new Tenant(
       id,
       name,
       password,
@@ -29,6 +30,10 @@ export class Tenant extends AggregateRoot {
       PricingCollection.build(),
       AppConfig.build()
     );
+
+    tenant.apply(new TenantCreatedDomainEvent(tenant.id()))
+
+    return tenant;
   }
 
   constructor(

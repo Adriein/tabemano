@@ -1,7 +1,7 @@
 import { Inject } from "@nestjs/common";
 import { EventsHandler, IEventHandler } from "@nestjs/cqrs";
 import { Client } from "Backoffice/Notification/Domain/Entity/Client";
-import { Email } from "Backoffice/Notification/Domain/Entity/Email";
+import { Email } from "Backoffice/Shared/Domain/Email/Email";
 import { IClientRepository } from "Backoffice/Notification/Domain/Repository/IClientRepository";
 import { ISmtpService } from "Backoffice/Notification/Domain/Service/ISmtpService";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";

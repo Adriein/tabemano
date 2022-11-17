@@ -7,6 +7,7 @@ import { TenantMapper } from "Backoffice/Notification/Infrastructure/Persistance
 import { TenantFilter } from "Backoffice/Shared/Domain/Tenant/TenantFilter";
 import { ClassConstructor } from "class-transformer";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
+import { UnexpectedError } from "Shared/Domain/Error/UnexpectedError";
 import Database from "Shared/Infrastructure/Persistance/Database";
 import { TenantModel } from "Shared/Infrastructure/Persistance/Model/TenantModel";
 import { TypeOrmRepository } from "Shared/Infrastructure/Persistance/Repository/TypeOrmRepository";
@@ -35,12 +36,20 @@ export class PgTenantRepository extends TypeOrmRepository<TenantModel> implement
     throw new Error();
   }
 
-  public async findOne(filter: TenantFilter): Promise<Result<Tenant, Error | RecordNotFoundError>> {
-    const adapter = new TypeOrmTenantFilterAdapter(filter);
+  public async findOne(filter: TenantFilter): Promise<Result<Tenant, Error | RecordNotFoundError | UnexpectedError>> {
+    try {
+      const adapter = new TypeOrmTenantFilterAdapter(filter);
 
-    const result = await this.repository().findOne(adapter.apply());
+      const result = await this.repository().findOne(adapter.apply());
 
-    return result ? Result.ok(this.mapper.toDomain(result)) : Result.err(new RecordNotFoundError());
+      if (!result) {
+        return Result.err(new RecordNotFoundError());
+      }
+
+      return Result.ok(this.mapper.toDomain(result));
+    } catch (error: any) {
+      return Result.err(new UnexpectedError(error.message));
+    }
   }
 
   save(entity: Tenant): Promise<void> {
