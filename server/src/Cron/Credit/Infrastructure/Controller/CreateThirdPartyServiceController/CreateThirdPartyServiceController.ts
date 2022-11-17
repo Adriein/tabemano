@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreateThirdPartyServiceCommand } from 'Cron/Credit/Application/CreateThirdPartyService/CreateThirdPartyServiceCommand';
-import { AdminGuard } from 'Shared/Infrastructure/Decorator/AdminGuard';
+import { LimitedAccessToAdmin } from 'Shared/Infrastructure/Decorator/LimitedAccessToAdmin';
 import { CreateThirdPartyServiceApiRequest } from './CreateThirdPartyServiceApiRequest';
 
 @Controller()
@@ -16,7 +16,7 @@ export class CreateThirdPartyServiceController {
 
   @Post('/create/third-party-service')
   @UseInterceptors(ClassSerializerInterceptor)
-  @AdminGuard()
+  @LimitedAccessToAdmin()
   public async create(@Body() body: CreateThirdPartyServiceApiRequest): Promise<void> {
     const command = CreateThirdPartyServiceCommand.fromJson(body);
     await this.commandBus.execute(command);
