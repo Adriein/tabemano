@@ -11,6 +11,7 @@ export class PgModuleMapper implements IMapper<Module, ModuleModel> {
     const urlList = dataModel.urlList.map((url: UrlModel) => {
       return url.url;
     });
+
     return new Module(
       dataModel.id,
       dataModel.name,
@@ -22,17 +23,7 @@ export class PgModuleMapper implements IMapper<Module, ModuleModel> {
 
   public toModel(entity: Module): ModuleModel {
     const model = new ModuleModel();
-    const urlModel = new UrlModel();
-
-    const urlList = entity.urlList().map((url: Url) => {
-      urlModel.url = url;
-      urlModel.id = ID.generate();
-      urlModel.moduleId = entity.id();
-      urlModel.createdAt = DateVo.now().value;
-      urlModel.updatedAt = DateVo.now().value;
-
-      return urlModel;
-    });
+    const urlList = this.buildUrlModel(entity);
 
     model.id = entity.id();
     model.name = entity.name();
@@ -41,5 +32,19 @@ export class PgModuleMapper implements IMapper<Module, ModuleModel> {
     model.urlList = urlList;
 
     return model;
+  }
+
+  private buildUrlModel(entity: Module): UrlModel[] {
+    return entity.urlList().map((url: Url) => {
+      const model = new UrlModel();
+
+      model.url = url;
+      model.id = ID.generate();
+      model.moduleId = entity.id();
+      model.createdAt = DateVo.now().value;
+      model.updatedAt = DateVo.now().value;
+
+      return model;
+    });
   }
 }

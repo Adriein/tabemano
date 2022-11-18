@@ -26,6 +26,6 @@ export class ModuleModel {
   @Column({ name: 'mo_updated_at', type: 'timestamp', precision: 0 })
   updatedAt!: Date;
 
-  @OneToMany(() => UrlModel, url => url.module)
+  @OneToMany(() => UrlModel, url => url.module, { cascade: true })
   urlList!: UrlModel[];
 }
