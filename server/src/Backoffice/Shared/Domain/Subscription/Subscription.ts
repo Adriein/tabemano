@@ -14,13 +14,12 @@ export class Subscription extends AggregateRoot {
     pricingId: ID,
     pricingName: string,
     pricingDuration: number,
-    pricingAmount: number
+    pricingAmount: number,
   ): Subscription {
     const subscriptionId = ID.generate();
     const event = SubscriptionEvent.build(SUBSCRIPTION_STATUS.CREATED, subscriptionId);
     return new Subscription(
       subscriptionId,
-      userId,
       pricingId,
       lastPayment,
       Subscription.expirationDate(lastPayment, pricingDuration),
@@ -30,12 +29,39 @@ export class Subscription extends AggregateRoot {
       pricingDuration,
       pricingAmount,
       SubscriptionEventCollection.build([ event ]),
+      userId,
+      undefined
+    );
+  }
+
+  public static buildTenant(
+    tenantId: ID,
+    lastPayment: DateVo,
+    pricingId: ID,
+    pricingName: string,
+    pricingDuration: number,
+    pricingAmount: number,
+  ): Subscription {
+    const subscriptionId = ID.generate();
+    const event = SubscriptionEvent.build(SUBSCRIPTION_STATUS.CREATED, subscriptionId);
+    return new Subscription(
+      subscriptionId,
+      pricingId,
+      lastPayment,
+      Subscription.expirationDate(lastPayment, pricingDuration),
+      true,
+      false,
+      pricingName,
+      pricingDuration,
+      pricingAmount,
+      SubscriptionEventCollection.build([ event ]),
+      undefined,
+      tenantId
     );
   }
 
   constructor(
     _id: ID,
-    private _userId: ID,
     private _pricingId: ID,
     private _paymentDate: DateVo,
     private _validTo: DateVo,
@@ -45,14 +71,20 @@ export class Subscription extends AggregateRoot {
     private _duration: number,
     private _price: number,
     private _events: SubscriptionEventCollection,
+    private _userId?: ID,
+    private _tenantId?: ID,
     _createdAt?: Date,
     _updatedAt?: Date
   ) {
     super(_id, _createdAt, _updatedAt);
   }
 
-  public userId(): ID {
+  public userId(): ID | undefined {
     return this._userId;
+  }
+
+  public tenantId(): ID | undefined {
+    return this._tenantId;
   }
 
   public pricingId(): ID {

@@ -11,11 +11,8 @@ export class PgSubscriptionMapper implements IMapper<Subscription, SubscriptionM
   public toDomain(dataModel: SubscriptionModel): Subscription {
     const eventCollection = this.buildEventCollection(dataModel);
 
-    const userId = dataModel.userId ? dataModel.userId : dataModel.tenantId;
-
     return new Subscription(
       dataModel.id,
-      userId!,
       dataModel.pricingId,
       dataModel.paymentDate,
       dataModel.validTo,
@@ -25,6 +22,8 @@ export class PgSubscriptionMapper implements IMapper<Subscription, SubscriptionM
       dataModel.duration,
       dataModel.price,
       eventCollection,
+      dataModel.userId!,
+      dataModel.tenantId!,
       dataModel.createdAt,
       dataModel.updatedAt
     );
@@ -36,7 +35,8 @@ export class PgSubscriptionMapper implements IMapper<Subscription, SubscriptionM
     const model = new SubscriptionModel();
 
     model.id = entity.id();
-    model.userId = entity.userId();
+    model.userId = entity.userId()!;
+    model.tenantId = entity.tenantId()!;
     model.isExpired = entity.isExpired();
     model.isActive = entity.isActive();
     model.paymentDate = entity.paymentDate();

@@ -96,7 +96,7 @@ export class Tenant extends AggregateRoot {
   }
 
   public createSubscription(pricing: Pricing): Subscription {
-    return Subscription.build(
+    return Subscription.buildTenant(
       this.id(),
       DateVo.now(),
       pricing.id(),
