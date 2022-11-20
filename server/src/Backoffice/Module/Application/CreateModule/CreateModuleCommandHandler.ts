@@ -1,8 +1,8 @@
 import { Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { Module } from 'Authorization/Permission/Domain/Entity/Module';
-import { ModuleFilter } from 'Authorization/Permission/Domain/Filter/ModuleFilter';
+import { Module } from 'Backoffice/Module/Domain/Entity/Module';
 import { ModuleAlreadyExistsError } from 'Backoffice/Module/Domain/Error/ModuleAlreadyExistsError';
+import { ModuleFilter } from 'Backoffice/Module/Domain/Filter/ModuleFilter';
 import { IModuleRepository } from 'Backoffice/Module/Domain/Repository/IModuleRepository';
 import { Log } from 'Shared/Domain/Decorators/Log';
 import { Name } from 'Shared/Domain/Vo/Name.vo';

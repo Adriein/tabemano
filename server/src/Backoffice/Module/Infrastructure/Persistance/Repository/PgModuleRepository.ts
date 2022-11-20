@@ -1,7 +1,5 @@
-import { Result } from '@badrap/result';
 import { Inject, Injectable } from '@nestjs/common';
 import Database from 'Shared/Infrastructure/Persistance/Database';
-import { Module } from 'Authorization/Permission/Domain/Entity/Module';
 import { ModuleModel } from 'Shared/Infrastructure/Persistance/Model/ModuleModel';
 import { IModuleRepository } from 'Backoffice/Module/Domain/Repository/IModuleRepository';
 import { Filter } from 'Shared/Domain/Entities/Filter';
@@ -10,7 +8,9 @@ import { TypeOrmRepository } from 'Shared/Infrastructure/Persistance/Repository/
 import { DataSource } from 'typeorm';
 import { PgModuleMapper } from '../Mapper/PgModuleMapper';
 import { TypeOrmModuleFilterAdapter } from '../Filter/TypeOrmModuleFilterAdapter';
-import { ModuleFilter } from 'Authorization/Permission/Domain/Filter/ModuleFilter';
+import { Module } from 'Backoffice/Module/Domain/Entity/Module';
+import { Result } from '@badrap/result';
+import { ModuleFilter } from 'Backoffice/Module/Domain/Filter/ModuleFilter';
 
 @Injectable()
 export class PgModuleRepository
