@@ -1,5 +1,7 @@
 import { SubscriptionAboutToExpireDomainEvent } from "Cron/Client/Application/CheckAboutToExpireSubscriptions/SubscriptionAboutToExpireDomainEvent";
+import { SubscriptionExpired } from "Cron/Client/Application/CheckExpiredSubscriptions/SubscriptionExpired";
 import { AggregateRoot } from "Shared/Domain/Entities/AggregateRoot";
+import { TabemanoEventBus } from "Shared/Domain/Entities/TabemanoEventBus";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Time } from "Shared/Infrastructure/Helper/Time";
@@ -49,8 +51,10 @@ export class Subscription extends AggregateRoot {
     return this._duration;
   }
 
-  public checkIsExpired = (): boolean => {
-    return Time.before(this._validTo.value, Time.now());
+  public checkIsExpired = (): void => {
+    if (Time.before(this._validTo.value, Time.now())) {
+      this.apply(new SubscriptionExpired(this._userId));
+    }
   }
 
   public checkIsAboutToExpire = (daysToWarn: number | undefined = 5): void => {
@@ -60,11 +64,4 @@ export class Subscription extends AggregateRoot {
       this.apply(new SubscriptionAboutToExpireDomainEvent(this._userId))
     }
   };
-
-
-  public isExpirationDateOlderThan(days: number) {
-    const diff = Time.diff(Time.now(), this._validTo.value);
-
-    return diff >= days;
-  }
 }

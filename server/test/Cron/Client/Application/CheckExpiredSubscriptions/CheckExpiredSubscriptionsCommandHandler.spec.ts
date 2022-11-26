@@ -63,11 +63,11 @@ describe('CheckExpiredSubscriptionsCommandHandler', () => {
   });
 
   it('should check if subscription is already expired', async () => {
-    jest.spyOn(client, 'isActiveSubscriptionExpired');
+    jest.spyOn(client, 'checkIfSubscriptionExpired');
 
     await handler.execute(new CheckExpiredSubscriptionsCommand());
 
-    expect(client.isActiveSubscriptionExpired).toHaveBeenCalledTimes(1);
+    expect(client.checkIfSubscriptionExpired).toHaveBeenCalledTimes(1);
   });
 
   it('should publish an event of expired subscription', async () => {

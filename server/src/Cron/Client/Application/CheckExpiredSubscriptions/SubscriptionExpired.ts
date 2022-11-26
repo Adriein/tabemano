@@ -1,13 +1,22 @@
 import { IEvent } from "@nestjs/cqrs";
+import { DomainEvent } from "Shared/Domain/Entities/DomainEvent";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 
-export class SubscriptionExpired implements IEvent {
+export class SubscriptionExpired extends DomainEvent implements IEvent {
+  protected readonly _type: string = 'tabemano.cron.1.event.client.subscription-expired';
+
   constructor(
-    private _subscriptionId: ID
-  ) {}
-
-
-  public get subscriptionId(): ID {
-    return this._subscriptionId;
+    protected _aggregateId: ID
+  ) {
+    super();
   }
+
+  public type(): string {
+    return this._type;
+  }
+
+  public clientId(): ID {
+    return this._aggregateId;
+  }
+
 }

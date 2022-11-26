@@ -41,7 +41,7 @@ export class Client extends AggregateRoot {
     return this._tenantWarningDays;
   }
 
-  public isActiveSubscriptionExpired(): boolean {
-    return this._activeSubscription.checkIsExpired();
+  public checkIfSubscriptionExpired(): void {
+    this._activeSubscription.checkIsExpired();
   }
 }

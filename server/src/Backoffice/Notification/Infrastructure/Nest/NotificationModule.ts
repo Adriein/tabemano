@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { SendAboutToExpireSubscriptionEmailHandler } from 'Backoffice/Notification/Application/SendAboutToExpireSubscriptionEmail/SendAboutToExpireSubscriptionEmailHandler';
+import { SendAboutToExpireSubscriptionEmailEventHandler } from 'Backoffice/Notification/Application/SendAboutToExpireSubscriptionEmail/SendAboutToExpireSubscriptionEmailEventHandler';
 import { SendRemainingCreditIsCloseToRunningOutEmailHandler } from 'Backoffice/Notification/Application/SendRemainingCreditIsCloseToRunningOutEmail/SendRemainingCreditIsCloseToRunningOutEmailHandler';
 import { VerifyTenantEmailDomainEventHandler } from 'Backoffice/Notification/Application/VerifyTenantEmail/VerifyTenantEmailDomainEventHandler';
 import { SendGridSmtpServiceAbstractFactory } from 'Backoffice/Notification/Infrastructure/Factory/SendGridSmtpServiceAbstractFactory';
@@ -13,7 +13,7 @@ import { TypeOrmModule } from 'Shared/Infrastructure/Persistance/TypeOrmModule';
 import { SendGridClient } from 'Shared/Infrastructure/Service/SendGrid/SendGridClient';
 
 const Handlers = [
-  SendAboutToExpireSubscriptionEmailHandler,
+  SendAboutToExpireSubscriptionEmailEventHandler,
   VerifyTenantEmailDomainEventHandler,
   SendRemainingCreditIsCloseToRunningOutEmailHandler,
 ];
@@ -54,12 +54,12 @@ const Clients = [
   },
 ];
 
-const Mapper = [TenantMapper];
+const Mapper = [ TenantMapper ];
 
 @Module({
-  imports: [CqrsModule, TypeOrmModule],
+  imports: [ CqrsModule, TypeOrmModule ],
   controllers: [],
-  providers: [...Handlers, ...Service, ...Repository, ...Mapper, ...Factories, ...Clients],
+  providers: [ ...Handlers, ...Service, ...Repository, ...Mapper, ...Factories, ...Clients ],
   exports: [],
 })
 export class NotificationModule {}

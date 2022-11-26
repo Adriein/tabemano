@@ -1,6 +1,5 @@
 import { Inject } from "@nestjs/common";
-import { CommandHandler, EventBus, ICommandHandler } from "@nestjs/cqrs";
-import { SubscriptionExpired } from "Cron/Client/Application/CheckExpiredSubscriptions/SubscriptionExpired";
+import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { Client } from "Cron/Client/Domain/Entity/Client";
 import { ClientFilter } from "Cron/Client/Domain/Filter/ClientFilter";
 import { IClientRepository } from "Cron/Client/Domain/Repository/IClientRepository";
@@ -16,7 +15,6 @@ export class CheckExpiredSubscriptionsCommandHandler implements ICommandHandler 
     private readonly clientRepository: IClientRepository,
     @Inject('IBackGroundJobRepository')
     private readonly backgroundJobRepository: IBackGroundJobRepository,
-    private readonly eventBus: EventBus,
   ) {}
 
   @Log()
@@ -27,21 +25,13 @@ export class CheckExpiredSubscriptionsCommandHandler implements ICommandHandler 
     const clients = await this.getActiveClients();
 
     for (const client of clients) {
-      if (!client.isActiveSubscriptionExpired()) {
-        continue;
-      }
-
-      this.makeSubscriptionExpired(client);
+      client.checkIfSubscriptionExpired();
     }
 
     backgroundJob.end();
     await this.backgroundJobRepository.save(backgroundJob);
   }
 
-  private makeSubscriptionExpired(client: Client): void {
-    this.eventBus.publish(new SubscriptionExpired(client.activeSubscriptionId()));
-  }
-  
   private async getActiveClients(): Promise<Client[]> {
     const filter = ClientFilter.create()
       .isActive(true)

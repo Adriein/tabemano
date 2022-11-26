@@ -141,15 +141,8 @@ export class Subscription extends AggregateRoot {
     this.addEventToHistory(SubscriptionEvent.build(SUBSCRIPTION_STATUS.EXPIRED, this.id()));
   }
 
-  public checkIsAboutToExpire = (daysToWarn: number | undefined = 5): void => {
-    const expirationDate = Time.add(this._paymentDate.value, 5);
-    const warningDate = Time.subtract(expirationDate, daysToWarn)
-
-    const isAboutToExpire = Time.equal(Time.now(), warningDate);
-
-    if (isAboutToExpire) {
-      this.addEventToHistory(SubscriptionEvent.build(SUBSCRIPTION_STATUS.ABOUT_TO_EXPIRE, this.id()));
-    }
+  public makeAboutToExpire = (): void => {
+    this.addEventToHistory(SubscriptionEvent.build(SUBSCRIPTION_STATUS.ABOUT_TO_EXPIRE, this.id()));
   };
 
   public isAboutToExpire(): boolean {
