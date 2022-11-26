@@ -6,7 +6,8 @@ export class SubscriptionExpired extends DomainEvent implements IEvent {
   protected readonly _type: string = 'tabemano.cron.1.event.client.subscription-expired';
 
   constructor(
-    protected _aggregateId: ID
+    protected _aggregateId: ID,
+    private _subscriptionId: ID,
   ) {
     super();
   }
@@ -19,4 +20,7 @@ export class SubscriptionExpired extends DomainEvent implements IEvent {
     return this._aggregateId;
   }
 
+  public subscriptionId(): ID {
+    return this._subscriptionId;
+  }
 }

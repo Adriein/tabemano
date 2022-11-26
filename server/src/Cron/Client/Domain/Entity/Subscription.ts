@@ -53,7 +53,7 @@ export class Subscription extends AggregateRoot {
 
   public checkIsExpired = (): void => {
     if (Time.before(this._validTo.value, Time.now())) {
-      this.apply(new SubscriptionExpired(this._userId));
+      this.apply(new SubscriptionExpired(this._userId, this.id()));
     }
   }
 

@@ -43,5 +43,6 @@ export class Client extends AggregateRoot {
 
   public checkIfSubscriptionExpired(): void {
     this._activeSubscription.checkIsExpired();
+    this._activeSubscription.commit();
   }
 }

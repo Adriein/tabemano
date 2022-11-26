@@ -10,7 +10,7 @@ export class SubscriptionExpiredEventHandler implements IEventHandler {
   constructor(private readonly repository: ISubscriptionRepository) {}
 
   public async handle(event: SubscriptionExpired): Promise<void> {
-    const subscription = await this.getActiveSubscription(event.subscriptionId);
+    const subscription = await this.getActiveSubscription(event.subscriptionId());
 
     subscription.makeExpired();
 
