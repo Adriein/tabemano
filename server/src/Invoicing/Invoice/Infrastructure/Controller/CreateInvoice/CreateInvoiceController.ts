@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreateInvoiceCommand } from 'Invoicing/Invoice/Application/CreateInvoice/CreateInvoiceCommand';
-import { TenantGuard } from 'Shared/Infrastructure/Decorator/TenantGuard';
+import { LimitedAccessToTenant } from 'Shared/Infrastructure/Decorator/LimitedAccessToTenant';
 
 @Controller()
 export class CreateInvoiceController {
@@ -16,7 +16,7 @@ export class CreateInvoiceController {
 
   @Post('/create/invoice')
   @UseInterceptors(ClassSerializerInterceptor)
-  @TenantGuard()
+  @LimitedAccessToTenant()
   public async createInvoice(@Body() body: any, @Session() session: any): Promise<any> {
     return await this.commandBus.execute(
       new CreateInvoiceCommand(

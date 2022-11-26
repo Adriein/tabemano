@@ -6,11 +6,11 @@ import { Permission } from 'Authorization/Permission/Domain/Entity/Permission';
 import { ModuleFilter } from 'Authorization/Permission/Domain/Filter/ModuleFilter';
 import { PermissionFilter } from 'Authorization/Permission/Domain/Filter/PermissionFilter';
 import { IPermissionRepository } from 'Authorization/Permission/Domain/Repository/IPermissionRepository';
-import { IModuleRepository } from 'Backoffice/Module/Domain/Repository/IModuleRepository';
 import { ModuleNotFoundError } from 'Shared/Domain/Error/ModuleNotFoundError';
 import { RecordNotFoundError } from 'Shared/Domain/Error/RecordNotFoundError';
 import { ID } from 'Shared/Domain/Vo/Id.vo';
 import { ModuleBookedDomainEvent } from 'Backoffice/Module/Application/BookModule/ModuleBookedDomainEvent';
+import { IModuleRepository } from 'Authorization/Permission/Domain/Repository/IModuleRepository';
 
 @EventsHandler(ModuleBookedDomainEvent)
 export class AssignPermissionDomainEventHandler implements IEventHandler {
