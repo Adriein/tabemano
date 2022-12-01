@@ -22,8 +22,8 @@ export class Permission extends AggregateRoot {
     private _moduleId: ID,
     private _moduleName: Name,
     private _moduleUrl: Url[],
-    _createdAt: Date,
-    _updatedAt: Date
+    _createdAt?: Date,
+    _updatedAt?: Date
   ) {
     super(_id);
   }

@@ -1,6 +1,5 @@
 import { Inject } from '@nestjs/common';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { Log } from 'Shared/Domain/Decorators/Log';
 import { Module } from 'Authorization/Permission/Domain/Entity/Module';
 import { Permission } from 'Authorization/Permission/Domain/Entity/Permission';
 import { ModuleFilter } from 'Authorization/Permission/Domain/Filter/ModuleFilter';
@@ -19,8 +18,7 @@ export class AssignPermissionDomainEventHandler implements IEventHandler {
     @Inject('IModuleRepository') private moduleRepository: IModuleRepository
   ) {}
 
-  @Log()
-  public async handle(event: ModuleBookedDomainEvent) {
+  public async handle(event: ModuleBookedDomainEvent): Promise<void> {
     await this.checkIfModuleExists(event.moduleId);
 
     const permissionAssigned = await this.checkIfTenantHasModuleAlreadyAssigned(event);
