@@ -5,7 +5,7 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { ModuleModel } from './ModuleModel';
 
 @Entity('ta_url')
-export class UrlModel {
+export class UrlModuleModel {
   @PrimaryColumn({
     name: 'ur_id',
     type: 'varchar',

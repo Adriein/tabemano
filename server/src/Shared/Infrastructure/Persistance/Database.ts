@@ -11,7 +11,7 @@ import { TenantModel } from "Shared/Infrastructure/Persistance/Model/TenantModel
 import { UserModel } from "Shared/Infrastructure/Persistance/Model/UserModel";
 import { DataSource } from 'typeorm';
 import { PermissionModel } from './Model/PermissionModel';
-import { UrlModel } from './Model/UrlModule';
+import { UrlModuleModel } from './Model/UrlModuleModel';
 import { ThirdPartyServiceModel } from './Model/ThirdPartyServiceModel';
 
 export default class Database {
@@ -40,7 +40,7 @@ export default class Database {
         BackGroundJobModel,
         ModuleModel,
         PermissionModel,
-        UrlModel,
+        UrlModuleModel,
         CompanyModel,
         TenantModel,
         ThirdPartyServiceModel,

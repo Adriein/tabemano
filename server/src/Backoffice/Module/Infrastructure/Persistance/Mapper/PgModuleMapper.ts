@@ -3,12 +3,12 @@ import { IMapper } from 'Shared/Domain/Interfaces/IMapper';
 import { DateVo } from 'Shared/Domain/Vo/Date.vo';
 import { ID } from 'Shared/Domain/Vo/Id.vo';
 import { Url } from 'Shared/Domain/Vo/Url.vo';
-import { UrlModel } from 'Shared/Infrastructure/Persistance/Model/UrlModule';
+import { UrlModuleModel } from 'Shared/Infrastructure/Persistance/Model/UrlModuleModel';
 import { Module } from 'Backoffice/Module/Domain/Entity/Module';
 
 export class PgModuleMapper implements IMapper<Module, ModuleModel> {
   public toDomain(dataModel: ModuleModel): Module {
-    const urlList = dataModel.urlList.map((url: UrlModel) => {
+    const urlList = dataModel.urlList.map((url: UrlModuleModel) => {
       return url.url;
     });
 
@@ -34,9 +34,9 @@ export class PgModuleMapper implements IMapper<Module, ModuleModel> {
     return model;
   }
 
-  private buildUrlModel(entity: Module): UrlModel[] {
+  private buildUrlModel(entity: Module): UrlModuleModel[] {
     return entity.urlList().map((url: Url) => {
-      const model = new UrlModel();
+      const model = new UrlModuleModel();
 
       model.url = url;
       model.id = ID.generate();

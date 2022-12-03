@@ -18,4 +18,6 @@ export abstract class DomainEvent implements IEvent {
   public get dateOccurred(): DateVo {
     return this._dateOccurred;
   }
+
+  public abstract serialize(): string;
 }

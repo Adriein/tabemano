@@ -2,7 +2,7 @@ import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { ID } from 'Shared/Domain/Vo/Id.vo';
 import { Name } from 'Shared/Domain/Vo/Name.vo';
 import { ValueObjectTransformer } from 'Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer';
-import { UrlModel } from './UrlModule';
+import { UrlModuleModel } from './UrlModuleModel';
 
 @Entity('ta_module')
 export class ModuleModel {
@@ -26,6 +26,6 @@ export class ModuleModel {
   @Column({ name: 'mo_updated_at', type: 'timestamp', precision: 0 })
   updatedAt!: Date;
 
-  @OneToMany(() => UrlModel, url => url.module, { cascade: true })
-  urlList!: UrlModel[];
+  @OneToMany(() => UrlModuleModel, url => url.module, { cascade: true })
+  urlList!: UrlModuleModel[];
 }
