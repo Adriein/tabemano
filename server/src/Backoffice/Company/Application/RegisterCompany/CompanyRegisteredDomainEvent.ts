@@ -19,4 +19,14 @@ export class CompanyRegisteredDomainEvent extends DomainEvent {
   public get type(): string {
     return this._type;
   }
+
+  public serialize(): string {
+    return JSON.stringify({
+      id: this.id.value,
+      dateOccurred: this.dateOccurred.value,
+      aggregateId: this._aggregateId.value,
+      tenantId: this._tenantId.value,
+      type: this._type
+    });
+  }
 }

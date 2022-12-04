@@ -23,8 +23,18 @@ export class ModuleBookedDomainEvent extends DomainEvent {
   public get moduleId(): ID {
     return this._moduleId;
   }
-  
+
   public get type(): string {
     return this._type;
+  }
+
+  public serialize(): string {
+    return JSON.stringify({
+      id: this.id.value,
+      dateOccurred: this.dateOccurred.value,
+      aggregateId: this._aggregateId.value,
+      tenantId: this._tenantId.value,
+      moduleId: this._moduleId.value
+    });
   }
 }

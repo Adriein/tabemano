@@ -47,4 +47,17 @@ export class TenantRegisteredDomainEvent extends DomainEvent {
   public get roleId(): ID {
     return this._roleId;
   }
+
+  public serialize(): string {
+    return JSON.stringify({
+      id: this.id.value,
+      dateOccurred: this.dateOccurred.value,
+      aggregateId: this._aggregateId.value,
+      type: this._type,
+      name: this._name.value,
+      email: this._email.value,
+      password: this._password.value,
+      roleId: this._roleId.value
+    });
+  }
 }

@@ -28,4 +28,15 @@ export class RemainingCreditRunOutDomainEvent extends DomainEvent {
   public get type(): string {
     return this._type;
   }
+
+  public serialize(): string {
+    return JSON.stringify({
+      id: this.id.value,
+      dateOccurred: this.dateOccurred.value,
+      aggregateId: this._aggregateId.value,
+      thirdPartyServiceName: this._thirdPartyServiceName.value,
+      creditsLeftBeforeNotifying: this._creditsLeftBeforeNotifying,
+      type: this._type
+    });
+  }
 }

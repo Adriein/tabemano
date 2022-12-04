@@ -11,4 +11,13 @@ export class TenantCreatedDomainEvent extends DomainEvent {
   public get aggregateId(): ID {
     return this._aggregateId;
   }
+
+  public serialize(): string {
+    return JSON.stringify({
+      id: this.id.value,
+      dateOccurred: this.dateOccurred.value,
+      aggregateId: this._aggregateId.value,
+      type: this._type
+    });
+  }
 }

@@ -45,4 +45,24 @@ export class ClientRegisteredDomainEvent extends DomainEvent {
   public get type(): string {
     return this._type;
   }
+
+  public serialize(): string {
+    return JSON.stringify({
+      id: this.id.value,
+      dateOccurred: this.dateOccurred.value,
+      aggregateId: this._aggregateId.value,
+      name: this._name.value,
+      email: this._email.value,
+      tenantId: this._tenantId.value,
+      pricing: {
+        id: this._pricing.id().value,
+        name: this._pricing.name(),
+        price: this._pricing.price(),
+        duration: this._pricing.duration(),
+        createdAt: this._pricing.createdAt(),
+        updatedAt: this._pricing.updatedAt(),
+      },
+      roleId: this._roleId.value
+    });
+  }
 }

@@ -23,4 +23,14 @@ export class SubscriptionExpired extends DomainEvent implements IEvent {
   public subscriptionId(): ID {
     return this._subscriptionId;
   }
+
+  public serialize(): string {
+    return JSON.stringify({
+      id: this.id.value,
+      dateOccurred: this.dateOccurred.value,
+      aggregateId: this._aggregateId.value,
+      subscriptionId: this._subscriptionId.value,
+      type: this._type,
+    });
+  }
 }
