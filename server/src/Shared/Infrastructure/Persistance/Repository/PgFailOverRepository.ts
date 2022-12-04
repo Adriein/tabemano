@@ -6,6 +6,7 @@ import { Filter } from "Shared/Domain/Entities/Filter";
 import { RecordNotFoundError } from "Shared/Domain/Error/RecordNotFoundError";
 import { IFailOverRepository } from "Shared/Domain/Interfaces/IFailOverRepository";
 import Database from "Shared/Infrastructure/Persistance/Database";
+import { PgFailOverDomainEventMapper } from "Shared/Infrastructure/Persistance/Mapper/PgFailOverDomainEventMapper";
 import { DomainEventFailOverModel } from "Shared/Infrastructure/Persistance/Model/DomainEventFailOverModel";
 import { TypeOrmRepository } from "Shared/Infrastructure/Persistance/Repository/TypeOrmRepository";
 import { DataSource } from "typeorm";
@@ -15,6 +16,7 @@ export class PgFailOverRepository extends TypeOrmRepository<DomainEventFailOverM
   constructor(
     @Inject(Database.DATABASE_CONNECTION)
     protected readonly dataSource: DataSource,
+    private readonly mapper: PgFailOverDomainEventMapper,
   ) {
     super();
   }
@@ -35,8 +37,10 @@ export class PgFailOverRepository extends TypeOrmRepository<DomainEventFailOverM
     throw new Error();
   }
 
-  save(entity: FailOverDomainEvent): Promise<void> {
-    return Promise.resolve(undefined);
+  public async save(entity: FailOverDomainEvent): Promise<void> {
+    const model = this.mapper.toModel(entity);
+
+    await this.repository().save(model);
   }
 
   update(entity: FailOverDomainEvent): Promise<void> {
