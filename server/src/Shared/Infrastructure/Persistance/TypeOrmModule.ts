@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+import { FailOverService } from "Shared/Domain/Services/FailOverService";
 import Database from "Shared/Infrastructure/Persistance/Database";
 import { PgFailOverDomainEventMapper } from "Shared/Infrastructure/Persistance/Mapper/PgFailOverDomainEventMapper";
 import { PgFailOverRepository } from "Shared/Infrastructure/Persistance/Repository/PgFailOverRepository";
@@ -18,7 +19,7 @@ const Mapper = [
 ]
 
 @Module({
-  providers: [ DatabaseProvider, ...Repository, ...Mapper ],
-  exports: [ DatabaseProvider, ...Repository, ...Mapper ],
+  providers: [ DatabaseProvider, ...Repository, ...Mapper, FailOverService ],
+  exports: [ DatabaseProvider, ...Repository, ...Mapper, FailOverService ],
 })
 export class TypeOrmModule {}

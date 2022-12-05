@@ -1,11 +1,33 @@
 import { Flex, Grid, Title, Card, Group, Text, Button, Input } from "@mantine/core";
 import { Container } from '@mantine/core';
 import { Form } from "@remix-run/react";
+import {
+  createCookieSessionStorage,
+  redirect,
+} from "@remix-run/node";
+
 
 export const action = async ({ request }: any) => {
   const form = await request.formData();
-  console.log(form.get('email'));
-  return null;
+  const response = await fetch('http://localhost:5000/api/v1/signin', {
+    method: 'POST', mode: 'cors', body: JSON.stringify({
+      email: form.get('email'),
+      password: form.get('password')
+    }),
+    headers: { "Content-type": "application/json; charset=UTF-8" }
+  });
+
+  const cookie = response.headers.get("set-cookie");
+
+  if (!cookie) {
+    return redirect('/');
+  }
+
+  const headers = new Headers();
+
+  headers.append('Set-cookie', cookie!);
+
+  return redirect('/dashboard', { headers });
 };
 
 export default function Index() {
