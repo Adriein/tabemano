@@ -4,11 +4,15 @@ import { IPricingRepository } from "Backoffice/Pricing/Domain/Entity/IPricingRep
 import { Pricing } from "Backoffice/Pricing/Domain/Entity/Pricing";
 import { TenantCreatedDomainEvent } from "Backoffice/Tenant/Application/CreateTenant/TenantCreatedDomainEvent";
 import { Log } from "Shared/Domain/Decorators/Log";
-import { UnexpectedError } from "Shared/Domain/Error/UnexpectedError";
+import { FailOverService } from "Shared/Domain/Services/FailOverService";
 
 @EventsHandler(TenantCreatedDomainEvent)
 export class CreateDefaultTenantPricesDomainEventHandler implements IEventHandler {
-  constructor(@Inject('IPricingRepository') private readonly repository: IPricingRepository) {}
+  constructor(
+    @Inject('IPricingRepository')
+    private readonly repository: IPricingRepository,
+    private readonly failOverService: FailOverService
+  ) {}
 
   @Log()
   public async handle(event: TenantCreatedDomainEvent): Promise<void> {
@@ -19,7 +23,7 @@ export class CreateDefaultTenantPricesDomainEventHandler implements IEventHandle
       await this.repository.save(monthlyPricing);
       await this.repository.save(quarterlyPricing);
     } catch (error: any) {
-      throw new UnexpectedError(error.message);
+      await this.failOverService.execute(event, error as Error);
     }
   }
 }

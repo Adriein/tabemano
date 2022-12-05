@@ -8,6 +8,7 @@ import { TenantFilter } from "Backoffice/Shared/Domain/Tenant/TenantFilter";
 import { TenantCreatedDomainEvent } from "Backoffice/Tenant/Application/CreateTenant/TenantCreatedDomainEvent";
 import { Log } from "Shared/Domain/Decorators/Log";
 import { IDomainEventHandler } from "Shared/Domain/Interfaces/IDomainEventHandler";
+import { FailOverService } from "Shared/Domain/Services/FailOverService";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 
 @EventsHandler(TenantCreatedDomainEvent)
@@ -16,7 +17,8 @@ export class VerifyTenantEmailDomainEventHandler implements IDomainEventHandler 
     @Inject('ITenantRepository')
     private readonly repository: ITenantRepository,
     @Inject('IThirdPartySmtpServiceAbstractFactory')
-    private readonly factory: IThirdPartySmtpServiceAbstractFactory
+    private readonly factory: IThirdPartySmtpServiceAbstractFactory,
+    private readonly failOverService: FailOverService
   ) {}
 
   @Log()
@@ -27,8 +29,8 @@ export class VerifyTenantEmailDomainEventHandler implements IDomainEventHandler 
       const service = this.getSmtpService();
 
       await tenant.verifyEmail(service);
-    } catch (error: any) {
-      console.log(error.serialize())
+    } catch (error) {
+      await this.failOverService.execute(event, error as Error);
     }
   }
 

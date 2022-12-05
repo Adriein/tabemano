@@ -1,5 +1,12 @@
 import { Flex, Grid, Title, Card, Group, Text, Button, Input } from "@mantine/core";
 import { Container } from '@mantine/core';
+import { Form } from "@remix-run/react";
+
+export const action = async ({ request }: any) => {
+  const form = await request.formData();
+  console.log(form.get('email'));
+  return null;
+};
 
 export default function Index() {
   return (
@@ -16,15 +23,20 @@ export default function Index() {
               <Group position="apart" mt="md" mb="xs">
                 <Text weight={500}>Log in</Text>
               </Group>
-              <Input
-                placeholder="Email"
-              />
-              <Input
-                placeholder="Password"
-              />
-              <Button variant="light" color="blue" fullWidth mt="md" radius="md">
-                Book classic tour now
-              </Button>
+              <Form method="post">
+                <Input
+                  name="email"
+                  placeholder="Email"
+                />
+                <Input
+                  name="password"
+                  type="password"
+                  placeholder="Password"
+                />
+                <Button type="submit" variant="light" color="blue" fullWidth mt="md" radius="md">
+                  Log in
+                </Button>
+              </Form>
             </Card>
           </Flex>
         </Grid.Col>

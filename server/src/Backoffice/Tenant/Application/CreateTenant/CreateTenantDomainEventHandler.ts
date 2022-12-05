@@ -7,6 +7,7 @@ import { ITenantRepository } from "Backoffice/Tenant/Domain/Repository/ITenantRe
 import { Tenant } from "Backoffice/Tenant/Domain/Entity/Tenant";
 import { Roles } from "Shared/Domain/constants";
 import { Log } from "Shared/Domain/Decorators/Log";
+import { FailOverService } from "Shared/Domain/Services/FailOverService";
 import { RoleType } from "Shared/Domain/Vo/RoleType";
 
 @EventsHandler(TenantRegisteredDomainEvent)
@@ -16,25 +17,30 @@ export class CreateTenantDomainEventHandler implements IEventHandler {
     private readonly tenantRepository: ITenantRepository,
     @Inject('ISubscriptionRepository')
     private readonly subscriptionRepository: ISubscriptionRepository,
+    private readonly failOverService: FailOverService
   ) {}
 
   @Log()
   public async handle(event: TenantRegisteredDomainEvent): Promise<void> {
-    const { name, email, password, roleId } = event;
+    try {
+      const { name, email, password, roleId } = event;
 
-    const admin = await this.findAdmin();
+      const admin = await this.findAdmin();
 
-    const pricing = admin.getYearlyPricing();
+      const pricing = admin.getYearlyPricing();
 
-    const tenant = Tenant.build(name, password, email, roleId);
+      const tenant = Tenant.build(name, password, email, roleId);
 
-    const subscription = tenant.createSubscription(pricing);
+      const subscription = tenant.createSubscription(pricing);
 
-    await this.tenantRepository.save(tenant);
-    
-    await this.subscriptionRepository.save(subscription);
+      await this.tenantRepository.save(tenant);
 
-    tenant.commit();
+      await this.subscriptionRepository.save(subscription);
+
+      tenant.commit();
+    } catch (error) {
+      await this.failOverService.execute(event, error as Error);
+    }
   }
 
   private async findAdmin(): Promise<Tenant> {

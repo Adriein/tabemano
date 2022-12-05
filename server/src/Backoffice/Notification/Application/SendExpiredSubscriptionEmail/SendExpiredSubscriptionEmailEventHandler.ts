@@ -5,6 +5,7 @@ import { IClientRepository } from "Backoffice/Notification/Domain/Repository/ICl
 import { ISmtpService } from "Backoffice/Notification/Domain/Service/ISmtpService";
 import { UserFilter } from "Backoffice/Shared/Domain/User/UserFilter";
 import { SubscriptionExpired } from "Cron/Client/Application/CheckExpiredSubscriptions/SubscriptionExpired";
+import { FailOverService } from "Shared/Domain/Services/FailOverService";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 
 @EventsHandler(SubscriptionExpired)
@@ -13,13 +14,18 @@ export class SendAboutToExpireSubscriptionEmailEventHandler implements IEventHan
     @Inject('IClientRepository')
     private readonly repository: IClientRepository,
     @Inject('ISmtpService')
-    private readonly smtpService: ISmtpService
+    private readonly smtpService: ISmtpService,
+    private readonly failOverService: FailOverService
   ) {}
 
   public async handle(event: SubscriptionExpired): Promise<void> {
-    const client = await this.findClient(event.clientId());
+    try {
+      const client = await this.findClient(event.clientId());
 
-    //await this.smtpService.send(new Email());
+      //await this.smtpService.send(new Email());
+    } catch (error) {
+      await this.failOverService.execute(event, error as Error);
+    }
   }
 
   private async findClient(id: ID): Promise<Client> {
