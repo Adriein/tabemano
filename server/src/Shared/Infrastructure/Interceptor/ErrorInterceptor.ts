@@ -2,7 +2,7 @@ import {
   BadRequestException,
   CallHandler,
   ExecutionContext,
-  Injectable, InternalServerErrorException,
+  Injectable, InternalServerErrorException, Logger,
   NestInterceptor,
   NotFoundException, UnauthorizedException,
 } from '@nestjs/common';
@@ -14,14 +14,20 @@ import { DomainError } from "Shared/Domain/Error/DomainError";
 
 @Injectable()
 export class ErrorsInterceptor implements NestInterceptor {
-  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+  constructor(private readonly logger: Logger) {}
+
+  public intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     return next
       .handle()
       .pipe(
         catchError(error => {
           if (error instanceof DomainError) {
+            this.logger.error(JSON.stringify(error.serialize(), null, 2), '', 'ErrorsInterceptor');
+
             return throwError(() => this.httpExceptionFactory(error));
           }
+
+          this.logger.error(error.message, error.stack, 'ErrorsInterceptor');
 
           return throwError(error);
         }),

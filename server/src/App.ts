@@ -6,6 +6,7 @@ import { BackofficeBoundedContext } from 'Backoffice/Shared/Infrastructure/Nest/
 import { CronBoundedContext } from 'Cron/Shared/Infrastructure/Nest/CronBoundedContext';
 import { InvoiceBoundedContext } from 'Invoicing/Shared/Infrastructure/Nest/InvoiceBoundedContext';
 import { CryptoService } from 'Shared/Domain/Services/CryptoService';
+import { SharedBoundedContext } from "Shared/Infrastructure/Nest/SharedBoundedContext";
 
 @Module({
   imports: [
@@ -15,9 +16,10 @@ import { CryptoService } from 'Shared/Domain/Services/CryptoService';
     BackofficeBoundedContext,
     InvoiceBoundedContext,
     CronBoundedContext,
+    SharedBoundedContext
   ],
   controllers: [],
-  providers: [CryptoService],
-  exports: [CqrsModule, CryptoService],
+  providers: [ CryptoService ],
+  exports: [ CqrsModule, CryptoService ],
 })
 export default class App {}

@@ -1,4 +1,4 @@
-import { VersioningType } from "@nestjs/common";
+import { Logger, VersioningType } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from '@nestjs/core';
 import { EventBus } from "@nestjs/cqrs";
@@ -13,7 +13,8 @@ async function bootstrap() {
 
   const config = app.get(ConfigService);
   const eventBus = app.get(EventBus);
-
+  const logger = app.get(Logger);
+  
   TabemanoEventBus.instance(eventBus);
 
   app.use(CookieSession({
@@ -25,7 +26,7 @@ async function bootstrap() {
     httpOnly: false,
   }));
 
-  app.useGlobalInterceptors(new ErrorsInterceptor());
+  app.useGlobalInterceptors(new ErrorsInterceptor(logger));
 
   app.enableVersioning({
     type: VersioningType.URI,

@@ -2,7 +2,6 @@ import { Flex, Grid, Title, Card, Group, Text, Button, Input } from "@mantine/co
 import { Container } from '@mantine/core';
 import { Form } from "@remix-run/react";
 import {
-  createCookieSessionStorage,
   redirect,
 } from "@remix-run/node";
 

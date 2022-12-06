@@ -47,7 +47,7 @@ export default class Database {
         TenantCompanyModel
       ],
       synchronize: false,
-      logging: true,
+      logging: false,
     });
 
     return Database._instance;

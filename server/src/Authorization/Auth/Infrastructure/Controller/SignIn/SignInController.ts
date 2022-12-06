@@ -27,7 +27,6 @@ export class SignInController {
     @Body() body: SignInApiRequest,
     @Session() session: any
   ): Promise<SignInResponse> {
-    console.log(body)
     const signInQuery = SignInQuery.fromJson(body);
 
     const signInResponse = await this.queryBus.execute<SignInQuery, SignInResponse>(signInQuery);
