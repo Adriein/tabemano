@@ -51,6 +51,7 @@ export enum ErrorCode {
   EXTERNAL_PROVIDER_ERROR = 2,
   APPLICATION_ERROR = 3,
   AUTHORIZATION_ERROR = 4,
+  UNEXPECTED_ERROR = 5,
 }
 
 export type ErrorSerialization = {
@@ -60,3 +61,5 @@ export type ErrorSerialization = {
   message: string;
   stack?: string[];
 };
+
+export const DEV_ENV = 'dev';

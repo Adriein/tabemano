@@ -29,7 +29,7 @@ export class FailOverDomainEvent {
   public serializeError(): string {
     const error: ErrorSerialization = {
       errorType: 'UnexpectedError',
-      errorCode: ErrorCode.APPLICATION_ERROR,
+      errorCode: ErrorCode.UNEXPECTED_ERROR,
       message: this._error.message,
       occurredOn: DateVo.now().value,
       stack: this._error.stack?.split('\n').map((trace: string) => trace.trim())

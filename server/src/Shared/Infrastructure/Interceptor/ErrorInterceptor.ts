@@ -1,8 +1,8 @@
 import {
   BadRequestException,
   CallHandler,
-  ExecutionContext,
-  Injectable, InternalServerErrorException, Logger,
+  ExecutionContext, Inject,
+  Injectable, InternalServerErrorException,
   NestInterceptor,
   NotFoundException, UnauthorizedException,
 } from '@nestjs/common';
@@ -11,10 +11,15 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ErrorCode } from "Shared/Domain/constants";
 import { DomainError } from "Shared/Domain/Error/DomainError";
+import { ITabemanoLogger } from "Shared/Domain/Interfaces/ITabemanoLogger";
+import { DateVo } from "Shared/Domain/Vo/Date.vo";
 
 @Injectable()
 export class ErrorsInterceptor implements NestInterceptor {
-  constructor(private readonly logger: Logger) {}
+  constructor(
+    @Inject('ITabemanoLogger')
+    private readonly logger: ITabemanoLogger
+  ) {}
 
   public intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     return next
@@ -22,12 +27,18 @@ export class ErrorsInterceptor implements NestInterceptor {
       .pipe(
         catchError(error => {
           if (error instanceof DomainError) {
-            this.logger.error(JSON.stringify(error.serialize(), null, 2), '', 'ErrorsInterceptor');
+            this.logger.error(error.serialize());
 
             return throwError(() => this.httpExceptionFactory(error));
           }
 
-          this.logger.error(error.message, error.stack, 'ErrorsInterceptor');
+          this.logger.fatal([ {
+            errorType: 'Unexpected Error',
+            errorCode: ErrorCode.UNEXPECTED_ERROR,
+            message: error.message,
+            occurredOn: DateVo.now().value,
+            stack: error.stack?.split('\n').map((trace: string) => trace.trim())
+          } ]);
 
           return throwError(error);
         }),
@@ -62,6 +73,7 @@ export class ErrorsInterceptor implements NestInterceptor {
           stack: error.stack?.split('\n').map((trace: string) => trace.trim())
         });
       case ErrorCode.APPLICATION_ERROR:
+      case ErrorCode.UNEXPECTED_ERROR:
       case ErrorCode.EXTERNAL_PROVIDER_ERROR:
         return new InternalServerErrorException({
           errorType: error.constructor.name,

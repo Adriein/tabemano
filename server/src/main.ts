@@ -4,6 +4,7 @@ import { NestFactory } from '@nestjs/core';
 import { EventBus } from "@nestjs/cqrs";
 import { TabemanoEventBus } from "Shared/Domain/Entities/TabemanoEventBus";
 import { ErrorsInterceptor } from "Shared/Infrastructure/Interceptor/ErrorInterceptor";
+import { TabemanoLogger } from "Shared/Infrastructure/Logger/TabemanoLogger";
 import App from "./App";
 import CookieSession from 'cookie-session';
 
@@ -13,8 +14,8 @@ async function bootstrap() {
 
   const config = app.get(ConfigService);
   const eventBus = app.get(EventBus);
-  const logger = app.get(Logger);
-  
+  const logger = app.get('ITabemanoLogger');
+
   TabemanoEventBus.instance(eventBus);
 
   app.use(CookieSession({
