@@ -91,6 +91,7 @@ async function main() {
       duration: pricing!.duration,
       pricingName: pricing!.name,
       price: pricing!.price,
+      currency: pricing!.currency,
       tenantId: null,
       events: [
         {
@@ -145,6 +146,7 @@ async function main() {
           validTo: new DateVo(subscriptionExpirationDate),
           duration: pricing!.duration,
           pricingName: pricing!.name,
+          currency: pricing!.currency,
           price: pricing!.price,
           tenantId: null,
           user: {
@@ -177,6 +179,7 @@ async function main() {
         duration: pricing!.duration,
         pricingName: pricing!.name,
         price: pricing!.price,
+        currency: pricing!.currency,
         tenantId: null,
         user: {
           id
