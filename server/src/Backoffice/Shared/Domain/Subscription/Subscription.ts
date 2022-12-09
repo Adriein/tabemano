@@ -2,6 +2,7 @@ import { SUBSCRIPTION_STATUS } from "Backoffice/Shared/constants";
 import { SubscriptionEvent } from "Backoffice/Shared/Domain/Subscription/SubscriptionEvent";
 import { SubscriptionEventCollection } from "Backoffice/Shared/Domain/Subscription/SubscriptionEventCollection";
 import { AggregateRoot } from "Shared/Domain/Entities/AggregateRoot";
+import { Money } from "Shared/Domain/Entities/Money";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Time } from "Shared/Infrastructure/Helper/Time";
@@ -14,7 +15,7 @@ export class Subscription extends AggregateRoot {
     pricingId: ID,
     pricingName: string,
     pricingDuration: number,
-    pricingAmount: number,
+    pricingAmount: Money,
   ): Subscription {
     const subscriptionId = ID.generate();
     const event = SubscriptionEvent.build(SUBSCRIPTION_STATUS.CREATED, subscriptionId);
@@ -40,7 +41,7 @@ export class Subscription extends AggregateRoot {
     pricingId: ID,
     pricingName: string,
     pricingDuration: number,
-    pricingAmount: number,
+    pricingAmount: Money,
   ): Subscription {
     const subscriptionId = ID.generate();
     const event = SubscriptionEvent.build(SUBSCRIPTION_STATUS.CREATED, subscriptionId);
@@ -69,7 +70,7 @@ export class Subscription extends AggregateRoot {
     private _isExpired: boolean,
     private _pricingName: string,
     private _duration: number,
-    private _price: number,
+    private _price: Money,
     private _events: SubscriptionEventCollection,
     private _userId?: ID,
     private _tenantId?: ID,
@@ -115,7 +116,7 @@ export class Subscription extends AggregateRoot {
     return this._duration;
   }
 
-  public price(): number {
+  public price(): Money {
     return this._price;
   }
 

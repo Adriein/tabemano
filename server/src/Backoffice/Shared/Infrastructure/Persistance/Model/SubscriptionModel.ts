@@ -1,6 +1,8 @@
 import { SubscriptionEventModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionEventModel";
+import { Currency } from "Shared/Domain/Vo/Currency.vo";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
+import { NumberVo } from "Shared/Domain/Vo/Number.vo";
 import { TenantModel } from "Shared/Infrastructure/Persistance/Model/TenantModel";
 import { UserModel } from "Shared/Infrastructure/Persistance/Model/UserModel";
 import { ValueObjectTransformer } from "Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer";
@@ -43,8 +45,15 @@ export class SubscriptionModel {
   @Column({ name: 'su_price_name' })
   pricingName!: string;
 
-  @Column({ name: 'su_price', type: 'double precision' })
-  price!: number;
+  @Column({
+    name: 'su_price',
+    type: 'double precision',
+    transformer: new ValueObjectTransformer<string, NumberVo>(NumberVo)
+  })
+  price!: NumberVo;
+
+  @Column({ name: 'su_currency', type: 'varchar', transformer: new ValueObjectTransformer<string, Currency>(Currency) })
+  currency!: Currency;
 
   @Column({ name: 'su_pricing_id', type: 'varchar', transformer: new ValueObjectTransformer<string, ID>(ID) })
   pricingId!: ID;

@@ -46,7 +46,8 @@ export class GetClientProfileResponse implements Serializable {
         id: subscription.id().value,
         pricing: {
           id: 'subscription.pricingId',
-          price: subscription.price(),
+          price: subscription.price().amount().value,
+          currency: subscription.price().currency().value,
           name: subscription.pricingName(),
           duration: subscription.duration()
         },

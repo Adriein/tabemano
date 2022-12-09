@@ -4,6 +4,7 @@ import { FindTenantClientsQuery } from "Backoffice/Client/Application/FindTenant
 import { CLIENT_ROLE } from "Shared/Domain/constants";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
+import { NumberVo } from "Shared/Domain/Vo/Number.vo";
 import { RoleType } from "Shared/Domain/Vo/RoleType";
 
 export class UserFilterFactory implements IFilterFactory<UserFilter> {
@@ -20,7 +21,7 @@ export class UserFilterFactory implements IFilterFactory<UserFilter> {
             filter.withSubscriptionDuration(Number(value));
           }
           if (field === 'amount') {
-            filter.withSubscriptionPrice(Number(value));
+            filter.withSubscriptionPrice(new NumberVo(Number(value)));
           }
           if (field === 'pricing_name') {
             filter.withPricingName(value);

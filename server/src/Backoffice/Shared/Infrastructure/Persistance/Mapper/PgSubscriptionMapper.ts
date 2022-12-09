@@ -4,6 +4,7 @@ import { SubscriptionEvent } from "Backoffice/Shared/Domain/Subscription/Subscri
 import { SubscriptionEventCollection } from "Backoffice/Shared/Domain/Subscription/SubscriptionEventCollection";
 import { SubscriptionEventModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionEventModel";
 import { SubscriptionModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/SubscriptionModel";
+import { Money } from "Shared/Domain/Entities/Money";
 import { IMapper } from "Shared/Domain/Interfaces/IMapper";
 
 
@@ -20,7 +21,7 @@ export class PgSubscriptionMapper implements IMapper<Subscription, SubscriptionM
       dataModel.isExpired,
       dataModel.pricingName,
       dataModel.duration,
-      dataModel.price,
+      new Money(dataModel.price, dataModel.currency),
       eventCollection,
       dataModel.userId!,
       dataModel.tenantId!,
@@ -44,7 +45,8 @@ export class PgSubscriptionMapper implements IMapper<Subscription, SubscriptionM
     model.pricingId = entity.pricingId();
     model.pricingName = entity.pricingName();
     model.duration = entity.duration();
-    model.price = entity.price();
+    model.price = entity.price().amount();
+    model.currency = entity.price().currency()
     model.events = events;
     model.createdAt = entity.createdAt();
     model.updatedAt = entity.updatedAt();

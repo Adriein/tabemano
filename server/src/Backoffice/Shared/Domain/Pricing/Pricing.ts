@@ -1,11 +1,12 @@
 import { BaseEntity } from "Shared/Domain/Entities/BaseEntity";
+import { Money } from "Shared/Domain/Entities/Money";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 
 export class Pricing extends BaseEntity {
   constructor(
     _id: ID,
     private readonly _name: string,
-    private readonly _price: number,
+    private readonly _price: Money,
     private readonly _duration: number,
     _createdAt?: Date,
     _updatedAt?: Date,
@@ -17,7 +18,7 @@ export class Pricing extends BaseEntity {
     return this._name;
   }
 
-  public price(): number {
+  public price(): Money {
     return this._price;
   }
 

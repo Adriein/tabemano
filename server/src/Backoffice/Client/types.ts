@@ -33,6 +33,7 @@ type ConfigResponse = {
 type SubscriptionPricing = {
   id: string;
   price: number;
+  currency: string;
   name: string;
   duration: number;
 }

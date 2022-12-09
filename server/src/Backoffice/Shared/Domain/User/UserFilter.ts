@@ -2,6 +2,7 @@ import { Filter } from "Shared/Domain/Entities/Filter";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
+import { NumberVo } from "Shared/Domain/Vo/Number.vo";
 import { RoleType } from "Shared/Domain/Vo/RoleType";
 
 export class UserFilter extends Filter {
@@ -61,7 +62,7 @@ export class UserFilter extends Filter {
     return this;
   }
 
-  public withSubscriptionPrice(amount: number): this {
+  public withSubscriptionPrice(amount: NumberVo): this {
     this.data.set(UserFilter.SUBSCRIPTION_AMOUNT_FILTER, amount);
     return this;
   }

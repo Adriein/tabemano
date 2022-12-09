@@ -5,6 +5,7 @@ import { PricingCollection } from "Backoffice/Shared/Domain/Pricing/PricingColle
 import { ConfigModel } from "Backoffice/Shared/Infrastructure/Persistance/Model/ConfigModel";
 import { AppConfig } from "Backoffice/Tenant/Domain/Entity/AppConfig";
 import { Tenant } from "Backoffice/Tenant/Domain/Entity/Tenant";
+import { Money } from "Shared/Domain/Entities/Money";
 import { IMapper } from "Shared/Domain/Interfaces/IMapper";
 import { RoleModel } from "Shared/Infrastructure/Persistance/Model/RoleModel";
 import { TenantModel } from "Shared/Infrastructure/Persistance/Model/TenantModel";
@@ -25,7 +26,7 @@ export class PgTenantMapper implements IMapper<Tenant, TenantModel> {
       return new Pricing(
         pricing.id,
         pricing.name,
-        pricing.price,
+        new Money(pricing.price, pricing.currency),
         pricing.duration,
         pricing.createdAt,
         pricing.updatedAt

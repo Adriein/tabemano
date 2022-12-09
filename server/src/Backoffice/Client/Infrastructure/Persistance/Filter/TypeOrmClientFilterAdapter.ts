@@ -3,6 +3,7 @@ import { Pagination } from "Shared/Domain/Entities/Pagination";
 import { DateVo } from "Shared/Domain/Vo/Date.vo";
 import { Email } from "Shared/Domain/Vo/Email.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
+import { NumberVo } from "Shared/Domain/Vo/Number.vo";
 import { RoleType } from "Shared/Domain/Vo/RoleType";
 import { TypeOrmAdapter } from "Shared/Infrastructure/Persistance/Adapter/TypeOrmAdapter";
 import { UserModel } from "Shared/Infrastructure/Persistance/Model/UserModel";
@@ -71,7 +72,7 @@ export class TypeOrmClientFilterAdapter extends TypeOrmAdapter<FindManyOptions<U
     }
 
     if (filters.has(UserFilter.SUBSCRIPTION_AMOUNT_FILTER)) {
-      const amount = filters.get(UserFilter.SUBSCRIPTION_AMOUNT_FILTER) as number;
+      const amount = filters.get(UserFilter.SUBSCRIPTION_AMOUNT_FILTER) as NumberVo;
 
       this.add({ where: { subscriptions: { price: amount } } });
     }

@@ -1,5 +1,6 @@
 import { Pricing } from "Backoffice/Pricing/Domain/Entity/Pricing";
 import { Serializable } from "Backoffice/Shared/Domain/Serializable";
+import { Money } from "Shared/Domain/Entities/Money";
 
 
 export class FindPricingResponse implements Serializable {
@@ -10,7 +11,7 @@ export class FindPricingResponse implements Serializable {
   constructor(
     private readonly _id: string,
     private readonly _name: string,
-    private readonly _amount: number,
+    private readonly _amount: Money,
     private readonly _duration: number
   ) {}
 
@@ -23,7 +24,7 @@ export class FindPricingResponse implements Serializable {
   }
 
 
-  public get amount(): number {
+  public get amount(): Money {
     return this._amount;
   }
 
