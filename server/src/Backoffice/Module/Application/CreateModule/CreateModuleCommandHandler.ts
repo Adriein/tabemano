@@ -20,7 +20,7 @@ export class CreateModuleCommandHandler implements ICommandHandler {
       return new Url(url);
     });
 
-    this.checkIfModuleAlreadyExists(name);
+    await this.checkIfModuleAlreadyExists(name);
 
     const module = Module.build(name, urlList);
 

@@ -11,11 +11,10 @@ import { PgConfigMapper } from 'Backoffice/Shared/Infrastructure/Persistance/Map
 import { PgSubscriptionMapper } from 'Backoffice/Shared/Infrastructure/Persistance/Mapper/PgSubscriptionMapper';
 import { TenantModule } from 'Backoffice/Tenant/Infrastructure/Nest/TenantModule';
 
-const Mappers = [PgConfigMapper, PgSubscriptionMapper, PgModuleMapper];
+const Mappers = [ PgConfigMapper, PgSubscriptionMapper, PgModuleMapper ];
 
 @Module({
   imports: [
-    CqrsModule,
     RoleModule,
     TenantModule,
     ClientModule,
@@ -25,16 +24,7 @@ const Mappers = [PgConfigMapper, PgSubscriptionMapper, PgModuleMapper];
     ModuleModule,
   ],
   controllers: [],
-  providers: [...Mappers],
-  exports: [
-    CqrsModule,
-    RoleModule,
-    TenantModule,
-    ClientModule,
-    PricingModule,
-    NotificationModule,
-    CompanyModule,
-    ModuleModule,
-  ],
+  providers: [ ...Mappers ],
+  exports: [],
 })
 export class BackofficeBoundedContext {}

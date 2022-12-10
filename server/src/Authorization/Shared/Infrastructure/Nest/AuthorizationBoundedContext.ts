@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { CqrsModule } from '@nestjs/cqrs';
 import { GetPermissionsQueryHandler } from 'Authorization/Permission/Application/GetPermissions/GetPermissionsQueryHandler';
 import { RegisterTenantCommandHandler } from 'Authorization/Auth/Application/RegisterTenant/RegisterTenantCommandHandler';
 import { SignInQueryHandler } from 'Authorization/Auth/Application/SignIn/SignInQueryHandler';
@@ -10,7 +9,7 @@ import { PgRoleMapper } from 'Authorization/Auth/Infrastructure/Persistance/Mapp
 import { PgAuthRepository } from 'Authorization/Auth/Infrastructure/Persistance/Repository/PgAuthRepository';
 import { PgRoleRepository } from 'Authorization/Auth/Infrastructure/Persistance/Repository/PgRoleRepository';
 import { CryptoService } from 'Shared/Domain/Services/CryptoService';
-import { TypeOrmModule } from 'Shared/Infrastructure/Persistance/TypeOrmModule';
+import { SharedModule } from "Shared/Infrastructure/Nest/SharedModule";
 import { GetPermissionsController } from '../../../Permission/Infrastructure/Controller/GetPermissions/GetPermissionsController';
 import { PgPermissionRepository } from 'Authorization/Permission/Infrastructure/Persistance/Repository/PgPermissionRepository';
 import { PgPermissionMapper } from 'Authorization/Permission/Infrastructure/Persistance/Mapper/PgPermissionMapper';
@@ -18,7 +17,7 @@ import { ModuleUrlFinderQueryHandler } from 'Authorization/Permission/Applicatio
 import { GetTenantProfileQueryHandler } from 'Authorization/Auth/Application/GetTenantProfile/GetTenantProfileQueryHandler';
 import { GetRoleQueryHandler } from 'Authorization/Auth/Application/GetRole/GetRoleQueryHandler';
 
-const Services = [CryptoService];
+const Services = [ CryptoService ];
 
 const Repositories = [
   {
@@ -35,7 +34,7 @@ const Repositories = [
   },
 ];
 
-const Controllers = [SignInController, RegisterTenantController, GetPermissionsController];
+const Controllers = [ SignInController, RegisterTenantController, GetPermissionsController ];
 
 const Handlers = [
   SignInQueryHandler,
@@ -46,12 +45,12 @@ const Handlers = [
   GetRoleQueryHandler,
 ];
 
-const Mappers = [PgAuthMapper, PgRoleMapper, PgPermissionMapper];
+const Mappers = [ PgAuthMapper, PgRoleMapper, PgPermissionMapper ];
 
 @Module({
-  imports: [CqrsModule, TypeOrmModule],
-  controllers: [...Controllers],
-  providers: [...Repositories, ...Handlers, ...Services, ...Mappers],
+  imports: [ SharedModule ],
+  controllers: [ ...Controllers ],
+  providers: [ ...Repositories, ...Handlers, ...Services, ...Mappers ],
   exports: [],
 })
 export class AuthorizationBoundedContext {}

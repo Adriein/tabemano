@@ -30,14 +30,26 @@
       "Cron/*": [
         "./src/Cron/*",
         "./src/Cron"
+      ],
+      "Checkout/*": [
+        "./src/Checkout/*",
+        "./src/Checkout"
       ]
     },
-    "types": ["jest", "@types/jest"]
+    "types": [
+      "jest",
+      "@types/jest"
+    ]
   },
   "include": [
-    "src", "test" 
-   ],
+    "src",
+    "test"
+  ],
   "exclude": [
-    "node_modules", "typeorm", "prisma", "dist", "bin"
+    "node_modules",
+    "typeorm",
+    "prisma",
+    "dist",
+    "bin"
   ]
 }
