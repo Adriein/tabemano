@@ -21,6 +21,14 @@ export const ProductTableDefinition = new Table({
       type: 'varchar',
     },
     {
+      name: 'pr_country',
+      type: 'varchar',
+    },
+    {
+      name: 'pr_is_active',
+      type: 'boolean',
+    },
+    {
       name: 'pr_description',
       type: 'varchar',
     },

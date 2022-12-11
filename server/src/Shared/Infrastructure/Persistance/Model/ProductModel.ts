@@ -1,3 +1,4 @@
+import { NumberVo } from "Shared/Domain/Vo/Number.vo";
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { ID } from 'Shared/Domain/Vo/Id.vo';
 import { Name } from 'Shared/Domain/Vo/Name.vo';
@@ -19,6 +20,13 @@ export class ProductModel {
     transformer: new ValueObjectTransformer<string, Name>(Name),
   })
   name!: Name;
+
+  @Column({
+    name: 'pr_price',
+    type: 'varchar',
+    transformer: new ValueObjectTransformer<number, NumberVo>(NumberVo),
+  })
+  price!: NumberVo;
 
   @Column({ name: 'pr_created_at', type: 'timestamp', precision: 0 })
   createdAt!: Date;
