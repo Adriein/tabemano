@@ -3,7 +3,7 @@ import { TenantModel } from 'Shared/Infrastructure/Persistance/Model/TenantModel
 import { UserModel } from 'Shared/Infrastructure/Persistance/Model/UserModel';
 import { ValueObjectTransformer } from 'Shared/Infrastructure/Persistance/Transformer/ValueObjectTransformer';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
-import { ModuleModel } from './ModuleModel';
+import { ProductModel } from './ProductModel';
 
 @Entity('ta_permission')
 export class PermissionModel {
@@ -32,9 +32,9 @@ export class PermissionModel {
   })
   moduleId!: ID;
 
-  @ManyToOne(() => ModuleModel)
+  @ManyToOne(() => ProductModel)
   @JoinColumn({ name: 'pe_module_id', referencedColumnName: 'id' })
-  module!: ModuleModel;
+  module!: ProductModel;
 
   @Column({ name: 'pe_created_at', type: 'timestamp', precision: 0 })
   createdAt!: Date;

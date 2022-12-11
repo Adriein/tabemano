@@ -9,10 +9,10 @@ import { IPermissionRepository } from 'Authorization/Permission/Domain/Repositor
 import { ModuleNotFoundError } from 'Shared/Domain/Error/ModuleNotFoundError';
 import { RecordNotFoundError } from 'Shared/Domain/Error/RecordNotFoundError';
 import { ID } from 'Shared/Domain/Vo/Id.vo';
-import { ModuleBookedDomainEvent } from 'Backoffice/Module/Application/BookModule/ModuleBookedDomainEvent';
+import { ProductBoughtDomainEvent } from 'Checkout/Product/Application/BuyProduct/ProductBoughtDomainEvent';
 import { IModuleRepository } from 'Authorization/Permission/Domain/Repository/IModuleRepository';
 
-@EventsHandler(ModuleBookedDomainEvent)
+@EventsHandler(ProductBoughtDomainEvent)
 export class AssignPermissionDomainEventHandler implements IEventHandler {
   constructor(
     @Inject('IPermissionRepository') private permissionRepository: IPermissionRepository,
@@ -20,7 +20,7 @@ export class AssignPermissionDomainEventHandler implements IEventHandler {
   ) {}
 
   @Log()
-  public async handle(event: ModuleBookedDomainEvent) {
+  public async handle(event: ProductBoughtDomainEvent) {
     await this.checkIfModuleExists(event.moduleId);
 
     const permissionAssigned = await this.checkIfTenantHasModuleAlreadyAssigned(event);
@@ -58,7 +58,7 @@ export class AssignPermissionDomainEventHandler implements IEventHandler {
   }
 
   private async checkIfTenantHasModuleAlreadyAssigned(
-    event: ModuleBookedDomainEvent
+    event: ProductBoughtDomainEvent
   ): Promise<Permission | undefined> {
     try {
       const filter = PermissionFilter.create()

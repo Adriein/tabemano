@@ -1,6 +1,6 @@
 import { Body, Controller, Get } from "@nestjs/common";
 import { QueryBus } from "@nestjs/cqrs";
-import { GetProductListQuery } from "Checkout/Product/Application/GetModuleList/GetProductListQuery";
+import { GetProductListQuery } from "Checkout/Product/Application/GetProductList/GetProductListQuery";
 import { GetProductListApiRequest } from "Checkout/Product/Infrastructure/Controller/GetProductList/GetProductListApiRequest";
 
 @Controller()

@@ -1,4 +1,4 @@
-import { ModuleModel } from 'Shared/Infrastructure/Persistance/Model/ModuleModel';
+import { ProductModel } from 'Shared/Infrastructure/Persistance/Model/ProductModel';
 import { PricingModel } from 'Backoffice/Pricing/Infrastructure/Persistance/Model/PricingModel';
 import { CompanyModel } from 'Shared/Infrastructure/Persistance/Model/CompanyModel';
 import { RoleModel } from 'Shared/Infrastructure/Persistance/Model/RoleModel';
@@ -11,7 +11,7 @@ import { TenantModel } from "Shared/Infrastructure/Persistance/Model/TenantModel
 import { UserModel } from "Shared/Infrastructure/Persistance/Model/UserModel";
 import { DataSource } from 'typeorm';
 import { PermissionModel } from './Model/PermissionModel';
-import { UrlModuleModel } from './Model/UrlModuleModel';
+import { UrlProductModel } from './Model/UrlProductModel';
 import { ThirdPartyServiceModel } from './Model/ThirdPartyServiceModel';
 
 export default class Database {
@@ -38,9 +38,9 @@ export default class Database {
         SubscriptionModel,
         SubscriptionEventModel,
         BackGroundJobModel,
-        ModuleModel,
+        ProductModel,
         PermissionModel,
-        UrlModuleModel,
+        UrlProductModel,
         CompanyModel,
         TenantModel,
         ThirdPartyServiceModel,

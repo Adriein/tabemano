@@ -13,7 +13,7 @@ export const UrlTableDefinition = new Table({
       type: 'varchar',
     },
     {
-      name: 'ur_module_id',
+      name: 'ur_product_id',
       type: 'varchar',
     },
     {
