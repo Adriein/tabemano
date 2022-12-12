@@ -17,10 +17,10 @@ export class RoleType extends ValueObject {
 
   constructor(private readonly _value: string) {
     super();
-    this.validate(_value);
+    this.validate();
   }
 
-  protected validate(primitive: any): boolean {
+  protected validate(): boolean {
     const roles = z.nativeEnum(Roles);
     try {
       roles.parse(this._value);

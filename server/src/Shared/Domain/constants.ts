@@ -60,3 +60,28 @@ export type ErrorSerialization = {
   message: string;
   stack?: string[];
 };
+
+export enum Allergens {
+  MOLLUSC = 'mollusc',
+  CRUSTACEAN = 'crustacean',
+  FISH = 'fish',
+  EGG = 'egg',
+  MILK = 'milk',
+  PEANUT = 'peanut',
+  SOY = 'soy',
+  TREE_NUT = 'tree nut',
+  CEREAL = 'cereal',
+  SESAME = 'sesame',
+  MUSTARD = 'mustard',
+  CELERY = 'celery',
+  LUPIN = 'lupin',
+  SULPHITE = 'sulphite',
+}
+
+export enum Diets {
+  CARNIVORE = 'carnivore',
+  OMNIVOROUS = 'omnivorous',
+  VEGAN = 'vegan',
+  VEGETARIAN = 'vegetarian',
+  PREGNANT = 'pregnant',
+}
