@@ -2,23 +2,26 @@ import { Allergen } from 'Shared/Domain/Vo/Allergen.vo';
 import { ID } from 'Shared/Domain/Vo/Id.vo';
 import { Kcal } from 'Shared/Domain/Vo/Kcal.vo';
 import { Name } from 'Shared/Domain/Vo/Name.vo';
+import { Unit } from 'Shared/Domain/Vo/Unit.vo';
 import { Macronutrient } from './Macronutrient';
 
 export class Food {
   public static build(
     name: Name,
     calories: Kcal,
-    quantity: Number,
-    macronutrient: Macronutrient,
-    allergen: Allergen
+    quantity: number,
+    unit: Unit,
+    macronutrients: Macronutrient[],
+    allergens: Allergen[]
   ): Food {
     return new Food(
       ID.generate(),
       name,
       calories,
       quantity,
-      macronutrient,
-      allergen,
+      unit,
+      macronutrients,
+      allergens,
       new Date(),
       new Date()
     );
@@ -28,9 +31,10 @@ export class Food {
     _id: ID,
     private _name: Name,
     private _calories: Kcal,
-    private _quantity: Number,
-    private _macronutrient: Macronutrient,
-    private _allergen: Allergen,
+    private _quantity: number,
+    private _unit: Unit,
+    private _macronutrients: Macronutrient[],
+    private _allergens: Allergen[],
     _createdAt?: Date,
     _updatedAt?: Date
   ) {}
@@ -43,15 +47,23 @@ export class Food {
     return this._calories;
   }
 
-  public quantity(): Number {
+  public quantity(): number {
     return this._quantity;
   }
 
-  public macronutrient(): Macronutrient {
-    return this._macronutrient;
+  public unit(): Unit {
+    return this._unit;
   }
 
-  public allergen(): Allergen {
-    return this._allergen;
+  public macronutrients(): Macronutrient[] {
+    return this._macronutrients;
+  }
+
+  public allergens(): Allergen[] {
+    return this._allergens;
+  }
+
+  public totalFoodCalories(): Kcal {
+    return new Kcal((this._quantity * this._calories.value) / 100);
   }
 }

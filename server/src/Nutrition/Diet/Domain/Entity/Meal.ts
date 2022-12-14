@@ -34,7 +34,27 @@ export class Meal {
     _updatedAt?: Date
   ) {}
 
-  public calculateTotalCalories(): Kcal {
+  public title(): Title {
+    return this._title;
+  }
+
+  public foodList(): Food[] {
+    return this._foodList;
+  }
+
+  public annotation(): Annotation {
+    return this._annotation;
+  }
+
+  public trainingDay(): boolean {
+    return this._trainingDay;
+  }
+
+  public totalMealCalories(): Kcal {
+    this._foodList.forEach((food: Food) => {
+      this._totalCalories = new Kcal(this._totalCalories.value + food.totalFoodCalories().value);
+    });
+
     return this._totalCalories;
   }
 }

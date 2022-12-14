@@ -62,10 +62,10 @@ export class Allergen extends ValueObject {
   constructor(private readonly _value: string) {
     super();
 
-    this.validate(_value);
+    this.validate();
   }
 
-  protected validate(primitive: any): boolean {
+  protected validate(): boolean {
     const allergens = z.nativeEnum(Allergens);
     try {
       allergens.parse(this._value);

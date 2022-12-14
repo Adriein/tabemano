@@ -85,3 +85,13 @@ export enum Diets {
   VEGETARIAN = 'vegetarian',
   PREGNANT = 'pregnant',
 }
+
+export enum MacronutrientNames {
+  CARBOHYDRATES = 'carbohydrates',
+  PROTEINS = 'proteins',
+  FAT = 'fat',
+}
+
+export enum Units {
+  GRAMS = 'g'
+}

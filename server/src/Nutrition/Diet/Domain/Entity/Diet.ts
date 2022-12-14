@@ -69,7 +69,11 @@ export class Diet extends AggregateRoot {
     return this._type;
   }
 
-  private calculateTotalCalories(): Kcal {
+  public totalDietCalories(): Kcal {
+    this._meals.forEach((meal: Meal) => {
+      this._totalCalories = new Kcal(this._totalCalories.value + meal.totalMealCalories().value);
+    });
+
     return this._totalCalories;
   }
 }
