@@ -3,9 +3,9 @@ import { ID } from 'Shared/Domain/Vo/Id.vo';
 import { Name } from 'Shared/Domain/Vo/Name.vo';
 import { Url } from 'Shared/Domain/Vo/Url.vo';
 
-export class Module extends AggregateRoot {
-  public static build(name: Name, urlList: Url[]): Module {
-    return new Module(ID.generate(), name, urlList, new Date(), new Date());
+export class Product extends AggregateRoot {
+  public static build(name: Name, urlList: Url[]): Product {
+    return new Product(ID.generate(), name, urlList, new Date(), new Date());
   }
 
   constructor(

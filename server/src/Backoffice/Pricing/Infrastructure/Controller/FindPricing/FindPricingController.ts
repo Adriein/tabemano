@@ -2,7 +2,7 @@ import { Controller, Get } from "@nestjs/common";
 import { QueryBus } from "@nestjs/cqrs";
 import { FindPricingQuery } from "Backoffice/Pricing/Application/FindPricing/FindPricingQuery";
 import { FindPricingResponse } from "Backoffice/Pricing/Application/FindPricing/FindPricingResponse";
-import { TabemanoResponse } from "Backoffice/Shared/Domain/TabemanoResponse";
+import { TabemanoResponse } from "Shared/Domain/Entities/TabemanoResponse";
 import { NextFunction, Request, Response } from "express";
 import { currentUser, requireAuth } from "Shared/Infrastructure/Middlewares/auth";
 

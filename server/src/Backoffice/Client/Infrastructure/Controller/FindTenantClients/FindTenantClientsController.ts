@@ -2,8 +2,8 @@ import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { FindTenantClientsQuery } from 'Backoffice/Client/Application/FindTenantClients/FindTenantClientsQuery';
 import { FindTenantClientsResponse } from 'Backoffice/Client/Application/FindTenantClients/FindTenantClientsResponse';
-import { TabemanoMetadata } from 'Backoffice/Shared/Domain/TabemanoMetadata';
-import { TabemanoResponse } from 'Backoffice/Shared/Domain/TabemanoResponse';
+import { TabemanoMetadata } from 'Shared/Domain/Entities/TabemanoMetadata';
+import { TabemanoResponse } from 'Shared/Domain/Entities/TabemanoResponse';
 import { AuthGuard } from 'Shared/Infrastructure/Guard/AuthGuard';
 
 @Controller()
@@ -24,7 +24,7 @@ export class FindTenantClientsController {
     query: FindTenantClientsQuery,
     clients: FindTenantClientsResponse[]
   ): TabemanoResponse<FindTenantClientsResponse> {
-    const metadata = TabemanoMetadata.build(query.page, query.quantity);
+    const metadata = TabemanoMetadata.build(true, { page: query.page, quantity: query.quantity });
 
     return TabemanoResponse.build(clients, metadata);
   }

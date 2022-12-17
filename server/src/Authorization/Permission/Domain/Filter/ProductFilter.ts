@@ -1,8 +1,8 @@
 import { Filter } from 'Shared/Domain/Entities/Filter';
-import { Name } from 'Shared/Domain/Vo/Name.vo';
+import { ID } from 'Shared/Domain/Vo/Id.vo';
 
 export class ProductFilter extends Filter {
-  public static PRODUCT_NAME_FILTER = 'name';
+  public static PRODUCT_ID_FILTER = 'productId';
 
   public static create(): ProductFilter {
     return new ProductFilter();
@@ -10,9 +10,8 @@ export class ProductFilter extends Filter {
 
   protected data: Map<string, any> = new Map();
 
-
-  public withModuleName(name: Name): this {
-    this.data.set(ProductFilter.PRODUCT_NAME_FILTER, name);
+  public withProductId(id: ID): this {
+    this.data.set(ProductFilter.PRODUCT_ID_FILTER, id);
     return this;
   }
 

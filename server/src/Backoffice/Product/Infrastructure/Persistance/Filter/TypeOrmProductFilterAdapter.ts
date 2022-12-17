@@ -14,8 +14,8 @@ export class TypeOrmProductFilterAdapter extends TypeOrmAdapter<FindManyOptions<
 
     this.add({ relations: { urlList: true } });
 
-    if (filters.has(ProductFilter.MODULE_NAME_FILTER)) {
-      const name = filters.get(ProductFilter.MODULE_NAME_FILTER) as Name;
+    if (filters.has(ProductFilter.PRODUCT_NAME_FILTER)) {
+      const name = filters.get(ProductFilter.PRODUCT_NAME_FILTER) as Name;
 
       this.add({ where: { name } });
     }

@@ -2,7 +2,7 @@ import { Controller, Post } from "@nestjs/common";
 import { QueryBus } from "@nestjs/cqrs";
 import { FindAppFiltersQuery } from "Backoffice/AppFilter/Application/FindAppFilters/FindAppFiltersQuery";
 import { FindFiltersResponse } from "Backoffice/AppFilter/Application/FindAppFilters/FindAppFiltersResponse";
-import { TabemanoResponse } from "Backoffice/Shared/Domain/TabemanoResponse";
+import { TabemanoResponse } from "Shared/Domain/Entities/TabemanoResponse";
 import { NextFunction, Request, Response } from "express";
 
 @Controller()

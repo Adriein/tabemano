@@ -1,7 +1,7 @@
 import { Controller, Get, UseGuards } from "@nestjs/common";
 import { QueryBus } from "@nestjs/cqrs";
 import { GetClientProfileQuery } from "Backoffice/Client/Application/GetClientProfile/GetClientProfileQuery";
-import { TabemanoResponse } from "Backoffice/Shared/Domain/TabemanoResponse";
+import { TabemanoResponse } from "Shared/Domain/Entities/TabemanoResponse";
 import { NextFunction, Request, Response } from "express";
 import { AuthGuard } from "Shared/Infrastructure/Guard/AuthGuard";
 

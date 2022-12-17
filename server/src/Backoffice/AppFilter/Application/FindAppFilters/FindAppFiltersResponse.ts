@@ -1,4 +1,4 @@
-import { Serializable } from "Backoffice/Shared/Domain/Serializable";
+import { Serializable } from "Shared/Domain/Interfaces/Serializable";
 
 export class FindFiltersResponse implements Serializable {
 

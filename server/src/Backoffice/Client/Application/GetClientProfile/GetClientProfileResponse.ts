@@ -1,6 +1,6 @@
 import { Client } from "Backoffice/Shared/Domain/Client/Client";
 import { GetClientProfileResponseType, SubscriptionResponse } from "Backoffice/Client/types";
-import { Serializable } from "Backoffice/Shared/Domain/Serializable";
+import { Serializable } from "Shared/Domain/Interfaces/Serializable";
 import { Subscription } from "Backoffice/Shared/Domain/Subscription/Subscription";
 import { SubscriptionEvent } from "Backoffice/Shared/Domain/Subscription/SubscriptionEvent";
 import { Time } from "Shared/Infrastructure/Helper/Time";

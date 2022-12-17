@@ -1,6 +1,7 @@
 import { Inject } from "@nestjs/common";
 import { IQueryHandler, QueryHandler } from "@nestjs/cqrs";
 import { GetProductListQuery } from "Checkout/Product/Application/GetProductList/GetProductListQuery";
+import { GetProductListResponse } from "Checkout/Product/Application/GetProductList/GetProductListResponse";
 import { Product } from "Checkout/Product/Domain/Entity/Product";
 import { ProductFilter } from "Checkout/Product/Domain/Filter/ProductFilter";
 import { IProductRepository } from "Checkout/Product/Domain/Repository/IProductRepository";
@@ -13,10 +14,12 @@ export class GetProductListQueryHandler implements IQueryHandler {
     private readonly repository: IProductRepository
   ) {}
 
-  public async execute(query: GetProductListQuery): Promise<Product[]> {
+  public async execute(query: GetProductListQuery): Promise<GetProductListResponse> {
     const country = new Country(query.country);
 
-    return await this.findProducts(country);
+    const products = await this.findProducts(country);
+
+    return GetProductListResponse.fromDomain(products);
   }
 
   private async findProducts(country: Country): Promise<Product[]> {

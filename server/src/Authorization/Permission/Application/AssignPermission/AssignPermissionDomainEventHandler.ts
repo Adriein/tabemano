@@ -1,9 +1,9 @@
 import { Inject } from '@nestjs/common';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Log } from 'Shared/Domain/Decorators/Log';
-import { Module } from 'Authorization/Permission/Domain/Entity/Module';
+import { Product } from 'Authorization/Permission/Domain/Entity/Product';
 import { Permission } from 'Authorization/Permission/Domain/Entity/Permission';
-import { ModuleFilter } from 'Authorization/Permission/Domain/Filter/ModuleFilter';
+import { ProductFilter } from 'Authorization/Permission/Domain/Filter/ProductFilter';
 import { PermissionFilter } from 'Authorization/Permission/Domain/Filter/PermissionFilter';
 import { IPermissionRepository } from 'Authorization/Permission/Domain/Repository/IPermissionRepository';
 import { ModuleNotFoundError } from 'Shared/Domain/Error/ModuleNotFoundError';
@@ -21,7 +21,7 @@ export class AssignPermissionDomainEventHandler implements IEventHandler {
 
   @Log()
   public async handle(event: ProductBoughtDomainEvent) {
-    await this.checkIfModuleExists(event.moduleId);
+    await this.checkIfModuleExists(event.productId);
 
     const permissionAssigned = await this.checkIfTenantHasModuleAlreadyAssigned(event);
 
@@ -29,11 +29,11 @@ export class AssignPermissionDomainEventHandler implements IEventHandler {
       return;
     }
 
-    const module = await this.getModule(event.moduleId);
+    const module = await this.getProduct(event.productId);
 
     const newPermission = Permission.build(
       event.tenantId,
-      event.moduleId,
+      event.productId,
       module.name(),
       module.urlList()
     );
@@ -41,9 +41,9 @@ export class AssignPermissionDomainEventHandler implements IEventHandler {
     await this.permissionRepository.save(newPermission);
   }
 
-  private async checkIfModuleExists(moduleId: ID): Promise<Module> {
+  private async checkIfModuleExists(moduleId: ID): Promise<Product> {
     try {
-      const filter = ModuleFilter.create().withModuleId(moduleId);
+      const filter = ProductFilter.create().withProductId(moduleId);
 
       const result = await this.moduleRepository.findOne(filter);
 
@@ -63,7 +63,7 @@ export class AssignPermissionDomainEventHandler implements IEventHandler {
     try {
       const filter = PermissionFilter.create()
         .withTenantId(event.tenantId)
-        .withModuleId(event.moduleId);
+        .withModuleId(event.productId);
 
       const result = await this.permissionRepository.findOne(filter);
 
@@ -77,8 +77,8 @@ export class AssignPermissionDomainEventHandler implements IEventHandler {
     }
   }
 
-  private async getModule(moduleId: ID): Promise<Module> {
-    const filter = ModuleFilter.create().withModuleId(moduleId);
+  private async getProduct(moduleId: ID): Promise<Product> {
+    const filter = ProductFilter.create().withProductId(moduleId);
 
     const result = await this.moduleRepository.findOne(filter);
 

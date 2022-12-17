@@ -1,4 +1,4 @@
 import { IRepository } from 'Shared/Domain/Interfaces/IRepository';
-import { Module } from '../Entity/Module';
+import { Product } from '../Entity/Product';
 
-export interface IModuleRepository extends IRepository<Module> {}
+export interface IModuleRepository extends IRepository<Product> {}

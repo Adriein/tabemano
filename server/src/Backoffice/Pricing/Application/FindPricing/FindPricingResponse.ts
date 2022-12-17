@@ -1,5 +1,5 @@
 import { Pricing } from "Backoffice/Pricing/Domain/Entity/Pricing";
-import { Serializable } from "Backoffice/Shared/Domain/Serializable";
+import { Serializable } from "Shared/Domain/Interfaces/Serializable";
 import { Money } from "Shared/Domain/Entities/Money";
 
 
