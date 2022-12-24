@@ -1,13 +1,14 @@
 import { DomainEvent } from 'Shared/Domain/Entities/DomainEvent';
 import { ID } from 'Shared/Domain/Vo/Id.vo';
 
-export class ProductBoughtDomainEvent extends DomainEvent {
-  protected _type = 'tabemano.checkout.1.event.product.bought';
+export class PaymentStartedDomainEvent extends DomainEvent {
+  protected _type = 'tabemano.checkout.1.event.payment.started';
 
   constructor(
     protected readonly _aggregateId: ID,
     private readonly _tenantId: ID,
-    private readonly _productId: ID
+    private readonly _productId: ID,
+    private readonly _paymentSession: any,
   ) {
     super();
   }
