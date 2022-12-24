@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { BuyProductCommandHandler } from "Checkout/Product/Application/BuyProduct/BuyProductCommandHandler";
+import { BuyProductQueryHandler } from "Checkout/Product/Application/BuyProduct/BuyProductQueryHandler";
 import { GetProductListQueryHandler } from "Checkout/Product/Application/GetProductList/GetProductListQueryHandler";
 import { GetProductListController } from "Checkout/Product/Infrastructure/Controller/GetProductList/GetProductListController";
 import { PgProductMapper } from "Checkout/Product/Infrastructure/Persistance/Mapper/PgProductMapper";
@@ -13,7 +13,7 @@ const Controllers = [
 
 const Handlers = [
   GetProductListQueryHandler,
-  BuyProductCommandHandler
+  BuyProductQueryHandler
 ];
 
 const Repository = [
