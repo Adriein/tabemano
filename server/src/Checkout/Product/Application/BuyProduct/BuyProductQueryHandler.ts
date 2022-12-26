@@ -4,15 +4,12 @@ import { BuyProductResponse } from "Checkout/Product/Application/BuyProduct/BuyP
 import { Product } from "Checkout/Product/Domain/Entity/Product";
 import { ProductFilter } from "Checkout/Product/Domain/Filter/ProductFilter";
 import { IProductRepository } from "Checkout/Product/Domain/Repository/IProductRepository";
-import { PaymentService } from "Checkout/Shared/Domain/Service/PaymentService";
 import { BuyProductQuery } from "Checkout/Product/Application/BuyProduct/BuyProductQuery";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 
 @QueryHandler(BuyProductQuery)
 export class BuyProductQueryHandler implements IQueryHandler {
   constructor(
-    @Inject('PaymentService')
-    private readonly service: PaymentService,
     @Inject('IProductRepository')
     private readonly repository: IProductRepository
   ) {}
@@ -21,9 +18,9 @@ export class BuyProductQueryHandler implements IQueryHandler {
     const productId = new ID(query.productId);
     const product = await this.getProduct(productId);
 
-    const checkoutSessionPublicToken = await product.buy(this.service);
+    product.buy();
 
-    return new BuyProductResponse(checkoutSessionPublicToken);
+    return new BuyProductResponse('');
   }
 
   private async getProduct(id: ID): Promise<Product> {

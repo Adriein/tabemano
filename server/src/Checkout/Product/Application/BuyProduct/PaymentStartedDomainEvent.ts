@@ -6,9 +6,8 @@ export class PaymentStartedDomainEvent extends DomainEvent {
 
   constructor(
     protected readonly _aggregateId: ID,
-    private readonly _tenantId: ID,
+    private readonly _customerId: ID,
     private readonly _productId: ID,
-    private readonly _paymentSession: any,
   ) {
     super();
   }
@@ -17,8 +16,8 @@ export class PaymentStartedDomainEvent extends DomainEvent {
     return this._aggregateId;
   }
 
-  public get tenantId(): ID {
-    return this._tenantId;
+  public get customerId(): ID {
+    return this._customerId;
   }
 
   public get productId(): ID {
@@ -34,7 +33,7 @@ export class PaymentStartedDomainEvent extends DomainEvent {
       id: this.id.value,
       dateOccurred: this.dateOccurred.value,
       aggregateId: this._aggregateId.value,
-      tenantId: this._tenantId.value,
+      tenantId: this._customerId.value,
       moduleId: this._productId.value
     });
   }

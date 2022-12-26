@@ -1,4 +1,4 @@
-import { PaymentService } from "Checkout/Shared/Domain/Service/PaymentService";
+import { PaymentService } from "Checkout/Payment/Domain/Service/PaymentService";
 import { AggregateRoot } from "Shared/Domain/Entities/AggregateRoot";
 import { Money } from "Shared/Domain/Entities/Money";
 import { ID } from "Shared/Domain/Vo/Id.vo";
@@ -23,7 +23,7 @@ export class Product extends AggregateRoot {
     return this._price;
   }
 
-  public async buy(service: PaymentService): Promise<string> {
-    return await service.createPayment(this);
+  public buy(): void {
+
   }
 }
