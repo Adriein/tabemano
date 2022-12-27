@@ -1,26 +1,25 @@
 import { Inject } from "@nestjs/common";
-import { IQueryHandler, QueryHandler } from "@nestjs/cqrs";
-import { BuyProductResponse } from "Checkout/Product/Application/BuyProduct/BuyProductResponse";
+import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { Product } from "Checkout/Product/Domain/Entity/Product";
 import { ProductFilter } from "Checkout/Product/Domain/Filter/ProductFilter";
 import { IProductRepository } from "Checkout/Product/Domain/Repository/IProductRepository";
-import { BuyProductQuery } from "Checkout/Product/Application/BuyProduct/BuyProductQuery";
+import { BuyProductCommand } from "Checkout/Product/Application/BuyProduct/BuyProductCommand";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 
-@QueryHandler(BuyProductQuery)
-export class BuyProductQueryHandler implements IQueryHandler {
+@CommandHandler(BuyProductCommand)
+export class BuyProductCommandHandler implements ICommandHandler<BuyProductCommand, void> {
   constructor(
     @Inject('IProductRepository')
     private readonly repository: IProductRepository
   ) {}
 
-  public async execute(query: BuyProductQuery): Promise<BuyProductResponse> {
-    const productId = new ID(query.productId);
+  public async execute(command: BuyProductCommand): Promise<void> {
+    const productId = new ID(command.productId);
+    const customerId = new ID(command.customerId);
+
     const product = await this.getProduct(productId);
 
-    product.buy();
-
-    return new BuyProductResponse('');
+    product.buy(customerId);
   }
 
   private async getProduct(id: ID): Promise<Product> {

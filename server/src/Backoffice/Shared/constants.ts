@@ -19,4 +19,4 @@ export const TRACKING_TYPE = {
   open: 'open',
 } as const;
 
-export type TrackingType = typeof TRACKING_TYPE[keyof typeof TRACKING_TYPE]
+export type TrackingType = typeof TRACKING_TYPE[keyof typeof TRACKING_TYPE];

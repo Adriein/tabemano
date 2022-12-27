@@ -7,7 +7,7 @@ import { ProductFilter } from "Checkout/Payment/Domain/Filter/ProductFilter";
 import { ICustomerRepository } from "Checkout/Payment/Domain/Repository/ICustomerRepository";
 import { IPaymentAttemptRepository } from "Checkout/Payment/Domain/Repository/IPaymentAttemptRepository";
 import { IProductRepository } from "Checkout/Payment/Domain/Repository/IProductRepository";
-import { PaymentService } from "Checkout/Payment/Domain/Service/PaymentService";
+import { IPaymentService } from "Checkout/Payment/Domain/Service/IPaymentService";
 import { PaymentStartedDomainEvent } from "Checkout/Product/Application/BuyProduct/PaymentStartedDomainEvent";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Url } from "Shared/Domain/Vo/Url.vo";
@@ -18,7 +18,7 @@ export class CreatePaymentAttemptEventHandler implements IEventHandler<PaymentSt
     private readonly productRepository: IProductRepository,
     private readonly customerRepository: ICustomerRepository,
     private readonly paymentAttemptRepository: IPaymentAttemptRepository,
-    private readonly service: PaymentService,
+    private readonly service: IPaymentService,
   ) {}
 
   public async handle(event: PaymentStartedDomainEvent): Promise<void> {
