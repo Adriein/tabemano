@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+import { PaymentSucceededDomainEvent } from "Checkout/Payment/Application/UpdatePaymentAttempt/PaymentSucceededDomainEvent";
 import { Log } from 'Shared/Domain/Decorators/Log';
 import { Product } from 'Authorization/Permission/Domain/Entity/Product';
 import { Permission } from 'Authorization/Permission/Domain/Entity/Permission';
@@ -9,10 +10,9 @@ import { IPermissionRepository } from 'Authorization/Permission/Domain/Repositor
 import { ModuleNotFoundError } from 'Shared/Domain/Error/ModuleNotFoundError';
 import { RecordNotFoundError } from 'Shared/Domain/Error/RecordNotFoundError';
 import { ID } from 'Shared/Domain/Vo/Id.vo';
-import { ProductBoughtDomainEvent } from 'Checkout/Product/Application/BuyProduct/ProductBoughtDomainEvent';
 import { IModuleRepository } from 'Authorization/Permission/Domain/Repository/IModuleRepository';
 
-@EventsHandler(ProductBoughtDomainEvent)
+@EventsHandler(PaymentSucceededDomainEvent)
 export class AssignPermissionDomainEventHandler implements IEventHandler {
   constructor(
     @Inject('IPermissionRepository') private permissionRepository: IPermissionRepository,
@@ -20,7 +20,7 @@ export class AssignPermissionDomainEventHandler implements IEventHandler {
   ) {}
 
   @Log()
-  public async handle(event: ProductBoughtDomainEvent) {
+  public async handle(event: PaymentSucceededDomainEvent) {
     await this.checkIfModuleExists(event.productId);
 
     const permissionAssigned = await this.checkIfTenantHasModuleAlreadyAssigned(event);
@@ -32,7 +32,7 @@ export class AssignPermissionDomainEventHandler implements IEventHandler {
     const module = await this.getProduct(event.productId);
 
     const newPermission = Permission.build(
-      event.tenantId,
+      event.customerId,
       event.productId,
       module.name(),
       module.urlList()
@@ -58,11 +58,11 @@ export class AssignPermissionDomainEventHandler implements IEventHandler {
   }
 
   private async checkIfTenantHasModuleAlreadyAssigned(
-    event: ProductBoughtDomainEvent
+    event: PaymentSucceededDomainEvent
   ): Promise<Permission | undefined> {
     try {
       const filter = PermissionFilter.create()
-        .withTenantId(event.tenantId)
+        .withTenantId(event.customerId)
         .withModuleId(event.productId);
 
       const result = await this.permissionRepository.findOne(filter);
