@@ -4,10 +4,14 @@ import { Address } from "../../src/Shared/Domain/Vo/Address.vo";
 import { City } from "../../src/Shared/Domain/Vo/City.vo";
 import { CompanyType } from "../../src/Shared/Domain/Vo/CompanyType.vo";
 import { Country } from "../../src/Shared/Domain/Vo/Country.vo";
+import { Currency } from "../../src/Shared/Domain/Vo/Currency.vo";
 import { FiscalId } from "../../src/Shared/Domain/Vo/FiscalId.vo";
+import { NumberVo } from "../../src/Shared/Domain/Vo/Number.vo";
 import { Phone } from "../../src/Shared/Domain/Vo/Phone.vo";
 import { State } from "../../src/Shared/Domain/Vo/State.vo";
+import { StringVo } from "../../src/Shared/Domain/Vo/String.vo";
 import { CompanyModel } from "../../src/Shared/Infrastructure/Persistance/Model/CompanyModel";
+import { ProductModel } from "../../src/Shared/Infrastructure/Persistance/Model/ProductModel";
 import { RoleModel } from '../../src/Shared/Infrastructure/Persistance/Model/RoleModel';
 import {
   MONTHLY_PRICING,
@@ -205,6 +209,34 @@ const createTenantSubscription = async (database: DataSource) => {
   });
 };
 
+const createBasicProducts = async (database: DataSource) => {
+  const productRepository = database.getRepository(ProductModel);
+
+  await productRepository.save({
+    id: ID.generate(),
+    isActive: true,
+    country: new Country('ES'),
+    name: new Name('Nutrición'),
+    description: new StringVo('Modulo de nutrición de Tabemano'),
+    price: new NumberVo(500),
+    currency: new Currency('EUR'),
+    createdAt: DateVo.now().value,
+    updatedAt: DateVo.now().value,
+  });
+
+  await productRepository.save({
+    id: ID.generate(),
+    isActive: true,
+    country: new Country('ES'),
+    name: new Name('Facturación'),
+    description: new StringVo('Modulo de facturación de Tabemano'),
+    price: new NumberVo(500),
+    currency: new Currency('EUR'),
+    createdAt: DateVo.now().value,
+    updatedAt: DateVo.now().value,
+  });
+}
+
 async function basicSeed() {
   const database = await Database.instance().initialize();
 
@@ -217,6 +249,8 @@ async function basicSeed() {
   await createBasicPricing(database);
 
   await createTenantSubscription(database);
+
+  await createBasicProducts(database);
 }
 
 basicSeed()

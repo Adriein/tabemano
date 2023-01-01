@@ -4,12 +4,14 @@ import { AggregateRoot } from "Shared/Domain/Entities/AggregateRoot";
 import { Money } from "Shared/Domain/Entities/Money";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 import { Name } from "Shared/Domain/Vo/Name.vo";
+import { StringVo } from "Shared/Domain/Vo/String.vo";
 
 export class Product extends AggregateRoot {
   constructor(
     id: ID,
     private _name: Name,
     private _price: Money,
+    private _description: StringVo,
     _dateCreated?: Date,
     _dateUpdated?: Date
   ) {
@@ -22,6 +24,10 @@ export class Product extends AggregateRoot {
 
   public price(): Money {
     return this._price;
+  }
+
+  public description(): StringVo {
+    return this._description;
   }
 
   public buy(customerId: ID): void {

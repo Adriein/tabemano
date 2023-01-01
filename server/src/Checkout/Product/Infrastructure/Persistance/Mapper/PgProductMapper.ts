@@ -10,6 +10,7 @@ export class PgProductMapper implements IMapper<Product, ProductModel> {
       dataModel.id,
       dataModel.name,
       new Money(dataModel.price, new Currency('EUR')),
+      dataModel.description,
       dataModel.createdAt,
       dataModel.updatedAt
     );
@@ -20,6 +21,8 @@ export class PgProductMapper implements IMapper<Product, ProductModel> {
     model.id = entity.id();
     model.name = entity.name();
     model.price = entity.price().amount();
+    model.currency = entity.price().currency();
+    model.description = entity.description();
     model.createdAt = entity.createdAt();
     model.updatedAt = entity.updatedAt();
 

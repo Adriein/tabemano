@@ -3,9 +3,9 @@ import { Country } from "Shared/Domain/Vo/Country.vo";
 import { ID } from "Shared/Domain/Vo/Id.vo";
 
 export class ProductFilter extends Filter {
-  private static COUNTRY_FILTER = 'country';
-  private static ACTIVE_FILTER = 'active';
-  private static ID_FILTER = 'id';
+  public static COUNTRY_FILTER = 'country';
+  public static ACTIVE_FILTER = 'active';
+  public static ID_FILTER = 'id';
 
   protected data: Map<string, any> = new Map();
 

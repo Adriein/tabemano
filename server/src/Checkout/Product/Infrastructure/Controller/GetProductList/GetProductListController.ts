@@ -10,7 +10,7 @@ import { TabemanoResponse } from "Shared/Domain/Entities/TabemanoResponse";
 export class GetProductListController {
   constructor(private readonly queryBus: QueryBus) {}
 
-  @Get('/checkout/product')
+  @Get('/checkout/products')
   public async getModuleList(@Body() body: GetProductListApiRequest): Promise<any> {
     const query = new GetProductListQuery(body.country);
 

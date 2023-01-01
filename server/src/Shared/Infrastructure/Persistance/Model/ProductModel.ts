@@ -1,4 +1,6 @@
+import { Currency } from "Shared/Domain/Vo/Currency.vo";
 import { NumberVo } from "Shared/Domain/Vo/Number.vo";
+import { StringVo } from "Shared/Domain/Vo/String.vo";
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { ID } from 'Shared/Domain/Vo/Id.vo';
 import { Name } from 'Shared/Domain/Vo/Name.vo';
@@ -27,6 +29,33 @@ export class ProductModel {
     transformer: new ValueObjectTransformer<number, NumberVo>(NumberVo),
   })
   price!: NumberVo;
+
+  @Column({
+    name: 'pr_currency',
+    type: 'varchar',
+    transformer: new ValueObjectTransformer<string, Currency>(Currency),
+  })
+  currency!: Currency;
+
+  @Column({
+    name: 'pr_country',
+    type: 'varchar',
+    transformer: new ValueObjectTransformer<string, StringVo>(StringVo),
+  })
+  country!: StringVo;
+
+  @Column({
+    name: 'pr_description',
+    type: 'varchar',
+    transformer: new ValueObjectTransformer<string, StringVo>(StringVo),
+  })
+  description!: StringVo;
+
+  @Column({
+    name: 'pr_is_active',
+    type: 'boolean',
+  })
+  isActive!: boolean;
 
   @Column({ name: 'pr_created_at', type: 'timestamp', precision: 0 })
   createdAt!: Date;
