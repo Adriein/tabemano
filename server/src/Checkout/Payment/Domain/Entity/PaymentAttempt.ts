@@ -41,7 +41,7 @@ export class PaymentAttempt extends AggregateRoot {
     super(_id, _createdAt, _updatedAt);
   }
 
-  public async markAsCompleted(repository: IPaymentAttemptRepository): Promise<void> {
+  public async complete(repository: IPaymentAttemptRepository): Promise<void> {
     this._status = PAYMENT_ATTEMPT_STATUS.completed;
     await repository.update(this);
 
@@ -49,11 +49,11 @@ export class PaymentAttempt extends AggregateRoot {
     super.commit();
   }
 
-  public markAsFailed(): void {
+  public failed(): void {
     this._status = PAYMENT_ATTEMPT_STATUS.failed;
   }
 
-  public markAsDisputed(): void {
+  public disputed(): void {
     this._status = PAYMENT_ATTEMPT_STATUS.disputed;
   }
 

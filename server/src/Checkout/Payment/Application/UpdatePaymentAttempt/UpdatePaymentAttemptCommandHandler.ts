@@ -14,7 +14,7 @@ export class UpdatePaymentAttemptCommandHandler implements ICommandHandler<Updat
 
     const attempt = await this.findPaymentAttempt(paymentAttemptId);
 
-    await attempt.markAsCompleted(this.repository);
+    await attempt.complete(this.repository);
   }
 
   private async findPaymentAttempt(id: ID): Promise<PaymentAttempt> {
