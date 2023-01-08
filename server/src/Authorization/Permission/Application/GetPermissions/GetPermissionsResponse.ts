@@ -9,8 +9,8 @@ export class GetPermissionsResponse {
     return new GetPermissionsResponse(
       permission.id().value,
       permission.tenantId().value,
-      permission.moduleId().value,
-      permission.moduleName().value,
+      permission.productId().value,
+      permission.productName().value,
       urlList
     );
   }

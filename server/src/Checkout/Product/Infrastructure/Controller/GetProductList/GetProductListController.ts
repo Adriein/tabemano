@@ -1,4 +1,4 @@
-import { Body, Controller, Get } from "@nestjs/common";
+import { Body, Controller, Get, Param, Query } from "@nestjs/common";
 import { QueryBus } from "@nestjs/cqrs";
 import { GetProductListQuery } from "Checkout/Product/Application/GetProductList/GetProductListQuery";
 import { GetProductListResponse } from "Checkout/Product/Application/GetProductList/GetProductListResponse";
@@ -11,8 +11,8 @@ export class GetProductListController {
   constructor(private readonly queryBus: QueryBus) {}
 
   @Get('/checkout/products')
-  public async getModuleList(@Body() body: GetProductListApiRequest): Promise<any> {
-    const query = new GetProductListQuery(body.country);
+  public async getModuleList(@Query() request: GetProductListApiRequest): Promise<any> {
+    const query = new GetProductListQuery(request.country);
 
     const productListResponse = await this.queryBus.execute<GetProductListQuery, GetProductListResponse>(query);
 

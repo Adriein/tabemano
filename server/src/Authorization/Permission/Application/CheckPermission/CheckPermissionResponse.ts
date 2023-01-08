@@ -5,8 +5,8 @@ export class CheckPermissionResponse {
     return new CheckPermissionResponse(
       permission.id().value,
       permission.tenantId().value,
-      permission.moduleId().value,
-      permission.moduleName().value
+      permission.productId().value,
+      permission.productName().value
     );
   }
 

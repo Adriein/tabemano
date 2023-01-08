@@ -139,9 +139,9 @@ const createBasicPricing = async (database: DataSource) => {
       tenant: {
         id
       },
-      price: 1000,
+      price: new NumberVo(1000),
       duration: 365,
-      currency: 'EUR',
+      currency: new Currency('EUR'),
       createdAt: DateVo.now().value,
       updatedAt: DateVo.now().value,
     },
@@ -152,9 +152,9 @@ const createBasicPricing = async (database: DataSource) => {
       tenant: {
         id
       },
-      price: 50,
+      price: new NumberVo(50),
       duration: 30,
-      currency: 'EUR',
+      currency: new Currency('EUR'),
       createdAt: DateVo.now().value,
       updatedAt: DateVo.now().value,
     },
@@ -165,9 +165,9 @@ const createBasicPricing = async (database: DataSource) => {
       tenant: {
         id
       },
-      price: 150,
+      price: new NumberVo(150),
       duration: 90,
-      currency: 'EUR',
+      currency: new Currency('EUR'),
       createdAt: DateVo.now().value,
       updatedAt: DateVo.now().value,
     },
@@ -185,9 +185,9 @@ const createTenantSubscription = async (database: DataSource) => {
     isExpired: false,
     paymentDate: DateVo.now(),
     validTo: new DateVo(validTo),
-    price: 1000,
+    price: new NumberVo(1000),
     duration: 10,
-    currency: 'EUR',
+    currency: new Currency('EUR'),
     pricingName: YEARLY_PRICING,
     pricingId: yearlyPricingId,
     userId: null,

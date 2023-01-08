@@ -20,11 +20,9 @@ export class GetPermissionsQueryHandler implements IQueryHandler {
 
     const permissions = await this.findPermissions(tenantId);
 
-    const permissionsResponse = permissions.map(permission => {
+    return permissions.map(permission => {
       return GetPermissionsResponse.fromDomain(permission);
     });
-
-    return permissionsResponse;
   }
 
   private async findPermissions(tenantId: ID): Promise<Permission[]> {

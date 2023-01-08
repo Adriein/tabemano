@@ -1,10 +1,22 @@
 import { Flex, Grid, Title, Card, Group, Text, Button, Input } from "@mantine/core";
 import { Container } from '@mantine/core';
-import { Form } from "@remix-run/react";
+import { Form, useLoaderData } from "@remix-run/react";
 import {
+  json,
   redirect,
 } from "@remix-run/node";
 
+export const loader = async () => {
+  console.log('executing the loader')
+  const response = await fetch('http://localhost:5000/api/v1/checkout/products?country=es', {
+    method: 'GET', mode: 'cors',
+    headers: { "Content-type": "application/json; charset=UTF-8" }
+  });
+
+  console.log(response)
+
+  return json({ products: [ { name: 'aaaa' } ] });
+};
 
 export const action = async ({ request }: any) => {
   const form = await request.formData();
@@ -30,6 +42,7 @@ export const action = async ({ request }: any) => {
 };
 
 export default function Index() {
+  const { products } = useLoaderData<typeof loader>();
   return (
     <Container size={"lg"}>
       <Grid>

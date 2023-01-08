@@ -20,7 +20,6 @@ export const DomainEventFailOverTableDefinition = new Table({
       name: 'defo_retry',
       type: 'boolean',
     },
-    ,
     {
       name: 'defo_ack',
       type: 'boolean',

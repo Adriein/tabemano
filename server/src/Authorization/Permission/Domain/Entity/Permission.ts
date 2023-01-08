@@ -20,8 +20,8 @@ export class Permission extends AggregateRoot {
     _id: ID,
     private _tenantId: ID,
     private _moduleId: ID,
-    private _moduleName: Name,
-    private _moduleUrl: Url[],
+    private _productName: Name,
+    private _productId: Url[],
     _createdAt: Date,
     _updatedAt: Date
   ) {
@@ -32,15 +32,15 @@ export class Permission extends AggregateRoot {
     return this._tenantId;
   }
 
-  public moduleId(): ID {
+  public productId(): ID {
     return this._moduleId;
   }
 
-  public moduleName(): Name {
-    return this._moduleName;
+  public productName(): Name {
+    return this._productName;
   }
 
   public moduleUrl(): Url[] {
-    return this._moduleUrl;
+    return this._productId;
   }
 }

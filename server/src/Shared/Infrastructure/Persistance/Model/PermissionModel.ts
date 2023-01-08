@@ -26,14 +26,14 @@ export class PermissionModel {
   tenant!: UserModel;
 
   @Column({
-    name: 'pe_module_id',
+    name: 'pe_product_id',
     type: 'varchar',
     transformer: new ValueObjectTransformer<string, ID>(ID),
   })
-  moduleId!: ID;
+  productId!: ID;
 
   @ManyToOne(() => ProductModel)
-  @JoinColumn({ name: 'pe_module_id', referencedColumnName: 'id' })
+  @JoinColumn({ name: 'pe_product_id', referencedColumnName: 'id' })
   module!: ProductModel;
 
   @Column({ name: 'pe_created_at', type: 'timestamp', precision: 0 })

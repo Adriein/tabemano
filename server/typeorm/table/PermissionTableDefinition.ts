@@ -16,6 +16,16 @@ export const PermissionTableDefinition = new Table({
       name: 'pe_product_id',
       type: 'varchar',
     },
+    {
+      name: 'pe_created_at',
+      type: 'timestamp',
+      precision: 0
+    },
+    {
+      name: 'pe_updated_at',
+      type: 'timestamp',
+      precision: 0
+    }
   ],
   foreignKeys: [
     {

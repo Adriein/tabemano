@@ -12,7 +12,7 @@ export class PgPermissionMapper implements IMapper<Permission, PermissionModel> 
     return new Permission(
       dataModel.id,
       dataModel.tenantId,
-      dataModel.moduleId,
+      dataModel.productId,
       dataModel.module.name,
       urlList,
       dataModel.createdAt,
@@ -25,7 +25,7 @@ export class PgPermissionMapper implements IMapper<Permission, PermissionModel> 
 
     model.id = entity.id();
     model.tenantId = entity.tenantId();
-    model.moduleId = entity.moduleId();
+    model.productId = entity.productId();
     model.createdAt = entity.createdAt();
     model.updatedAt = entity.updatedAt();
 
