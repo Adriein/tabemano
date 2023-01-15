@@ -12,6 +12,7 @@ export class GetProductListResponse implements Serializable<ProductDto[]> {
   public serialize(): ProductDto[] {
     return this.products.map((product: Product) => {
       return {
+        id: product.id().value,
         name: product.name().value,
         description: product.description().value,
         currency: product.price().currency().value,

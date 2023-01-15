@@ -5,9 +5,9 @@ import {
   json,
   redirect,
 } from "@remix-run/node";
+import { Link } from "react-router-dom";
 
 export const loader = async () => {
-  console.log('executing the loader')
   const response = await fetch('http://localhost:5000/api/v1/checkout/products?country=ES', {
     method: 'GET', mode: 'cors',
     headers: { "Content-type": "application/json; charset=UTF-8" }
@@ -78,7 +78,7 @@ export default function Index() {
         </Grid.Col>
         <Grid.Col span={12}>
           <Grid>
-            {products.map((product: { name: string, currency: string, price: string, description: string }) => {
+            {products.map((product: { id: string, name: string, currency: string, price: string, description: string }) => {
               return (
                 <Grid.Col span={spanProductHero}>
                   <Card shadow="sm" p="lg" radius="md" withBorder>
@@ -91,7 +91,7 @@ export default function Index() {
                     </Text>
 
                     <Button variant="light" color="blue" fullWidth mt="md" radius="md">
-                      {product.price} {product.currency}
+                      <Link to={`/checkout/${product.id}/registration`}>{product.price} {product.currency}</Link>
                     </Button>
                   </Card>
                 </Grid.Col>
