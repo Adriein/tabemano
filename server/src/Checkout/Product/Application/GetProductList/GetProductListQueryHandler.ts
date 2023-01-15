@@ -5,6 +5,7 @@ import { GetProductListResponse } from "Checkout/Product/Application/GetProductL
 import { Product } from "Checkout/Product/Domain/Entity/Product";
 import { ProductFilter } from "Checkout/Product/Domain/Filter/ProductFilter";
 import { IProductRepository } from "Checkout/Product/Domain/Repository/IProductRepository";
+import { Log } from "Shared/Domain/Decorators/Log";
 import { Country } from "Shared/Domain/Vo/Country.vo";
 
 @QueryHandler(GetProductListQuery)
@@ -14,6 +15,7 @@ export class GetProductListQueryHandler implements IQueryHandler {
     private readonly repository: IProductRepository
   ) {}
 
+  @Log()
   public async execute(query: GetProductListQuery): Promise<GetProductListResponse> {
     const country = new Country(query.country);
 

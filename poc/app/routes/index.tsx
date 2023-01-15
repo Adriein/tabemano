@@ -1,4 +1,4 @@
-import { Flex, Grid, Title, Card, Group, Text, Button, Input } from "@mantine/core";
+import { Flex, Grid, Title, Card, Group, Text, Button, Input, Space } from "@mantine/core";
 import { Container } from '@mantine/core';
 import { Form, useLoaderData } from "@remix-run/react";
 import {
@@ -8,14 +8,14 @@ import {
 
 export const loader = async () => {
   console.log('executing the loader')
-  const response = await fetch('http://localhost:5000/api/v1/checkout/products?country=es', {
+  const response = await fetch('http://localhost:5000/api/v1/checkout/products?country=ES', {
     method: 'GET', mode: 'cors',
     headers: { "Content-type": "application/json; charset=UTF-8" }
   });
 
-  console.log(response)
+  const tabemanoResponse = await response.json();
 
-  return json({ products: [ { name: 'aaaa' } ] });
+  return json({ products: tabemanoResponse.data });
 };
 
 export const action = async ({ request }: any) => {
@@ -43,6 +43,7 @@ export const action = async ({ request }: any) => {
 
 export default function Index() {
   const { products } = useLoaderData<typeof loader>();
+  const spanProductHero = 12 / products.length;
   return (
     <Container size={"lg"}>
       <Grid>
@@ -62,6 +63,7 @@ export default function Index() {
                   name="email"
                   placeholder="Email"
                 />
+                <Space h="xs"/>
                 <Input
                   name="password"
                   type="password"
@@ -73,6 +75,29 @@ export default function Index() {
               </Form>
             </Card>
           </Flex>
+        </Grid.Col>
+        <Grid.Col span={12}>
+          <Grid>
+            {products.map((product: { name: string, currency: string, price: string, description: string }) => {
+              return (
+                <Grid.Col span={spanProductHero}>
+                  <Card shadow="sm" p="lg" radius="md" withBorder>
+                    <Text size="sm" color="dimmed">
+                      {product.name}
+                    </Text>
+
+                    <Text size="sm" color="dimmed">
+                      {product.description}
+                    </Text>
+
+                    <Button variant="light" color="blue" fullWidth mt="md" radius="md">
+                      {product.price} {product.currency}
+                    </Button>
+                  </Card>
+                </Grid.Col>
+              )
+            })}
+          </Grid>
         </Grid.Col>
       </Grid>
     </Container>
