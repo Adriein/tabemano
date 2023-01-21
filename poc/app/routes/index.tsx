@@ -101,6 +101,5 @@ export default function Index() {
         </Grid.Col>
       </Grid>
     </Container>
-
   );
 }

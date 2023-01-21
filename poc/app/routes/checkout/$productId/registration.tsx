@@ -1,10 +1,21 @@
-import { Flex, Grid, Title } from "@mantine/core";
+import { Button, Card, Flex, Grid, Group, Input, Space, Text, Title } from "@mantine/core";
 import { Container } from '@mantine/core';
+import { redirect } from "@remix-run/node";
+import { Form } from "@remix-run/react";
 
-// @ts-ignore
-export async function action({ params }) {
-  const id = params.productId;
-  console.log(id);
+export async function action({ params, request }: any) {
+  const form = await request.formData();
+
+  const response = await fetch('http://localhost:5000/api/v1/register/tenant', {
+    method: 'POST', mode: 'cors', body: JSON.stringify({
+      name: form.get('name'),
+      email: form.get('email'),
+      password: form.get('password')
+    }),
+    headers: { "Content-type": "application/json; charset=UTF-8" }
+  });
+
+  return redirect(`/checkout/${params.productId}/payment`);
 }
 
 export default function Registration() {
@@ -13,7 +24,37 @@ export default function Registration() {
       <Grid>
         <Grid.Col span={12}>
           <Flex justify="center">
-            <Title order={1}>Registration</Title>
+            <Card shadow="sm" p="lg" radius="md" withBorder>
+              <Group position="apart" mt="md" mb="xs">
+                <Text weight={500}>Sign up</Text>
+              </Group>
+              <Form method="post">
+                <Input
+                  name="name"
+                  placeholder="Name"
+                />
+                <Space h="xs"/>
+                <Input
+                  name="email"
+                  placeholder="Email"
+                />
+                <Space h="xs"/>
+                <Input
+                  name="password"
+                  type="password"
+                  placeholder="Password"
+                />
+                <Space h="xs"/>
+                <Input
+                  name="repeatPassword"
+                  type="password"
+                  placeholder="Repeat password"
+                />
+                <Button type="submit" variant="light" color="blue" fullWidth mt="md" radius="md">
+                  Sign Up
+                </Button>
+              </Form>
+            </Card>
           </Flex>
         </Grid.Col>
       </Grid>
