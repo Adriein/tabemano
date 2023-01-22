@@ -1,4 +1,4 @@
-import { Button, Card, Flex, Grid, Group, Input, Space, Text, Title } from "@mantine/core";
+import { Button, Card, Flex, Grid, Group, Input, Space, Text } from "@mantine/core";
 import { Container } from '@mantine/core';
 import { redirect } from "@remix-run/node";
 import { Form } from "@remix-run/react";
@@ -15,7 +15,17 @@ export async function action({ params, request }: any) {
     headers: { "Content-type": "application/json; charset=UTF-8" }
   });
 
-  return redirect(`/checkout/${params.productId}/payment`);
+  const cookie = response.headers.get("set-cookie");
+
+  if (!cookie) {
+    //return redirect('/');
+  }
+
+  const headers = new Headers();
+
+  headers.append('Set-cookie', cookie!);
+
+  return redirect(`/checkout/${params.productId}/payment`, { headers });
 }
 
 export default function Registration() {

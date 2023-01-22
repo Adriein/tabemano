@@ -45,6 +45,7 @@
     "rimraf": "^3.0.2",
     "rotating-file-stream": "^3.0.4",
     "rxjs": "^7.5.5",
+    "stripe": "^11.7.0",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^3.14.1",
     "tslog": "^4.4.4",
