@@ -43,7 +43,19 @@ export class PgProductRepository extends TypeOrmRepository<ProductModel> impleme
   }
 
   public async findOne(filter: ProductFilter): Promise<Result<Product, Error | RecordNotFoundError>> {
-    throw new Error();
+    try {
+      const adapter = new TypeOrmProductFilterAdapter(filter);
+
+      const result = await this.repository().findOne(adapter.apply());
+
+      if (!result) {
+        return Result.err(new RecordNotFoundError())
+      }
+
+      return Result.ok(this.mapper.toDomain(result));
+    } catch (error: any) {
+      return Result.err(new UnexpectedError(error.message))
+    }
   }
 
   public async save(entity: Product): Promise<void> {

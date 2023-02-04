@@ -36,7 +36,7 @@ export default function Registration() {
           <Flex justify="center">
             <Card shadow="sm" p="lg" radius="md" withBorder>
               <Group position="apart" mt="md" mb="xs">
-                <Text weight={500}>Sign up</Text>
+                <Text weight={500}>Register</Text>
               </Group>
               <Form method="post">
                 <Input
@@ -61,7 +61,7 @@ export default function Registration() {
                   placeholder="Repeat password"
                 />
                 <Button type="submit" variant="light" color="blue" fullWidth mt="md" radius="md">
-                  Sign Up
+                  Register
                 </Button>
               </Form>
             </Card>

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Query } from "@nestjs/common";
+import { Controller, Get, Query } from "@nestjs/common";
 import { QueryBus } from "@nestjs/cqrs";
 import { GetProductListQuery } from "Checkout/Product/Application/GetProductList/GetProductListQuery";
 import { GetProductListResponse } from "Checkout/Product/Application/GetProductList/GetProductListResponse";
